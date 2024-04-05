@@ -25,7 +25,7 @@
 
     <header id="header" class="header fixed-top d-flex align-items-center">
         <div class="d-flex align-items-center justify-content-between">
-            <a href="{{ route('User') }}" class="logo d-flex align-items-center">
+            <a href="index.html" class="logo d-flex align-items-center">
                 <span class="d-none d-lg-block w-100 text-center">MyCrm</span>
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -33,27 +33,49 @@
         <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
                 <li class="nav-item">
-                    <a class="nav-link nav-icon" href="{{ route('Contact') }}" title="Murojatlar">
+                    <a class="nav-link nav-icon" href="#" title="O'qivchilar uchun elonlar">
+                        <i class="bi bi-phone-vibrate"></i>
+                        <span class="badge bg-success badge-number">3</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-icon" href="#" title="O'qituvchilar uchun elonlar">
+                        <i class="bi bi-megaphone"></i>
+                        <span class="badge bg-success badge-number">3</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-icon" href="#" title="Tug'ilgan kunlar">
+                        <i class="bi bi-gift"></i>
+                        <span class="badge bg-success badge-number">3</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-icon" href="#" title="Eslatmalar">
+                        <i class="bi bi-alarm"></i>
+                        <span class="badge bg-success badge-number">3</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-icon" href="#" title="Murojatlar">
                         <i class="bi bi-chat-left-text"></i>
                         <span class="badge bg-success badge-number">3</span>
                     </a>
                 </li>
                 <li class="nav-item dropdown pe-3">
-                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="" data-bs-toggle="dropdown">
+                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
                         <i class="bi bi-person-circle" class="rounded-circle" style="font-size: 30px;"></i>
-                        <span class="d-none d-md-block dropdown-toggle ps-2">{{ @Auth::user()->email }}</span>
+                        <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
-                            <h6>{{ @Auth::user()->name }}</h6>
-                            <span class="text-success">
-                                <i class="bi bi-coin"></i>
-                                <p style="display:inline;" class="text-danger">{{ @Auth::user()->balans }} </p>so'm
-                            </span>
+                            <h6>Kevin Anderson</h6>
+                            <span>Filial</span>
+                            <a href="../admin/"><span>Admin filila</span></a>
                         </li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="{{ route('Kabinet') }}"><i class="bi bi-person"></i><span>Kabinet</span></a>
+                            <a class="dropdown-item d-flex align-items-center" href="./kabinet.html"><i class="bi bi-person"></i><span>Kabinet</span></a>
                         </li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
@@ -76,23 +98,30 @@
     <aside id="sidebar" class="sidebar">
         <ul class="sidebar-nav" id="sidebar-nav">
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ route('User') }}"><i class="bi bi-grid"></i><span>Bosh sahifa</span></a>
+                <a class="nav-link " href="index.html"><i class="bi bi-grid"></i><span>Bosh sahifa</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ route('Guruhlar') }}"><i class="bi bi-columns"></i><span>Guruhlarim</span></a>
+                <a class="nav-link collapsed" href="./tashrif.html"><i class="bi bi-people"></i><span>Tashriflar</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ route('Tolovlar') }}"><i class="bi bi-coin"></i><span>To'lovlar</span></a>
+                <a class="nav-link collapsed" href="./guruh.html"><i class="bi bi-people"></i><span>Guruhlar</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ route('Contact') }}"><i class="bi bi-chat-dots"></i><span>Bog'lanish</span></a>
+                <a class="nav-link collapsed" href="./moliya.html"><i class="bi bi-bar-chart"></i><span>Moliya</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="./techer.html"><i class="bi bi-person"></i><span>O'qituvchilar</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="./hodim.html"><i class="bi bi-person"></i><span>Hodimlar</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="./eslatma.html"><i class="bi bi-person"></i><span>Eslatmalar</span></a>
             </li>
         </ul>
     </aside>
   
-    
-
-        @yield('content')
+    @yield('content')
   
     <footer id="footer" class="footer">
         <div class="copyright">

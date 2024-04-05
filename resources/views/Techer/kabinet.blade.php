@@ -1,18 +1,20 @@
-@extends('User.layout.app')
-@section('title',"Kabinet")
+@extends('Techer.layout.home')
+@section('title','Kabinet')
 @section('content')
-<main id="main" class="main">
-    <div class="pagetitle">
-        <h1>Kabinet</h1>
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('User) }}">Bosh sahifa</a></li>
-                <li class="breadcrumb-item active">Kabinet</li>
-            </ol>
-        </nav>
-    </div>
 
-    <section class="section dashboard">
+    <main id="main" class="main">
+
+        <div class="pagetitle">
+            <h1>Kabinet</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('Techer')}}">Bosh sahifa</a></li>
+                    <li class="breadcrumb-item active">Kabinet</li>
+                </ol>
+            </nav>
+        </div>
+    
+        <section class="section dashboard">
         <div class="row">
             <div class="col-lg-8">
                 <div class="card">
@@ -63,5 +65,7 @@
         
                 
     </section>
-</main>
+
+    </main>
+
 @endsection
