@@ -95,5 +95,10 @@
   <script src="https://atko.tech/NiceAdmin/assets/vendor/tinymce/tinymce.min.js"></script>
   <script src="https://atko.tech/NiceAdmin/assets/vendor/php-email-form/validate.js"></script>
   <script src="https://atko.tech/NiceAdmin/assets/js/main.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.7/jquery.inputmask.min.js"></script>
+  <script>
+    $(".phone").inputmask("99 999 9999");
+  </script>
 </body>
 </html>

@@ -31,6 +31,7 @@ class User extends Authenticatable
         'about',
         'smm',
         'balans',
+        'admin_id'
     ];
 
     /**

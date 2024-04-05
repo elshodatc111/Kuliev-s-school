@@ -4,25 +4,32 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SuperAdmin\SuperAdminController;
 use App\Http\Controllers\SuperAdmin\KabinetController;
+use App\Http\Controllers\SuperAdmin\HodimlarController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Techer\TecherController;
 use App\Http\Controllers\User\UserController;
+
 Route::get('/', [HomeController::class, 'index']);
 
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-### SuperAdmin ###
+### Start SuperAdmin ###
 Route::get('/Superadmin/index', [SuperAdminController::class, 'index'])->name('SuperAdmin');
 Route::get('/Superadmin/filial', [SuperAdminController::class, 'filial'])->name('filial');
 Route::get('/Superadmin/hisobot', [SuperAdminController::class, 'hisobot'])->name('hisobot');
 Route::get('/Superadmin/statistika', [SuperAdminController::class, 'statistika'])->name('statistika');
-Route::get('/Superadmin/hodimlar', [SuperAdminController::class, 'hodimlar'])->name('hodimlar');
+    ###Hodimlar###
+Route::get('/Superadmin/hodimlar', [HodimlarController::class, 'hodimlar'])->name('hodimlar');
+Route::post('/Superadmin/hodimlar', [HodimlarController::class, 'hodimCreate'])->name('hodimCreate');
+Route::get('/Superadmin/del/{id}', [HodimlarController::class, 'HodimDeletes'])->name('HodimDeletes');
+Route::get('/Superadmin/pass/{id}', [HodimlarController::class, 'HodimPassword'])->name('HodimPassword');
+    ###Kabinet###
 Route::get('/Superadmin/kabinet', [KabinetController::class, 'kabinet'])->name('kabinet');
 Route::put('/Superadmin/kabinet/{id}', [KabinetController::class, 'kabinetUpdate'])->name('kabinetUpdate');
 Route::put('/Superadmin/kabinet/password/{id}', [KabinetController::class, 'kabinetPassword'])->name('kabinetPassword');
-
+### Emd SuperAdmin ###
 ### Admin ###
 Route::get('/Admin/index', [AdminController::class, 'index'])->name('Admin');
 

@@ -10,9 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
 class SuperAdminController extends Controller{
-    public function __construct(){
-        $this->middleware('auth');
-    }
+    
     public function index(){
         
         return view('SuperAdmin.index');
@@ -26,9 +24,8 @@ class SuperAdminController extends Controller{
     public function statistika(){
         return view('SuperAdmin.statistika');
     }
-    public function hodimlar(){
-        return view('SuperAdmin.hodimlar');
-    }
+
+
 
     
 }
