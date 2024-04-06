@@ -45,12 +45,12 @@ Route::put('/Superadmin/kabinet/password/{id}', [KabinetController::class, 'kabi
 Route::get('/Admin/index', [AdminController::class, 'index'])->name('Admin');
 Route::get('/Admin/admin/techer', [AdminTecherController::class, 'index'])->name('AdminTecher');
 Route::post('/Admin/admin/techer', [AdminTecherController::class, 'techerCreate'])->name('AdminTecherCreate');
-Route::post('/Admin/admin/update', [AdminTecherController::class, 'techerUpdate'])->name('AdminTecherUpdate');
-Route::post('/Admin/admin/update/password', [AdminTecherController::class, 'techerUpdatePassword'])->name('AdminTecherUpdatePassword');
+Route::post('/Admin/admin/techer/update', [AdminTecherController::class, 'techerUpdate'])->name('AdminTecherUpdate');
+Route::post('/Admin/admin/techer/update/password', [AdminTecherController::class, 'techerUpdatePassword'])->name('AdminTecherUpdatePassword');
 Route::get('/Admin/admin/techer/show/{id}', [AdminTecherController::class, 'techerShow'])->name('AdminTecherShow');
 Route::get('/Admin/admin/techer/delete/{id}', [AdminTecherController::class, 'techerDelete'])->name('AdminTecherDelete');
-Route::get('/Admin/kabinet', [HodimController::class, 'kabinet'])->name('adminkabinet');
-Route::get('/Admin/hodimlar', [HodimController::class, 'adminHodimlar'])->name('adminHodimlar');
+Route::get('/Admin/hodim/kabinet', [HodimController::class, 'kabinet'])->name('adminkabinet');
+Route::get('/Admin/hodim/', [HodimController::class, 'adminHodimlar'])->name('adminHodimlar');
 Route::get('/Admin/hodim/{id}', [HodimController::class, 'adminHodim'])->name('adminHodim');
 Route::get('/Admin/hodim/delete/{id}', [HodimController::class, 'adminHodimDelete'])->name('adminHodimDelete');
 Route::post('/Admin/hodim/create', [HodimController::class, 'adminCreateHodimlar'])->name('adminCreateHodimlar');
