@@ -14,7 +14,7 @@ class SendMessegeCreatTecher{
     }
 
     public function handle(AdminCreateTecher $event): void{
-        $text = $event->name." ".$event->filial." o'quv markazida o'qituvchi lavozimida ishga olindingiz.\nLogin: ".$event->login."\nParol::".$event->password;
+        $text = $event->name." ".$event->filial." o'quv markazida o'qituvchi lavozimida ishga olindingiz.\nLogin: ".$event->login."\nParol: ".$event->password;
         $eskiz_email = env('ESKIZ_UZ_EMAIL');
         $eskiz_password = env('ESKIZ_UZ_Password');
         $eskiz = new Eskiz($eskiz_email,$eskiz_password);

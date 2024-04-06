@@ -12,7 +12,7 @@ class SendMessegeHodimUpdatePassword{
         
     }
     public function handle(HodimUpdatePasswor $event): void{
-        $Text = "Sizning yangi parolingiz: ".$event->password;
+        $Text = "Sizning yangi parolingiz\nParol:".$event->password;
         $eskiz_email = env('ESKIZ_UZ_EMAIL');
         $eskiz_password = env('ESKIZ_UZ_Password');
         $eskiz = new Eskiz($eskiz_email,$eskiz_password);

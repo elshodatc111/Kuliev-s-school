@@ -28,14 +28,30 @@
                         <tr>
                             <th>#</th>
                             <th>O'qituvchilar</th>
-                            <th>Phone</th>
-                            <th>Aktiv guruhlari</th>
+                            <th>Telefon raqam</th>
+                            <th>Telefon raqam 2</th>
                             <th>Login</th>
                             <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
-                        
+                        @forelse($Techers as $item)
+                        <tr>
+                            <td>{{ $loop->index+1 }}</td>
+                            <td style="text-align:left">{{ $item->name }}</td>
+                            <td>{{ $item->phone }}</td>
+                            <td>{{ $item->phone2 }}</td>
+                            <td>{{ $item->email }}</td>
+                            <td>
+                                <a href="{{ route('AdminTecherShow',$item->id) }}" class="btn btn-primary py-0 px-1"><i class="bi bi-eye"></i></a>
+                                <a href="{{ route('AdminTecherDelete',$item->id) }}" class="btn btn-danger py-0 px-1"><i class="bi bi-trash"></i></a>
+                            </td>
+                        </tr>
+                        @empty
+                            <tr>
+                                <td colspan=6 class="text-center">O'qituvchi o'chirildi.</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
