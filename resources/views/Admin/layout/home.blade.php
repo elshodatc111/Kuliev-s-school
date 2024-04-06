@@ -113,19 +113,19 @@
                 <a class="nav-link collapsed" href="./tashrif.html"><i class="bi bi-people"></i><span>Tashriflar</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link collapsed" href="./guruh.html"><i class="bi bi-people"></i><span>Guruhlar</span></a>
+                <a class="nav-link collapsed" href="./guruh.html"><i class="bi bi-safe2"></i><span>Guruhlar</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link collapsed" href="./moliya.html"><i class="bi bi-bar-chart"></i><span>Moliya</span></a>
+                <a class="nav-link collapsed" href="./moliya.html"><i class="bi bi-pie-chart"></i><span>Moliya</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link collapsed" href="./techer.html"><i class="bi bi-person"></i><span>O'qituvchilar</span></a>
+                <a class="nav-link collapsed" href="{{ route('AdminTecher') }}"><i class="bi bi-easel"></i><span>O'qituvchilar</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ route('adminHodimlar') }}"><i class="bi bi-person"></i><span>Hodimlar</span></a>
+                <a class="nav-link collapsed" href="{{ route('adminHodimlar') }}"><i class="bi bi-person-workspace"></i><span>Hodimlar</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link collapsed" href="./eslatma.html"><i class="bi bi-person"></i><span>Eslatmalar</span></a>
+                <a class="nav-link collapsed" href="./eslatma.html"><i class="bi bi-messenger"></i><span>Eslatmalar</span></a>
             </li>
         </ul>
     </aside>

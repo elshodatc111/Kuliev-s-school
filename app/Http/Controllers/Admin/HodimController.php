@@ -44,7 +44,7 @@ class HodimController extends Controller
         $validate['filial_id'] = request()->cookie('filial_id');
         $User = User::create($validate);
         CreateHodim::dispatch($User->id);
-        return redirect()->back()->with('success', 'Yangi hodim qo\'shildi. Parol: '.$parol); 
+        return redirect()->back()->with('success', 'Yangi hodim qo\'shildi.'); 
     }
     public function adminHodimDelete($id){
         $User = User::find($id);

@@ -8,6 +8,7 @@ use App\Http\Controllers\SuperAdmin\HodimlarController;
 use App\Http\Controllers\SuperAdmin\FilialController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\HodimController;
+use App\Http\Controllers\Admin\AdminTecherController;
 use App\Http\Controllers\Techer\TecherController;
 use App\Http\Controllers\User\UserController;
 
@@ -42,6 +43,8 @@ Route::put('/Superadmin/kabinet/password/{id}', [KabinetController::class, 'kabi
 ### Emd SuperAdmin ###
 ### Admin ###
 Route::get('/Admin/index', [AdminController::class, 'index'])->name('Admin');
+Route::get('/Admin/admin/techer', [AdminTecherController::class, 'index'])->name('AdminTecher');
+Route::post('/Admin/admin/techer', [AdminTecherController::class, 'techerCreate'])->name('AdminTecherCreate');
 Route::get('/Admin/kabinet', [HodimController::class, 'kabinet'])->name('adminkabinet');
 Route::get('/Admin/hodimlar', [HodimController::class, 'adminHodimlar'])->name('adminHodimlar');
 Route::get('/Admin/hodim/{id}', [HodimController::class, 'adminHodim'])->name('adminHodim');
