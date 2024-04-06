@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Filial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 class HomeController extends Controller{
@@ -12,9 +12,14 @@ class HomeController extends Controller{
         if(Auth::user()->type=='SuperAdmin'){
             return redirect()->route('SuperAdmin');
         }elseif(Auth::user()->type=='Admin' OR Auth::user()->type=='Operator'){
+            $Filial = Filial::find(Auth::user()->filial_id);
+            if(empty($Filial)){
+                Auth::logout();
+                return redirect()->route('home');
+            }
             return redirect()->route('Admin')
                 ->withCookie('filial_id', Auth::user()->filial_id, 86400)
-                ->withCookie('filial_name', "Test Filial", 86400);
+                ->withCookie('filial_name', $Filial->filial_name, 86400);
         }elseif(Auth::user()->type=='Techer'){
             return redirect()->route('Techer');
         }elseif(Auth::user()->type=='User'){

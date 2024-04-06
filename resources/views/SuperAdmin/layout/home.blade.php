@@ -20,7 +20,6 @@
   <link href="https://atko.tech/NiceAdmin/assets/vendor/simple-datatables/style.css" rel="stylesheet">
   <link href="https://atko.tech/NiceAdmin/assets/css/style.css" rel="stylesheet">
 </head>
-
 <body>
 
   <header id="header" class="header fixed-top d-flex align-items-center">
@@ -109,6 +108,117 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.7/jquery.inputmask.min.js"></script>
   <script>
     $(".phone").inputmask("99 999 9999");
+    (function($, undefined) {
+        "use strict";
+        $(function() {
+            var $form1 = $( "#form1" );
+            var $form2 = $( "#form2" );
+            var $form3 = $( "#form3" );
+            var $form4 = $( "#form4" );
+            var $input1 = $form1.find( "#summa1" );
+            var $input2 = $form1.find( "#summa2" );
+            var $input3 = $form1.find( "#summa3" );
+            var $input11 = $form2.find( "#summa1" );
+            var $input22 = $form2.find( "#summa2" );
+            var $input33 = $form2.find( "#summa3" );
+            var $input111 = $form3.find( "#summa1" );
+            var $input222 = $form3.find( "#summa2" );
+            var $input333 = $form3.find( "#summa3" );
+            var $input1111 = $form4.find( "#summa1" );
+            var $input2222 = $form4.find( "#summa2" );
+            var $input3333 = $form4.find( "#summa3" );
+            $input1.on( "keyup", function( event ) {
+                var selection = window.getSelection().toString();
+                if ( selection !== '' ) {return;}
+                if ( $.inArray( event.keyCode, [38,40,37,39] ) !== -1 ) {return;}
+                var $this = $( this );
+                var input1 = $this.val();
+                var input1 = input1.replace(/[\D\s\._\-]+/g, "");
+                input1 = input1 ? parseInt( input1, 10 ) : 0;
+                $this.val( function() {return ( input1 === 0 ) ? "0" : input1.toLocaleString( "en-US" );} );
+            } );
+            $input2.on( "keyup", function( event ) {
+                var selection = window.getSelection().toString();
+                if ( selection !== '' ) {return;}
+                if ( $.inArray( event.keyCode, [38,40,37,39] ) !== -1 ) {return;}
+                var $this = $( this );
+                var input2 = $this.val();
+                var input2 = input2.replace(/[\D\s\._\-]+/g, "");
+                input2 = input2 ? parseInt( input2, 10 ) : 0;
+                $this.val( function() {return ( input2 === 0 ) ? "0" : input2.toLocaleString( "en-US" );} );
+            } );
+            $input3.on( "keyup", function( event ) {
+                var selection = window.getSelection().toString();
+                if ( selection !== '' ) {return;}
+                if ( $.inArray( event.keyCode, [38,40,37,39] ) !== -1 ) {return;}
+                var $this = $( this );
+                var input3 = $this.val();
+                var input3 = input3.replace(/[\D\s\._\-]+/g, "");
+                input3 = input3 ? parseInt( input3, 10 ) : 0;
+                $this.val( function() {return ( input3 === 0 ) ? "0" : input3.toLocaleString( "en-US" );} );
+            } );
+            $input11.on( "keyup", function( event ) {
+                var selection = window.getSelection().toString();
+                if ( selection !== '' ) {return;}
+                if ( $.inArray( event.keyCode, [38,40,37,39] ) !== -1 ) {return;}
+                var $this = $( this );
+                var input11 = $this.val();
+                var input11 = input11.replace(/[\D\s\._\-]+/g, "");
+                input11 = input11 ? parseInt( input11, 10 ) : 0;
+                $this.val( function() {return ( input11 === 0 ) ? "0" : input11.toLocaleString( "en-US" );} );
+            } );
+            $input22.on( "keyup", function( event ) {
+                var selection = window.getSelection().toString();
+                if ( selection !== '' ) {return;}
+                if ( $.inArray( event.keyCode, [38,40,37,39] ) !== -1 ) {return;}
+                var $this = $( this );
+                var input22 = $this.val();
+                var input22 = input22.replace(/[\D\s\._\-]+/g, "");
+                input22 = input22 ? parseInt( input22, 10 ) : 0;
+                $this.val( function() {return ( input22 === 0 ) ? "0" : input22.toLocaleString( "en-US" );} );
+            } );
+            $input33.on( "keyup", function( event ) {
+                var selection = window.getSelection().toString();
+                if ( selection !== '' ) {return;}
+                if ( $.inArray( event.keyCode, [38,40,37,39] ) !== -1 ) {return;}
+                var $this = $( this );
+                var input33 = $this.val();
+                var input33 = input33.replace(/[\D\s\._\-]+/g, "");
+                input33 = input33 ? parseInt( input33, 10 ) : 0;
+                $this.val( function() {return ( input33 === 0 ) ? "0" : input33.toLocaleString( "en-US" );} );
+            } );
+            $input1111.on( "keyup", function( event ) {
+                var selection = window.getSelection().toString();
+                if ( selection !== '' ) {return;}
+                if ( $.inArray( event.keyCode, [38,40,37,39] ) !== -1 ) {return;}
+                var $this = $( this );
+                var input1111 = $this.val();
+                var input1111 = input1111.replace(/[\D\s\._\-]+/g, "");
+                input1111 = input1111 ? parseInt( input1111, 10 ) : 0;
+                $this.val( function() {return ( input1111 === 0 ) ? "0" : input1111.toLocaleString( "en-US" );} );
+            } );
+            $input2222.on( "keyup", function( event ) {
+                var selection = window.getSelection().toString();
+                if ( selection !== '' ) {return;}
+                if ( $.inArray( event.keyCode, [38,40,37,39] ) !== -1 ) {return;}
+                var $this = $( this );
+                var input2222 = $this.val();
+                var input2222 = input2222.replace(/[\D\s\._\-]+/g, "");
+                input2222 = input2222 ? parseInt( input2222, 10 ) : 0;
+                $this.val( function() {return ( input2222 === 0 ) ? "0" : input2222.toLocaleString( "en-US" );} );
+            } );
+            $input3333.on( "keyup", function( event ) {
+                var selection = window.getSelection().toString();
+                if ( selection !== '' ) {return;}
+                if ( $.inArray( event.keyCode, [38,40,37,39] ) !== -1 ) {return;}
+                var $this = $( this );
+                var input3333 = $this.val();
+                var input3333 = input3333.replace(/[\D\s\._\-]+/g, "");
+                input3333 = input3333 ? parseInt( input3333, 10 ) : 0;
+                $this.val( function() {return ( input3333 === 0 ) ? "0" : input3333.toLocaleString( "en-US" );} );
+            } );
+        });
+    })(jQuery);
   </script>
 </body>
 </html>

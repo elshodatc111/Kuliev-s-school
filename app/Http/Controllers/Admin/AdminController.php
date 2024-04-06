@@ -26,7 +26,6 @@ class AdminController extends Controller
     }
     public function index(){
         $this->coocies();
-        
         return view('Admin.index');
     }
 }

@@ -28,8 +28,8 @@ class KabinetController extends Controller{
 
     public function kabinetPassword(Request $request, $id){
         $validated = $request->validate([
-            'pass0' => 'required', 'max:2',
-            'pass1' => 'required', 'max:8',
+            'pass0' => 'required', 'min:8',
+            'pass1' => 'required', 'min:8',
             'pass2' => 'required', 'min:8',
         ]);
         if($request->pass1 == $request->pass2){
