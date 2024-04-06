@@ -7,8 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 
-class AdminController extends Controller
-{
+class AdminController extends Controller{
     public function __construct(){
         $this->middleware('auth');
     }
@@ -28,4 +27,6 @@ class AdminController extends Controller
         $this->coocies();
         return view('Admin.index');
     }
+    
+
 }

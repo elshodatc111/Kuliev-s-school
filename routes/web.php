@@ -7,6 +7,7 @@ use App\Http\Controllers\SuperAdmin\KabinetController;
 use App\Http\Controllers\SuperAdmin\HodimlarController;
 use App\Http\Controllers\SuperAdmin\FilialController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\HodimController;
 use App\Http\Controllers\Techer\TecherController;
 use App\Http\Controllers\User\UserController;
 
@@ -41,13 +42,21 @@ Route::put('/Superadmin/kabinet/password/{id}', [KabinetController::class, 'kabi
 ### Emd SuperAdmin ###
 ### Admin ###
 Route::get('/Admin/index', [AdminController::class, 'index'])->name('Admin');
-
+Route::get('/Admin/kabinet', [HodimController::class, 'kabinet'])->name('adminkabinet');
+Route::get('/Admin/hodimlar', [HodimController::class, 'adminHodimlar'])->name('adminHodimlar');
+Route::get('/Admin/hodim/{id}', [HodimController::class, 'adminHodim'])->name('adminHodim');
+Route::get('/Admin/hodim/delete/{id}', [HodimController::class, 'adminHodimDelete'])->name('adminHodimDelete');
+Route::post('/Admin/hodim/create', [HodimController::class, 'adminCreateHodimlar'])->name('adminCreateHodimlar');
+Route::post('/Admin/hodim/clear/statistika', [HodimController::class, 'adminClearHodimlarStatistik'])->name('adminClearHodimlarStatistik');
+Route::post('/Admin/hodim/update/user', [HodimController::class, 'adminUpdateHodimlarUser'])->name('adminUpdateHodimlarUser');
+Route::post('/Admin/hodim/update/password', [HodimController::class, 'adminUpdateHodimlarPassword'])->name('adminUpdateHodimlarPassword');
+Route::post('/Admin/hodim/pay/ishhaqi', [HodimController::class, 'adminPayHodimlarIshHaqi'])->name('adminPayHodimlarIshHaqi');
+Route::get('/Admin/hodim/pay/ishhaqi/delete/{id}', [HodimController::class, 'adminPayHodimlarIshHaqiDelete'])->name('adminPayHodimlarIshHaqiDelete');
 ### Techer ###
 Route::get('/Techer/index', [TecherController::class, 'index'])->name('Techer');
 Route::get('/Techer/guruhlar', [TecherController::class, 'Guruhlar'])->name('TGuruhlar');
 Route::get('/Techer/tulovlar', [TecherController::class, 'Tolovlar'])->name('TTolovlar');
 Route::get('/Techer/kabinet', [TecherController::class, 'Kabinet'])->name('TKabinet');
-
 ### User ###
 Route::get('/User/index', [UserController::class, 'index'])->name('User');
 Route::get('/User/guruhlar', [UserController::class, 'Guruhlar'])->name('Guruhlar');

@@ -25,7 +25,7 @@
 
     <header id="header" class="header fixed-top d-flex align-items-center">
         <div class="d-flex align-items-center justify-content-between">
-            <a href="index.html" class="logo d-flex align-items-center">
+            <a href="{{ route('Admin') }}" class="logo d-flex align-items-center">
                 <span class="d-none d-lg-block w-100 text-center">MyCrm</span>
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -76,10 +76,16 @@
                                 <span>{{ request()->cookie('filial_name') }}</span>
                             @endif
                         </li>
+                        @if(Auth::user()->type != 'SuperAdmin')
                         <li><hr class="dropdown-divider"></li>
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="./kabinet.html"><i class="bi bi-person"></i><span>Kabinet</span></a>
+                            <a class="dropdown-item d-flex align-items-center" 
+                                href="{{ route('adminkabinet')}}">
+                                <i class="bi bi-person"></i>
+                                <span>Kabinet</span>
+                            </a>
                         </li>
+                        @endif
                         <li><hr class="dropdown-divider"></li>
                         <li>
                             <a class="dropdown-item" href="{{ route('logout') }}"
@@ -101,7 +107,7 @@
     <aside id="sidebar" class="sidebar">
         <ul class="sidebar-nav" id="sidebar-nav">
             <li class="nav-item">
-                <a class="nav-link " href="index.html"><i class="bi bi-grid"></i><span>Bosh sahifa</span></a>
+                <a class="nav-link collapsed" href="{{ route('Admin') }}"><i class="bi bi-grid"></i><span>Bosh sahifa</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="./tashrif.html"><i class="bi bi-people"></i><span>Tashriflar</span></a>
@@ -116,7 +122,7 @@
                 <a class="nav-link collapsed" href="./techer.html"><i class="bi bi-person"></i><span>O'qituvchilar</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link collapsed" href="./hodim.html"><i class="bi bi-person"></i><span>Hodimlar</span></a>
+                <a class="nav-link collapsed" href="{{ route('adminHodimlar') }}"><i class="bi bi-person"></i><span>Hodimlar</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="./eslatma.html"><i class="bi bi-person"></i><span>Eslatmalar</span></a>

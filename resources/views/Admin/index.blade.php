@@ -8,7 +8,7 @@
     <h1>Bosh sahifa</h1>
     <nav>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('Admin') }}">Dashboard</a></li>
             <li class="breadcrumb-item active">Bosh sahifa</li>
         </ol>
     </nav>
