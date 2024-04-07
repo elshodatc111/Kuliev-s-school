@@ -10,7 +10,7 @@ class GuruhTime extends Model
     use HasFactory;
     protected $fillable = [
         'filial_id',
-        'guruh_id',
+        'room_id',
         'dates',
         'times',
     ];

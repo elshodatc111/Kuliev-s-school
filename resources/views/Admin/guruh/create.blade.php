@@ -35,7 +35,7 @@
                 @elseif (Session::has('error'))
                     <div class="alert alert-danger">{{Session::get('error') }}</div>
                 @endif
-                <form action="{{ route('AdminGuruhCreate1') }}" method="post">
+                <form action="{{ route('AdminGuruhCreate1') }}" method="post" id="form1">
                     @csrf 
                     <div class="row">
                         <div class="col-lg-6">
@@ -57,20 +57,33 @@
                                     <label for="hafta_kun" style="text-align:left;width:100%" class="mt-2">Hafta kunlari</label>
                                     <select name="hafta_kun" class="form-select" required>
                                         <option value="">Tanlang</option>
-                                        <option value="juft">Toq kunlar</option>
-                                        <option value="toq">Juft kunlar</option>
+                                        <option value="juft">Juft kunlar</option>
+                                        <option value="toq">Toq kunlar</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <label for="" style="text-align:left;width:100%">Dars xonasi</label>
-                            <select name="room_id" class="form-select" required>
-                                <option value="">Tanlang</option>
-                                @foreach($Room as $item)
-                                    <option value="{{ $item->id }}">{{ $item->room_name }}</option>
-                                @endforeach
-                            </select>
+                            <div class="row">
+                                <div class="col-6">
+                                    <label for="" style="text-align:left;width:100%">Dars xonasi</label>
+                                    <select name="room_id" class="form-select" required>
+                                        <option value="">Tanlang</option>
+                                        @foreach($Room as $item)
+                                            <option value="{{ $item->id }}">{{ $item->room_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-6">
+                                    <label for="cours_id" style="text-align:left;width:100%">Guruh uchun kurs</label>
+                                    <select name="cours_id" class="form-select" required>
+                                        <option value="">Tanlang</option>
+                                        @foreach($Cours as $item)
+                                        <option value="{{ $item->id }}">{{ $item->cours_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                             <label for="techer_id" style="text-align:left;width:100%" class="mt-2">Guruh o'qituvchisi</label>
                             <select name="techer_id" class="form-select" required>
                                 <option value="">Tanlang</option>
@@ -78,13 +91,17 @@
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
                                 @endforeach
                             </select>
-                            <label for="cours_id" style="text-align:left;width:100%" class="mt-2">Guruh uchun kurs</label>
-                            <select name="cours_id" class="form-select" required>
-                                <option value="">Tanlang</option>
-                                @foreach($Cours as $item)
-                                <option value="{{ $item->id }}">{{ $item->cours_name }}</option>
-                                @endforeach
-                            </select>
+                            <div class="row">
+                                <div class="col-6">
+                                    <label for="techer_price" class="pt-2">O'qituvchiga to'lov</label>
+                                    <input type="text" name="techer_price" class="form-control" id="summa1" required>
+                                </div>
+                                <div class="col-6">
+                                    <label for="techer_bonus" class="pt-2">O'qituvchiga bonus</label>
+                                    <input type="text" name="techer_bonus" class="form-control" id="summa2" required>
+                                </div>
+                            </div>
+                            
                         </div>
                         <div class="col-12">
                             <button type="submit" class="btn btn-primary w-50 mt-2">Kiyingi</button>

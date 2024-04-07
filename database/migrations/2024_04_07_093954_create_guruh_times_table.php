@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('guruh_times', function (Blueprint $table) {
             $table->id();
             $table->integer('filial_id');
-            $table->integer('guruh_id');
+            $table->integer('room_id');
             $table->string('dates');
             $table->string('times');
             $table->timestamps();

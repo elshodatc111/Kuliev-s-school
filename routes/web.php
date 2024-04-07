@@ -46,9 +46,11 @@ Route::put('/Superadmin/kabinet/password/{id}', [KabinetController::class, 'kabi
 ### Admin ###
 Route::get('/Admin/index', [AdminController::class, 'index'])->name('Admin');
 Route::get('/Admin/guruh', [AdminGuruhController::class, 'index'])->name('AdminGuruh');
+Route::get('/Admin/guruh/show/{id}', [AdminGuruhController::class, 'show'])->name('AdminGuruhShow');
 Route::get('/Admin/guruh/end', [AdminGuruhController::class, 'endGuruh'])->name('AdminGuruhEnd');
 Route::get('/Admin/guruh/create', [AdminGuruhController::class, 'CreateGuruh'])->name('AdminGuruhCreate');
-Route::post('/Admin/guruh/create', [AdminGuruhController::class, 'CreateGuruh1'])->name('AdminGuruhCreate1');
+Route::post('/Admin/guruh/create1', [AdminGuruhController::class, 'CreateGuruh1'])->name('AdminGuruhCreate1');
+Route::post('/Admin/guruh/create2', [AdminGuruhController::class, 'CreateGuruh2'])->name('AdminGuruhCreate2');
 
 Route::get('/Admin/admin/techer', [AdminTecherController::class, 'index'])->name('AdminTecher');
 Route::post('/Admin/admin/techer', [AdminTecherController::class, 'techerCreate'])->name('AdminTecherCreate');
