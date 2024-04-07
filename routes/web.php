@@ -48,7 +48,8 @@ Route::get('/Admin/index', [AdminController::class, 'index'])->name('Admin');
 Route::get('/Admin/guruh', [AdminGuruhController::class, 'index'])->name('AdminGuruh');
 Route::get('/Admin/guruh/end', [AdminGuruhController::class, 'endGuruh'])->name('AdminGuruhEnd');
 Route::get('/Admin/guruh/create', [AdminGuruhController::class, 'CreateGuruh'])->name('AdminGuruhCreate');
-Route::get('/Admin/guruh', [AdminGuruhController::class, 'index'])->name('AdminGuruh');
+Route::post('/Admin/guruh/create', [AdminGuruhController::class, 'CreateGuruh1'])->name('AdminGuruhCreate1');
+
 Route::get('/Admin/admin/techer', [AdminTecherController::class, 'index'])->name('AdminTecher');
 Route::post('/Admin/admin/techer', [AdminTecherController::class, 'techerCreate'])->name('AdminTecherCreate');
 Route::post('/Admin/admin/techer/update', [AdminTecherController::class, 'techerUpdate'])->name('AdminTecherUpdate');
