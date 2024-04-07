@@ -5,8 +5,10 @@ namespace App\Http\Controllers\SuperAdmin;
 use App\Models\User;
 use App\Models\Filial;
 use App\Models\Room;
+use App\Models\Cours;
 use App\Models\TulovSetting;
 use App\Models\FilialKassa;
+use App\Events\CreateFilial;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -46,7 +48,8 @@ class FilialController extends Controller{
             $TulovSetting[$key]['chegirma'] = number_format(($item->chegirma), 0, '.', ' ');
             $TulovSetting[$key]['admin_chegirma'] = number_format(($item->admin_chegirma), 0, '.', ' ');
         }
-        return view('SuperAdmin.filialshow',compact('Filial','Room','TulovSetting'));
+        $Cours = Cours::where('filial_id',$id)->get();
+        return view('SuperAdmin.filialshow',compact('Filial','Room','TulovSetting','Cours'));
     }
     public function roomcreate(Request $request){
         $validated = $request->validate([
@@ -82,5 +85,13 @@ class FilialController extends Controller{
         $TulovSetting->status = 'false';
         $TulovSetting->save();
         return redirect()->back()->with('success', 'To\'lov sozlamasi o\'chirildi.');
+    }
+    public function filialCoursCreate(Request $request){
+        $validated = $request->validate([
+            'filial_id' => 'required',
+            'cours_name' => 'required'
+        ]);
+        Cours::create($validated);
+        return redirect()->back()->with('success', 'Yangi kurs kiritildi.');
     }
 }

@@ -8,6 +8,7 @@ use App\Http\Controllers\SuperAdmin\HodimlarController;
 use App\Http\Controllers\SuperAdmin\FilialController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\HodimController;
+use App\Http\Controllers\Admin\AdminGuruhController;
 use App\Http\Controllers\Admin\AdminTecherController;
 use App\Http\Controllers\Techer\TecherController;
 use App\Http\Controllers\User\UserController;
@@ -31,6 +32,7 @@ Route::get('/Superadmin/setting/tulov/deleted/{id}', [FilialController::class, '
 Route::post('/Superadmin/setting/tulov/create', [FilialController::class, 'tulovSettingCreate'])->name('tulovSettingCreate');
 Route::post('/Superadmin/room/create', [FilialController::class, 'roomcreate'])->name('roomcreate');
 Route::post('/Superadmin/filial', [FilialController::class, 'filialcreate'])->name('filialcreate');
+Route::post('/Superadmin/cours/create', [FilialController::class, 'filialCoursCreate'])->name('filialCoursCreate');
     ###Hodimlar###
 Route::get('/Superadmin/hodimlar', [HodimlarController::class, 'hodimlar'])->name('hodimlar');
 Route::post('/Superadmin/hodimlar', [HodimlarController::class, 'hodimCreate'])->name('hodimCreate');
@@ -43,6 +45,10 @@ Route::put('/Superadmin/kabinet/password/{id}', [KabinetController::class, 'kabi
 ### Emd SuperAdmin ###
 ### Admin ###
 Route::get('/Admin/index', [AdminController::class, 'index'])->name('Admin');
+Route::get('/Admin/guruh', [AdminGuruhController::class, 'index'])->name('AdminGuruh');
+Route::get('/Admin/guruh/end', [AdminGuruhController::class, 'endGuruh'])->name('AdminGuruhEnd');
+Route::get('/Admin/guruh/create', [AdminGuruhController::class, 'CreateGuruh'])->name('AdminGuruhCreate');
+Route::get('/Admin/guruh', [AdminGuruhController::class, 'index'])->name('AdminGuruh');
 Route::get('/Admin/admin/techer', [AdminTecherController::class, 'index'])->name('AdminTecher');
 Route::post('/Admin/admin/techer', [AdminTecherController::class, 'techerCreate'])->name('AdminTecherCreate');
 Route::post('/Admin/admin/techer/update', [AdminTecherController::class, 'techerUpdate'])->name('AdminTecherUpdate');

@@ -113,7 +113,7 @@
                 <a class="nav-link collapsed" href="./tashrif.html"><i class="bi bi-people"></i><span>Tashriflar</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link collapsed" href="./guruh.html"><i class="bi bi-safe2"></i><span>Guruhlar</span></a>
+                <a class="nav-link collapsed" href="{{ route('AdminGuruh') }}"><i class="bi bi-safe2"></i><span>Guruhlar</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="./moliya.html"><i class="bi bi-pie-chart"></i><span>Moliya</span></a>

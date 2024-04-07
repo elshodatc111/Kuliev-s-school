@@ -57,7 +57,7 @@
     </div>
     <div class="row">
         <div class="col-lg-6">
-            <div class="card">
+            <div class="card" style="min-height:300px;">
                 <div class="card-body text-center">
                     <h5 class="card-title mb-0">Filial xonalari</span></h5>
                     <div class="table-responsive">
@@ -103,7 +103,7 @@
             </div>
         </div>
         <div class="col-lg-6">
-            <div class="card">
+            <div class="card" style="min-height:300px;">
                 <div class="card-body text-center">
                     <h5 class="card-title mb-0">To'lov sozlamalari</span></h5>
                     <div class="table-responsive">
@@ -153,6 +153,51 @@
                             </div>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title mb-0">Filial kurslari</span></h5>
+                        <table class="table table-bordered text-center">
+                            <tr>
+                                <th>#</th>
+                                <th>Kurs nomi</th>
+                                <th>Status</th>
+                            </tr>
+                            @forelse($Cours as $item)
+                            <tr>
+                                <td>{{ $loop->index+1 }}</td>
+                                <td>{{ $item->cours_name }}</td>
+                                <td>
+                                    <a href="" class="btn btn-primary px-1 py-0"><i class="bi bi-eye"></i></a>
+                                    <a href="" class="btn btn-danger px-1 py-0"><i class="bi bi-trash"></i></a>
+                                </td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan=3 class='text-center'>Kurslar mavjud emas.</td>
+                            </tr>
+                            @endforelse
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title mb-0">Yangi kurs qo'shish</span></h5>
+                        <form action="{{ route('filialCoursCreate') }}" method="post">
+                            @csrf
+                            <label for="cours_name">Kursning nomi</label>
+                            <input type="hidden" name="filial_id" value="{{ $Filial->id }}">
+                            <input type="text" name="cours_name" required class="form-control">
+                            <button class="btn btn-primary mt-2 w-100">Kursni saqlash</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
