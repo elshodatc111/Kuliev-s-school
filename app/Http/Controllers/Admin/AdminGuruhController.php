@@ -9,14 +9,52 @@ use App\Models\Cours;
 use App\Models\GuruhTime;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class AdminGuruhController extends Controller{
-    
+    public function __construct(){
+        $this->middleware('auth');
+    }
     public function index(){
-        return view('Admin.guruh.index');
+        $EndData = date("Y-m-d",strtotime('-15 day',strtotime(date('Y-m-d'))));
+        $Guruh = Guruh::where('filial_id',request()->cookie('filial_id'))->where('guruh_end','>=',$EndData)->get();
+        $Guruhlar = array();
+        foreach($Guruh as $key=> $item){
+            $Guruhlar[$key]['guruh_name'] = $item->guruh_name;
+            $Guruhlar[$key]['guruh_start'] = $item->guruh_start;
+            $Guruhlar[$key]['guruh_end'] = $item->guruh_end;
+            if($item->guruh_start<=date("Y-m-d") AND $item->guruh_end>=date("Y-m-d")){
+                $Guruhlar[$key]['guruh'] = 0;
+            }elseif($item->guruh_start>date("Y-m-d")){
+                $Guruhlar[$key]['guruh'] = 1;
+            }else{
+                $Guruhlar[$key]['guruh'] = -1;
+            }
+            $Guruhlar[$key]['talabalar'] = 0;
+            $Guruhlar[$key]['id'] = $item->id;
+        }
+        return view('Admin.guruh.index',compact('Guruhlar'));
     }
     public function endGuruh(){
-        return view('Admin.guruh.end');
+        $EndData = date("Y-m-d");
+        $Guruh = Guruh::where('filial_id',request()->cookie('filial_id'))->where('guruh_end','<',$EndData)->get();
+        $Guruhlar = array();
+        foreach($Guruh as $key=> $item){
+            $Guruhlar[$key]['guruh_name'] = $item->guruh_name;
+            $Guruhlar[$key]['guruh_start'] = $item->guruh_start;
+            $Guruhlar[$key]['guruh_end'] = $item->guruh_end;
+            if($item->guruh_start<=date("Y-m-d") AND $item->guruh_end>=date("Y-m-d")){
+                $Guruhlar[$key]['guruh'] = 0;
+            }elseif($item->guruh_start>date("Y-m-d")){
+                $Guruhlar[$key]['guruh'] = 1;
+            }else{
+                $Guruhlar[$key]['guruh'] = -1;
+            }
+            $Guruhlar[$key]['talabalar'] = 0;
+            $Guruhlar[$key]['id'] = $item->id;
+        }
+        return view('Admin.guruh.end',compact('Guruhlar'));
     }
     public function CreateGuruh(){
         $TulovSetting = TulovSetting::where('filial_id',request()->cookie('filial_id'))->get();
@@ -166,10 +204,12 @@ class AdminGuruhController extends Controller{
             'guruh_end' => ['required'],
             'guruh_vaqt' => ['required'],
         ]);
+        $validate['admin_id'] = Auth::user()->id;
         $Guruh = Guruh::create($validate);
+        $GuruhID = $Guruh->id;
         $Kunlar = array();
         $Kunlar['date0'] = $request->date0;
-        $Kunlar['date2'] = $request->date2;
+        $Kunlar['date1'] = $request->date1;
         $Kunlar['date2'] = $request->date2;
         $Kunlar['date3'] = $request->date3;
         $Kunlar['date4'] = $request->date4;
@@ -185,14 +225,71 @@ class AdminGuruhController extends Controller{
             GuruhTime::create([
                 'filial_id'=>$request->filial_id,
                 'room_id'=>$request->room_id,
+                'guruh_id'=>$GuruhID,
                 'dates'=>$value,
                 'times'=>$request->guruh_vaqt,
             ]);
         }
         return redirect()->route('AdminGuruhShow',$Guruh->id); 
     }
+    public function GuruhAbout($id){
+        $Guruhlar = Guruh::find($id);
+        $Guruh = array();
+        $Guruh['guruh_name'] = $Guruhlar->guruh_name;
+        $Guruh['guruh_price'] = number_format(($Guruhlar->guruh_price), 0, '.', ' ');
+        $Guruh['techer_price'] = number_format(($Guruhlar->techer_price), 0, '.', ' ');
+        $Guruh['techer_bonus'] = number_format(($Guruhlar->techer_bonus), 0, '.', ' ');
+        $Guruh['guruh_start'] = $Guruhlar->guruh_start;
+        $Guruh['guruh_end'] = $Guruhlar->guruh_end;
+        $Guruh['guruh_vaqt'] = $Guruhlar->guruh_vaqt;
+        $Guruh['admin_id'] = User::find($Guruhlar->admin_id)->email;
+        $Guruh['techer_id'] = User::find($Guruhlar->techer_id)->name;
+        $Guruh['created_at'] = $Guruhlar->created_at;
+        $Guruh['updated_at'] = $Guruhlar->updated_at;
+        $Guruh['cours_id'] = Cours::find($Guruhlar->cours_id)->cours_name;
+        $Guruh['room_id'] = Room::find($Guruhlar->room_id)->room_name;
+        $Guruh['id'] = $Guruhlar->id;
+        switch ($Guruhlar->guruh_vaqt) {
+            case 1:
+                $Guruh['guruh_vaqt'] = '08:00-09:30';
+                break;
+            case 2:
+                $Guruh['guruh_vaqt'] = '09:30-11:00';
+                break;
+            case 3:
+                $Guruh['guruh_vaqt'] = '11:00-12:30';
+            break;
+            case 4:
+                $Guruh['guruh_vaqt'] = '12:30-14:00';
+                break;
+            case 5:
+                $Guruh['guruh_vaqt'] = '14:00-15:30';
+                break;
+            case 6:
+                $Guruh['guruh_vaqt'] = '15:30-17:00';
+                break;
+            case 7:
+                $Guruh['guruh_vaqt'] = '17:00-18:30';
+                break;
+            case 8:
+                $Guruh['guruh_vaqt'] = '18:30-20:00';
+                break;
+            case 9:
+                $Guruh['guruh_vaqt'] = '20:00-21:30';
+                break;
+        }
+        $Kunlar = GuruhTime::where('guruh_id',$Guruhlar->id)->get();
+        $Kun = array();
+        foreach ($Kunlar as $key => $value) {
+            $Kun[$key] = $value->dates;
+        }
+        $Guruh['Kunlar'] = $Kun;
+        return $Guruh;
+    }
     public function show($id){
-        dd(Guruh::find($id));
+        $Guruh = $this->GuruhAbout($id);
+        $Days = GuruhTime::where('guruh_id',$Guruh['id'])->get();
+        return view('Admin.guruh.show',compact('Guruh','Days'));
     }
 
 }

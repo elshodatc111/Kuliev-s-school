@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('guruh_start');
             $table->string('guruh_end')->nullable();
             $table->string('guruh_vaqt');
+            $table->string('admin_id');
             $table->timestamps();
         });
     }

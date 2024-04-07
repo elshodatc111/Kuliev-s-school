@@ -23,5 +23,6 @@ class Guruh extends Model
         'guruh_start',
         'guruh_end',
         'guruh_vaqt',
+        'admin_id'
     ];
 }

@@ -19,6 +19,7 @@
 @elseif (Session::has('error'))
     <div class="alert alert-danger">{{Session::get('error') }}</div>
 @endif
+                guruhdagi talabalar soni
 <section class="section dashboard">
     <div class="card info-card sales-card">
         <div class="card-body text-center pt-3">
@@ -34,7 +35,40 @@
                 </li>
             </ul>
             <div>
-                Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus.
+                <div class="table-responsive">
+                    <table class="table datatable text-center table-hover" style="font-size:14px;">
+                        <thead>
+                            <tr>
+                                <th class="text-center">#</th>
+                                <th class="text-center">Guruh</th>
+                                <th class="text-center">Boshlanish vaqti</th>
+                                <th class="text-center">Yakunlanish vaqti</th>
+                                <th class="text-center">Talabalar</th>
+                                <th class="text-center">Guruh holati</th>
+                                <th class="text-center">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($Guruhlar as $item)
+                            <tr>
+                                <td>{{ $loop->index+1 }}</td>
+                                <td style="text-align:left">{{ $item['guruh_name'] }}</td>
+                                <td>{{ $item['guruh_start'] }}</td>
+                                <td>{{ $item['guruh_end'] }}</td>
+                                <td>{{ $item['talabalar'] }}</td>
+                                <td>
+                                    <span class="bg-danger text-white px-1" style="border-radius:5px">YAKUNLADNI</span>
+                                </td>
+                                <td>
+                                    <a href="{{ route('AdminGuruhShow',$item['id']) }}" class="btn btn-primary px-1 py-0"><i class="bi bi-eye"></i></a>
+                                </td>
+                            </tr>
+                            @empty
+
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
