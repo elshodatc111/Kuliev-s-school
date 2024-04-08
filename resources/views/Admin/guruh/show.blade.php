@@ -102,16 +102,126 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-3 col-6 pt-lg-0 pt-1">
-                            <button class="btn btn-primary w-100" style="font-size:14px;"><i class="bi bi-clock"></i> Eslatma Saqlash</button>
+                            <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#esltama" style="font-size:14px;"><i class="bi bi-clock"></i> Eslatma Saqlash</button>
                         </div>
                         <div class="col-lg-3 col-6 pt-lg-0 pt-1">
-                            <button class="btn btn-primary w-100" style="font-size:14px;"><i class="bi bi-messenger"></i> SMS yuborish</button>
+                            <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#alluserSendMessege" style="font-size:14px;"><i class="bi bi-messenger"></i> SMS yuborish</button>
                         </div>
                         <div class="col-lg-3 col-6 pt-lg-0 pt-1">
-                            <button class="btn btn-primary w-100" style="font-size:14px;"><i class="bi bi-messenger"></i> Qarzdorlarga SMS</button>
+                            <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#GuruhDebetUserSendMessege" style="font-size:14px;"><i class="bi bi-messenger"></i> Qarzdorlarga SMS</button>
                         </div>
                         <div class="col-lg-3 col-6 pt-lg-0 pt-1">
-                            <button class="btn btn-danger w-100" style="font-size:14px;"><i class="bi bi-trash"></i> Talaba o'chirish</button>
+                            @if(Auth::user()->type!="Operator")
+                            <button class="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#GuruhDeleteUser" style="font-size:14px;"><i class="bi bi-trash"></i> Talaba o'chirish</button>
+                            @endif
+                        </div>
+                        <!-- Guruh uchun eslatma qoldirish -->
+                        <div class="modal fade" id="esltama" tabindex="-1">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title w-100 text-center">Guruh uchun eslatma qoldirish.</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="" method="post">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <textarea name="" placeholder="Eslatma matni..." required class="form-control mb-3"></textarea>
+                                                </div>
+                                                <div class="col-6">
+                                                    <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilisk</button>
+                                                </div>
+                                                <div class="col-6">
+                                                    <button type="submit" class="btn btn-success w-100">Eslatma qoldirish</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Guruh Talabalariga SMS yuborish -->
+                        <div class="modal fade" id="alluserSendMessege" tabindex="-1">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title w-100 text-center">Guruh talabalariga sms yuborish.</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="" method="post">
+                                            <div class="row px-3">
+                                                <div class="form-check form-switch my-1">
+                                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                                                    <label class="form-check-label w-100" style="text-align:left;" for="flexSwitchCheckDefault">Elshod Musurmonov</label>
+                                                </div>
+                                                <div class="form-check form-switch my-1">
+                                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked">
+                                                    <label class="form-check-label w-100" style="text-align:left;" for="flexSwitchCheckChecked">Dilshod Xolmurodov</label>
+                                                </div>
+                                                <textarea name="" placeholder="SMS matni..." required class="form-control my-3"></textarea>
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilisk</button>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <button type="submit" class="btn btn-success w-100">SMS yuborish</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Gurugdagi qarzdorlarga SMS yuborish -->
+                        <div class="modal fade" id="GuruhDebetUserSendMessege" tabindex="-1">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title w-100 text-center">Qarzdor talabalarga SMS yuborilsinmi?</h5>
+                                    </div>
+                                    <div class="modal-body text-center p-0">
+                                        <form action="#" method="post" class="p-0 m-0 w-100 py-2">
+                                            @csrf
+                                            <input type="hidden" name="user_id" value="#">
+                                            <button type="button" class="btn btn-secondary" style="width:47%;" data-bs-dismiss="modal">Bekor qilish</button>
+                                            <button type="submit66" class="btn btn-success" style="width:47%;">SMS yuborish</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Guruhdan talaba o'chirish -->
+                        <div class="modal fade" id="GuruhDeleteUser" tabindex="-1">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title w-100 text-center">Guruhdan talaba o'chirish.</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="" method="post" id="form1">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <label for="" class="mb-1">O'chiriladigan talabani tanlang</label>
+                                                    <select name="" class="form-select" required>
+                                                        <option value="">Tanlang...</option>
+                                                    </select>
+                                                    <label for="" class="mt-2 mb-1">Jarima Summasi</label>
+                                                    <input type="text" id="summa1" class="form-control" required>
+                                                    <label for="" class="mt-2 mb-1">Guruhdan o'chirish sababi</label>
+                                                    <textarea name="" placeholder="Sabab..." required class="form-control mb-3"></textarea>
+                                                </div>
+                                                <div class="col-6">
+                                                    <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilisk</button>
+                                                </div>
+                                                <div class="col-6">
+                                                    <button type="submit" class="btn btn-success w-100">Guruhdan o'chirish</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -323,8 +433,153 @@
     </div>
 
     <div class="text-center">
-        <button class="btn btn-danger" style="font-size:14px;"><i class="bi bi-trash"></i> Guruhni o'chirish</button>
-        <button class="btn btn-primary" style="font-size:14px;"><i class="bi bi-arrow-right-square"></i> Guruhni davom etish</button>
+        @if(Auth::user()->type!="Operator")
+        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteGuruh" style="font-size:14px;"><i class="bi bi-trash"></i> Guruhni o'chirish</button>
+        @endif
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#nextGuruh" style="font-size:14px;"><i class="bi bi-arrow-right-square"></i> Guruhni davom etish</button>
+    </div>
+    <!-- Guruhni davom ettirish -->
+    <div class="modal fade" id="nextGuruh" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Guruhni davom ettiritsh</h5>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="post" id="form4">
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <h5 class="card-title mt-0 pt-0">
+                                    Yangi guruh haqida ma`lumotlarini to'ldiring.
+                                </h5>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="guruh_name" required>
+                                    <label for="guruh_name">Yangi guruh nomi</label>
+                                </div>
+                                <div class="form-floating mt-2">
+                                    <select class="form-select" id="guruh_price" required>
+                                        <option value>Tanlang...</option>
+                                        <option value="1">1000000</option>
+                                        <option value="2">1000000</option>
+                                    </select>
+                                    <label for="guruh_price">Yangi guruh narxi</label>
+                                </div>
+                                <div class="form-floating mt-2">
+                                    <input type="date" class="form-control" id="dars_boshlanish_vaqti" required>
+                                    <label for="dars_boshlanish_vaqti">Dars boshlanish</label>
+                                </div>
+                                <div class="form-floating mt-2">
+                                    <select class="form-select" id="hafta_kuni" required>
+                                        <option value>Tanlang...</option>
+                                        <option value="1">Toq kunlar</option>
+                                        <option value="2">Juft kunlar</option>
+                                    </select>
+                                    <label for="hafta_kuni">Hafta kuni</label>
+                                </div>  
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-floating">
+                                    <select class="form-select" id="guruh_price" required>
+                                        <option value="">Tanlang...</option>
+                                    </select>
+                                    <label for="guruh_price">Dars xonasi</label>
+                                </div>
+                                <div class="form-floating mt-2">
+                                    <select class="form-select" id="hafta_kuni" required>
+                                        <option value>Tanlang...</option>
+                                        <option value="1">Toq kunlar</option>
+                                        <option value="2">Juft kunlar</option>
+                                    </select>
+                                    <label for="hafta_kuni">Guruh uchun kurs</label>
+                                </div>
+                                <div class="form-floating mt-2">
+                                    <select class="form-select" id="hafta_kuni" required>
+                                        <option value>Tanlang...</option>
+                                        <option value="1">Toq kunlar</option>
+                                        <option value="2">Juft kunlar</option>
+                                    </select>
+                                    <label for="hafta_kuni">Guruh o'qituvchisi</label>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-floating mt-2">
+                                            <input type="text" id="summa1" class="form-control" id="dars_boshlanish_vaqti" required>
+                                            <label for="dars_boshlanish_vaqti">O'qituvchiga to'lov</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-floating mt-2">
+                                            <input type="text" id="summa2" class="form-control" id="dars_boshlanish_vaqti" required>
+                                            <label for="dars_boshlanish_vaqti">O'qituvchiga bonus</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 row">
+                                <div class="col-12 text-center">
+                                    <h5 class="card-title">
+                                        Yangi guruhga qo'shiladigan talabalar.
+                                    </h5>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-check form-switch mt-1" style="text-align:left;">
+                                        <input class="form-check-input" type="checkbox" id="01011">
+                                        <label class="form-check-label w-100" for="01011">Elshod Musurmonov</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-check form-switch mt-1" style="text-align:left;">
+                                        <input class="form-check-input" type="checkbox" id="0101d1">
+                                        <label class="form-check-label w-100" for="0101d1">Elshod Musurmonov</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-check form-switch mt-1" style="text-align:left;">
+                                        <input class="form-check-input" type="checkbox" id="010sss11">
+                                        <label class="form-check-label w-100" for="010sss11">Elshod Musurmonov</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-check form-switch mt-1" style="text-align:left;">
+                                        <input class="form-check-input" type="checkbox" id="010sas11">
+                                        <label class="form-check-label w-100" for="010sas11">Elshod Musurmonov</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <hr>
+                            </div>
+                            <div class="col-6">
+                                <button type="button" class="btn btn-secondary my-2 w-100" data-bs-dismiss="modal">Bekor qilish</button>
+                            </div>
+                            <div class="col-6">
+                                <button type="button" class="btn btn-success my-2 w-100">Kiyingi</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Guruhni o'chirish -->
+    <div class="modal fade" id="deleteGuruh" tabindex="-1">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title w-100 text-center">Guruh o'chirilsinmi?</h5>
+                </div>
+                <div class="modal-body text-center p-0">
+                    <form action="#" method="post" class="p-0 m-0 w-100 py-2">
+                        @csrf
+                        <input type="hidden" name="user_id" value="#">
+                        <button type="button" class="btn btn-secondary" style="width:47%;" data-bs-dismiss="modal">Bekor qilish</button>
+                        <button type="submit66" class="btn btn-success" style="width:47%;">O'chirish</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
 </section>
