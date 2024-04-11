@@ -66,6 +66,52 @@ class AdminStudentController extends Controller{
         CreateTashrif::dispatch($id,$Phone,$password);
         return redirect()->route('Student')->with('success', 'Yangi tashrif qo\'shildi.'); 
     }
+    public function guruhPlus(Request $request){
+        $validate = $request->validate([
+            'user_id' => ['required', 'string', 'max:255'],
+            'guruh_id' => ['required', 'string', 'max:255'],
+            'commit_start' => ['required', 'string', 'max:255'],
+        ]);
+        $validate['filial_id'] = request()->cookie('filial_id');
+        $validate['status'] = 'true';
+        $validate['admin_id_start'] = Auth::user()->id;
+        $GuruhUser2 = GuruhUser::where('user_id',$request->user_id)->where('guruh_id',$request->guruh_id)->where('status','true')->get();
+        if(count($GuruhUser2)>0){
+            return redirect()->back()->with('error', 'Talaba siz tanlagan guruhda mavjud.'); 
+        }
+        $GuruhUser = GuruhUser::create($validate);
+        $Guruh = Guruh::where('id',$request->guruh_id)->first();
+        $Guruh_price = $Guruh->guruh_price;
+        $Balans = User::where('id',$request->user_id)->first()->balans;
+        if(empty($Balans)){
+            $Balans = 0;
+        }
+        $Summa = $Balans-$Guruh_price;
+        $User = User::find($request->user_id);
+        $User->update(['balans'=>$Summa]);
+        $UserHistory = UserHistory::create([
+            'filial_id'=>request()->cookie('filial_id'),
+            'user_id'=>$request->user_id,
+            'status'=>"Guruhga qo'shildi",
+            'type'=>$Guruh->guruh_name,
+            'summa'=>-$Guruh_price,
+            'xisoblash'=>$Balans."-".$Guruh_price."=".$Summa,
+            'balans'=>$Summa
+        ]);
+        return redirect()->back()->with('success', 'Talaba yangi guruhga qo\'shildi.'); 
+    }
+    public function update(Request $request){
+        $validate = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'phone' => ['required', 'string', 'max:255'],
+            'phone2' => ['required', 'string', 'max:255'],
+            'addres' => ['required', 'string', 'max:255'],
+            'tkun' => ['required', 'string', 'max:255'],
+            'about' => ['required', 'string', 'max:255']
+        ]);
+        $User = User::find($request->user_id)->update($validate);
+        return redirect()->back()->with('success', 'Talaba malumotlari yangilandi.'); 
+    }
     public function userAbout($id){
         $User = User::find($id);
         $Users = array();
@@ -101,44 +147,21 @@ class AdminStudentController extends Controller{
         $UserHistory = UserHistory::where('user_id',$id)->orderby('id','desc')->get();
         return $UserHistory;
     }
+    public function TalabaGuruhlari($id){
+        $GuruhUser = GuruhUser::where('user_id',$id)->get();
+        $result = array();
+        #dd($GuruhUser->guruh_id);
+        foreach($GuruhUser as $key => $item){
+            $result[$key]['guruh_name'] = Guruh::where('id',$item->guruh_id)->first()->guruh_name;
+        #dd($result);
+        }
+    }
     public function show($id){
         $Users = $this->userAbout($id);
         $Guruhs = $this->Guruhs($id);
         $userHistory = $this->userHistory($id);
-        return view('Admin.user.show',compact('Users','Guruhs','userHistory'));
+        $talaba_guruh = $this->TalabaGuruhlari($id);
+        return view('Admin.user.show',compact('Users','Guruhs','userHistory','talaba_guruh'));
     }
-    public function guruhPlus(Request $request){
-        $validate = $request->validate([
-            'user_id' => ['required', 'string', 'max:255'],
-            'guruh_id' => ['required', 'string', 'max:255'],
-            'commit_start' => ['required', 'string', 'max:255'],
-        ]);
-        $validate['filial_id'] = request()->cookie('filial_id');
-        $validate['status'] = 'true';
-        $validate['admin_id_start'] = Auth::user()->id;
-        $GuruhUser2 = GuruhUser::where('user_id',$request->user_id)->where('guruh_id',$request->guruh_id)->where('status','true')->get();
-        if(count($GuruhUser2)>0){
-            return redirect()->back()->with('error', 'Talaba siz tanlagan guruhda mavjud.'); 
-        }
-        $GuruhUser = GuruhUser::create($validate);
-        $Guruh = Guruh::where('id',$request->guruh_id)->first();
-        $Guruh_price = $Guruh->guruh_price;
-        $Balans = User::where('id',$request->user_id)->first()->balans;
-        if(empty($Balans)){
-            $Balans = 0;
-        }
-        $Summa = $Balans-$Guruh_price;
-        $User = User::find($request->user_id);
-        $User->update(['balans'=>$Summa]);
-        $UserHistory = UserHistory::create([
-            'filial_id'=>request()->cookie('filial_id'),
-            'user_id'=>$request->user_id,
-            'status'=>"Guruhga qo'shildi",
-            'type'=>$Guruh->guruh_name,
-            'summa'=>-$Guruh_price,
-            'xisoblash'=>$Balans."-".$Guruh_price."=".$Summa,
-            'balans'=>$Summa
-        ]);
-        return redirect()->back()->with('success', 'Talaba yangi guruhga qo\'shildi.'); 
-    }
+
 }

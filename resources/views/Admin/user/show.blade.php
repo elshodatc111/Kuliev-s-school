@@ -34,7 +34,7 @@
                                         <span class="badge text-dark">{{ $Users['phone'] }}</span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <b>Telefon Raqam:</b>
+                                        <b>Tanish Telefon Raqam:</b>
                                         <span class="badge text-dark">{{ $Users['phone2'] }}</span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -216,17 +216,52 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Talaba edit</h5>
+                    <h5 class="modal-title w-100 text-center">Talabani taxrirlash</h5>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="col-6">
-                            <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
+                    <form action="{{ route('AdminUserUpdate') }}" method="post">
+                        @csrf 
+                        <input type="hidden" name="user_id" value="{{ $Users['id'] }}">
+                        <label for="name" class="mb-1">Talaba FIO</label>
+                        <input type="text" name="name" class="form-control"  value="{{ $Users['name'] }}" required>
+                        <label for="phone" class="mt-2 mb-1">Telefon raqam</label>
+                        <input type="text" name="phone" class="form-control"  value="{{ $Users['phone'] }}" required>
+                        <label for="phone2" class="mt-2 mb-1">Tanish telefon raqami</label>
+                        <input type="text" name="phone2" class="form-control"  value="{{ $Users['phone2'] }}" required>
+                        <label for="addres" class="mt-2 mb-1">Yashash manzili</label>
+                        <select name="addres" class="form-select">
+                            <option value="">Tanlang</option>
+                            <option value="Qarshi shaxar">Qarshi shaxar</option>
+                            <option value="Qarshi tuman">Qarshi tuman</option>
+                            <option value="Shaxrisabz shaxar">Shaxrisabz shaxar</option>
+                            <option value="Shaxrisabz tuman">Shaxrisabz tuman</option>
+                            <option value="Guzor tuman">Guzor tuman</option>
+                            <option value="Nishon tuman">Nishon tuman</option>
+                            <option value="Koson tuman">Koson tuman</option>
+                            <option value="Kasbi tuman">Kasbi tuman</option>
+                            <option value="Muborak tuman">Muborak tuman</option>
+                            <option value="Mirishkor tuman">Mirishkor tuman</option>
+                            <option value="Yakkabog' tuman">Yakkabog' tuman</option>
+                            <option value="Qamashi tuman">Qamashi tuman</option>
+                            <option value="Chiroqchi tuman">Chiroqchi tuman</option>
+                            <option value="Ko'kdala tuman">Ko'kdala tuman</option>
+                            <option value="Kitob tuman">Kitob tuman</option>
+                            <option value="Dexqonobod tuman">Dexqonobod tuman</option>
+                            <option value="Boshqa tuman">Boshqa</option>
+                        </select>
+                        <label for="tkun" class="mt-2 mb-1">Tug'ilgan kuni</label>
+                        <input type="date" name="tkun" class="form-control"  value="{{ $Users['tkun'] }}" required>
+                        <label for="about" class="mt-2 mb-1">Talaba haqida</label>
+                        <input type="text" name="about" class="form-control mb-3"  value="{{ $Users['about'] }}" required>
+                        <div class="row">
+                            <div class="col-6">
+                                <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
+                            </div>
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-primary w-100">Yangilash</button>
+                            </div>
                         </div>
-                        <div class="col-6">
-                            <button type="button" class="btn btn-primary w-100">Yangilash</button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -388,12 +423,12 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>FIO</th>
-                                    <th>Manzil</th>
-                                    <th>Telefon raqam</th>
-                                    <th>Guruhlar</th>
-                                    <th>Ro'yhatdan o'tdi</th>
-                                    <th>Status</th>
+                                    <th>Guruh</th>
+                                    <th>Guruhga qo'shildi</th>
+                                    <th>Meneger</th>
+                                    <th>Qoshish haqida</th>
+                                    <th>Guruhdan o'chirildi</th>
+                                    <th>O'chirish haqida</th>
                                 </tr>
                             </thead>
                             <tbody>

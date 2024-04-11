@@ -53,6 +53,7 @@ Route::get('/Admin/student/pays', [AdminStudentController::class, 'pays'])->name
 Route::get('/Admin/student/create', [AdminStudentController::class, 'create'])->name('StudentCreate');
 Route::post('/Admin/student/story', [AdminStudentController::class, 'store'])->name('StudentCreateStore');
 Route::post('/Admin/guruh/guruh/plus', [AdminStudentController::class, 'guruhPlus'])->name('AdminUserGuruhPlus');
+Route::post('/Admin/student/update', [AdminStudentController::class, 'update'])->name('AdminUserUpdate');
 
 Route::get('/Admin/guruh', [AdminGuruhController::class, 'index'])->name('AdminGuruh');
 Route::get('/Admin/guruh/show/{id}', [AdminGuruhController::class, 'show'])->name('AdminGuruhShow');
