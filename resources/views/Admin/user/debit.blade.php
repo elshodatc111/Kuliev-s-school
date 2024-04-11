@@ -9,6 +9,7 @@
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('Admin') }}">Bosh sahifa</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('Student') }}">Talabalar</a></li>
             <li class="breadcrumb-item active">Qarzdorlar</li>
         </ol>
     </nav>
@@ -24,10 +25,10 @@
                 <div class="card-body pt-3">
                     <ul class="nav nav-tabs d-flex" id="myTabjustified" role="tablist">
                         <li class="nav-item flex-fill" role="presentation">
-                            <a href="{{ route('Student') }}" class="nav-link text-center text-center bg-success text-white w-100 active">Tashriflar</a>
+                            <a href="{{ route('Student') }}" class="nav-link text-center w-100">Tashriflar</a>
                         </li>
                         <li class="nav-item flex-fill" role="presentation">
-                            <a href="{{ route('StudentQarzdorlar') }}" class="nav-link w-100 text-center">Qarzdorlar</a>
+                            <a href="{{ route('StudentQarzdorlar') }}" class="nav-link bg-success text-white w-100 active text-center">Qarzdorlar</a>
                         </li>
                         <li class="nav-item flex-fill" role="presentation">
                             <a href="{{ route('StudentTulovlar') }}" class="nav-link text-center w-100">To'lovlar</a>
@@ -40,37 +41,37 @@
                         <div class="tab-pane fade show active" id="home-justified" role="tabpanel" aria-labelledby="home-tab">
                             <h5 class="card-title w-100 text-center py-1">Tashriflar</h5>
                             <div class="table-responsive">
-                                <table class="table datatable">
+                                <table class="table datatable" style="font-size:14px;">
                                     <thead>
                                         <tr>
                                             <th class="bg-primary text-white text-center">#</th>
                                             <th class="bg-primary text-white text-center">FIO</th>
                                             <th class="bg-primary text-white text-center">Manzil</th>
                                             <th class="bg-primary text-white text-center">Telefon raqam</th>
-                                            <th class="bg-primary text-white text-center">Guruhlar</th>
+                                            <th class="bg-primary text-white text-center">Qarzdorlik</th>
                                             <th class="bg-primary text-white text-center">Ro'yhatdan o'tdi</th>
                                             <th class="bg-primary text-white text-center">Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @forelse($User as $item)
                                         <tr>
-                                            <td class="text-center">1</td>
-                                            <td>Bo'sh</td>
-                                            <td>Bo'sh</td>
-                                            <td>Bo'sh</td>
-                                            <td>Bo'sh</td>
-                                            <td>Bo'sh</td>
-                                            <td>Bo'sh</td>
+                                            <td class="text-center">{{ $loop->index+1 }}</td>
+                                            <th>{{ $item->name }}</th>
+                                            <td>{{ $item->addres }}</td>
+                                            <td class="text-center">{{ $item->phone }}</td>
+                                            <td class="text-center">{{ $item->balans }}</td>
+                                            <td class="text-center">{{ $item->created_at }}</td>
+                                            <td class="text-center">
+                                                <a href="{{ route('StudentShow',$item->id) }}" class="btn btn-primary py-0 px-1">
+                                                    <i class="bi bi-eye"></i></a>
+                                            </td>
                                         </tr>
+                                        @empty
                                         <tr>
-                                            <td class="text-center">2</td>
-                                            <td>Bo'sh</td>
-                                            <td>Bo'sh</td>
-                                            <td>Bo'sh</td>
-                                            <td>Bo'sh</td>
-                                            <td>Bo'sh</td>
-                                            <td>Bo'sh</td>
+                                            <td colspan=7 class="text-center">Tashriflar mavjud emas</td>
                                         </tr>
+                                        @endforelse
                                     </tbody>
                                 </table>
                             </div>

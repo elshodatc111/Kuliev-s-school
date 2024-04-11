@@ -11,9 +11,7 @@ use mrmuminov\eskizuz\Eskiz;
 use mrmuminov\eskizuz\types\sms\SmsSingleSmsType;
 
 class NewHodimSendMessege{
-    public function __construct(){
-        //
-    }
+    public function __construct(){}
     public function handle(CreateHodim $event): void{
         $User = User::find($event->user_id);
         $Filial_Name = Filial::where('id',$User->filial_id)->first()->filial_name;

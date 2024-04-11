@@ -7,22 +7,10 @@ use App\Events\CreatIshHaqi;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Log;
-class IshHaqiFililaKassaUpdate
-{
-    /**
-     * Create the event listener.
-     */
-    public function __construct()
-    {
-        //
-    }
-
-    /**
-     * Handle the event.
-     */
+class IshHaqiFililaKassaUpdate{
+    public function __construct(){}
     public function handle(CreatIshHaqi $event): void{
         $type = $event->type;
-        Log::info($event->summa);
         $summa = intval($event->summa);
         $filial_id = $event->filial_id;
         $FilialKassa = FilialKassa::where('filial_id',$filial_id)->first();

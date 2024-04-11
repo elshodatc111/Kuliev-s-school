@@ -9,7 +9,7 @@
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('Admin') }}">Bosh sahifa</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('Admin') }}">Talabalar</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('Student') }}">Talabalar</a></li>
             <li class="breadcrumb-item active">Talaba</li>
         </ol>
     </nav>

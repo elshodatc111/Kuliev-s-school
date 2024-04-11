@@ -47,9 +47,11 @@ Route::put('/Superadmin/kabinet/password/{id}', [KabinetController::class, 'kabi
 ### Admin ###
 Route::get('/Admin/index', [AdminController::class, 'index'])->name('Admin');
 Route::get('/Admin/student/index', [AdminStudentController::class, 'index'])->name('Student');
+Route::get('/Admin/student/index/{id}', [AdminStudentController::class, 'show'])->name('StudentShow');
 Route::get('/Admin/student/debit', [AdminStudentController::class, 'debit'])->name('StudentQarzdorlar');
 Route::get('/Admin/student/pays', [AdminStudentController::class, 'pays'])->name('StudentTulovlar');
 Route::get('/Admin/student/create', [AdminStudentController::class, 'create'])->name('StudentCreate');
+Route::post('/Admin/student/story', [AdminStudentController::class, 'store'])->name('StudentCreateStore');
 
 Route::get('/Admin/guruh', [AdminGuruhController::class, 'index'])->name('AdminGuruh');
 Route::get('/Admin/guruh/show/{id}', [AdminGuruhController::class, 'show'])->name('AdminGuruhShow');

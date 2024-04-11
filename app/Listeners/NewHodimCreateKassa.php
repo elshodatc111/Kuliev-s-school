@@ -10,11 +10,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
 class NewHodimCreateKassa{
-    public function __construct()
-    {
-        //
-    }
-
+    public function __construct(){}
     public function handle(CreateHodim $event): void{
         $User = User::find($event->user_id);
         $AdminKassa = AdminKassa::create([

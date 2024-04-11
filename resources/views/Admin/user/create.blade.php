@@ -1,15 +1,15 @@
 @extends('Admin.layout.home')
-@section('title','To\'lovlar')
+@section('title','Yangi tashrif')
 @section('content')
 
 <main id="main" class="main">
 
 <div class="pagetitle">
-    <h1>To'lovlar</h1>
+    <h1>Yangi tashrif</h1>
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('Admin') }}">Bosh sahifa</a></li>
-            <li class="breadcrumb-item active">To'lovlar</li>
+            <li class="breadcrumb-item active">Yangi tashrif</li>
         </ol>
     </nav>
 </div>
@@ -24,7 +24,7 @@
                 <div class="card-body pt-3">
                     <ul class="nav nav-tabs d-flex" id="myTabjustified" role="tablist">
                         <li class="nav-item flex-fill" role="presentation">
-                            <a href="{{ route('Student') }}" class="nav-link text-center text-center bg-success text-white w-100 active">Tashriflar</a>
+                            <a href="{{ route('Student') }}" class="nav-link text-center text-center">Tashriflar</a>
                         </li>
                         <li class="nav-item flex-fill" role="presentation">
                             <a href="{{ route('StudentQarzdorlar') }}" class="nav-link w-100 text-center">Qarzdorlar</a>
@@ -33,47 +33,70 @@
                             <a href="{{ route('StudentTulovlar') }}" class="nav-link text-center w-100">To'lovlar</a>
                         </li>
                         <li class="nav-item flex-fill" role="presentation">
-                            <a href="{{ route('StudentCreate') }}" class="nav-link text-center w-100">Yangi tashrif</a>
+                            <a href="{{ route('StudentCreate') }}" class="nav-link text-center w-100 bg-success text-white w-100 active">Yangi tashrif</a>
                         </li>
                     </ul>
                     <div class="tab-content pt-2" id="myTabjustifiedContent">
                         <div class="tab-pane fade show active" id="home-justified" role="tabpanel" aria-labelledby="home-tab">
-                            <h5 class="card-title w-100 text-center py-1">Tashriflar</h5>
-                            <div class="table-responsive">
-                                <table class="table datatable">
-                                    <thead>
-                                        <tr>
-                                            <th class="bg-primary text-white text-center">#</th>
-                                            <th class="bg-primary text-white text-center">FIO</th>
-                                            <th class="bg-primary text-white text-center">Manzil</th>
-                                            <th class="bg-primary text-white text-center">Telefon raqam</th>
-                                            <th class="bg-primary text-white text-center">Guruhlar</th>
-                                            <th class="bg-primary text-white text-center">Ro'yhatdan o'tdi</th>
-                                            <th class="bg-primary text-white text-center">Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="text-center">1</td>
-                                            <td>Bo'sh</td>
-                                            <td>Bo'sh</td>
-                                            <td>Bo'sh</td>
-                                            <td>Bo'sh</td>
-                                            <td>Bo'sh</td>
-                                            <td>Bo'sh</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center">2</td>
-                                            <td>Bo'sh</td>
-                                            <td>Bo'sh</td>
-                                            <td>Bo'sh</td>
-                                            <td>Bo'sh</td>
-                                            <td>Bo'sh</td>
-                                            <td>Bo'sh</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                            <h5 class="card-title w-100 text-center py-1">Yangi tashrif</h5>
+                            <form action="{{ route('StudentCreateStore') }}" method="post" class="row">
+                                @csrf
+                                <div class="col-lg-6">
+                                    <label for="name" class="mt-2 mb-1">FIO</label>
+                                    <input type="text" name="name" class="form-control" required>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label for="phone" class="mt-2 mb-1">Telefon raqam</label>
+                                            <input type="text" name="phone" class="form-control phone" required>
+                                        </div>
+                                        <div class="col-6">
+                                            <label for="phone2" class="mt-2 mb-1">Tanishi telefon raqami</label>
+                                            <input type="text" name="phone2" class="form-control phone" required>
+                                        </div>
+                                    </div>
+                                    <label for="addres" class="mt-2 mb-1">Yashash Manzil</label>
+                                    <select name="addres" class="form-select">
+                                        <option value="">Tanlang</option>
+                                        <option value="Qarshi shaxar">Qarshi shaxar</option>
+                                        <option value="Qarshi tuman">Qarshi tuman</option>
+                                        <option value="Shaxrisabz shaxar">Shaxrisabz shaxar</option>
+                                        <option value="Shaxrisabz tuman">Shaxrisabz tuman</option>
+                                        <option value="Guzor tuman">Guzor tuman</option>
+                                        <option value="Nishon tuman">Nishon tuman</option>
+                                        <option value="Koson tuman">Koson tuman</option>
+                                        <option value="Kasbi tuman">Kasbi tuman</option>
+                                        <option value="Muborak tuman">Muborak tuman</option>
+                                        <option value="Mirishkor tuman">Mirishkor tuman</option>
+                                        <option value="Yakkabog' tuman">Yakkabog' tuman</option>
+                                        <option value="Qamashi tuman">Qamashi tuman</option>
+                                        <option value="Chiroqchi tuman">Chiroqchi tuman</option>
+                                        <option value="Ko'kdala tuman">Ko'kdala tuman</option>
+                                        <option value="Kitob tuman">Kitob tuman</option>
+                                        <option value="Dexqonobod tuman">Dexqonobod tuman</option>
+                                        <option value="Boshqa tuman">Boshqa</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label for="tkun" class="mt-2 mb-1">Tug'ilgan kuni</label>
+                                    <input type="date" name="tkun" class="form-control" required>
+                                    <label for="about" class="mt-2 mb-1">Talaba haqida</label>
+                                    <input type="text" name="about" class="form-control" required>
+                                    <label for="smm" class="mt-2 mb-1">Biz haqimizda</label>
+                                    <select name="smm" class="form-select">
+                                        <option value="">Tanlang</option>
+                                        <option value="Telegram">Telegram</option>
+                                        <option value="Instagram">Instagram</option>
+                                        <option value="Facebook">Facebook</option>
+                                        <option value="Bannerlar">Bannerlar</option>
+                                        <option value="Tanishlar">Tanishlar</option>
+                                        <option value="Boshqa">Boshqa</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 text-center">
+                                    <button class="btn btn-primary w-50 mt-3">Tashrifni saqlash</button>
+                                </div>
+                            </form>
+                            
                         </div>
                     </div>
                 </div>

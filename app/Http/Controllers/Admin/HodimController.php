@@ -23,7 +23,7 @@ class HodimController extends Controller
         return view('Admin.profel');
     }
     public function adminHodimlar(){
-        $User = User::where('filial_id',request()->cookie('filial_id'))->where('type','!=','SuperAdmin')->where('status','true')->get();
+        $User = User::where('filial_id',request()->cookie('filial_id'))->where('type','!=','SuperAdmin')->where('type','!=','User')->where('type','!=','Techer')->where('status','true')->get();
         return view('Admin.hodimlar',compact('User'));
     }
     public function adminCreateHodimlar(Request $request){
