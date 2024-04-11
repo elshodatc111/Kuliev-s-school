@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Log;
 class CreateTashrifAdminKassa{
     public function __construct(){}
     public function handle(CreateTashrif $event): void{
-        if(Auth::user()->type='Admin' OR Auth::user()->type=='Operator'){
+        if(Auth::user()->type!='SuperAdmin'){
             $AdminKassa = AdminKassa::where('user_id',Auth::user()->id)->first();
             $count = $AdminKassa->tashriflar;
             $AdminKassa->tashriflar = $count+1;

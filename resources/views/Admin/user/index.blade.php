@@ -68,7 +68,7 @@
                                         </tr>
                                         @empty
                                         <tr>
-                                            <td colspan=7 class="text-center">Tashriflar mavjud emas</td>
+                                            <td colspan=7 class="text-center">Tashriflar mavjud emas.</td>
                                         </tr>
                                         @endforelse
                                     </tbody>

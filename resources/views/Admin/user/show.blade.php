@@ -21,123 +21,103 @@
 @endif
 
     <section class="section dashboard">
-        <div class="row">
-            <div class="col-lg-8">
-                <div class="card">
-                    <div class="card-body pt-3">
-                        <div class="tab-content pt-2" id="myTabjustifiedContent">
-                            <div class="tab-pane fade show active" id="home-justified" role="tabpanel" aria-labelledby="home-tab">
-                                <h5 class="card-title w-100 text-center py-1">Elshod Musurmonov</h5>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <ul class="list-group">
-                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                <b>Telefon Raqam:</b>
-                                                <span class="badge text-dark">90 998 0450</span>
-                                            </li>
-                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                <b>Telefon Raqam:</b>
-                                                <span class="badge text-dark">90 998 0450</span>
-                                            </li>
-                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                <b>Yashash Manzil:</b>
-                                                <span class="badge text-dark">Qarshi shaxar</span>
-                                            </li>
-                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                <b>Tug'ilgan Kuni:</b>
-                                                <span class="badge text-dark">1997-01-02</span>
-                                            </li>
-                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                <b>Talaba Haqida:</b>
-                                                <span class="badge text-dark">Kareys tiliga juda qiziqadi</span>
-                                            </li>
-                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                <b>Biz Haqimizda:</b>
-                                                <span class="badge text-dark">Telegram</span>
-                                            </li>
-                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                <b>Login:</b>
-                                                <span class="badge text-dark">1585458254</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <ul class="list-group">
-                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                <b>Talaba Balansi:</b>
-                                                <span class="badge bg-success">250 000</span>
-                                                <span class="badge bg-danger">250 000</span>
-                                            </li>
-                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                <b>Naqt To'lovlar:</b>
-                                                <span class="badge text-dark">250 000</span>
-                                            </li>
-                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                <b>Plastik To'lovlar:</b>
-                                                <span class="badge text-dark">250 000</span>
-                                            </li>
-                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                <b>Payme Orqali To'lov:</b>
-                                                <span class="badge text-dark">250 000</span>
-                                            </li>
-                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                <b>Chegirmalar:</b>
-                                                <span class="badge text-dark">250 000</span>
-                                            </li>
-                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                <b>Qaytarilgan To'lovlar:</b>
-                                                <span class="badge text-dark">250 000</span>
-                                            </li>
-                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                <b>Ro'yhatga Olidi:</b>
-                                                <span class="badge text-dark">2024-01-01 15:14:17</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
+        <div class="card">
+            <div class="card-body pt-3">
+                <div class="tab-content pt-2" id="myTabjustifiedContent">
+                    <div class="tab-pane fade show active" id="home-justified" role="tabpanel" aria-labelledby="home-tab">
+                        <h5 class="card-title w-100 text-center py-1">{{ $Users['name'] }}</h5>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <ul class="list-group">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <b>Telefon Raqam:</b>
+                                        <span class="badge text-dark">{{ $Users['phone'] }}</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <b>Telefon Raqam:</b>
+                                        <span class="badge text-dark">{{ $Users['phone2'] }}</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <b>Yashash Manzil:</b>
+                                        <span class="badge text-dark">{{ $Users['addres'] }}</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <b>Tug'ilgan Kuni:</b>
+                                        <span class="badge text-dark">{{ $Users['tkun'] }}</span>
+                                    </li>
+                                </ul>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="card">
-                    <div class="card-body pt-3">
-                        <div class="tab-content pt-2" id="myTabjustifiedContent">
-                            <div class="tab-pane fade show active" id="home-justified" role="tabpanel" aria-labelledby="home-tab">
-                                <div class="row">
-                                    <div class="col-lg-12 col-6">
-                                        <button class="btn my-1 btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#tulovPlus"><i class="bi bi-cash-coin"></i> To'lov qilish</button>
-                                    </div>
-                                    <div class="col-lg-12 col-6">
-                                        <button class="btn my-1 btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#sendMessege"><i class="bi bi-messenger"></i> SMS yuborish</button>
-                                    </div>
-                                    <div class="col-lg-12 col-6">
-                                        <button class="btn my-1 btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#eslatmaQoldirish"><i class="bi bi-messenger"></i> Eslatma qoldirish</button>
-                                    </div>
-                                    <div class="col-lg-12 col-6">
-                                        <button class="btn my-1 btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#guruhPlusUser"><i class="bi bi-cash-coin"></i> Guruhga qo'shish</button>
-                                    </div>
-                                    <div class="col-lg-6 col-6">
-                                        <button class="btn my-1 btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#userEdit"><i class="bi bi-pencil-square"></i> Taxrirlash</button>
-                                    </div>
-                                    <div class="col-lg-6 col-6">
-                                        <button class="btn my-1 btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#resetPassword"><i class="bi bi-lock"></i> Parolni yangilash</button>
-                                    </div>
-                                    <div class="col-lg-12 col-6">
-                                        <button class="btn my-1 btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#parRepetUsr"><i class="bi bi-cash-stack"></i> To'lovni qaytarish</button>
-                                    </div>
-                                    <div class="col-lg-12 col-6">
-                                        <button class="btn my-1 btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#chegirmaPlus"><i class="bi bi-coin"></i> Chegirma kiritish</button>
-                                    </div>
-                                </div>
+                            <div class="col-lg-6">
+                                <ul class="list-group">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <b>Talaba Balansi:</b>
+                                        @if($Users['balans']>0)
+                                        <span class="badge bg-success">{{ $Users['balans'] }}</span>
+                                        @elseif($Users['balans'] < 0)
+                                        <span class="badge bg-danger">{{ $Users['balans'] }}</span>
+                                        @else
+                                        <span class="badge bg-primary">0</span>
+                                        @endif
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <b>Talaba Haqida:</b>
+                                        <span class="badge text-dark">{{ $Users['about'] }}</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <b>Biz Haqimizda:</b>
+                                        <span class="badge text-dark">{{ $Users['smm'] }}</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <b>Login:</b>
+                                        <span class="badge text-dark">{{ $Users['email'] }}</span>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+                
+
     </section>
+    <div class="card">
+        <div class="card-body pt-3">
+            <div class="tab-content pt-2" id="myTabjustifiedContent">
+                <div class="tab-pane fade show active" id="home-justified" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="row">
+                        <div class="col-lg-3 col-6">
+                            <button class="btn my-1 btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#tulovPlus"><i class="bi bi-cash-coin"></i> To'lov qilish</button>
+                        </div>
+                        <div class="col-lg-3 col-6">
+                            <button class="btn my-1 btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#sendMessege"><i class="bi bi-messenger"></i> SMS yuborish</button>
+                        </div>
+                        <div class="col-lg-3 col-6">
+                            <button class="btn my-1 btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#eslatmaQoldirish"><i class="bi bi-messenger"></i> Eslatma qoldirish</button>
+                        </div>
+                        <div class="col-lg-3 col-6">
+                            <button class="btn my-1 btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#guruhPlusUser"><i class="bi bi-cash-coin"></i> Guruhga qo'shish</button>
+                        </div>
+                        <div class="col-lg-3 col-6">
+                            <button class="btn my-1 btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#userEdit"><i class="bi bi-pencil-square"></i> Taxrirlash</button>
+                        </div>
+                        <div class="col-lg-3 col-6">
+                            <button class="btn my-1 btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#resetPassword"><i class="bi bi-lock"></i> Parolni yangilash</button>
+                        </div>
+                        @if(Auth::user()->type!='Operator')
+                        <div class="col-lg-3 col-6">
+                            <button class="btn my-1 btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#parRepetUsr"><i class="bi bi-cash-stack"></i> To'lovni qaytarish</button>
+                        </div>
+                        <div class="col-lg-3 col-6">
+                            <button class="btn my-1 btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#chegirmaPlus"><i class="bi bi-coin"></i> Chegirma kiritish</button>
+                        </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                
     <!-- To'lov qilish -->
     <div class="modal fade" id="tulovPlus" tabindex="-1">
         <div class="modal-dialog">
@@ -203,17 +183,30 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Guruhga qo'shish</h5>
+                    <h5 class="modal-title w-100 text-center">Guruhga qo'shish</h5>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="col-6">
-                            <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
+                    <form action="{{ route('AdminUserGuruhPlus') }}" method="post">
+                        @csrf
+                        <input type="hidden" name="user_id" value="{{ $Users['id'] }}">
+                        <label for="" class="mb-1">Guruhni tanlang</label>
+                        <select name="guruh_id" class="form-select" required>
+                            <option value="guruh_id">Tanlang</option>
+                            @foreach($Guruhs as $item)
+                            <option value="{{ $item['guruh_id'] }}">{{ $item['guruh_name']." (".$item['techer']." )" }}</option>
+                            @endforeach
+                        </select>
+                        <label for="commit_start" class="mb-1 mt-3">Guruhga qo'shish uchun izoh</label>
+                        <input type="text" name="commit_start" class="form-control mb-3" required>
+                        <div class="row">
+                            <div class="col-6">
+                                <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
+                            </div>
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-primary w-100">Saqlash</button>
+                            </div>
                         </div>
-                        <div class="col-6">
-                            <button type="button" class="btn btn-primary w-100">Yangilash</button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -314,7 +307,7 @@
                 </li>
                 <li class="nav-item flex-fill col-lg-3 col-6" role="presentation">
                     <button class="nav-link w-100" id="contact-tab" data-bs-toggle="tab" data-bs-target="#Talaba_eslatma" 
-                    type="button" role="tab" aria-controls="eslatma" aria-selected="false"><i class="bi bi-messenger"></i> Talaba haqida eslatma</button>
+                    type="button" role="tab" aria-controls="eslatma" aria-selected="false"><i class="bi bi-messenger"></i> Eslatma</button>
                 </li>
                 <li class="nav-item flex-fill col-lg-3 col-6" role="presentation">
                     <button class="nav-link w-100" id="contact-tab" data-bs-toggle="tab" data-bs-target="#Talaba_Tulovlari" 
@@ -330,24 +323,40 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>FIO</th>
-                                    <th>Manzil</th>
-                                    <th>Telefon raqam</th>
-                                    <th>Guruhlar</th>
-                                    <th>Ro'yhatdan o'tdi</th>
                                     <th>Status</th>
+                                    <th>Guruh</th>
+                                    <th>Summa</th>
+                                    <th>To'lov turi</th>
+                                    <th>Hisoblash</th>
+                                    <th>Balans</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="text-center">1</td>
-                                    <td>Bo'sh</td>
-                                    <td>Bo'sh</td>
-                                    <td>Bo'sh</td>
-                                    <td>Bo'sh</td>
-                                    <td>Bo'sh</td>
-                                    <td>Bo'sh</td>
-                                </tr> 
+                                @forelse($userHistory as $item)
+                                    @if($item->status=='Markazga tashrif')
+                                    <tr>
+                                        <td class="text-center">{{ $loop->index+1 }}</td>
+                                        <td>{{ $item['status'] }}</td>
+                                        <td>_</td>
+                                        <td>_</td>
+                                        <td>_</td>
+                                        <td>_</td>
+                                        <td>{{ $item['balans'] }}</td>
+                                    </tr> 
+                                    @else
+                                    <tr>
+                                        <td class="text-center">{{ $loop->index+1 }}</td>
+                                        <td>{{ $item['status'] }}</td>
+                                        <td>{{ $item['type'] }}</td>
+                                        <td>{{ $item['summa'] }}</td>
+                                        <td>_</td>
+                                        <td>{{ $item['xisoblash'] }}</td>
+                                        <td>{{ $item['balans'] }}</td>
+                                    </tr> 
+                                    @endif
+                                @empty
+
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
