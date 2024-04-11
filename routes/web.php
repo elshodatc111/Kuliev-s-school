@@ -60,6 +60,7 @@ Route::get('/Admin/guruh/end', [AdminGuruhController::class, 'endGuruh'])->name(
 Route::get('/Admin/guruh/create', [AdminGuruhController::class, 'CreateGuruh'])->name('AdminGuruhCreate');
 Route::post('/Admin/guruh/create1', [AdminGuruhController::class, 'CreateGuruh1'])->name('AdminGuruhCreate1');
 Route::post('/Admin/guruh/create2', [AdminGuruhController::class, 'CreateGuruh2'])->name('AdminGuruhCreate2');
+Route::post('/Admin/guruh/deleteUser', [AdminGuruhController::class, 'guruhDelUser'])->name('guruhDeletesUserss');
 
 Route::get('/Admin/admin/techer', [AdminTecherController::class, 'index'])->name('AdminTecher');
 Route::post('/Admin/admin/techer', [AdminTecherController::class, 'techerCreate'])->name('AdminTecherCreate');

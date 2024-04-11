@@ -199,17 +199,23 @@
                                         <h5 class="modal-title w-100 text-center">Guruhdan talaba o'chirish.</h5>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="" method="post" id="form1">
+                                        <form action="{{ route('guruhDeletesUserss') }}" method="post" id="form1">
                                             <div class="row">
                                                 <div class="col-12">
+                                                    @csrf
+                                                    <input type="hidden" name="guruh_price" value="{{ $UsersDeletes['guruh_price'] }}">
+                                                    <input type="hidden" name="guruh_id" value="{{ $Guruh['id'] }}">
                                                     <label for="" class="mb-1">O'chiriladigan talabani tanlang</label>
-                                                    <select name="" class="form-select" required>
-                                                        <option value="">Tanlang...</option>
+                                                    <select name="user_id" class="form-select" required>
+                                                        <option value="user_id">Tanlang...</option>
+                                                        @foreach($UsersDeletes['user'] as $item)
+                                                        <option value="{{ $item['user_id'] }}">{{ $item['user_name'] }}</option>
+                                                        @endforeach
                                                     </select>
-                                                    <label for="" class="mt-2 mb-1">Jarima Summasi</label>
-                                                    <input type="text" id="summa1" class="form-control" required>
-                                                    <label for="" class="mt-2 mb-1">Guruhdan o'chirish sababi</label>
-                                                    <textarea name="" placeholder="Sabab..." required class="form-control mb-3"></textarea>
+                                                    <label for="jarima" class="mt-2 mb-1">Jarima Summasi(max: {{ $UsersDeletes['guruh_price'] }})</label>
+                                                    <input type="text" name="jarima" id="summa1" class="form-control" required>
+                                                    <label for="commit_end" class="mt-2 mb-1">Guruhdan o'chirish sababi</label>
+                                                    <textarea name="commit_end" placeholder="Sabab..." required class="form-control mb-3"></textarea>
                                                 </div>
                                                 <div class="col-6">
                                                     <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilisk</button>

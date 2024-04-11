@@ -343,13 +343,33 @@
                                         <td>_</td>
                                         <td>{{ $item['balans'] }}</td>
                                     </tr> 
+                                    @elseif($item->status=="Guruhdan o'chirildi")
+                                    <tr>
+                                        <td class="text-center">{{ $loop->index+1 }}</td>
+                                        <td>{{ $item['status'] }}</td>
+                                        <td>{{ $item['type'] }}</td>
+                                        <td>{{ $item['summa'] }}</td>
+                                        <td>Balansga qaytarildi.</td>
+                                        <td>{{ $item['xisoblash'] }}</td>
+                                        <td>{{ $item['balans'] }}</td>
+                                    </tr> 
+                                    @elseif($item->status=="Jarima")
+                                    <tr>
+                                        <td class="text-center">{{ $loop->index+1 }}</td>
+                                        <td>{{ $item['status'] }}</td>
+                                        <td>{{ $item['type'] }}</td>
+                                        <td>{{ $item['summa'] }}</td>
+                                        <td>Guruhdan jarima.</td>
+                                        <td>{{ $item['xisoblash'] }}</td>
+                                        <td>{{ $item['balans'] }}</td>
+                                    </tr> 
                                     @else
                                     <tr>
                                         <td class="text-center">{{ $loop->index+1 }}</td>
                                         <td>{{ $item['status'] }}</td>
                                         <td>{{ $item['type'] }}</td>
                                         <td>{{ $item['summa'] }}</td>
-                                        <td>_</td>
+                                        <td>Balansidan yichildi</td>
                                         <td>{{ $item['xisoblash'] }}</td>
                                         <td>{{ $item['balans'] }}</td>
                                     </tr> 

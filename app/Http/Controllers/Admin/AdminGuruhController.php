@@ -5,6 +5,8 @@ use App\Models\TulovSetting;
 use App\Models\Room;
 use App\Models\User;
 use App\Models\Guruh;
+use App\Models\UserHistory;
+use App\Models\GuruhUser;
 use App\Models\Cours;
 use App\Models\GuruhTime;
 use App\Http\Controllers\Controller;
@@ -35,7 +37,7 @@ class AdminGuruhController extends Controller{
             $Guruhlar[$key]['id'] = $item->id;
         }
         return view('Admin.guruh.index',compact('Guruhlar'));
-    }
+    } 
     public function endGuruh(){
         $EndData = date("Y-m-d");
         $Guruh = Guruh::where('filial_id',request()->cookie('filial_id'))->where('guruh_end','<',$EndData)->get();
@@ -286,10 +288,67 @@ class AdminGuruhController extends Controller{
         $Guruh['Kunlar'] = $Kun;
         return $Guruh;
     }
+    public function userEndGroups($id){
+        $GuruhUser = GuruhUser::where('guruh_id',$id)->where('status','true')->get();
+        $Deletes = array();
+        $Users = array();
+        foreach ($GuruhUser as $key => $value) {
+            $Users[$key]['user_id'] = $value->user_id;
+            $Users[$key]['user_name'] = User::where('id',$value->user_id)->first()->name;
+        }
+        $Deletes['user'] = $Users;
+        $Deletes['guruh_price'] = number_format((Guruh::where('id',$id)->first()->guruh_price), 0, '.', ' ');
+        return $Deletes;
+    }
     public function show($id){
         $Guruh = $this->GuruhAbout($id);
         $Days = GuruhTime::where('guruh_id',$Guruh['id'])->get();
-        return view('Admin.guruh.show',compact('Guruh','Days'));
+        $UsersDeletes = $this->userEndGroups($id);
+        #dd($UsersDeletes);
+        return view('Admin.guruh.show',compact('Guruh','Days','UsersDeletes'));
+    }
+    public function guruhDelUser(Request $request){
+        $validate = $request->validate([
+            'guruh_id' => ['required', 'string', 'max:255'],
+            'user_id' => ['required', 'string', 'max:255'],
+            'commit_end' => ['required', 'string', 'max:255']
+        ]);
+        $jarima = str_replace(",","",$request->jarima);
+        $validate['status'] = 'false';
+        $validate['admin_id_end'] = Auth::User()->id;
+        $UserGuruh = GuruhUser::where('user_id',$validate['user_id'])->where('guruh_id',$validate['guruh_id'])->where('status','true')->first();
+        $UserGuruh->update($validate);
+        $User = User::find($request->user_id);
+        $Balans = $User->balans;
+        $Guruh_name = Guruh::where('id',$request->guruh_id)->first()->guruh_name;
+        $Guruh_price = Guruh::where('id',$request->guruh_id)->first()->guruh_price;
+        $Xisob = strval($Balans." + ".$Guruh_price." = ".$Balans+$Guruh_price);
+        $Balans = $Balans+$Guruh_price;
+        $UserHistory = UserHistory::create([
+            'filial_id'=>request()->cookie('filial_id'),
+            'user_id'=>$request->user_id,
+            'status'=>"Guruhdan o'chirildi",
+            'type'=>$Guruh_name,
+            'summa'=>$Guruh_price,
+            'xisoblash'=>$Xisob,
+            'balans'=>$Balans,
+        ]);
+        $Xisob2 = strval($Balans." - ".$jarima." = ".$Balans-$jarima);
+        $Balans = $Balans-$jarima;
+        $UserHistory = UserHistory::create([
+            'filial_id'=>request()->cookie('filial_id'),
+            'user_id'=>$request->user_id,
+            'status'=>"Jarima",
+            'type'=>$Guruh_name,
+            'summa'=>$jarima,
+            'xisoblash'=>$Xisob2,
+            'balans'=>$Balans,
+        ]);
+        $Users = User::find($request->user_id)->update([
+            'balans'=>$Balans
+        ]);
+        $User_name = $User->name;
+        return redirect()->back()->with('success', $User_name.' guruhdan o\'chirildi.'); 
     }
 
 }
