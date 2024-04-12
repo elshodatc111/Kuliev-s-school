@@ -98,13 +98,13 @@
                         <div class="col-lg-3 col-6">
                             <button class="btn my-1 btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#guruhPlusUser"><i class="bi bi-cash-coin"></i> Guruhga qo'shish</button>
                         </div>
-                        @if(Auth::user()->type!='Operator')
                         <div class="col-lg-3 col-6">
                             <button class="btn my-1 btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#userEdit"><i class="bi bi-pencil-square"></i> Taxrirlash</button>
                         </div>
                         <div class="col-lg-3 col-6">
                             <button class="btn my-1 btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#resetPassword"><i class="bi bi-lock"></i> Parolni yangilash</button>
                         </div>
+                        @if(Auth::user()->type!='Operator')
                         <div class="col-lg-3 col-6">
                             <button class="btn my-1 btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#parRepetUsr"><i class="bi bi-cash-stack"></i> To'lovni qaytarish</button>
                         </div>
@@ -117,7 +117,7 @@
             </div>
         </div>
     </div>
-                
+        Eslatmalar qoldi        
     <!-- To'lov qilish +++ -->
     <div class="modal fade" id="tulovPlus" tabindex="-1">
         <div class="modal-dialog">
@@ -313,42 +313,90 @@
             </div>
         </div>
     </div>
-    <!-- To'lovni qaytarish -->
+    <!-- To'lovni qaytarish +++ -->
     <div class="modal fade" id="parRepetUsr" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">To'lovni qaytarish</h5>
+                    <h5 class="modal-title w-100 text-center">To'lovni qaytarish</h5>
+                    <hr>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="col-6">
-                            <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
+                    <table class="table w-100 text-center table-bordered">
+                        <tr>
+                            <th>Kassada mavjud naqt</th>
+                            <th>Kassada mavjud plastik</th>
+                        </tr>
+                        <tr>
+                            <td>{{ $FilialKassa['naqt'] }}</td>
+                            <td>{{ $FilialKassa['plastik'] }}</td>
+                        </tr>
+                    </table>
+                    <form action="{{ route('AdminUserTulovQaytar') }}" id="form2" method="post" >
+                        @csrf 
+                        <input type="hidden" name="id" value="{{ $Users['id'] }}">
+                        <input type="hidden" name="naqt" value="{{ $FilialKassa['naqt'] }}">
+                        <input type="hidden" name="plastik" value="{{ $FilialKassa['plastik'] }}">
+                        <div class="row">
+                            <div class="col-6">
+                                <label for="summa">Qaytariladigan summa</label>
+                                <input type="text" name="summa" id="summa2" class="form-control" required>
+                            </div>
+                            <div class="col-6">
+                                <label for="type">To'lov turi</label>
+                                <select name="type" class="form-select" required>
+                                    <option value="">Tanlang</option>
+                                    <option value="Naqt">Naqt</option>
+                                    <option value="Plastik">Plastik</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label for="about" class="mt-3">Qaytarish haqida</label>
+                                <textarea name="about" class="form-control mb-3 mt-1" required></textarea>
+                            </div>
+                            <div class="col-6">
+                                <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
+                            </div>
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-primary w-100">Qaytarish</button>
+                            </div>
                         </div>
-                        <div class="col-6">
-                            <button type="button" class="btn btn-primary w-100">Yangilash</button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Chegirma kiritish -->
+    <!-- Chegirma kiritish +++ -->
     <div class="modal fade" id="chegirmaPlus" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Chegirma kiritish</h5>
+                    <h5 class="modal-title w-100 text-center">Chegirma kiritish</h5>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="col-6">
-                            <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
+                    <form action="{{ route('AdminUserAdminChegirma') }}" id="form4" method="post">
+                        @csrf 
+                        <input type="hidden" name="user_id" value="{{ $Users['id'] }}">
+                        <label for="chegirma">Chegirma summasi</label>
+                        <input type="text" name="chegirma" id="summa1" class="form-control" required>
+                        <label for="guruh_id" class="mt-2">Chegirma uchun guruhni tanlang</label>
+                        <select name="guruh_id" class="form-select" required>
+                            <option value="">Tanlang</option>
+                            @foreach($adminChegirma as $item)
+                            <option value="{{ $item['id'] }}">{{ $item['guruh_name'] }} (max:{{ $item['max_chegirma'] }})</option>
+                            @endforeach
+                        </select>
+                        <label for="about" class="mt-2">Chegirma haqida</label>
+                        <textarea name="about" required class="form-control mb-3"></textarea>
+                        <div class="row">
+                            <div class="col-6">
+                                <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
+                            </div>
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-primary w-100">Saqlash</button>
+                            </div>
                         </div>
-                        <div class="col-6">
-                            <button type="button" class="btn btn-primary w-100">Yangilash</button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -379,7 +427,7 @@
                 <div class="tab-pane fade show active" id="Talaba_Tarixi" role="tabpanel" aria-labelledby="history-tab">
                     <h5 class="card-title w-100 pt-1 p-0 text-center">Talaba tarixi</h5>
                     <div class="table-responsive" style="font-size:12px;">
-                        <table class="table table-bordered">
+                        <table class="table table-bordered table-hover">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -474,7 +522,7 @@
                 <div class="tab-pane fade show" id="Talaba_guruhlari" role="tabpanel" aria-labelledby="guruhlar-tab">
                     <h5 class="card-title w-100 p-0 pt-1 text-center">Talaba Guruhlari</h5>
                     <div class="table-responsive" style="font-size:12px;">
-                        <table class="table table-bordered">
+                        <table class="table table-bordered table-hover">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -517,7 +565,7 @@
                 <div class="tab-pane fade show" id="Talaba_eslatma" role="tabpanel" aria-labelledby="eslatma-tab">
                     <h5 class="card-title w-100 p-0 pt-1 text-center">Talaba haqida eslatma</h5>
                     <div class="table-responsive" style="font-size:12px;">
-                        <table class="table table-bordered">
+                        <table class="table table-hover table-bordered">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -546,7 +594,7 @@
                 <div class="tab-pane fade show" id="Talaba_Tulovlari" role="tabpanel" aria-labelledby="tulovlar-tab">
                     <h5 class="card-title w-100 p-0 pt-1 text-center">Talaba to'lovlari</h5>
                     <div class="table-responsive" style="font-size:12px;">
-                        <table class="table table-bordered">
+                        <table class="table table-hover table-bordered">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -571,9 +619,13 @@
                                     <td>{{ $item['admin'] }}</td>
                                     @if(Auth::user()->type!='Operator')
                                     <td class="text-center">
+                                        @if($item['type']=='Qaytarildi (Naqt)')
+                                        @elseif($item['type']=='Qaytarildi (Plastik)')
+                                        @else
                                         <a href="{{ route('AdminUserTulovDelete',$item['id']) }}" class="btn btn-danger py-0 px-1">
                                             <i class="bi bi-trash"></i>
                                         </a>
+                                        @endif
                                     </td>
                                     @endif
                                 </tr> 

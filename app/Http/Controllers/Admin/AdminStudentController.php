@@ -24,7 +24,17 @@ class AdminStudentController extends Controller{
         $this->middleware('auth');
     }
     public function index(){
-        $User = User::where('filial_id',request()->cookie('filial_id'))->where('type','User')->orderby('id','desc')->get();
+        $Users = User::where('filial_id',request()->cookie('filial_id'))->where('type','User')->orderby('id','desc')->get();
+        $User = array();
+        foreach ($Users as $key => $value) {
+            $User[$key]['id']=$value->id;
+            $User[$key]['name']=$value->name;
+            $User[$key]['addres']=$value->addres;
+            $User[$key]['phone']=$value->phone;
+            $GuruhUser = count(GuruhUser::where('user_id',$value->id)->where('status','true')->get());
+            $User[$key]['created_at']=$GuruhUser;
+            $User[$key]['guruhlar']=$value->created_at;
+        }
         return view('Admin.user.index',compact('User'));
     }
     public function debit(){
@@ -32,7 +42,23 @@ class AdminStudentController extends Controller{
         return view('Admin.user.debit',compact('User'));
     }
     public function pays(){
-        return "Tulovlar:";
+        $Tulov = Tulov::where('filial_id',request()->cookie('filial_id'))->orderby('id','desc')->get();
+        $pays = array();
+        foreach ($Tulov as $key => $value) {
+            $pays[$key]['id'] = $value->id;
+            $pays[$key]['fio'] = User::find($value->user_id)->name;
+            if($value->guruh_id!='NULL' OR $value->guruh_id!=" "){
+                $pays[$key]['guruh'] = " ";
+            }else{
+                $pays[$key]['guruh'] = Guruh::where('id',$value->guruh_id)->guruh_name;
+            }
+            $pays[$key]['type'] = $value->type;
+            $pays[$key]['about'] = $value->about;
+            $pays[$key]['summa'] = number_format(($value->summa), 0, '.', ' ');
+            $pays[$key]['meneger'] = User::find($value->admin_id)->email;
+            $pays[$key]['created_at'] = $value->created_at;
+        }
+        return view('Admin.user.pays',compact('pays'));
     }
     public function create(){
         return view('Admin.user.create');
@@ -182,6 +208,16 @@ class AdminStudentController extends Controller{
     }
     public function userHistory($id){
         $UserHistory = UserHistory::where('user_id',$id)->orderby('id','desc')->get();
+        $Keys = array();
+        foreach ($UserHistory as $key => $value) {
+            $Keys[$key]['filial_id'] = $value->filial_id;
+            $Keys[$key]['user_id'] = $value->user_id;
+            $Keys[$key]['status'] = $value->status;
+            $Keys[$key]['type'] = $value->type;
+            $Keys[$key]['summa'] = number_format(($value->summa), 0, '.', ' ');
+            $Keys[$key]['xisoblash'] = $value->xisoblash;
+            $Keys[$key]['balans'] = number_format(($value->balans), 0, '.', ' ');
+        }
         return $UserHistory;
     }
     public function TalabaGuruhlari($id){
@@ -245,6 +281,32 @@ class AdminStudentController extends Controller{
         }
         return $Tulov;
     }
+    public function adminChegirma($id){
+        $userArxivGuruh = GuruhUser::where('user_id',$id)->where('status','true')->get();
+        $Guruhlar = array();
+        $thsDay = date("Y-m-d");
+        foreach ($userArxivGuruh as $key => $value) {
+            $guruh_id = $value->guruh_id;
+            $Guruh = Guruh::where('id',$guruh_id)->where('guruh_end','>=',$thsDay)->first();
+            if($Guruh){
+                $Tulovs = count(Tulov::where('user_id',$id)->where('guruh_id',$value->guruh_id)->where('type','Chegirma')->get());
+                if($Tulovs>0){}
+                else{
+                    $Guruhlar[$key]['id'] = $value->guruh_id;
+                    $Guruhlar[$key]['guruh_name'] = $Guruh->guruh_name;
+                    $Guruhlar[$key]['max_chegirma'] = $Guruh->guruh_admin_chegirma;
+                }
+            }
+        }
+        return $Guruhlar;
+    }
+    public function kassadaMavjud(){
+        $FilialKassa = FilialKassa::where('filial_id',request()->cookie('filial_id'))->first();
+        $Kassa = array();
+        $Kassa['naqt'] = number_format(($FilialKassa->tulov_naqt), 0, '.', ' ');
+        $Kassa['plastik'] = number_format(($FilialKassa->tulov_plastik), 0, '.', ' ');
+        return $Kassa;
+    }
     public function show($id){
         $Users = $this->userAbout($id);
         $Guruhs = $this->Guruhs($id);
@@ -253,9 +315,10 @@ class AdminStudentController extends Controller{
         $userArxivGuruh = $this->userArxivGuruh($id);
         $ChegirmaGuruh = $this->chegirmaliGuruhlar($id);
         $Tulovlar = $this->TalabaTulovlari($id);
-        return view('Admin.user.show',compact('Users','Guruhs','userHistory','Tulovlar','talaba_guruh','userArxivGuruh','ChegirmaGuruh'));
+        $adminChegirma = $this->adminChegirma($id);
+        $FilialKassa = $this->kassadaMavjud();
+        return view('Admin.user.show',compact('FilialKassa','adminChegirma','Users','Guruhs','userHistory','Tulovlar','talaba_guruh','userArxivGuruh','ChegirmaGuruh'));
     }
-
     public function tulov(Request $request){
         $validate = $request->validate([
             'user_id' => ['required', 'string', 'max:255'],
@@ -310,4 +373,99 @@ class AdminStudentController extends Controller{
         $TalabaTulovlar->delete();
         return redirect()->back()->with('success', 'To\'lov o\'chirildi.'); 
     }
+    public function adminChegirmaMax(Request $request){
+        if($request->chegirma==0){
+            return redirect()->back()->with('error', 'Chegirma summasi noto\'g\'ri.'); 
+        }
+        $guruh_id = $request->guruh_id;
+        $user_id = $request->user_id;
+        $User = User::find($user_id);
+        $Chegirma = str_replace(",","", $request->chegirma);
+        $Guruh = Guruh::find($guruh_id);
+        if($Guruh->guruh_admin_chegirma<$Chegirma){
+            return redirect()->back()->with('error', 'Guruh uchun chegirma maksimal so\'mmadan ortib ketdi.'); 
+        }
+        $about = $request->about;
+        $Guruh_Name = $Guruh->guruh_name;
+        $UserHistory = UserHistory::create([
+            'filial_id'=>request()->cookie('filial_id'),
+            'user_id'=>$user_id,
+            'status'=>'Chegirma',
+            'type'=>$Guruh_Name,
+            'summa'=>$Chegirma,
+            'xisoblash'=>$User->balans."+".$Chegirma."=".$User->balans+$Chegirma,
+            'balans'=>$User->balans+$Chegirma
+        ]);
+        $User->balans = $User->balans+$Chegirma;
+        $User->save();
+        $Tulov = Tulov::create([
+            'filial_id' => request()->cookie('filial_id'),
+            'user_id' => $user_id,
+            'guruh_id' => $guruh_id,
+            'summa' => $Chegirma,
+            'type' => 'Chegirma',
+            'status' => 'true',
+            'about' => $about,
+            'admin_id' => Auth::user()->id,
+        ]);
+        $FilialKassa = FilialKassa::where('filial_id',request()->cookie('filial_id'))->first();
+        $tulov_chegirma = $FilialKassa->tulov_chegirma;
+        $Mavjud = $tulov_chegirma + $Chegirma;
+        $FilialKassa->tulov_chegirma=$Mavjud;
+        $FilialKassa->save();
+        return redirect()->back()->with('success', 'Chegirma kiritildi.'); 
+    }
+    public function tulovQaytar(Request $request){
+        $summa = intval(str_replace(",","",$request->summa));
+        if($request->type=='Naqt'){
+            $naqt = intval(str_replace(" ","",$request->naqt));
+            if($summa>$naqt){
+                return redirect()->back()->with('error', 'To\'lov qaytarish uchun kassada mablag\' yetarli emas.'); 
+            }
+        }elseif($request->type=='Plastik'){
+            $naqt = intval(str_replace(" ","",$request->plastik));
+            if($summa>$naqt){
+                return redirect()->back()->with('error', 'To\'lov qaytarish uchun kassada mablag\' yetarli emas.'); 
+            }
+        }
+        if($summa==0){
+            return redirect()->back()->with('error', 'To\'lov summasi noto\'g\'ri kiritildi.'); 
+        }
+        $User = User::find($request->id);
+        $Balans = $User->balans;
+        $User->balans = $Balans-$summa;
+        $User->save();
+        $UserHistory = UserHistory::create([
+            'filial_id'=>request()->cookie('filial_id'),
+            'user_id'=>$request->id,
+            'status'=>'Qaytarildi ('.$request->type.")",
+            'type'=>" ",
+            'summa'=>$summa,
+            'xisoblash'=>$Balans."-".$summa."=".$Balans-$summa,
+            'balans'=>$Balans-$summa
+        ]);
+        $Tulov = Tulov::create([
+            'filial_id' => request()->cookie('filial_id'),
+            'user_id' => $request->id,
+            'guruh_id' => " ",
+            'summa' => $summa,
+            'type' => 'Qaytarildi ('.$request->type.")",
+            'status' => 'true',
+            'about' => $request->about,
+            'admin_id' => Auth::user()->id,
+        ]);
+        $FilialKassa = FilialKassa::where('filial_id',request()->cookie('filial_id'))->first();
+        if($request->type=='Naqt'){
+            $tulov_naqt = $FilialKassa->tulov_naqt;
+            $Qoldiq = $tulov_naqt-$summa;
+            $FilialKassa->tulov_naqt = $Qoldiq;
+        }else{
+            $tulov_plastik = $FilialKassa->tulov_plastik;
+            $Qoldiq = $tulov_plastik-$summa;
+            $FilialKassa->tulov_plastik = $Qoldiq;
+        }
+        $FilialKassa->save();
+        return redirect()->back()->with('success', 'To\'lov qaytarildi.'); 
+    }
+
 }

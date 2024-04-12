@@ -56,13 +56,13 @@
                                         @forelse($User as $item)
                                         <tr>
                                             <td class="text-center">{{ $loop->index+1 }}</td>
-                                            <th>{{ $item->name }}</th>
-                                            <td>{{ $item->addres }}</td>
-                                            <td class="text-center">{{ $item->phone }}</td>
-                                            <td class="text-center">0</td>
-                                            <td class="text-center">{{ $item->created_at }}</td>
+                                            <th>{{ $item['name'] }}</th>
+                                            <td>{{ $item['addres'] }}</td>
+                                            <td class="text-center">{{ $item['phone'] }}</td>
+                                            <td class="text-center">{{ $item['guruhlar'] }}</td>
+                                            <td class="text-center">{{ $item['created_at'] }}</td>
                                             <td class="text-center">
-                                                <a href="{{ route('StudentShow',$item->id) }}" class="btn btn-primary py-0 px-1">
+                                                <a href="{{ route('StudentShow',$item['id']) }}" class="btn btn-primary py-0 px-1">
                                                     <i class="bi bi-eye"></i></a>
                                             </td>
                                         </tr>

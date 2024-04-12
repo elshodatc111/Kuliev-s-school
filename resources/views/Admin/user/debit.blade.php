@@ -39,7 +39,7 @@
                     </ul>
                     <div class="tab-content pt-2" id="myTabjustifiedContent">
                         <div class="tab-pane fade show active" id="home-justified" role="tabpanel" aria-labelledby="home-tab">
-                            <h5 class="card-title w-100 text-center py-1">Tashriflar</h5>
+                            <h5 class="card-title w-100 text-center py-1">Qarzdorlar</h5>
                             <div class="table-responsive">
                                 <table class="table datatable" style="font-size:14px;">
                                     <thead>

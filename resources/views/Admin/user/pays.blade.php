@@ -24,13 +24,13 @@
                 <div class="card-body pt-3">
                     <ul class="nav nav-tabs d-flex" id="myTabjustified" role="tablist">
                         <li class="nav-item flex-fill" role="presentation">
-                            <a href="{{ route('Student') }}" class="nav-link text-center text-center bg-success text-white w-100 active">Tashriflar</a>
+                            <a href="{{ route('Student') }}" class="nav-link text-center text-center w-100">Tashriflar</a>
                         </li>
                         <li class="nav-item flex-fill" role="presentation">
                             <a href="{{ route('StudentQarzdorlar') }}" class="nav-link w-100 text-center">Qarzdorlar</a>
                         </li>
                         <li class="nav-item flex-fill" role="presentation">
-                            <a href="{{ route('StudentTulovlar') }}" class="nav-link text-center w-100">To'lovlar</a>
+                            <a href="{{ route('StudentTulovlar') }}" class="nav-link text-center w-100 bg-success text-white active">To'lovlar</a>
                         </li>
                         <li class="nav-item flex-fill" role="presentation">
                             <a href="{{ route('StudentCreate') }}" class="nav-link text-center w-100">Yangi tashrif</a>
@@ -38,39 +38,36 @@
                     </ul>
                     <div class="tab-content pt-2" id="myTabjustifiedContent">
                         <div class="tab-pane fade show active" id="home-justified" role="tabpanel" aria-labelledby="home-tab">
-                            <h5 class="card-title w-100 text-center py-1">Tashriflar</h5>
+                            <h5 class="card-title w-100 text-center py-1">To'lovlar</h5>
                             <div class="table-responsive">
-                                <table class="table datatable">
+                                <table class="table datatable" style="font-size:14px;">
                                     <thead>
                                         <tr>
                                             <th class="bg-primary text-white text-center">#</th>
                                             <th class="bg-primary text-white text-center">FIO</th>
-                                            <th class="bg-primary text-white text-center">Manzil</th>
-                                            <th class="bg-primary text-white text-center">Telefon raqam</th>
-                                            <th class="bg-primary text-white text-center">Guruhlar</th>
-                                            <th class="bg-primary text-white text-center">Ro'yhatdan o'tdi</th>
-                                            <th class="bg-primary text-white text-center">Status</th>
+                                            <th class="bg-primary text-white text-center">Guruh</th>
+                                            <th class="bg-primary text-white text-center">To'lov summasi</th>
+                                            <th class="bg-primary text-white text-center">To'lov turi</th>
+                                            <th class="bg-primary text-white text-center">To'lov haqida</th>
+                                            <th class="bg-primary text-white text-center">Meneger</th>
+                                            <th class="bg-primary text-white text-center">To'lov vaqti</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @forelse($pays as $item)
                                         <tr>
-                                            <td class="text-center">1</td>
-                                            <td>Bo'sh</td>
-                                            <td>Bo'sh</td>
-                                            <td>Bo'sh</td>
-                                            <td>Bo'sh</td>
-                                            <td>Bo'sh</td>
-                                            <td>Bo'sh</td>
+                                            <td class="text-center">{{ $loop->index+1 }}</td>
+                                            <td>{{ $item['fio'] }}</td>
+                                            <td>{{ $item['guruh'] }}</td>
+                                            <td>{{ $item['summa'] }}</td>
+                                            <td>{{ $item['type'] }}</td>
+                                            <td>{{ $item['about'] }}</td>
+                                            <td>{{ $item['meneger'] }}</td>
+                                            <td>{{ $item['created_at'] }}</td>
                                         </tr>
-                                        <tr>
-                                            <td class="text-center">2</td>
-                                            <td>Bo'sh</td>
-                                            <td>Bo'sh</td>
-                                            <td>Bo'sh</td>
-                                            <td>Bo'sh</td>
-                                            <td>Bo'sh</td>
-                                            <td>Bo'sh</td>
-                                        </tr>
+                                        @empty
+
+                                        @endforelse
                                     </tbody>
                                 </table>
                             </div>
