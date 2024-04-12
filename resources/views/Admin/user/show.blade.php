@@ -123,37 +123,60 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">To'lov qilish</h5>
+                    <h5 class="modal-title w-100 text-center">To'lov qilish</h5>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="col-6">
-                            <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
+                    <form action="{{ route('AdminUserTulov') }}" method="post" id="form1">
+                        @csrf 
+                        <input type="hidden" name="user_id" value="{{ $Users['id'] }}">
+                        <label for="naqt" class="mb-1">To'lov summasi (NAQT)</label>
+                        <input type="text" name="naqt" value="0" id="summa1" class="form-control" required>
+                        <label for="plastik" class="mb-1 mt-2">To'lov summasi (PLASTIK)</label>
+                        <input type="text" name="plastik" value="0" id="summa2" class="form-control" required>
+                        <label for="guruh_id" class="mb-1 mt-2">Chegirmali guruhni tanlang.</label>
+                        <select name="guruh_id"  class="form-select">
+                            <option value="">Tanlang...</option>
+                            @foreach($ChegirmaGuruh as $item)
+                            <option value="{{ $item['guruh_id'] }}">{{ $item['guruh_name'] }} (Tulov:{{ $item['chegirmaTulov'] }})</option>
+                            @endforeach
+                        </select>
+                        <label for="about" class="mb-1 mt-2">To'lov haqida</label>
+                        <textarea type="text" name="about" class="form-control mb-3"></textarea>
+                        <div class="row">
+                            <div class="col-6">
+                                <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
+                            </div>
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-primary w-100">To'lov</button>
+                            </div>
                         </div>
-                        <div class="col-6">
-                            <button type="button" class="btn btn-primary w-100">Yangilash</button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-    <!-- To'lov qilish -->
+    <!-- SMS yuborish +++ -->
     <div class="modal fade" id="sendMessege" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">SMS yuborish</h5>
+                    <h5 class="modal-title w-100 text-center">SMS yuborish</h5>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="col-6">
-                            <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
+                    <form action="{{ route('AdminUserSendMessege') }}" method="post">
+                        @csrf
+                        <input type="hidden" name="user_id" value="{{ $Users['id'] }}">
+                        <label for="text">SMS matni</label>
+                        <textarea name="text" class="form-control mb-3" required></textarea>
+                        <div class="row">
+                            <div class="col-6">
+                                <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
+                            </div>
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-primary w-100">SMS yuborish</button>
+                            </div>
                         </div>
-                        <div class="col-6">
-                            <button type="button" class="btn btn-primary w-100">Yangilash</button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -178,7 +201,7 @@
             </div>
         </div>
     </div>
-    <!-- Guruhga qo'shish -->
+    <!-- Guruhga qo'shish +++ -->
     <div class="modal fade" id="guruhPlusUser" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -211,7 +234,7 @@
             </div>
         </div>
     </div>
-    <!-- User Edet -->
+    <!-- User Edet +++ -->
     <div class="modal fade" id="userEdit" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -225,9 +248,9 @@
                         <label for="name" class="mb-1">Talaba FIO</label>
                         <input type="text" name="name" class="form-control"  value="{{ $Users['name'] }}" required>
                         <label for="phone" class="mt-2 mb-1">Telefon raqam</label>
-                        <input type="text" name="phone" class="form-control"  value="{{ $Users['phone'] }}" required>
+                        <input type="text" name="phone" class="form-control phone"  value="{{ $Users['phone'] }}" required>
                         <label for="phone2" class="mt-2 mb-1">Tanish telefon raqami</label>
-                        <input type="text" name="phone2" class="form-control"  value="{{ $Users['phone2'] }}" required>
+                        <input type="text" name="phone2" class="form-control phone"  value="{{ $Users['phone2'] }}" required>
                         <label for="addres" class="mt-2 mb-1">Yashash manzili</label>
                         <select name="addres" class="form-select">
                             <option value="">Tanlang</option>
@@ -266,7 +289,7 @@
             </div>
         </div>
     </div>
-    <!-- Parolni yangilash -->
+    <!-- Parolni yangilash +++ -->
     <div class="modal fade" id="resetPassword" tabindex="-1">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
@@ -274,13 +297,15 @@
                     <h5 class="modal-title w-100 text-center">Paroni yangilash</h5>
                 </div>
                 <div class="modal-body">
-                    <form action="" method="post">
+                    <form action="{{ route('AdminUserPasswordUpdate') }}" method="post">
+                        @csrf 
+                        <input type="hidden" name="id" value="{{ $Users['id'] }}">
                         <div class="row">
                             <div class="col-6">
                                 <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
                             </div>
                             <div class="col-6">
-                                <button type="button" class="btn btn-primary w-100">Yangilash</button>
+                                <button type="submit" class="btn btn-primary w-100">Yangilash</button>
                             </div>
                         </div>
                     </form>
@@ -428,19 +453,33 @@
                                     <th>Meneger</th>
                                     <th>Qoshish haqida</th>
                                     <th>Guruhdan o'chirildi</th>
+                                    <th>Meneger</th>
                                     <th>O'chirish haqida</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @forelse($userArxivGuruh as $item)
                                 <tr>
-                                    <td class="text-center">1</td>
-                                    <td>Bo'sh</td>
-                                    <td>Bo'sh</td>
-                                    <td>Bo'sh</td>
-                                    <td>Bo'sh</td>
-                                    <td>Bo'sh</td>
-                                    <td>Bo'sh</td>
+                                    <td class="text-center">{{ $loop->index+1 }}</td>
+                                    <td><a href="{{ route('AdminGuruhShow',$item['guruh_id'] ) }}">{{ $item['guruh_name'] }}</a></td>
+                                    <td>{{ $item['guruh_start'] }}</td>
+                                    <td>{{ $item['admin_id_start'] }}</td>
+                                    <td>{{ $item['commit_start'] }}</td>
+                                    <td>{{ $item['updated_at'] }}</td>
+                                    <td>{{ $item['admin_id_end'] }}</td>
+                                    <td>{{ $item['commit_end'] }}</td>
+                                    <td class="text-center">
+                                        @if($item['status']=='false')
+                                            <p class="bg-danger p-1 m-0 text-white">O'chirildi</p>
+                                        @else
+                                            <p class="bg-success p-1 m-0 text-white">Faol</p>
+                                        @endif
+                                    </td>
                                 </tr> 
+                                @empty
+
+                                @endforelse
                             </tbody>
                         </table>
                     </div>

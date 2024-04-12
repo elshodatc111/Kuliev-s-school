@@ -8,10 +8,14 @@ use App\Models\AdminKassa;
 use App\Models\UserHistory;
 use App\Models\GuruhUser;
 use App\Events\CreateTashrif;
+use App\Events\createTulov;
+use App\Events\UserResetPassword;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use mrmuminov\eskizuz\Eskiz;
+use mrmuminov\eskizuz\types\sms\SmsSingleSmsType;
 
 class AdminStudentController extends Controller{
     public function __construct(){
@@ -127,6 +131,37 @@ class AdminStudentController extends Controller{
         $Users['email'] = $User->email;
         return $Users;
     }
+    public function passwordUpdate(Request $request){
+        $password = rand(10000000,99999999);
+        $User = User::find($request->id);
+        $User->password = Hash::make($password);
+        $User->save();
+        UserResetPassword::dispatch($User->name,$password,$User->phone);
+        return redirect()->back()->with('success', 'Talaba paroli yangilandi.'); 
+    }
+    public function sendMessege(Request $request){
+        $User = User::find($request->user_id);
+        $phone = "+998".str_replace(" ","",$User->phone);
+        $Text = $request->text;
+        $eskiz_email = env('ESKIZ_UZ_EMAIL');
+        $eskiz_password = env('ESKIZ_UZ_Password');
+        $eskiz = new Eskiz($eskiz_email,$eskiz_password);
+        $eskiz->requestAuthLogin();
+        $from='4546';
+        $mobile_phone = $phone;
+        $message = $Text;
+        $user_sms_id = 1;
+        $callback_url = '';
+        $singleSmsType = new SmsSingleSmsType(
+            from: $from,
+            message: $message,
+            mobile_phone: $mobile_phone,
+            user_sms_id:$user_sms_id,
+            callback_url:$callback_url
+        );
+        $result = $eskiz->requestSmsSend($singleSmsType);
+        return redirect()->back()->with('success', 'SMS xabar yuborildi.'); 
+    }
     public function Guruhs($id){
         $Guruhs = Guruh::where('guruh_end','>',date('Y-m-d'))
             ->where('filial_id',request()->cookie('filial_id'))->get();
@@ -150,18 +185,68 @@ class AdminStudentController extends Controller{
     public function TalabaGuruhlari($id){
         $GuruhUser = GuruhUser::where('user_id',$id)->get();
         $result = array();
-        #dd($GuruhUser->guruh_id);
         foreach($GuruhUser as $key => $item){
             $result[$key]['guruh_name'] = Guruh::where('id',$item->guruh_id)->first()->guruh_name;
-        #dd($result);
         }
+    }
+    public function userArxivGuruh($id){
+        $userArxivGuruh = GuruhUser::where('user_id',$id)->get();
+        $History = array();
+        foreach($userArxivGuruh as $key => $item){
+            $History[$key]['id'] = $item->id;
+            $History[$key]['guruh_id'] = $item->guruh_id;
+            $History[$key]['guruh_name'] = Guruh::find($item->guruh_id)->guruh_name;
+            $History[$key]['guruh_start'] = $item->created_at;
+            $History[$key]['commit_start'] = $item->commit_start;
+            $History[$key]['admin_id_start'] = User::where('id',$item->admin_id_start)->first()->email;
+            $History[$key]['status'] = $item->status;
+            if($item->status=='true'){
+                $History[$key]['admin_id_end'] = " ";
+                $History[$key]['updated_at'] = " ";
+                $History[$key]['commit_end'] = " ";
+            }else{
+                $History[$key]['commit_end'] = $item->commit_end;
+                $History[$key]['admin_id_end'] = User::where('id',$item->admin_id_end)->first()->email;
+                $History[$key]['updated_at'] = $item->updated_at;
+            }
+        }
+        return $History;
+    }
+    public function chegirmaliGuruhlar($id){
+        $userArxivGuruh = GuruhUser::where('user_id',$id)->where('status','true')->get();
+        $ChegirmaDay = date("Y-m-d",strtotime('-3 day',strtotime(date('Y-m-d'))));
+        $Guruhlar = array();
+        foreach ($userArxivGuruh as $key => $value) {
+            $Guruh = Guruh::where('id',$value->guruh_id)->where('guruh_start','>=',$ChegirmaDay)->first();
+            if($Guruh){
+                $Guruhlar[$key]['guruh_id'] = $Guruh->id;
+                $Guruhlar[$key]['guruh_name'] = $Guruh->guruh_name;
+                $Guruhlar[$key]['chegirmaTulov'] = $Guruh->guruh_price-$Guruh->guruh_chegirma;
+            }
+        }
+        return $Guruhlar;
     }
     public function show($id){
         $Users = $this->userAbout($id);
         $Guruhs = $this->Guruhs($id);
         $userHistory = $this->userHistory($id);
         $talaba_guruh = $this->TalabaGuruhlari($id);
-        return view('Admin.user.show',compact('Users','Guruhs','userHistory','talaba_guruh'));
+        $userArxivGuruh = $this->userArxivGuruh($id);
+        $ChegirmaGuruh = $this->chegirmaliGuruhlar($id);
+        return view('Admin.user.show',compact('Users','Guruhs','userHistory','talaba_guruh','userArxivGuruh','ChegirmaGuruh'));
+    }
+
+    public function tulov(Request $request){
+        $validate = $request->validate([
+            'user_id' => ['required', 'string', 'max:255'],
+            'naqt' => ['required', 'string', 'max:255'],
+            'plastik' => ['required', 'string', 'max:255']
+        ]);
+        if($request->naqt == '0' AND $request->plastik == '0'){
+            return redirect()->back()->with('error', 'To\'lov summasi noto\'g\'ri kiritildi.'); 
+        }
+        createTulov::dispatch($request->user_id, $request->naqt, $request->plastik, $request->guruh_id, $request->about);
+        return redirect()->back()->with('success', 'To\'lov amalga oshirildi.'); 
     }
 
 }

@@ -52,8 +52,11 @@ Route::get('/Admin/student/debit', [AdminStudentController::class, 'debit'])->na
 Route::get('/Admin/student/pays', [AdminStudentController::class, 'pays'])->name('StudentTulovlar');
 Route::get('/Admin/student/create', [AdminStudentController::class, 'create'])->name('StudentCreate');
 Route::post('/Admin/student/story', [AdminStudentController::class, 'store'])->name('StudentCreateStore');
-Route::post('/Admin/guruh/guruh/plus', [AdminStudentController::class, 'guruhPlus'])->name('AdminUserGuruhPlus');
 Route::post('/Admin/student/update', [AdminStudentController::class, 'update'])->name('AdminUserUpdate');
+Route::post('/Admin/student/password/update', [AdminStudentController::class, 'passwordUpdate'])->name('AdminUserPasswordUpdate');
+Route::post('/Admin/student/guruh/plus', [AdminStudentController::class, 'guruhPlus'])->name('AdminUserGuruhPlus');
+Route::post('/Admin/student/send/messege', [AdminStudentController::class, 'sendMessege'])->name('AdminUserSendMessege');
+Route::post('/Admin/student/pay', [AdminStudentController::class, 'tulov'])->name('AdminUserTulov');
 
 Route::get('/Admin/guruh', [AdminGuruhController::class, 'index'])->name('AdminGuruh');
 Route::get('/Admin/guruh/show/{id}', [AdminGuruhController::class, 'show'])->name('AdminGuruhShow');
