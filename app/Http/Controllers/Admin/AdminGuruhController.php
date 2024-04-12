@@ -252,9 +252,11 @@ class AdminGuruhController extends Controller{
         $Guruh['guruh_vaqt'] = $Guruhlar->guruh_vaqt;
         $Guruh['admin_id'] = User::find($Guruhlar->admin_id)->email;
         $Guruh['techer_id'] = User::find($Guruhlar->techer_id)->name;
+        $Guruh['techer_techer'] = $Guruhlar->techer_id;
         $Guruh['created_at'] = $Guruhlar->created_at;
         $Guruh['updated_at'] = $Guruhlar->updated_at;
         $Guruh['cours_id'] = Cours::find($Guruhlar->cours_id)->cours_name;
+        $Guruh['cours_cours'] = $Guruhlar->cours_id;
         $Guruh['room_id'] = Room::find($Guruhlar->room_id)->room_name;
         $Guruh['id'] = $Guruhlar->id;
         switch ($Guruhlar->guruh_vaqt) {
@@ -330,13 +332,14 @@ class AdminGuruhController extends Controller{
         }
         return $Users;
     }
-
     public function show($id){
         $Guruh = $this->GuruhAbout($id);
         $Days = GuruhTime::where('guruh_id',$Guruh['id'])->get();
+        $TulovSetting = TulovSetting::where('filial_id',request()->cookie('filial_id'))->get();
+        $Room = Room::where('filial_id',request()->cookie('filial_id'))->where('status','true')->get();
         $UsersDeletes = $this->userEndGroups($id);
         $Talabalar = $this->guruhTalabalari($id);
-        return view('Admin.guruh.show',compact('Guruh','Days','UsersDeletes','Talabalar'));
+        return view('Admin.guruh.show',compact('TulovSetting','Room','Guruh','Days','UsersDeletes','Talabalar'));
     }
     public function guruhDelUser(Request $request){
         $validate = $request->validate([
@@ -434,5 +437,136 @@ class AdminGuruhController extends Controller{
         }
         return redirect()->back()->with('success', $k.' ta qarzdor talabaga sms xabar yuborildi.');
     }
+    public function CreateGuruhNext(Request $request){
+        if($request->dars_boshlanish_vaqti<date("Y-m-d")){
+            return redirect()->back()->with('error', 'Yangi guruhni bugungi kungacha bo\'lgan kunlar bilan ochish mumkun emas.');
+        }
+        $Guruh = Guruh::find($request->guruh_id);
+        $NewGuruhForm = array();
+        $NewGuruhForm['filial_id'] = request()->cookie('filial_id');
+        $NewGuruhForm['techer_id'] = $request->techer_id;
+        $NewGuruhForm['cours_id'] = $request->cours_id;
+        $NewGuruhForm['room_id'] = $request->room_id;
+        $NewGuruhForm['guruh_name'] = $request->guruh_name;
+        $NewGuruhForm['guruh_price'] = TulovSetting::find($request->guruh_price)->tulov_summa;
+        $NewGuruhForm['guruh_chegirma'] = TulovSetting::find($request->guruh_price)->chegirma;
+        $NewGuruhForm['guruh_admin_chegirma'] = TulovSetting::find($request->guruh_price)->admin_chegirma;
+        $NewGuruhForm['techer_price'] = intval(str_replace(",","",$request->techer_price));
+        $NewGuruhForm['techer_bonus'] = intval(str_replace(",","",$request->techer_bonus));
+        $NewGuruhForm['guruh_status'] = 'true';
+        $NewGuruhForm['guruh_start'] = $request->dars_boshlanish_vaqti;
+        $NewGuruhForm['admin_id'] = Auth::user()->id;
+        $NewGuruh = array();
+        $NewGuruh['guruh_name'] = $request->guruh_name;
+        $NewGuruh['guruh_price'] = TulovSetting::find($request->guruh_price)->tulov_summa;
+        $NewGuruh['techer_id'] = User::find($request->techer_id)->name;
+        $NewGuruh['techer_price'] = $request->techer_price;
+        $NewGuruh['techer_bonus'] = $request->techer_bonus;
+        $NewGuruh['cours_id'] = Cours::find($request->cours_id)->cours_name;
+        $NewGuruh['room_id'] = Room::find($request->room_id)->room_name;
+        $NewGuruh['guruh_start'] = $request->dars_boshlanish_vaqti;
+        $NewGuruh['dars_kunlari'] = $this->DarsKunlari($request->dars_boshlanish_vaqti,$request->hafta_kun);
+        $NewGuruh['guruh_end'] = end($NewGuruh['dars_kunlari']);
+        $NewGuruh['hafta_kuni'] = $request->hafta_kuni;
+        $NewGuruh['users'] = GuruhUser::where('guruh_users.guruh_id',$request->guruh_id)->where('guruh_users.status','true')->join('users','users.id','guruh_users.user_id')->select('users.id','users.name')->get();
+        $dars_vaqti = array(1,2,3,4,5,6,7,8,9);
+        foreach ($dars_vaqti as $value) {
+            $K = 0;
+            foreach($NewGuruh['dars_kunlari'] as $item){
+                $GuruhJadval = GuruhTime::where('room_id',$request->room_id)
+                ->where('dates',$item)
+                ->where('times',$value)->get();
+                if(count($GuruhJadval)>0){
+                    $K++;
+                }
+            }
+            if($K>0){
+                unset($dars_vaqti[$value-1]);
+            }
+        }
+        $NewGuruh['bosh_vaqtlar'] = $this->boshSoatlar($dars_vaqti);
+        return view('Admin.guruh.create_next',compact('Guruh','NewGuruh','NewGuruhForm'));
+    }
+    public function CreateGuruhNext2(Request $request){
+        $DarsKunlari = array();
+        $DarsKunlari['0'] = $request->kun0;
+        $DarsKunlari['1'] = $request->kun1;
+        $DarsKunlari['2'] = $request->kun2;
+        $DarsKunlari['3'] = $request->kun3;
+        $DarsKunlari['4'] = $request->kun4;
+        $DarsKunlari['5'] = $request->kun5;
+        $DarsKunlari['6'] = $request->kun6;
+        $DarsKunlari['7'] = $request->kun7;
+        $DarsKunlari['8'] = $request->kun8;
+        $DarsKunlari['9'] = $request->kun9;
+        $DarsKunlari['10'] = $request->kun10;
+        $DarsKunlari['11'] = $request->kun11;
+        $DarsKunlari['12'] = $request->kun12;
+        $validate = $request->validate([
+            'techer_id' => ['required', 'string', 'max:255'],
+            'cours_id' => ['required', 'string', 'max:255'],
+            'room_id' => ['required', 'string', 'max:255'],
+            'guruh_name' => ['required', 'string', 'max:255'],
+            'guruh_price' => ['required', 'string', 'max:255'],
+            'guruh_chegirma' => ['required', 'string', 'max:255'],
+            'guruh_admin_chegirma' => ['required', 'string', 'max:255'],
+            'techer_price' => ['required', 'string', 'max:255'],
+            'techer_bonus' => ['required', 'string', 'max:255'],
+            'guruh_status' => ['required', 'string', 'max:255'],
+            'guruh_start' => ['required', 'string', 'max:255'],
+            'guruh_end' => ['required', 'string', 'max:255'],
+            'guruh_vaqt' => ['required', 'string', 'max:255'],
+        ]);
+        $validate['admin_id'] = Auth::User()->id;
+        $validate['filial_id'] = request()->cookie('filial_id');
+        $Guruh = Guruh::create($validate);
+        $filial_id = $Guruh->filial_id;
+        $guruh_id = $Guruh->id;
+        $room_id = $Guruh->room_id;
+        $times = $Guruh->guruh_vaqt;
+        foreach ($DarsKunlari as $key => $value) {
+            $GuruhTime = GuruhTime::create([
+                'filial_id'=>$filial_id,
+                'guruh_id'=>$guruh_id,
+                'room_id'=>$room_id,
+                'dates'=>$value,
+                'times'=>$times,
+            ]);
+        }
+        $admin_id_start = $Guruh->admin_id;
+        $commit_start = "Yangi guruhga ko'chirildi.";
+        $status = "true";
+        $GuruhUser = GuruhUser::where('guruh_id',$request->guruh_id)->where('status','true')->get();
+        foreach ($GuruhUser as $key => $value) {
+            $Userss = strval('User'.$value->user_id);
+            if($request->$Userss){
+                GuruhUser::create([
+                    'filial_id'=>$filial_id,
+                    'user_id'=>$value->user_id,
+                    'guruh_id'=>$guruh_id,
+                    'status'=>$status,
+                    'commit_start'=>$commit_start,
+                    'admin_id_start'=>$admin_id_start,
+                ]);
+                $Users = User::find($value->user_id);
+                $Balans = $Users->balans;
+                $Qoldiq = $Balans-$Guruh->guruh_price;
+                $Users->balans = $Qoldiq;
+                $Users->save();
+                $UserHistory = UserHistory::create([
+                    'filial_id'=>request()->cookie('filial_id'),
+                    'user_id'=>$value->user_id,
+                    'status'=>"Guruhga qo'shildi",
+                    'type'=>$Guruh->guruh_name,
+                    'summa'=>$Guruh->guruh_price,
+                    'xisoblash'=>$Balans."-".$Guruh->guruh_price."=".$Qoldiq,
+                    'balans'=>$Qoldiq,
+                ]);
+            }
+        }
+        return redirect()->route('AdminGuruhShow',$guruh_id)->with('success', 'Yangi guruh ochildi.');
+    }
+
+    
 
 }

@@ -67,6 +67,8 @@ Route::get('/Admin/guruh/end', [AdminGuruhController::class, 'endGuruh'])->name(
 Route::get('/Admin/guruh/create', [AdminGuruhController::class, 'CreateGuruh'])->name('AdminGuruhCreate');
 Route::post('/Admin/guruh/create1', [AdminGuruhController::class, 'CreateGuruh1'])->name('AdminGuruhCreate1');
 Route::post('/Admin/guruh/create2', [AdminGuruhController::class, 'CreateGuruh2'])->name('AdminGuruhCreate2');
+Route::put('/Admin/guruh/create/next', [AdminGuruhController::class, 'CreateGuruhNext'])->name('CreateGuruhNext');
+Route::post('/Admin/guruh/create/next2', [AdminGuruhController::class, 'CreateGuruhNext2'])->name('CreateGuruhNext2');
 Route::post('/Admin/guruh/deleteUser', [AdminGuruhController::class, 'guruhDelUser'])->name('guruhDeletesUserss');
 Route::post('/Admin/guruh/user/sendMessege', [AdminGuruhController::class, 'userSendMessege'])->name('userSendMessege');
 Route::post('/Admin/guruh/debit/sendMessege', [AdminGuruhController::class, 'debitSendMessege'])->name('debitSendMessege');

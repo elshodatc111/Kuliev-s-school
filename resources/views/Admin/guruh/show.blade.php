@@ -423,7 +423,10 @@
                     <h5 class="modal-title">Guruhni davom ettiritsh</h5>
                 </div>
                 <div class="modal-body">
-                    <form action="" method="post" id="form4">
+                    <form action="{{ route('CreateGuruhNext') }}" method="post" id="form4">
+                        @csrf 
+                        @method('put')
+                        <input type="hidden" name="guruh_id" value="{{ $Guruh['id'] }}">
                         <div class="row">
                             <div class="col-12 text-center">
                                 <h5 class="card-title mt-0 pt-0">
@@ -432,96 +435,65 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="guruh_name" required>
+                                    <input type="text" class="form-control" name="guruh_name" id="guruh_name" required>
                                     <label for="guruh_name">Yangi guruh nomi</label>
                                 </div>
                                 <div class="form-floating mt-2">
-                                    <select class="form-select" id="guruh_price" required>
+                                    <select class="form-select" name="guruh_price" id="guruh_price" required>
                                         <option value>Tanlang...</option>
-                                        <option value="1">1000000</option>
-                                        <option value="2">1000000</option>
+                                        @foreach($TulovSetting as $item)
+                                        <option value="{{ $item['id'] }}">{{ $item['tulov_summa'] }}</option>
+                                        @endforeach
                                     </select>
                                     <label for="guruh_price">Yangi guruh narxi</label>
                                 </div>
                                 <div class="form-floating mt-2">
-                                    <input type="date" class="form-control" id="dars_boshlanish_vaqti" required>
+                                    <input type="date" class="form-control" name="dars_boshlanish_vaqti" id="dars_boshlanish_vaqti" required>
                                     <label for="dars_boshlanish_vaqti">Dars boshlanish</label>
                                 </div>
                                 <div class="form-floating mt-2">
-                                    <select class="form-select" id="hafta_kuni" required>
+                                    <select class="form-select" name="hafta_kuni" id="hafta_kuni" required>
                                         <option value>Tanlang...</option>
-                                        <option value="1">Toq kunlar</option>
-                                        <option value="2">Juft kunlar</option>
+                                        <option value="toq">Toq kunlar</option>
+                                        <option value="juft">Juft kunlar</option>
                                     </select>
                                     <label for="hafta_kuni">Hafta kuni</label>
                                 </div>  
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-floating">
-                                    <select class="form-select" id="guruh_price" required>
+                                    <select class="form-select" name="room_id" id="room_id" required>
                                         <option value="">Tanlang...</option>
+                                        @foreach($Room as $item)
+                                        <option value="{{ $item['id'] }}">{{ $item['room_name'] }}</option>
+                                        @endforeach
                                     </select>
-                                    <label for="guruh_price">Dars xonasi</label>
+                                    <label for="room_id">Dars xonasi</label>
                                 </div>
                                 <div class="form-floating mt-2">
-                                    <select class="form-select" id="hafta_kuni" required>
-                                        <option value>Tanlang...</option>
-                                        <option value="1">Toq kunlar</option>
-                                        <option value="2">Juft kunlar</option>
+                                    <select class="form-select" name="cours_id" id="cours_id" required>
+                                        <option value="{{ $Guruh['cours_cours'] }}">{{ $Guruh['cours_id'] }}</option>
                                     </select>
-                                    <label for="hafta_kuni">Guruh uchun kurs</label>
+                                    <label for="cours_id">Guruh uchun kurs</label>
                                 </div>
                                 <div class="form-floating mt-2">
-                                    <select class="form-select" id="hafta_kuni" required>
-                                        <option value>Tanlang...</option>
-                                        <option value="1">Toq kunlar</option>
-                                        <option value="2">Juft kunlar</option>
+                                    <select class="form-select" name="techer_id" id="techer_id" required>
+                                        <option value="{{ $Guruh['techer_techer'] }}">{{ $Guruh['techer_id'] }}</option>
                                     </select>
-                                    <label for="hafta_kuni">Guruh o'qituvchisi</label>
+                                    <label for="techer_id">Guruh o'qituvchisi</label>
                                 </div>
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-floating mt-2">
-                                            <input type="text" id="summa1" class="form-control" id="dars_boshlanish_vaqti" required>
-                                            <label for="dars_boshlanish_vaqti">O'qituvchiga to'lov</label>
+                                            <input type="text" id="summa1" class="form-control" name="techer_price" value="{{ $Guruh['techer_price'] }}" id="techer_price" required>
+                                            <label for="techer_price">O'qituvchiga to'lov</label>
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="form-floating mt-2">
-                                            <input type="text" id="summa2" class="form-control" id="dars_boshlanish_vaqti" required>
-                                            <label for="dars_boshlanish_vaqti">O'qituvchiga bonus</label>
+                                            <input type="text" id="summa2" class="form-control"  name="techer_bonus" value="{{ $Guruh['techer_bonus'] }}" id="techer_bonus" required>
+                                            <label for="techer_bonus">O'qituvchiga bonus</label>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 row">
-                                <div class="col-12 text-center">
-                                    <h5 class="card-title">
-                                        Yangi guruhga qo'shiladigan talabalar.
-                                    </h5>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="form-check form-switch mt-1" style="text-align:left;">
-                                        <input class="form-check-input" type="checkbox" id="01011">
-                                        <label class="form-check-label w-100" for="01011">Elshod Musurmonov</label>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="form-check form-switch mt-1" style="text-align:left;">
-                                        <input class="form-check-input" type="checkbox" id="0101d1">
-                                        <label class="form-check-label w-100" for="0101d1">Elshod Musurmonov</label>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="form-check form-switch mt-1" style="text-align:left;">
-                                        <input class="form-check-input" type="checkbox" id="010sss11">
-                                        <label class="form-check-label w-100" for="010sss11">Elshod Musurmonov</label>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="form-check form-switch mt-1" style="text-align:left;">
-                                        <input class="form-check-input" type="checkbox" id="010sas11">
-                                        <label class="form-check-label w-100" for="010sas11">Elshod Musurmonov</label>
                                     </div>
                                 </div>
                             </div>
@@ -532,7 +504,7 @@
                                 <button type="button" class="btn btn-secondary my-2 w-100" data-bs-dismiss="modal">Bekor qilish</button>
                             </div>
                             <div class="col-6">
-                                <button type="button" class="btn btn-success my-2 w-100">Kiyingi</button>
+                                <button type="submit" class="btn btn-success my-2 w-100">Kiyingi</button>
                             </div>
                         </div>
                     </form>
