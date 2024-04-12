@@ -140,7 +140,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Guruh Talabalariga SMS yuborish -->
+                        <!-- Guruh Talabalariga SMS yuborish +++ -->
                         <div class="modal fade" id="alluserSendMessege" tabindex="-1">
                             <div class="modal-dialog">
                                 <div class="modal-content">
@@ -148,17 +148,19 @@
                                         <h5 class="modal-title w-100 text-center">Guruh talabalariga sms yuborish.</h5>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="" method="post">
+                                        <form action="{{ route('userSendMessege') }}" method="post">
+                                            @csrf
                                             <div class="row px-3">
+                                                <input type="hidden" name="guruh_id" value="{{ $Guruh['id'] }}">
+                                                @foreach($Talabalar as $item)
+                                                @if($item['status']=='Faol')
                                                 <div class="form-check form-switch my-1">
-                                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                                                    <label class="form-check-label w-100" style="text-align:left;" for="flexSwitchCheckDefault">Elshod Musurmonov</label>
+                                                    <input class="form-check-input" type="checkbox" id="{{ $item['user_id'] }}" name="User{{ $item['user_id'] }}">
+                                                    <label class="form-check-label w-100" style="text-align:left;" for="{{ $item['user_id'] }}">{{ $item['User'] }}</label>
                                                 </div>
-                                                <div class="form-check form-switch my-1">
-                                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked">
-                                                    <label class="form-check-label w-100" style="text-align:left;" for="flexSwitchCheckChecked">Dilshod Xolmurodov</label>
-                                                </div>
-                                                <textarea name="" placeholder="SMS matni..." required class="form-control my-3"></textarea>
+                                                @endif
+                                                @endforeach
+                                                <textarea name="text" placeholder="SMS matni..." required class="form-control my-3"></textarea>
                                                 <div class="row">
                                                     <div class="col-6">
                                                         <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilisk</button>
@@ -173,7 +175,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Gurugdagi qarzdorlarga SMS yuborish -->
+                        <!-- Gurugdagi qarzdorlarga SMS yuborish +++ -->
                         <div class="modal fade" id="GuruhDebetUserSendMessege" tabindex="-1">
                             <div class="modal-dialog modal-sm">
                                 <div class="modal-content">
@@ -181,9 +183,9 @@
                                         <h5 class="modal-title w-100 text-center">Qarzdor talabalarga SMS yuborilsinmi?</h5>
                                     </div>
                                     <div class="modal-body text-center p-0">
-                                        <form action="#" method="post" class="p-0 m-0 w-100 py-2">
+                                        <form action="{{ route('debitSendMessege') }}" method="post" class="p-0 m-0 w-100 py-2">
                                             @csrf
-                                            <input type="hidden" name="user_id" value="#">
+                                            <input type="hidden" name="guruh_id" value="{{ $Guruh['id'] }}">
                                             <button type="button" class="btn btn-secondary" style="width:47%;" data-bs-dismiss="modal">Bekor qilish</button>
                                             <button type="submit66" class="btn btn-success" style="width:47%;">SMS yuborish</button>
                                         </form>
@@ -191,7 +193,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Guruhdan talaba o'chirish -->
+                        <!-- Guruhdan talaba o'chirish +++ -->
                         <div class="modal fade" id="GuruhDeleteUser" tabindex="-1">
                             <div class="modal-dialog">
                                 <div class="modal-content">
