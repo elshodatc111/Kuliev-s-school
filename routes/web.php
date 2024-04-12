@@ -57,6 +57,7 @@ Route::post('/Admin/student/password/update', [AdminStudentController::class, 'p
 Route::post('/Admin/student/guruh/plus', [AdminStudentController::class, 'guruhPlus'])->name('AdminUserGuruhPlus');
 Route::post('/Admin/student/send/messege', [AdminStudentController::class, 'sendMessege'])->name('AdminUserSendMessege');
 Route::post('/Admin/student/pay', [AdminStudentController::class, 'tulov'])->name('AdminUserTulov');
+Route::get('/Admin/student/pay/delete/{id}', [AdminStudentController::class, 'tulovDelete'])->name('AdminUserTulovDelete');
 
 Route::get('/Admin/guruh', [AdminGuruhController::class, 'index'])->name('AdminGuruh');
 Route::get('/Admin/guruh/show/{id}', [AdminGuruhController::class, 'show'])->name('AdminGuruhShow');

@@ -56,6 +56,11 @@ class UserTulov{
             }else{
                 $Chegirma=0;
             }
+            $FilialKassa = FilialKassa::where('filial_id',request()->cookie('filial_id'))->first();
+            $tulov_chegirma = $FilialKassa->tulov_chegirma;
+            $Mavjud = $tulov_chegirma + $Chegirma;
+            $FilialKassa->tulov_chegirma=$Mavjud;
+            $FilialKassa->save();
         }else{
             $Guruh_Name = ' ';
             $Chegirma = 0;

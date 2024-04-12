@@ -7,6 +7,7 @@ use App\Models\Guruh;
 use App\Models\AdminKassa;
 use App\Models\UserHistory;
 use App\Models\GuruhUser;
+use App\Models\FilialKassa;
 use App\Models\Tulov;
 use App\Events\CreateTashrif;
 use App\Events\createTulov;
@@ -267,5 +268,46 @@ class AdminStudentController extends Controller{
         createTulov::dispatch($request->user_id, $request->naqt, $request->plastik, $request->guruh_id, $request->about);
         return redirect()->back()->with('success', 'To\'lov amalga oshirildi.'); 
     }
-
+    public function tulovDelete($id){
+        $TalabaTulovlar = Tulov::where('id',$id)->first();
+        $user_id = $TalabaTulovlar->user_id;
+        $guruh_id = $TalabaTulovlar->guruh_id;
+        if($guruh_id=='NULL'){
+            $guruh_name = " ";
+        }else{
+            $guruh_name = Guruh::where('id',$guruh_id)->first()->guruh_name;
+        }
+        $summa = $TalabaTulovlar->summa;
+        $type = $TalabaTulovlar->type;
+        $User = User::find($user_id);
+        $User_Balans = $User->balans;
+        $User_balans = $User->balans;
+        $User->balans = $User_balans-$summa;
+        $User->save();
+        $FilialKassa = FilialKassa::where('filial_id',request()->cookie('filial_id'))->first();
+        if($type=='Chegirma'){
+            if(empty($FilialKassa->tulov_chegirma)){
+                $TypeChegirma = 0;
+            }else{
+                $TypeChegirma = $FilialKassa->tulov_chegirma;
+            }
+            $FilialKassa->tulov_chegirma = $TypeChegirma-$summa; 
+        }elseif($type='Naqt'){
+            $FilialKassa->tulov_naqt = $FilialKassa->tulov_naqt-$summa;        
+        }elseif($type='Plastik'){
+            $FilialKassa->tulov_plastik = $FilialKassa->tulov_plastik-$summa;            
+        }
+        $FilialKassa->save();
+        $UserHistory = UserHistory::create([
+            'filial_id'=>request()->cookie('filial_id'),
+            'user_id'=>$user_id,
+            'status'=>"To'lov o'chirildi(".$type.")",
+            'type'=>$guruh_name,
+            'summa'=>$summa,
+            'xisoblash'=>$User_Balans."-".$summa."=".$User->balans,
+            'balans'=>$User->balans
+        ]);
+        $TalabaTulovlar->delete();
+        return redirect()->back()->with('success', 'To\'lov o\'chirildi.'); 
+    }
 }

@@ -98,13 +98,13 @@
                         <div class="col-lg-3 col-6">
                             <button class="btn my-1 btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#guruhPlusUser"><i class="bi bi-cash-coin"></i> Guruhga qo'shish</button>
                         </div>
+                        @if(Auth::user()->type!='Operator')
                         <div class="col-lg-3 col-6">
                             <button class="btn my-1 btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#userEdit"><i class="bi bi-pencil-square"></i> Taxrirlash</button>
                         </div>
                         <div class="col-lg-3 col-6">
                             <button class="btn my-1 btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#resetPassword"><i class="bi bi-lock"></i> Parolni yangilash</button>
                         </div>
-                        @if(Auth::user()->type!='Operator')
                         <div class="col-lg-3 col-6">
                             <button class="btn my-1 btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#parRepetUsr"><i class="bi bi-cash-stack"></i> To'lovni qaytarish</button>
                         </div>
@@ -214,7 +214,7 @@
                         <input type="hidden" name="user_id" value="{{ $Users['id'] }}">
                         <label for="" class="mb-1">Guruhni tanlang</label>
                         <select name="guruh_id" class="form-select" required>
-                            <option value="guruh_id">Tanlang</option>
+                            <option value="">Tanlang</option>
                             @foreach($Guruhs as $item)
                             <option value="{{ $item['guruh_id'] }}">{{ $item['guruh_name']." (".$item['techer']." )" }}</option>
                             @endforeach
@@ -555,7 +555,9 @@
                                     <th>To'lov haqida</th>
                                     <th>To'lov vaqti</th>
                                     <th>Meneger</th>
+                                    @if(Auth::user()->type!='Operator')
                                     <th>Status</th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
@@ -567,12 +569,24 @@
                                     <td>{{ $item['about'] }}</td>
                                     <td>{{ $item['created_at'] }}</td>
                                     <td>{{ $item['admin'] }}</td>
-                                    <td class="text-center"><a href="" class="btn btn-danger py-0 px-1"><i class="bi bi-trash"></i></a></td>
+                                    @if(Auth::user()->type!='Operator')
+                                    <td class="text-center">
+                                        <a href="{{ route('AdminUserTulovDelete',$item['id']) }}" class="btn btn-danger py-0 px-1">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </td>
+                                    @endif
                                 </tr> 
                                 @empty
+                                @if(Auth::user()->type!='Operator')
                                 <tr>
                                     <td colspan=7 class="text-center">To'lovlar mavjud emas.</td>
                                 </tr>
+                                @else
+                                <tr>
+                                    <td colspan=6 class="text-center">To'lovlar mavjud emas.</td>
+                                </tr>
+                                @endif
                                 @endforelse
                             </tbody>
                         </table>
