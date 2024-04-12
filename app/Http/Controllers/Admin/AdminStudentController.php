@@ -7,6 +7,7 @@ use App\Models\Guruh;
 use App\Models\AdminKassa;
 use App\Models\UserHistory;
 use App\Models\GuruhUser;
+use App\Models\Tulov;
 use App\Events\CreateTashrif;
 use App\Events\createTulov;
 use App\Events\UserResetPassword;
@@ -219,12 +220,29 @@ class AdminStudentController extends Controller{
         foreach ($userArxivGuruh as $key => $value) {
             $Guruh = Guruh::where('id',$value->guruh_id)->where('guruh_start','>=',$ChegirmaDay)->first();
             if($Guruh){
-                $Guruhlar[$key]['guruh_id'] = $Guruh->id;
-                $Guruhlar[$key]['guruh_name'] = $Guruh->guruh_name;
-                $Guruhlar[$key]['chegirmaTulov'] = $Guruh->guruh_price-$Guruh->guruh_chegirma;
+                $Tulovs = count(Tulov::where('user_id',$id)->where('guruh_id',$value->guruh_id)->where('type','Chegirma')->get());
+                if($Tulovs>0){}
+                else{
+                    $Guruhlar[$key]['guruh_id'] = $Guruh->id;
+                    $Guruhlar[$key]['guruh_name'] = $Guruh->guruh_name;
+                    $Guruhlar[$key]['chegirmaTulov'] = $Guruh->guruh_price-$Guruh->guruh_chegirma;
+                }
             }
         }
         return $Guruhlar;
+    }
+    public function TalabaTulovlari($id){
+        $TalabaTulovlar = Tulov::where('user_id',$id)->get();
+        $Tulov = array();
+        foreach ($TalabaTulovlar as $key => $value) {
+            $Tulov[$key]['id'] = $value->id;
+            $Tulov[$key]['summa'] = number_format(($value->summa), 0, '.', ' ');
+            $Tulov[$key]['type'] = $value->type;
+            $Tulov[$key]['about'] = $value->about;
+            $Tulov[$key]['created_at'] = $value->created_at;
+            $Tulov[$key]['admin'] = User::find($value->admin_id)->email;
+        }
+        return $Tulov;
     }
     public function show($id){
         $Users = $this->userAbout($id);
@@ -233,7 +251,8 @@ class AdminStudentController extends Controller{
         $talaba_guruh = $this->TalabaGuruhlari($id);
         $userArxivGuruh = $this->userArxivGuruh($id);
         $ChegirmaGuruh = $this->chegirmaliGuruhlar($id);
-        return view('Admin.user.show',compact('Users','Guruhs','userHistory','talaba_guruh','userArxivGuruh','ChegirmaGuruh'));
+        $Tulovlar = $this->TalabaTulovlari($id);
+        return view('Admin.user.show',compact('Users','Guruhs','userHistory','Tulovlar','talaba_guruh','userArxivGuruh','ChegirmaGuruh'));
     }
 
     public function tulov(Request $request){

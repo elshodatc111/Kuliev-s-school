@@ -118,7 +118,7 @@
         </div>
     </div>
                 
-    <!-- To'lov qilish -->
+    <!-- To'lov qilish +++ -->
     <div class="modal fade" id="tulovPlus" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -135,7 +135,7 @@
                         <input type="text" name="plastik" value="0" id="summa2" class="form-control" required>
                         <label for="guruh_id" class="mb-1 mt-2">Chegirmali guruhni tanlang.</label>
                         <select name="guruh_id"  class="form-select">
-                            <option value="">Tanlang...</option>
+                            <option value="NULL">Tanlang...</option>
                             @foreach($ChegirmaGuruh as $item)
                             <option value="{{ $item['guruh_id'] }}">{{ $item['guruh_name'] }} (Tulov:{{ $item['chegirmaTulov'] }})</option>
                             @endforeach
@@ -419,7 +419,37 @@
                                         <td>{{ $item['status'] }}</td>
                                         <td>{{ $item['type'] }}</td>
                                         <td>{{ $item['summa'] }}</td>
-                                        <td>Guruhdan jarima.</td>
+                                        <td>Guruhdagi darslari uchun jarima.</td>
+                                        <td>{{ $item['xisoblash'] }}</td>
+                                        <td>{{ $item['balans'] }}</td>
+                                    </tr> 
+                                    @elseif($item->status=="Chegirma")
+                                    <tr>
+                                        <td class="text-center">{{ $loop->index+1 }}</td>
+                                        <td>{{ $item['status'] }}</td>
+                                        <td>{{ $item['type'] }}</td>
+                                        <td>{{ $item['summa'] }}</td>
+                                        <td>To'liq to'lov uchun chegirma.</td>
+                                        <td>{{ $item['xisoblash'] }}</td>
+                                        <td>{{ $item['balans'] }}</td>
+                                    </tr> 
+                                    @elseif($item->status=="Tulov Naqt")
+                                    <tr>
+                                        <td class="text-center">{{ $loop->index+1 }}</td>
+                                        <td>{{ $item['status'] }}</td>
+                                        <td>{{ $item['type'] }}</td>
+                                        <td>{{ $item['summa'] }}</td>
+                                        <td>Naqt To'lov.</td>
+                                        <td>{{ $item['xisoblash'] }}</td>
+                                        <td>{{ $item['balans'] }}</td>
+                                    </tr> 
+                                    @elseif($item->status=="Tulov Plastik")
+                                    <tr>
+                                        <td class="text-center">{{ $loop->index+1 }}</td>
+                                        <td>{{ $item['status'] }}</td>
+                                        <td>{{ $item['type'] }}</td>
+                                        <td>{{ $item['summa'] }}</td>
+                                        <td>Plastik To'lov.</td>
                                         <td>{{ $item['xisoblash'] }}</td>
                                         <td>{{ $item['balans'] }}</td>
                                     </tr> 
@@ -520,24 +550,30 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>FIO</th>
-                                    <th>Manzil</th>
-                                    <th>Telefon raqam</th>
-                                    <th>Guruhlar</th>
-                                    <th>Ro'yhatdan o'tdi</th>
+                                    <th>To'lov summasi</th>
+                                    <th>To'lov turi</th>
+                                    <th>To'lov haqida</th>
+                                    <th>To'lov vaqti</th>
+                                    <th>Meneger</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @forelse($Tulovlar as $item)
                                 <tr>
-                                    <td class="text-center">1</td>
-                                    <td>Bo'sh</td>
-                                    <td>Bo'sh</td>
-                                    <td>Bo'sh</td>
-                                    <td>Bo'sh</td>
-                                    <td>Bo'sh</td>
-                                    <td>Bo'sh</td>
+                                    <td class="text-center">{{ $loop->index+1 }}</td>
+                                    <td>{{ $item['summa'] }}</td>
+                                    <td>{{ $item['type'] }}</td>
+                                    <td>{{ $item['about'] }}</td>
+                                    <td>{{ $item['created_at'] }}</td>
+                                    <td>{{ $item['admin'] }}</td>
+                                    <td class="text-center"><a href="" class="btn btn-danger py-0 px-1"><i class="bi bi-trash"></i></a></td>
                                 </tr> 
+                                @empty
+                                <tr>
+                                    <td colspan=7 class="text-center">To'lovlar mavjud emas.</td>
+                                </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
