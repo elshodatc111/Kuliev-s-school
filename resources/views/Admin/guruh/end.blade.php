@@ -19,7 +19,6 @@
 @elseif (Session::has('error'))
     <div class="alert alert-danger">{{Session::get('error') }}</div>
 @endif
-                guruhdagi talabalar soni
 <section class="section dashboard">
     <div class="card info-card sales-card">
         <div class="card-body text-center pt-3">

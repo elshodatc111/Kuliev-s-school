@@ -33,7 +33,8 @@ class AdminGuruhController extends Controller{
             }else{
                 $Guruhlar[$key]['guruh'] = -1;
             }
-            $Guruhlar[$key]['talabalar'] = 0;
+            $GuruhUser = count(GuruhUser::where('guruh_id',$item->id)->where('status','true')->get());
+            $Guruhlar[$key]['talabalar'] = $GuruhUser;
             $Guruhlar[$key]['id'] = $item->id;
         }
         return view('Admin.guruh.index',compact('Guruhlar'));
@@ -53,7 +54,8 @@ class AdminGuruhController extends Controller{
             }else{
                 $Guruhlar[$key]['guruh'] = -1;
             }
-            $Guruhlar[$key]['talabalar'] = 0;
+            $GuruhUser = count(GuruhUser::where('guruh_id',$item->id)->where('status','true')->get());
+            $Guruhlar[$key]['talabalar'] = $GuruhUser;
             $Guruhlar[$key]['id'] = $item->id;
         }
         return view('Admin.guruh.end',compact('Guruhlar'));
@@ -300,12 +302,36 @@ class AdminGuruhController extends Controller{
         $Deletes['guruh_price'] = number_format((Guruh::where('id',$id)->first()->guruh_price), 0, '.', ' ');
         return $Deletes;
     }
+    public function guruhTalabalari($guruh_id){
+        $GuruhUser = GuruhUser::where('guruh_id',$guruh_id)->orderby('id','desc')->get();
+        $Users = array();
+        foreach ($GuruhUser as $key => $value) {
+            $Users[$key]['user_id'] = $value->user_id;
+            $Users[$key]['User'] = User::find($value->user_id)->name;
+            $Users[$key]['commit_start'] = $value->commit_start;
+            $Users[$key]['created_at'] = $value->created_at;
+            $Users[$key]['admin_id_start'] = User::find($value->admin_id_start)->email;
+            if($value->status=='true'){
+                $Users[$key]['commit_end'] = " ";
+                $Users[$key]['admin_id_end'] = " ";
+                $Users[$key]['updated_at'] = " ";
+                $Users[$key]['status'] = "Faol";
+            }else{
+                $Users[$key]['commit_end'] = $value->commit_end;
+                $Users[$key]['admin_id_end'] = User::find($value->admin_id_end)->email;
+                $Users[$key]['updated_at'] = $value->updated_at;
+                $Users[$key]['status'] = "O'chirildi";
+            }
+            $Users[$key]['balans'] = number_format((User::find($value->user_id)->balans), 0, '.', ' ');
+        }
+        return $Users;
+    }
     public function show($id){
         $Guruh = $this->GuruhAbout($id);
         $Days = GuruhTime::where('guruh_id',$Guruh['id'])->get();
         $UsersDeletes = $this->userEndGroups($id);
-        #dd($UsersDeletes);
-        return view('Admin.guruh.show',compact('Guruh','Days','UsersDeletes'));
+        $Talabalar = $this->guruhTalabalari($id);
+        return view('Admin.guruh.show',compact('Guruh','Days','UsersDeletes','Talabalar'));
     }
     public function guruhDelUser(Request $request){
         $validate = $request->validate([

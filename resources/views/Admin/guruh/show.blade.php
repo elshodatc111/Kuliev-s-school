@@ -279,37 +279,38 @@
                 <div class="tab-pane fade" id="contact-justified" role="tabpanel" aria-labelledby="contact-tab">
                     <div class="table-responsive">
                         <h5 class="card-title pt-0 my-0 pb-1">Guruh talabalari</h5>
-                        <table class="table text-center table-bordered table-hover" style="font-size:14px;">
+                        <table class="table text-center table-bordered table-hover" style="font-size:12px;">
                             <thead>
                                 <tr>
                                     <th class="text-center">#</th>
                                     <th class="text-center">Talaba</th>
                                     <th class="text-center">Guruhga qo'shildi</th>
+                                    <th class="text-center">Meneger</th>
+                                    <th class="text-center">Izoh</th>
+                                    <th class="text-center">Guruhdan o'chirildi</th>
+                                    <th class="text-center">Meneger</th>
                                     <th class="text-center">Izoh</th>
                                     <th class="text-center">Balans</th>
-                                    <th class="text-center">Meneger</th>
                                     <th class="text-center">Status</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @forelse($Talabalar as $item)
                                 <tr>
-                                    <td>1</td>
-                                    <td style="text-align:left"><a href="">Elshod Musurmonov</a></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>Faol</td>
+                                    <td>{{ $loop->index+1 }}</td>
+                                    <td style="text-align:left"><a href="{{ route('StudentShow',$item['user_id']) }}">{{ $item['User'] }}</a></td>
+                                    <td>{{ $item['created_at'] }}</td>
+                                    <td>{{ $item['admin_id_start'] }}</td>
+                                    <td>{{ $item['commit_start'] }}</td>
+                                    <td>{{ $item['updated_at'] }}</td>
+                                    <td>{{ $item['admin_id_end'] }}</td>
+                                    <td>{{ $item['commit_end'] }}</td>
+                                    <td>{{ $item['balans'] }}</td>
+                                    <td>{{ $item['status'] }}</td>
                                 </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td style="text-align:left"><a href="">Elshod Musurmonov</a></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>O'chirildi</td>
-                                </tr>
+                                @empty
+
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
@@ -405,39 +406,7 @@
             </div>
         </div>
     </div>
-
-    <div class="card">
-        <div class="card-body text-center">
-            <div class="table-responsive">
-                <h5 class="card-title pb-1"><i class="bi bi-disc"></i> Guruh uchun chegirmalar</h5>
-                <table class="table text-center table-bordered table-hover" style="font-size:14px;">
-                    <thead>
-                        <tr>
-                            <th class="text-center">#</th>
-                            <th class="text-center">Talaba</th>
-                            <th class="text-center">Chegirma Summasi</th>
-                            <th class="text-center">Chegirma Vaqti</th>
-                            <th class="text-center">Chegirma Haqida</th>
-                            <th class="text-center">Meneger</th>
-                            <th class="text-center">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
+    
     <div class="text-center">
         @if(Auth::user()->type!="Operator")
         <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteGuruh" style="font-size:14px;"><i class="bi bi-trash"></i> Guruhni o'chirish</button>
