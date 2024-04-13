@@ -15,11 +15,11 @@ class IshHaqiFililaKassaUpdate{
         $filial_id = $event->filial_id;
         $FilialKassa = FilialKassa::where('filial_id',$filial_id)->first();
         if($type=='Naqt'){
-            $Mavjud = intval($FilialKassa->tulov_naqt_ish_haqi)+$summa;
-            $FilialKassa->tulov_naqt_ish_haqi = $Mavjud;
+            $FilialKassa->tulov_naqt_ish_haqi = intval($FilialKassa->tulov_naqt_ish_haqi)+$summa;
+            $FilialKassa->tulov_naqt = intval($FilialKassa->tulov_naqt)-$summa;
         }else{
-            $Mavjud = intval($FilialKassa->tulov_plastik_ish_haqi)+$summa;
-            $FilialKassa->tulov_plastik_ish_haqi = $Mavjud;
+            $FilialKassa->tulov_plastik_ish_haqi = intval($FilialKassa->tulov_plastik_ish_haqi)+$summa;
+            $FilialKassa->tulov_plastik = intval($FilialKassa->tulov_plastik)-$summa;
         }
         $FilialKassa->save();
     }

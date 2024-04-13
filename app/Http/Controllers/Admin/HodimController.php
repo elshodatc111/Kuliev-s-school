@@ -14,8 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class HodimController extends Controller
-{
+class HodimController extends Controller{
     public function __construct(){
         $this->middleware('auth');
     }
@@ -62,17 +61,16 @@ class HodimController extends Controller
         $Kassa['chegirma'] = number_format(($AdminKassa->chegirma), 0, '.', ' ');
         $Kassa['qaytarildi'] = number_format(($AdminKassa->qaytarildi), 0, '.', ' ');
         $Kassa['tashriflar'] = number_format(($AdminKassa->tashriflar), 0, '.', ' ');
-        
-        $Kassa['MavjudNaqt'] = number_format(500000, 0, '.', ' ');
-        $Kassa['MavjudPlastik'] = number_format(500000, 0, '.', ' ');
-        
+        $FilialKassa = FilialKassa::where('filial_id',request()->cookie('filial_id'))->first();
+        $Kassa['MavjudNaqt'] = number_format($FilialKassa->tulov_naqt, 0, '.', ' ');
+        $Kassa['MavjudPlastik'] = number_format($FilialKassa->tulov_plastik, 0, '.', ' ');
         $ishHaqi = array();
-        foreach(IshHaqi::where('user_id',$id)->get() as $key=> $item){
+        foreach(IshHaqi::where('user_id',$id)->orderby('id','desc')->get() as $key=> $item){
             $ishHaqi[$key]['id']=$item->id;
             $ishHaqi[$key]['summa']=number_format(($item->summa), 0, '.', ' ');
             $ishHaqi[$key]['type']=$item->type;
             $ishHaqi[$key]['about']=$item->about;
-            $ishHaqi[$key]['created_at']=$item->admin_id;
+            $ishHaqi[$key]['created_at']=$item->created_at;
             $ishHaqi[$key]['admin_email']=User::find($item->admin_id)->email;
         }
         return view('Admin.hodim_show',compact('User','Kassa','ishHaqi'));
@@ -115,42 +113,22 @@ class HodimController extends Controller
         }else{
             $Mavjud = str_replace(" ","",$request->Plastik);
         }
-        if($Mavjud<$request->summa){
-            return redirect()->back()->with('error', 'Kassada yetarli mablag\' emas.');
-        }
-        $validate = $request->validate([
-            'user_id' => ['required', 'string', 'max:255'],
-            'summa' => ['required', 'string', 'max:255'],
-            'type' => ['required', 'string', 'max:255'],
-            'about' => ['required', 'string', 'max:255'],
-        ]);
-        $validate['summa'] = str_replace(",","",$request->summa);
-        $validate['filial_id'] = request()->cookie('filial_id');
-        $validate['status'] = "Hodim";
-        $validate['admin_id'] = Auth::user()->id;
-        $IshHaqi = IshHaqi::create($validate);
-        $type = $request->type;
         $summa = str_replace(",","",$request->summa);
         $filial_id = request()->cookie('filial_id');
+        $type = $request->type;
+        if($Mavjud<$summa){
+            return redirect()->back()->with('error', 'Kassada yetarli mablag\' emas.');
+        }
+        $IshHaqi = IshHaqi::create([
+            'user_id' => $request->user_id,
+            'summa' => $summa,
+            'type' => $type,
+            'about' => $request->about,
+            'admin_id' =>  Auth::user()->id,
+            'status' => "Hodim",
+            'filial_id' => $filial_id,
+        ]);
         CreatIshHaqi::dispatch($type,$summa,$filial_id);
         return redirect()->back()->with('success', 'Hodimga ish haqi to\'landi.'); 
-    }
-    public function adminPayHodimlarIshHaqiDelete($id){
-        $IshHaqi = IshHaqi::find($id);
-        $summa = $IshHaqi->summa;
-        $type = $IshHaqi->type;
-        if($type=='Naqt'){
-            $SummaKassa = FilialKassa::where('filial_id',request()->cookie('filial_id'))->first();
-            $mavjud = $SummaKassa->tulov_naqt_ish_haqi-$summa;
-            $SummaKassa->tulov_naqt_ish_haqi = $mavjud;
-            $SummaKassa->save();
-        }else{
-            $SummaKassa = FilialKassa::where('filial_id',request()->cookie('filial_id'))->first();
-            $mavjud = $SummaKassa->tulov_plastik_ish_haqi-$summa;
-            $SummaKassa->tulov_plastik_ish_haqi = $mavjud;
-            $SummaKassa->save();
-        }
-        $IshHaqi->delete();
-        return redirect()->back()->with('success', 'To\'langan ish haqi o\'chirildi.'); 
     }
 }

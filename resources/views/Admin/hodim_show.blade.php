@@ -15,8 +15,6 @@
     </nav>
 </div>
 
-Kassada mavjud naqt va plastik summalar to'g'irlanmagan
-
 @if (Session::has('success'))
     <div class="alert alert-success">{{Session::get('success') }}</div>
 @elseif (Session::has('error'))
@@ -62,13 +60,13 @@ Kassada mavjud naqt va plastik summalar to'g'irlanmagan
                     </table>
                     <div class="row">
                         <div class="col-lg-4 pt-lg-0 pt-2">
-                            <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#updatePassword">Parol Yangilash</button>
+                            <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#updatePassword"><i class="bi bi-lock"></i> Parol Yangilash</button>
                         </div>
                         <div class="col-lg-4 pt-lg-0 pt-2">
-                            <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#userTaxrir">Taxrirlash</button>
+                            <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#userTaxrir"><i class="bi bi-pencil-square"></i> Taxrirlash</button>
                         </div>
                         <div class="col-lg-4 pt-lg-0 pt-2">
-                            <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#ishhaqi">Ish haqi to'lov</button>
+                            <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#ishhaqi"><i class="bi bi-cash"></i> Ish haqi to'lov</button>
                         </div>
                     </div>
                 </div>
@@ -77,7 +75,7 @@ Kassada mavjud naqt va plastik summalar to'g'irlanmagan
         <div class="col-lg-4">
             <div class="card info-card sales-card">
                 <div class="card-body text-center">
-                    <h5 class="card-title"><i class="bi bi-person"></i> Statistika</span></h5>
+                    <h5 class="card-title"><i class="bi bi-bar-chart-line"></i> Statistika</span></h5>
                     <table class="table table-bordered table-hover"  style="font-size:12px;">
                         <tr>
                             <td style="text-align:left;width:25%;">Naqt</td>
@@ -100,7 +98,7 @@ Kassada mavjud naqt va plastik summalar to'g'irlanmagan
                             <td style="text-align:right;width:25%;">{{ $Kassa['tashriflar'] }}</td>
                         </tr>
                     </table>
-                    <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#clearStatistik">Statistika tozalash</button>
+                    <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#clearStatistik"><i class="bi bi-repeat"></i> Statistika tozalash</button>
                 </div>
             </div>
         </div>
@@ -171,18 +169,28 @@ Kassada mavjud naqt va plastik summalar to'g'irlanmagan
                         <input type="text" name="name" class="form-control" value="{{ $User->name }}" required>
                         <label for="addres" class="mt-2">Manzil</label>
                         <input type="text" name="addres" class="form-control" value="{{ $User->addres }}" required>
-                        <label for="phone" class="mt-2">Telefon raqam 1</label>
-                        <input type="text" name="phone" class="form-control phone" value="{{ $User->phone }}" required>
-                        <label for="phone2" class="mt-2">Telefon raqam 2</label>
-                        <input type="text" name="phone2" class="form-control phone" value="{{ $User->phone2 }}" required>
-                        <label for="tkun" class="mt-2">Tugilgan kuni</label>
-                        <input type="date" name="tkun" class="form-control" value="{{ $User->tkun }}" required>
-                        <label for="type" class="mt-2">Lavozimi</label>
-                        <select name="type" class="form-select">
-                            <option value="">Tanlang</option>
-                            <option value="Operator">Operator</option>
-                            <option value="Admin">Admin</option>
-                        </select>
+                        <div class="row">
+                            <div class="col-6">
+                                <label for="phone" class="mt-2">Telefon raqam 1</label>
+                                <input type="text" name="phone" class="form-control phone" value="{{ $User->phone }}" required>
+                            </div>
+                            <div class="col-6">
+                                <label for="phone2" class="mt-2">Telefon raqam 2</label>
+                                <input type="text" name="phone2" class="form-control phone" value="{{ $User->phone2 }}" required>
+                            </div>
+                            <div class="col-6">
+                                <label for="tkun" class="mt-2">Tugilgan kuni</label>
+                                <input type="date" name="tkun" class="form-control" value="{{ $User->tkun }}" required>
+                            </div>
+                            <div class="col-6">
+                                <label for="type" class="mt-2">Lavozimi</label>
+                                <select name="type" class="form-select" required>
+                                    <option value="">Tanlang</option>
+                                    <option value="Operator">Operator</option>
+                                    <option value="Admin">Admin</option>
+                                </select>
+                            </div>
+                        </div>
                         <label for="about" class="mt-2">Hodim haqida</label>
                         <input type="text" name="about" class="form-control" value="{{ $User->about }}" required>
                         <div class="row mt-3">
@@ -248,9 +256,6 @@ Kassada mavjud naqt va plastik summalar to'g'irlanmagan
                             <th>To'lov vaqti</th>
                             <th>To'lov haqida</th>
                             <th>Operator</th>
-                            @if(Auth::User()->type=="SuperAdmin")
-                            <th>O'chirish</th>
-                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -262,17 +267,10 @@ Kassada mavjud naqt va plastik summalar to'g'irlanmagan
                             <td>{{ $item['created_at'] }}</td>
                             <td>{{ $item['about'] }}</td>
                             <td>{{ $item['admin_email'] }}</td>
-                            @if(Auth::User()->type=="SuperAdmin")
-                            <th><a href="{{ route('adminPayHodimlarIshHaqiDelete',$item['id'] ) }}" class="btn btn-danger py-0 px-1"><i class="bi bi-trash"></i></a></th>
-                            @endif
                         </tr>
                         @empty
                             <tr>
-                            @if(Auth::User()->type=="SuperAdmin")
-                                <td class="text-center" colspan=7>Ish haqi to'lovlari mavjud emas.</td>
-                            @else 
                                 <td class="text-center" colspan=6>Ish haqi to'lovlari mavjud emas.</td>
-                            @endif
                             </tr>
                         @endforelse
                     </tbody>

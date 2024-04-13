@@ -47,6 +47,7 @@ Route::put('/Superadmin/kabinet/password/{id}', [KabinetController::class, 'kabi
 ### Emd SuperAdmin ###
 ### Admin ###
 Route::get('/Admin/index', [AdminController::class, 'index'])->name('Admin');
+
 Route::get('/Admin/student/index', [AdminStudentController::class, 'index'])->name('Student');
 Route::get('/Admin/student/index/{id}', [AdminStudentController::class, 'show'])->name('StudentShow');
 Route::get('/Admin/student/debit', [AdminStudentController::class, 'debit'])->name('StudentQarzdorlar');
@@ -61,6 +62,7 @@ Route::post('/Admin/student/pay', [AdminStudentController::class, 'tulov'])->nam
 Route::post('/Admin/student/pay/qaytar', [AdminStudentController::class, 'tulovQaytar'])->name('AdminUserTulovQaytar');
 Route::post('/Admin/student/admin/chegirma', [AdminStudentController::class, 'adminChegirmaMax'])->name('AdminUserAdminChegirma');
 Route::get('/Admin/student/pay/delete/{id}', [AdminStudentController::class, 'tulovDelete'])->name('AdminUserTulovDelete');
+
 Route::get('/Admin/moliya', [MoliyaController::class, 'index'])->name('AdminMoliya');
 Route::post('/Admin/moliya/chiqim', [MoliyaController::class, 'chiqim'])->name('AdminMoliyaCHiqim');
 Route::post('/Admin/moliya/chiqim/delete', [MoliyaController::class, 'chiqimdelete'])->name('AdminMoliyaCHiqimDelete');
@@ -87,6 +89,7 @@ Route::post('/Admin/admin/techer/update', [AdminTecherController::class, 'techer
 Route::post('/Admin/admin/techer/update/password', [AdminTecherController::class, 'techerUpdatePassword'])->name('AdminTecherUpdatePassword');
 Route::get('/Admin/admin/techer/show/{id}', [AdminTecherController::class, 'techerShow'])->name('AdminTecherShow');
 Route::get('/Admin/admin/techer/delete/{id}', [AdminTecherController::class, 'techerDelete'])->name('AdminTecherDelete');
+
 Route::get('/Admin/hodim/kabinet', [HodimController::class, 'kabinet'])->name('adminkabinet');
 Route::get('/Admin/hodim/', [HodimController::class, 'adminHodimlar'])->name('adminHodimlar');
 Route::get('/Admin/hodim/{id}', [HodimController::class, 'adminHodim'])->name('adminHodim');
@@ -96,7 +99,6 @@ Route::post('/Admin/hodim/clear/statistika', [HodimController::class, 'adminClea
 Route::post('/Admin/hodim/update/user', [HodimController::class, 'adminUpdateHodimlarUser'])->name('adminUpdateHodimlarUser');
 Route::post('/Admin/hodim/update/password', [HodimController::class, 'adminUpdateHodimlarPassword'])->name('adminUpdateHodimlarPassword');
 Route::post('/Admin/hodim/pay/ishhaqi', [HodimController::class, 'adminPayHodimlarIshHaqi'])->name('adminPayHodimlarIshHaqi');
-Route::get('/Admin/hodim/pay/ishhaqi/delete/{id}', [HodimController::class, 'adminPayHodimlarIshHaqiDelete'])->name('adminPayHodimlarIshHaqiDelete');
 ### Techer ###
 Route::get('/Techer/index', [TecherController::class, 'index'])->name('Techer');
 Route::get('/Techer/guruhlar', [TecherController::class, 'Guruhlar'])->name('TGuruhlar');
