@@ -63,15 +63,15 @@
                     <table class="table table-bordered text-center table-hover" style="font-size:14px;">
                         <tr>
                             <td style="text-align:left">Yangi guruhlari</td>
-                            <td style="text-align:right">15</td>
+                            <td style="text-align:right">{{ $Statistika['new'] }}</td>
                         </tr>
                         <tr>
                             <td style="text-align:left">Aktiv guruhlari</td>
-                            <td style="text-align:right">15</td>
+                            <td style="text-align:right">{{ $Statistika['activ'] }}</td>
                         </tr>
                         <tr>
                             <td style="text-align:left">Yakunlangan guruhlari</td>
-                            <td style="text-align:right">15</td>
+                            <td style="text-align:right">{{ $Statistika['end'] }}</td>
                         </tr>
                     </table>
                     <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#ishhaqi">Ish haqi to'lov</button>
@@ -134,20 +134,23 @@
                             <td colspan=2>Kassada mavjud</td>
                         </tr>
                         <tr>
-                            <td>Naqt: 15000</td>
-                            <td>Plastik: 15000</td>
+                            <td>Naqt: {{ $Statistika['Naqt'] }}</td>
+                            <td>Plastik: {{ $Statistika['Plastik'] }}</td>
                         </tr>
                     </table>
-                    <form action="#" method="post" id="form1">
+                    <form action="{{ route('AdminTecherPay') }}" method="post" id="form1">
                         @csrf
-                        <input type="hidden" name="Naqt" value="#">
-                        <input type="hidden" name="Plastik" value="#">
-                        <input type="hidden" name="user_id" value="#">
+                        <input type="hidden" name="Naqt" value="{{ $Statistika['Naqt'] }}">
+                        <input type="hidden" name="Plastik" value="{{ $Statistika['Plastik'] }}">
+                        <input type="hidden" name="user_id" value="{{ $Techer->id }}">
                         <div class="row mt-3">
                             <div class="col-12">
                                 <label for="summa">Guruhni tanlang</label>
-                                <select name="" class="form-select mb-2" required>
-                                    <option value="">Tanlang</option>
+                                <select name="guruh_id" class="form-select mb-2" required>
+                                    <option value="guruh_id">Tanlang</option>
+                                    @foreach($Guruh as $item)
+                                    <option value="{{ $item['id'] }}">{{ $item['guruh_name'] }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="col-6">
@@ -200,6 +203,7 @@
     <div class="card info-card sales-card">
       <div class="card-body text-center">
         <h5 class="card-title">O'qituvchi guruhlari</span></h5>
+        Bonus<br>Davomatlar soni
         <div class="table-responsive">
             <table class="table table-bordered text-center table-striped table-hover" style="font-size:14px;">
                 <thead>
@@ -209,22 +213,32 @@
                         <th>Boshlanish vaqti</th>
                         <th>Tugash vaqti</th>
                         <th>Talabalar</th>
+                        <th>Talaba o'chirildi</th>
                         <th>Bonus</th>
+                        <th>Davomad</th>
                         <th>Ish haqi</th>
                         <th>To'langan</th>
                     </tr>
                 </thead>
                 <tbody>
+                    @forelse($Guruh as $item)
                     <tr>
-                        <td>1</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>{{ $loop->index+1 }}</td>
+                        <td style="text-align:left;"><a href="{{ route('AdminGuruhShow',$item['id'] ) }}">{{ $item['guruh_name'] }}<a></td>
+                        <td>{{ $item['guruh_start'] }}</td>
+                        <td>{{ $item['guruh_end'] }}</td>
+                        <td>{{ $item['Users'] }}</td>
+                        <td>{{ $item['delete'] }}</td>
+                        <td>{{ $item['Bonus'] }}</td>
+                        <td>{{ $item['Davomat'] }}</td>
+                        <td style="text-align:right">{{ $item['Hisoblandi'] }}</td>
+                        <td style="text-align:right">{{ $item['Tulov'] }}</td>
                     </tr>
+                    @empty
+                    <tr>
+                        <td class="text-center" colspan=9>Guruhlar mavjud emas.</td>
+                    </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
@@ -243,20 +257,24 @@
                         <th>To'lov Summa</th>
                         <th>To'lov vaqti</th>
                         <th>To'lov haqida</th>
-                        <th>Operator</th>
-                        <th>Status</th>
+                        <th>Meneger</th>
                     </tr>
                 </thead>
                 <tbody>
+                    @forelse($Tulov as $item)
                     <tr>
-                        <td>1</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>{{ $loop->index+1 }}</td>
+                        <td style="text-align:left">{{ $item['guruh'] }}</td>
+                        <td>{{ $item['summa'] }}</td>
+                        <td>{{ $item['created_at'] }}</td>
+                        <td>{{ $item['about'] }}</td>
+                        <td>{{ $item['admin_id'] }}</td>
                     </tr>
+                    @empty
+                    <tr>
+                        <td class="text-center" colspan=6>To'lovlar mavjud emas</td>
+                    </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>

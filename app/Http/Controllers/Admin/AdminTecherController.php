@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Models\User;
 use App\Models\FilialKassa;
 use App\Models\IshHaqi;
+use App\Models\Guruh;
+use App\Models\GuruhUser;
 use App\Events\AdminCreateTecher;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -43,8 +45,53 @@ class AdminTecherController extends Controller{
     }
     public function techerShow($id){
         $Techer = User::find($id);
-
-        return view('Admin.techer.show',compact('Techer'));
+        $Days = date("Y-m-d",strtotime('-30 day',time()));
+        $Days2 = date("Y-m-d h:i:s",strtotime('-60 day',time()));
+        $Guruhlar = Guruh::where('techer_id',$id)->where('guruh_status','true')->where('guruh_end','>=',$Days)->get();
+        $Guruh = array();
+        $Statistika = array();
+        $newGuruh = 0;
+        $activGuruh = 0;
+        $endGuruh = 0;
+        foreach ($Guruhlar as $key => $value) {
+            $TecherTulov = $value->techer_price;
+            $TecherBonus = $value->techer_bonus;
+            if($value->guruh_start>date("Y-m-d")){$newGuruh = $newGuruh + 1;
+            }elseif($value->guruh_end<date("Y-m-d")){$endGuruh = $endGuruh + 1;
+            }else{$activGuruh = $activGuruh + 1;}
+            $tulov = 0;
+            $IshHaqi = IshHaqi::where('user_id',$id)->where('status',$value->id)->get();
+            foreach ($IshHaqi as $items) {
+                $tulov = $tulov + $items->summa;
+            }
+            $Guruh[$key]['id'] = $value->id;
+            $Guruh[$key]['guruh_name'] = $value->guruh_name;
+            $Guruh[$key]['guruh_start'] = $value->guruh_start;
+            $Guruh[$key]['guruh_end'] = $value->guruh_end;
+            $Guruh[$key]['Users'] = count(GuruhUser::where('guruh_id',$value->id)->where('status','true')->get());
+            $Guruh[$key]['Bonus'] = 0;  ### To'g'irlanishi kerak  ###
+            $Guruh[$key]['delete'] = count(GuruhUser::where('guruh_id',$value->id)->where('status','false')->get());
+            $Guruh[$key]['Davomat'] = 0;  ### To'g'irlanishi kerak  ###
+            $Guruh[$key]['Hisoblandi'] = number_format($Guruh[$key]['Users']*$TecherTulov+$TecherBonus*$Guruh[$key]['Bonus'], 0, '.', ' ');
+            $Guruh[$key]['Tulov'] = number_format($tulov, 0, '.', ' ');
+        }
+        $Statistika['new'] = $newGuruh;
+        $Statistika['activ'] = $activGuruh;
+        $Statistika['end'] = $endGuruh;
+        $Statistika['Naqt'] = number_format((FilialKassa::where('filial_id',request()->cookie('filial_id'))->first()->tulov_naqt), 0, '.', ' ');
+        $Statistika['Plastik'] = number_format((FilialKassa::where('filial_id',request()->cookie('filial_id'))->first()->tulov_plastik), 0, '.', ' ');
+        #dd($Guruhlar);
+        $Tulovlar = IshHaqi::where('user_id',$id)->where('created_at','>=',$Days2)->orderby('id','desc')->get();
+        $Tulov = array();
+        foreach ($Tulovlar as $key => $value) {
+            $Tulov[$key]['id'] = $value->id;
+            $Tulov[$key]['guruh'] = Guruh::find($value->status)->guruh_name;
+            $Tulov[$key]['summa'] = number_format($value->summa, 0, '.', ' ');
+            $Tulov[$key]['created_at'] = $value->created_at;
+            $Tulov[$key]['about'] = $value->about;
+            $Tulov[$key]['admin_id'] = User::find($value->admin_id)->email;
+        }
+        return view('Admin.techer.show',compact('Techer','Guruh','Statistika','Tulov'));
     }
     public function techerDelete($id){
         $Techer = User::find($id);
@@ -72,6 +119,33 @@ class AdminTecherController extends Controller{
         $User->save();
         HodimUpdatePasswor::dispatch($User->id,$password);
         return redirect()->back()->with('success', 'O\'qituvchi paroli yangilandi.'); 
+    }
+    public function TecherPay(Request $request){
+        $Naqt = str_replace(" ","",$request->Naqt);
+        $Plastik = str_replace(" ","",$request->Plastik);
+        $summa = str_replace(",","",$request->summa);
+        $FilialKassa = FilialKassa::where('filial_id',request()->cookie('filial_id'))->first();
+        if($summa==0){return redirect()->back()->with('error', 'To\'lov summasi noto\'g\'ri.');}
+        if($request->type=='Naqt'){
+            if($summa>$Naqt){return redirect()->back()->with('error', 'Kassada mablag\' yetarli emas.'); }
+            $FilialKassa->tulov_naqt = $FilialKassa->tulov_naqt-$summa;
+            $FilialKassa->tulov_naqt_ish_haqi = $FilialKassa->tulov_naqt_ish_haqi+$summa;
+        }else{
+            if($summa>$Plastik){return redirect()->back()->with('error', 'Kassada mablag\' yetarli emas.'); }  
+            $FilialKassa->tulov_plastik = $FilialKassa->tulov_plastik-$summa;  
+            $FilialKassa->tulov_plastik_ish_haqi = $FilialKassa->tulov_plastik_ish_haqi+$summa;
+        }
+        $FilialKassa->save();
+        $IshHaqi = IshHaqi::create([
+            'filial_id'=>request()->cookie('filial_id'),
+            'user_id'=>$request->user_id,
+            'summa'=>$summa,
+            'type'=>$request->type,
+            'status'=>$request->guruh_id,
+            'about'=>$request->about,
+            'admin_id'=>Auth::user()->id,
+        ]);
+        return redirect()->back()->with('success', "O'qituvchiga ish haqi to'landi");
     }
 
 
