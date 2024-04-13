@@ -63,7 +63,11 @@ Route::post('/Admin/student/admin/chegirma', [AdminStudentController::class, 'ad
 Route::get('/Admin/student/pay/delete/{id}', [AdminStudentController::class, 'tulovDelete'])->name('AdminUserTulovDelete');
 Route::get('/Admin/moliya', [MoliyaController::class, 'index'])->name('AdminMoliya');
 Route::post('/Admin/moliya/chiqim', [MoliyaController::class, 'chiqim'])->name('AdminMoliyaCHiqim');
+Route::post('/Admin/moliya/chiqim/delete', [MoliyaController::class, 'chiqimdelete'])->name('AdminMoliyaCHiqimDelete');
+Route::post('/Admin/moliya/chiqim/tasdiqlandi', [MoliyaController::class, 'chiqimtasdiq'])->name('AdminMoliyaCHiqimTasdiq');
 Route::post('/Admin/moliya/xarajat', [MoliyaController::class, 'xarajat'])->name('AdminMoliyaXarajat');
+Route::post('/Admin/moliya/xarajat/delete', [MoliyaController::class, 'xarajatdelete'])->name('AdminMoliyaXarajatDelete');
+Route::post('/Admin/moliya/xarajat/tasdiqlandi', [MoliyaController::class, 'xarajattasdiq'])->name('AdminMoliyaXarajatTasdiq');
 
 Route::get('/Admin/guruh', [AdminGuruhController::class, 'index'])->name('AdminGuruh');
 Route::get('/Admin/guruh/show/{id}', [AdminGuruhController::class, 'show'])->name('AdminGuruhShow');

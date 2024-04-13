@@ -9,7 +9,7 @@ class Moliya extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'filail_id',
+        'filial_id',
         'xodisa',
         'summa',
         'type',

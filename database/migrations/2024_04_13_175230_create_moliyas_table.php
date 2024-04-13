@@ -8,7 +8,7 @@ return new class extends Migration{
     public function up(): void{
         Schema::create('moliyas', function (Blueprint $table) {
             $table->id();
-            $table->integer('filail_id');
+            $table->integer('filial_id');
             $table->string('xodisa');
             $table->integer('summa');
             $table->string('type');

@@ -183,57 +183,95 @@
         </ul>
         <div class="tab-content pt-2" id="borderedTabJustifiedContent">
             <div class="tab-pane fade show active" id="bordered-justified-home" role="tabpanel" aria-labelledby="home-tab">
-                <div class="table-responsive">
-                    <table class="table text-center table-hover" style="font-size:14px;">
+                <div class="table-responsive pt-3">
+                    <table class="table text-center table-bordered table-hover" style="font-size:14px;">
                         <thead>
                             <tr>
                                 <th class="text-center">#</th>
-                                <th class="text-center">Guruh</th>
-                                <th class="text-center">Boshlanish vaqti</th>
-                                <th class="text-center">Yakunlanish vaqti</th>
-                                <th class="text-center">Talabalar</th>
-                                <th class="text-center">Guruh holati</th>
+                                <th class="text-center">Summa</th>
+                                <th class="text-center">Chiqim turi</th>
+                                <th class="text-center">Chiqim haqida</th>
+                                <th class="text-center">Chiqim vaqti</th>
+                                <th class="text-center">Meneger</th>
                                 <th class="text-center">Status</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @forelse($Chiqim as $item)
                             <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>{{ $loop->index+1 }}</td>
+                                <td>{{ $item['summa'] }}</td>
+                                <td>{{ $item['type'] }}</td>
+                                <td>{{ $item['about'] }}</td>
+                                <td>{{ $item['created_at'] }}</td>
+                                <td>{{ $item['user'] }}</td>
+                                <td>
+                                    <form action="{{ route('AdminMoliyaCHiqimDelete') }}" method="post" style="display:inline;">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{ $item['id'] }}">
+                                        <button type="submit" class="btn btn-danger px-1 py-0"><i class="bi bi-trash"></i></button>
+                                    </form>
+                                    @if(Auth::user()->type=='SuperAdmin')
+                                    <form action="{{ route('AdminMoliyaCHiqimTasdiq') }}" method="post" style="display:inline;">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{ $item['id'] }}">
+                                        <button type="submit" class="btn btn-success px-1 py-0"><i class="bi bi-check"></i></button>
+                                    </form>
+                                    @endif
+                                </td>
                             </tr>
+                            @empty
+                                <tr>
+                                    <td colspan=7 class="text-center"> Tasdiqlanmagan chiqimlar mavjud emas.</td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
             </div>
             <div class="tab-pane fade" id="bordered-justified-profile" role="tabpanel" aria-labelledby="profile-tab">
-                <div class="table-responsive">
-                    <table class="table text-center table-hover" style="font-size:14px;">
+                <div class="table-responsive pt-3">
+                    <table class="table text-center table-bordered table-hover" style="font-size:14px;">
                         <thead>
                             <tr>
                                 <th class="text-center">#</th>
-                                <th class="text-center">Guruh</th>
-                                <th class="text-center">Boshlanish vaqti</th>
-                                <th class="text-center">Yakunlanish vaqti</th>
-                                <th class="text-center">Talabalar</th>
-                                <th class="text-center">Guruh holati</th>
+                                <th class="text-center">Summa</th>
+                                <th class="text-center">Xarajat turi</th>
+                                <th class="text-center">Xarajat haqida</th>
+                                <th class="text-center">Xarajat vaqti</th>
+                                <th class="text-center">Meneger</th>
                                 <th class="text-center">Status</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @forelse($Xarajat as $item)
                             <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>{{ $loop->index+1 }}</td>
+                                <td>{{ $item['summa'] }}</td>
+                                <td>{{ $item['type'] }}</td>
+                                <td>{{ $item['about'] }}</td>
+                                <td>{{ $item['created_at'] }}</td>
+                                <td>{{ $item['user'] }}</td>
+                                <td>
+                                    <form action="{{ route('AdminMoliyaXarajatDelete') }}" method="post" style="display:inline;">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{ $item['id'] }}">
+                                        <button type="submit" class="btn btn-danger px-1 py-0"><i class="bi bi-trash"></i></button>
+                                    </form>
+                                    @if(Auth::user()->type=='SuperAdmin')
+                                    <form action="{{ route('AdminMoliyaXarajatTasdiq') }}" method="post" style="display:inline;">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{ $item['id'] }}">
+                                        <button type="submit" class="btn btn-success px-1 py-0"><i class="bi bi-check"></i></button>
+                                    </form>
+                                    @endif
+                                </td>
                             </tr>
+                            @empty
+                                <tr>
+                                    <td colspan=7 class="text-center"> Tasdiqlanmagan xarajatlar mavjud emas.</td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
