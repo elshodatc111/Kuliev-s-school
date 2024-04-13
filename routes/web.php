@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\HodimController;
 use App\Http\Controllers\Admin\AdminGuruhController;
 use App\Http\Controllers\Admin\AdminTecherController;
 use App\Http\Controllers\Admin\AdminStudentController;
+use App\Http\Controllers\Admin\MoliyaController;
 use App\Http\Controllers\Techer\TecherController;
 use App\Http\Controllers\User\UserController;
 
@@ -60,6 +61,9 @@ Route::post('/Admin/student/pay', [AdminStudentController::class, 'tulov'])->nam
 Route::post('/Admin/student/pay/qaytar', [AdminStudentController::class, 'tulovQaytar'])->name('AdminUserTulovQaytar');
 Route::post('/Admin/student/admin/chegirma', [AdminStudentController::class, 'adminChegirmaMax'])->name('AdminUserAdminChegirma');
 Route::get('/Admin/student/pay/delete/{id}', [AdminStudentController::class, 'tulovDelete'])->name('AdminUserTulovDelete');
+Route::get('/Admin/moliya', [MoliyaController::class, 'index'])->name('AdminMoliya');
+Route::post('/Admin/moliya/chiqim', [MoliyaController::class, 'chiqim'])->name('AdminMoliyaCHiqim');
+Route::post('/Admin/moliya/xarajat', [MoliyaController::class, 'xarajat'])->name('AdminMoliyaXarajat');
 
 Route::get('/Admin/guruh', [AdminGuruhController::class, 'index'])->name('AdminGuruh');
 Route::get('/Admin/guruh/show/{id}', [AdminGuruhController::class, 'show'])->name('AdminGuruhShow');

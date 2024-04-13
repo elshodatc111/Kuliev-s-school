@@ -116,7 +116,7 @@
                 <a class="nav-link collapsed" href="{{ route('AdminGuruh') }}"><i class="bi bi-safe2"></i><span>Guruhlar</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link collapsed" href="./moliya.html"><i class="bi bi-pie-chart"></i><span>Moliya</span></a>
+                <a class="nav-link collapsed" href="{{ route('AdminMoliya') }}"><i class="bi bi-pie-chart"></i><span>Moliya</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ route('AdminTecher') }}"><i class="bi bi-easel"></i><span>O'qituvchilar</span></a>
