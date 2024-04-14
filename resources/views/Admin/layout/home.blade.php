@@ -32,33 +32,29 @@
         </div>
         <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
+                @if(Auth::user()->type != 'Operator')
                 <li class="nav-item">
-                    <a class="nav-link nav-icon" href="#" title="O'qivchilar uchun elonlar">
-                        <i class="bi bi-phone-vibrate"></i>
-                        <span class="badge bg-success badge-number">3</span>
+                    <a class="nav-link nav-icon" href="{{ route('AdminElonlar') }}" title="Elonlar">
+                        <i class="bi bi-megaphone-fill"></i>
+                        <span class="badge bg-primary badge-number">3</span>
+                    </a>
+                </li>
+                @endif
+                <li class="nav-item">
+                    <a class="nav-link nav-icon" href="{{ route('AdminTKun') }}" title="Tug'ilgan kunlar">
+                        <i class="bi bi-cake2-fill"></i>
+                        <span class="badge bg-warning badge-number">3</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link nav-icon" href="#" title="O'qituvchilar uchun elonlar">
-                        <i class="bi bi-megaphone"></i>
-                        <span class="badge bg-success badge-number">3</span>
+                    <a class="nav-link nav-icon" href="{{ route('AdminEslatma') }}" title="Eslatmalar">
+                        <i class="bi bi-messenger"></i>
+                        <span class="badge bg-danger badge-number">3</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link nav-icon" href="#" title="Tug'ilgan kunlar">
-                        <i class="bi bi-gift"></i>
-                        <span class="badge bg-success badge-number">3</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link nav-icon" href="#" title="Eslatmalar">
-                        <i class="bi bi-alarm"></i>
-                        <span class="badge bg-success badge-number">3</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link nav-icon" href="#" title="Murojatlar">
-                        <i class="bi bi-chat-left-text"></i>
+                    <a class="nav-link nav-icon" href="{{ route('AdminMurojarlar') }}" title="Murojatlar">
+                        <i class="bi bi-envelope-arrow-down-fill"></i>
                         <span class="badge bg-success badge-number">3</span>
                     </a>
                 </li>
@@ -127,7 +123,7 @@
             </li>
             @endif
             <li class="nav-item">
-                <a class="nav-link collapsed" href="./eslatma.html"><i class="bi bi-messenger"></i><span>Eslatmalar</span></a>
+                <a class="nav-link collapsed" href="{{ route('AdminEslatma') }}"><i class="bi bi-messenger"></i><span>Eslatmalar</span></a>
             </li>
         </ul>
     </aside>

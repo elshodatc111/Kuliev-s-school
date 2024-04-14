@@ -116,8 +116,7 @@
                 </div>
             </div>
         </div>
-    </div>
-        Eslatmalar qoldi        
+    </div>     
     <!-- To'lov qilish +++ -->
     <div class="modal fade" id="tulovPlus" tabindex="-1">
         <div class="modal-dialog">
@@ -181,22 +180,31 @@
             </div>
         </div>
     </div>
-    <!-- Eslatma qilish -->
+    <!-- Eslatma qilish +++ -->
     <div class="modal fade" id="eslatmaQoldirish" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Eslatma qoldirish</h5>
+                    <h5 class="modal-title w-100 text-center">Eslatma qoldirish</h5>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="col-6">
-                            <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
+                    <form action="{{ route('AdminUserComment') }}" method="post">
+                        @csrf 
+                        <input type="hidden" name="user_guruh_id" value="{{ $Users['id'] }}">
+                        <input type="hidden" name="type" value="user">
+                        <div class="row">
+                            <div class="col-12">
+                                <label for="text">Eslatma matni</label>
+                                <textarea name="text" class="form-control mb-3" required></textarea>
+                            </div>
+                            <div class="col-6">
+                                <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
+                            </div>
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-primary w-100">Eslatmani saqlash</button>
+                            </div>
                         </div>
-                        <div class="col-6">
-                            <button type="button" class="btn btn-primary w-100">Yangilash</button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -414,10 +422,6 @@
                     type="button" role="tab" aria-controls="guruhlar" aria-selected="false"><i class="bi bi-people"></i> Talaba guruhlari</button>
                 </li>
                 <li class="nav-item flex-fill col-lg-3 col-6" role="presentation">
-                    <button class="nav-link w-100" id="contact-tab" data-bs-toggle="tab" data-bs-target="#Talaba_eslatma" 
-                    type="button" role="tab" aria-controls="eslatma" aria-selected="false"><i class="bi bi-messenger"></i> Eslatma</button>
-                </li>
-                <li class="nav-item flex-fill col-lg-3 col-6" role="presentation">
                     <button class="nav-link w-100" id="contact-tab" data-bs-toggle="tab" data-bs-target="#Talaba_Tulovlari" 
                     type="button" role="tab" aria-controls="tulovlar" aria-selected="false"><i class="bi bi-cash-stack"></i> Talaba to'lovlari</button>
                 </li>
@@ -558,35 +562,6 @@
                                 @empty
 
                                 @endforelse
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="tab-pane fade show" id="Talaba_eslatma" role="tabpanel" aria-labelledby="eslatma-tab">
-                    <h5 class="card-title w-100 p-0 pt-1 text-center">Talaba haqida eslatma</h5>
-                    <div class="table-responsive" style="font-size:12px;">
-                        <table class="table table-hover table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>FIO</th>
-                                    <th>Manzil</th>
-                                    <th>Telefon raqam</th>
-                                    <th>Guruhlar</th>
-                                    <th>Ro'yhatdan o'tdi</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="text-center">1</td>
-                                    <td>Bo'sh</td>
-                                    <td>Bo'sh</td>
-                                    <td>Bo'sh</td>
-                                    <td>Bo'sh</td>
-                                    <td>Bo'sh</td>
-                                    <td>Bo'sh</td>
-                                </tr> 
                             </tbody>
                         </table>
                     </div>

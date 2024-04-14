@@ -25,8 +25,6 @@ class AdminController extends Controller{
     }
     public function index(){
         $this->coocies();
-
-
         $currentTime = time();
         $weekStart = strtotime('last Monday', $currentTime);
         $Room = Room::where('filial_id',request()->cookie('filial_id'))->where('status','true')->get();
@@ -52,6 +50,18 @@ class AdminController extends Controller{
             $Rooms[$key]['hafta_kun'] = $Jadval;
         }
         return view('Admin.index', compact('Rooms'));
+    }
+    public function eslatmalar(){
+        return "Eslatmalar";
+    }
+    public function murojatlar(){
+        return "murojatlar";
+    }
+    public function tkun(){
+        return "tkun";
+    }
+    public function elonlar(){
+        return "elonlar";
     }
     
 

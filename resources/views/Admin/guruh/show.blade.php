@@ -123,19 +123,23 @@
                                         <h5 class="modal-title w-100 text-center">Guruh uchun eslatma qoldirish.</h5>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="" method="post">
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <textarea name="" placeholder="Eslatma matni..." required class="form-control mb-3"></textarea>
-                                                </div>
-                                                <div class="col-6">
-                                                    <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilisk</button>
-                                                </div>
-                                                <div class="col-6">
-                                                    <button type="submit" class="btn btn-success w-100">Eslatma qoldirish</button>
-                                                </div>
+                                        <form action="{{ route('AdminUserComment') }}" method="post">
+                                        @csrf 
+                                        <input type="hidden" name="user_guruh_id" value="{{ $Guruh['id'] }}">
+                                        <input type="hidden" name="type" value="guruh">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <label for="text">Eslatma matni</label>
+                                                <textarea name="text" class="form-control mb-3" required></textarea>
                                             </div>
-                                        </form>
+                                            <div class="col-6">
+                                                <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
+                                            </div>
+                                            <div class="col-6">
+                                                <button type="submit" class="btn btn-primary w-100">Eslatmani saqlash</button>
+                                            </div>
+                                        </div>
+                                    </form>
                                     </div>
                                 </div>
                             </div>
@@ -383,31 +387,7 @@
         </div>
     </div>
 
-    <div class="card">
-        <div class="card-body text-center">
-            <div class="table-responsive">
-                <h5 class="card-title pb-1"><i class="bi bi-clock"></i> Eslatmalar</h5>
-                <table class="table text-center table-bordered table-hover" style="font-size:14px;">
-                    <thead>
-                        <tr>
-                            <th class="text-center">#</th>
-                            <th class="text-center">Eslatma matni</th>
-                            <th class="text-center">Eslatma vaqti</th>
-                            <th class="text-center">Eslatma holati</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+
     
     <div class="text-center">
         @if(Auth::user()->type!="Operator")

@@ -48,6 +48,10 @@ Route::put('/Superadmin/kabinet/password/{id}', [KabinetController::class, 'kabi
 ### Emd SuperAdmin ###
 ### Admin ###
 Route::get('/Admin/index', [AdminController::class, 'index'])->name('Admin');
+Route::get('/Admin/eslatma', [AdminController::class, 'eslatmalar'])->name('AdminEslatma');
+Route::get('/Admin/murojatlar', [AdminController::class, 'murojatlar'])->name('AdminMurojarlar');
+Route::get('/Admin/tkun', [AdminController::class, 'tkun'])->name('AdminTKun');
+Route::get('/Admin/elonlar', [AdminController::class, 'elonlar'])->name('AdminElonlar');
 
 Route::get('/Admin/student/index', [AdminStudentController::class, 'index'])->name('Student');
 Route::get('/Admin/student/index/{id}', [AdminStudentController::class, 'show'])->name('StudentShow');
@@ -62,6 +66,7 @@ Route::post('/Admin/student/send/messege', [AdminStudentController::class, 'send
 Route::post('/Admin/student/pay', [AdminStudentController::class, 'tulov'])->name('AdminUserTulov');
 Route::post('/Admin/student/pay/qaytar', [AdminStudentController::class, 'tulovQaytar'])->name('AdminUserTulovQaytar');
 Route::post('/Admin/student/admin/chegirma', [AdminStudentController::class, 'adminChegirmaMax'])->name('AdminUserAdminChegirma');
+Route::post('/Admin/student/comment', [AdminStudentController::class, 'comment'])->name('AdminUserComment');
 Route::get('/Admin/student/pay/delete/{id}', [AdminStudentController::class, 'tulovDelete'])->name('AdminUserTulovDelete');
 
 Route::get('/Admin/moliya', [MoliyaController::class, 'index'])->name('AdminMoliya');

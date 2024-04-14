@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
 use App\Models\Guruh;
+use App\Models\Eslatma;
 use App\Models\AdminKassa;
 use App\Models\UserHistory;
 use App\Models\GuruhUser;
@@ -466,6 +467,17 @@ class AdminStudentController extends Controller{
         }
         $FilialKassa->save();
         return redirect()->back()->with('success', 'To\'lov qaytarildi.'); 
+    }
+    public function comment(Request $request){
+        Eslatma::create([
+            'filial_id'=>request()->cookie('filial_id'),
+            'type'=>$request->type,
+            'user_guruh_id'=>$request->user_guruh_id,
+            'text'=>$request->text,
+            'status'=>'true',
+            'admin_id'=>Auth::User()->id,
+        ]);
+        return redirect()->back()->with('success', "Eslatma saqlandi."); 
     }
 
 }
