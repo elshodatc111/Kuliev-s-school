@@ -202,8 +202,9 @@
     
     <div class="card info-card sales-card">
       <div class="card-body text-center">
-        <h5 class="card-title">O'qituvchi guruhlari</span></h5>
-        Bonus<br>Davomatlar soni
+        <h5 class="card-title mb-0 pb-0">O'qituvchi guruhlari</h5>
+        <p class="m-0 p-0 text-danger" style="font-size:10px;">(Guruh yakunlangandan 30 kundan so'ng guruhlar o'chiriladi)</p>
+        Davomatlar soni
         <div class="table-responsive">
             <table class="table table-bordered text-center table-striped table-hover" style="font-size:14px;">
                 <thead>
@@ -247,7 +248,8 @@
 
     <div class="card info-card sales-card">
       <div class="card-body text-center">
-        <h5 class="card-title">To'langan ish haqi</span></h5>
+        <h5 class="card-title mb-0 pb-0">To'langan ish haqi</h5>
+        <p class="m-0 p-0 text-danger" style="font-size:10px;">(Oxirgi 35 kunda to'langan ish haqi)</p>
         <div class="table-responsive">
             <table class="table table-bordered text-center table-striped table-hover" style="font-size:14px;">
                 <thead>

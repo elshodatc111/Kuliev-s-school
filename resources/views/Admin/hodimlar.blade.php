@@ -43,8 +43,10 @@
                                 <td>{{ $item->type }}</td>
                                 <td>{{ $item->email }}</td>
                                 <td>
+                                    @if(Auth::user()->type != 'Operator')
                                     <a href="{{ route('adminHodim',$item->id) }}" class="btn btn-primary py-0 px-1"><i class="bi bi-eye"></i></a>
                                     <a href="{{ route('adminHodimDelete',$item->id) }}" class="btn btn-danger py-0 px-1"><i class="bi bi-trash"></i></a>
+                                    @endif
                                 </td>
                             </tr>
                         @empty
@@ -57,7 +59,7 @@
             </div>
         </div>
     </div>
-    
+    @if(Auth::user()->type != 'Operator')
     <div class="card info-card sales-card">
       <div class="card-body text-center">
         <h5 class="card-title">Yangi Hodim</span></h5>
@@ -97,6 +99,7 @@
         </form>
       </div>
     </div>  
+    @endif
 </section>
 
 </main>

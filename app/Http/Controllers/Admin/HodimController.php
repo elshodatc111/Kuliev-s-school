@@ -18,9 +18,6 @@ class HodimController extends Controller{
     public function __construct(){
         $this->middleware('auth');
     }
-    public function kabinet(){
-        return view('Admin.profel');
-    }
     public function adminHodimlar(){
         $User = User::where('filial_id',request()->cookie('filial_id'))->where('type','!=','SuperAdmin')->where('type','!=','User')->where('type','!=','Techer')->where('status','true')->get();
         return view('Admin.hodimlar',compact('User'));
@@ -52,7 +49,6 @@ class HodimController extends Controller{
         return redirect()->back()->with('success', 'Hodim o\'chirildi.'); 
     }
     public function adminHodim($id){
-        ### Kamchilik mavjud
         $User = User::find($id);
         $Kassa = array();
         $AdminKassa = AdminKassa::where('user_id',$id)->first();
@@ -65,7 +61,8 @@ class HodimController extends Controller{
         $Kassa['MavjudNaqt'] = number_format($FilialKassa->tulov_naqt, 0, '.', ' ');
         $Kassa['MavjudPlastik'] = number_format($FilialKassa->tulov_plastik, 0, '.', ' ');
         $ishHaqi = array();
-        foreach(IshHaqi::where('user_id',$id)->orderby('id','desc')->get() as $key=> $item){
+        $Days2 = date("Y-m-d h:i:s",strtotime('-35 day',time()));
+        foreach(IshHaqi::where('user_id',$id)->where('created_at','>=',$Days2)->orderby('id','desc')->get() as $key=> $item){
             $ishHaqi[$key]['id']=$item->id;
             $ishHaqi[$key]['summa']=number_format(($item->summa), 0, '.', ' ');
             $ishHaqi[$key]['type']=$item->type;

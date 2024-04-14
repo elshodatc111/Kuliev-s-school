@@ -245,7 +245,8 @@
 
     <div class="card info-card sales-card">
         <div class="card-body text-center">
-            <h5 class="card-title">Hodimga to'langan ish haqi</span></h5>
+            <h5 class="card-title pb-0 mb-0">Hodimga to'langan ish haqi</h5>
+            <p class="m-0 p-0 text-danger" style="font-size:10px;">(Oxirgi 35 kunda to'langan ish haqi)</p>
             <div class="table-responsive">
                 <table class="table table-bordered text-center table-striped table-hover" style="font-size:14px;">
                     <thead>

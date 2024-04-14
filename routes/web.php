@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\HodimController;
 use App\Http\Controllers\Admin\AdminGuruhController;
 use App\Http\Controllers\Admin\AdminTecherController;
 use App\Http\Controllers\Admin\AdminStudentController;
+use App\Http\Controllers\Admin\AdminKabinetController;
 use App\Http\Controllers\Admin\MoliyaController;
 use App\Http\Controllers\Techer\TecherController;
 use App\Http\Controllers\User\UserController;
@@ -91,7 +92,10 @@ Route::post('/Admin/admin/techer/update/password', [AdminTecherController::class
 Route::get('/Admin/admin/techer/show/{id}', [AdminTecherController::class, 'techerShow'])->name('AdminTecherShow');
 Route::get('/Admin/admin/techer/delete/{id}', [AdminTecherController::class, 'techerDelete'])->name('AdminTecherDelete');
 
-Route::get('/Admin/hodim/kabinet', [HodimController::class, 'kabinet'])->name('adminkabinet');
+Route::get('/Admin/hodim/kabinet', [AdminKabinetController::class, 'kabinet'])->name('adminkabinet');
+Route::post('/Admin/hodim/kabinet/update', [AdminKabinetController::class, 'update'])->name('adminkabinetupdate');
+Route::post('/Admin/hodim/kabinet/passwupdate', [AdminKabinetController::class, 'passwupdate'])->name('adminkabinetpasswupdate');
+
 Route::get('/Admin/hodim/', [HodimController::class, 'adminHodimlar'])->name('adminHodimlar');
 Route::get('/Admin/hodim/{id}', [HodimController::class, 'adminHodim'])->name('adminHodim');
 Route::get('/Admin/hodim/delete/{id}', [HodimController::class, 'adminHodimDelete'])->name('adminHodimDelete');

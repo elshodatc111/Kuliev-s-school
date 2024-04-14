@@ -42,9 +42,10 @@
                             <td>{{ $item->phone }}</td>
                             <td>{{ $item->phone2 }}</td>
                             <td>{{ $item->email }}</td>
-                            <td>
+                            <td>@if(Auth::user()->type != 'Operator')
                                 <a href="{{ route('AdminTecherShow',$item->id) }}" class="btn btn-primary py-0 px-1"><i class="bi bi-eye"></i></a>
                                 <a href="{{ route('AdminTecherDelete',$item->id) }}" class="btn btn-danger py-0 px-1"><i class="bi bi-trash"></i></a>
+                                @endif
                             </td>
                         </tr>
                         @empty
@@ -57,7 +58,7 @@
             </div>
         </div>
     </div>
-    
+    @if(Auth::user()->type != 'Operator')
     <div class="card info-card sales-card">
       <div class="card-body text-center">
         <h5 class="card-title">Yangi O'qituvchi qo'shish</span></h5>
@@ -88,6 +89,7 @@
         </form>
       </div>
     </div>  
+    @endif
 </section>
 
 </main>

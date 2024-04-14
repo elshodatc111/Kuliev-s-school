@@ -46,7 +46,7 @@ class AdminTecherController extends Controller{
     public function techerShow($id){
         $Techer = User::find($id);
         $Days = date("Y-m-d",strtotime('-30 day',time()));
-        $Days2 = date("Y-m-d h:i:s",strtotime('-60 day',time()));
+        $Days2 = date("Y-m-d h:i:s",strtotime('-35 day',time()));
         $Guruhlar = Guruh::where('techer_id',$id)->where('guruh_status','true')->where('guruh_end','>=',$Days)->get();
         $Guruh = array();
         $Statistika = array();
@@ -61,15 +61,19 @@ class AdminTecherController extends Controller{
             }else{$activGuruh = $activGuruh + 1;}
             $tulov = 0;
             $IshHaqi = IshHaqi::where('user_id',$id)->where('status',$value->id)->get();
-            foreach ($IshHaqi as $items) {
-                $tulov = $tulov + $items->summa;
+            foreach ($IshHaqi as $items) {$tulov = $tulov + $items->summa;}
+            $bonuss = 0;
+            $Student = GuruhUser::where('guruh_id',$value->id)->where('status','true')->get();
+            foreach ($Student as $talaba) {
+                $BonusTalaba = count(GuruhUser::where('user_id',$talaba->user_id)->where('created_at','>=',$talaba->created_at)->where('status','true')->get());
+                if($BonusTalaba>1){$bonuss = $bonuss + 1;}
             }
             $Guruh[$key]['id'] = $value->id;
             $Guruh[$key]['guruh_name'] = $value->guruh_name;
             $Guruh[$key]['guruh_start'] = $value->guruh_start;
             $Guruh[$key]['guruh_end'] = $value->guruh_end;
             $Guruh[$key]['Users'] = count(GuruhUser::where('guruh_id',$value->id)->where('status','true')->get());
-            $Guruh[$key]['Bonus'] = 0;  ### To'g'irlanishi kerak  ###
+            $Guruh[$key]['Bonus'] = $bonuss;
             $Guruh[$key]['delete'] = count(GuruhUser::where('guruh_id',$value->id)->where('status','false')->get());
             $Guruh[$key]['Davomat'] = 0;  ### To'g'irlanishi kerak  ###
             $Guruh[$key]['Hisoblandi'] = number_format($Guruh[$key]['Users']*$TecherTulov+$TecherBonus*$Guruh[$key]['Bonus'], 0, '.', ' ');
@@ -80,7 +84,6 @@ class AdminTecherController extends Controller{
         $Statistika['end'] = $endGuruh;
         $Statistika['Naqt'] = number_format((FilialKassa::where('filial_id',request()->cookie('filial_id'))->first()->tulov_naqt), 0, '.', ' ');
         $Statistika['Plastik'] = number_format((FilialKassa::where('filial_id',request()->cookie('filial_id'))->first()->tulov_plastik), 0, '.', ' ');
-        #dd($Guruhlar);
         $Tulovlar = IshHaqi::where('user_id',$id)->where('created_at','>=',$Days2)->orderby('id','desc')->get();
         $Tulov = array();
         foreach ($Tulovlar as $key => $value) {
@@ -147,7 +150,4 @@ class AdminTecherController extends Controller{
         ]);
         return redirect()->back()->with('success', "O'qituvchiga ish haqi to'landi");
     }
-
-
-
 }

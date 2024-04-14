@@ -118,12 +118,14 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ route('AdminMoliya') }}"><i class="bi bi-pie-chart"></i><span>Moliya</span></a>
             </li>
+            @if(Auth::user()->type != 'Operator')
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ route('AdminTecher') }}"><i class="bi bi-easel"></i><span>O'qituvchilar</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ route('adminHodimlar') }}"><i class="bi bi-person-workspace"></i><span>Hodimlar</span></a>
             </li>
+            @endif
             <li class="nav-item">
                 <a class="nav-link collapsed" href="./eslatma.html"><i class="bi bi-messenger"></i><span>Eslatmalar</span></a>
             </li>
