@@ -52,16 +52,17 @@ class AdminController extends Controller{
         return view('Admin.index', compact('Rooms'));
     }
     public function eslatmalar(){
-        return "Eslatmalar";
+
+        return view('Admin.messege.eslatma');
     }
     public function murojatlar(){
-        return "murojatlar";
+        return view('Admin.messege.murojat');
     }
     public function tkun(){
-        return "tkun";
+        return view('Admin.messege.tkun');
     }
     public function elonlar(){
-        return "elonlar";
+        return view('Admin.messege.elon');
     }
     
 

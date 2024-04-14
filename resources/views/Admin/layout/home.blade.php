@@ -49,7 +49,7 @@
                 <li class="nav-item">
                     <a class="nav-link nav-icon" href="{{ route('AdminEslatma') }}" title="Eslatmalar">
                         <i class="bi bi-messenger"></i>
-                        <span class="badge bg-danger badge-number">3</span>
+                        <span class="badge bg-danger badge-number">@include('Admin.layout.eslatma')</span>
                     </a>
                 </li>
                 <li class="nav-item">
