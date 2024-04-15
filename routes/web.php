@@ -49,6 +49,7 @@ Route::put('/Superadmin/kabinet/password/{id}', [KabinetController::class, 'kabi
 ### Admin ###
 Route::get('/Admin/index', [AdminController::class, 'index'])->name('Admin');
 Route::get('/Admin/eslatma', [AdminController::class, 'eslatmalar'])->name('AdminEslatma');
+Route::get('/Admin/eslatma/arxiv/{id}', [AdminController::class, 'eslatmaarxiv'])->name('AdminEslatmaArxiv');
 Route::get('/Admin/murojatlar', [AdminController::class, 'murojatlar'])->name('AdminMurojarlar');
 Route::get('/Admin/tkun', [AdminController::class, 'tkun'])->name('AdminTKun');
 Route::get('/Admin/elonlar', [AdminController::class, 'elonlar'])->name('AdminElonlar');

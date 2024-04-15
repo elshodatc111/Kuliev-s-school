@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 use App\Models\Room;
+use App\Models\User;
 use App\Models\Guruh;
+use App\Models\Eslatma;
 use App\Models\GuruhTime;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Log;
 
 class AdminController extends Controller{
     public function __construct(){$this->middleware('auth');}
@@ -19,7 +22,6 @@ class AdminController extends Controller{
             }
         }
         if(!request()->cookie('filial_name')){
-            Auth::logout();
             return view('home')->withCookie('filial_id', ' ', -86400)->withCookie('filial_name', ' ', -86400);
         }
     }
@@ -52,8 +54,47 @@ class AdminController extends Controller{
         return view('Admin.index', compact('Rooms'));
     }
     public function eslatmalar(){
-
-        return view('Admin.messege.eslatma');
+        $Eslatma = array();
+        $ess = Eslatma::where('filial_id',request()->cookie('filial_id'))->where('status','true')->get();
+        if($ess){
+            foreach($ess as $key => $item){
+                $Eslatma[$key]['id'] = $item->id;
+                $Eslatma[$key]['type'] = $item->type;
+                if($item->type=='user'){
+                    $Eslatma[$key]['name'] =User::where('id',$item->user_guruh_id)->first()->name;
+                }else{
+                    $Eslatma[$key]['name'] = Guruh::find($item->user_guruh_id)->guruh_name;
+                }
+                $Eslatma[$key]['user_guruh_id'] = $item->user_guruh_id;
+                $Eslatma[$key]['text'] = $item->text;
+                $Eslatma[$key]['created_at'] = $item->created_at;
+                $Eslatma[$key]['meneger'] = User::find($item->admin_id)->email;
+            }
+        }
+        $Eslatma_arxiv = array();
+        $arxiv = Eslatma::where('filial_id',request()->cookie('filial_id'))->where('status','false')->orderby('id','desc')->get();
+        if($arxiv){
+            foreach($arxiv as $key=>$item){
+                $Eslatma_arxiv[$key]['id'] = $item->id;
+                $Eslatma_arxiv[$key]['type'] = $item->type;
+                if($item->type=='user'){
+                    $Eslatma_arxiv[$key]['name'] =User::where('id',$item->user_guruh_id)->first()->name;
+                }else{
+                    $Eslatma_arxiv[$key]['name'] = Guruh::find($item->user_guruh_id)->guruh_name;
+                }
+                $Eslatma_arxiv[$key]['user_guruh_id'] = $item->user_guruh_id;
+                $Eslatma_arxiv[$key]['text'] = $item->text;
+                $Eslatma_arxiv[$key]['created_at'] = $item->created_at;
+                $Eslatma_arxiv[$key]['meneger'] = User::find($item->admin_id)->email;
+            }
+        }
+        return view('Admin.messege.eslatma',compact('Eslatma','Eslatma_arxiv'));
+    }
+    public function eslatmaarxiv($id){
+        $Eslatma = Eslatma::find($id);
+        $Eslatma->status='false';
+        $Eslatma->save();
+        return redirect()->back()->with('success', "Eslatma arxivlansi.");
     }
     public function murojatlar(){
         return view('Admin.messege.murojat');
@@ -65,5 +106,10 @@ class AdminController extends Controller{
         return view('Admin.messege.elon');
     }
     
+    public function sendMessege(){
+        $Eslatma = Eslatma::find(4);
+        $Eslatma->status='true';
+        $Eslatma->save();
+    }
 
 }
