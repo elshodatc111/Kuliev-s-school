@@ -43,7 +43,7 @@
                 <li class="nav-item">
                     <a class="nav-link nav-icon" href="{{ route('AdminTKun') }}" title="Tug'ilgan kunlar">
                         <i class="bi bi-cake2-fill"></i>
-                        <span class="badge bg-warning badge-number">3</span>
+                        <span class="badge bg-warning badge-number">@include('Admin.layout.tkun')</span>
                     </a>
                 </li>
                 <li class="nav-item">

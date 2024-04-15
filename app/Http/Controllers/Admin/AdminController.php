@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 use App\Models\Room;
 use App\Models\User;
+
+use Carbon\Carbon;
 use App\Models\Guruh;
 use App\Models\Eslatma;
 use App\Models\GuruhTime;
@@ -100,7 +102,9 @@ class AdminController extends Controller{
         return view('Admin.messege.murojat');
     }
     public function tkun(){
-        return view('Admin.messege.tkun');
+        $today = Carbon::today();
+        $tkun = User::whereRaw("DATE_FORMAT(tkun, '%m-%d') = ?", [$today->format('m-d')])->get();
+        return view('Admin.messege.tkun', compact('tkun'));
     }
     public function elonlar(){
         return view('Admin.messege.elon');
