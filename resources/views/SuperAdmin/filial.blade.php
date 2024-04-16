@@ -23,38 +23,41 @@
     <div class="card-body text-center">
       <h5 class="card-title">Filiallar</span></h5>
       <div class="table-responsive">
-          <table class="table table-bordered text-center table-striped table-hover" style="font-size:14px;">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Filial</th>
-                <th>Manzil</th>
-                <th>Naqt</th>
-                <th>Plastik</th>
-                <th>Payme</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              @forelse($Filial as $item)
-              <tr>
-                <td>{{ $loop->index+1 }}</td>
-                <td style="text-align:left;">{{ $item->filial_name }}</td>
-                <td style="text-align:left;">{{ $item->filial_addres }}</td>
-                <td>{{ $item->naqt-$item->xarajat_naqt }}</td>
-                <td>{{ $item->plastik-$item->xarajat_plastik }}</td>
-                <td>{{ $item->payme-$item->xarajat_payme }}</td>
-                <td>
-                  <a href="{{ route('filial.show',$item->id ) }}" class="btn btn-primary px-1 py-0"><i class="bi bi-gear"></i></a>
-                  <a href="{{ route('filailCrm',$item->id) }}" class="btn btn-warning px-1 text-white py-0"><i class="bi bi-eye"></i></a>
-                </td>
-              </tr>
-              @empty
+        <table class="table table-bordered text-center table-striped table-hover" style="font-size:14px;">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Filial</th>
+              <th>Naqt</th>
+              <th>Plastik</th>
+              <th>Payme</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            @forelse($Filial as $item)
+            <tr>
+              <td>{{ $loop->index+1 }}</td>
+              <td style="text-align:left;">
+                <a href="{{ route('filailCrm',$item->id) }}">{{ $item->filial_name }}</a>
+              </td>
+              <td>{{ $item->naqt }}</td>
+              <td>{{ $item->plastik }}</td>
+              <td>{{ $item->payme }}</td>
+              <td style="text-align:right">
+                <a href="#" title="Moliya" class="btn btn-warning py-0 my-1 my-lg-0"><i class="bi bi-cash"></i></a>
+                <a href="#" title="Statistika" class="btn btn-danger py-0 my-1 my-lg-0"><i class="bi bi-bar-chart"></i></a>
+                <a href="#" title="Hisobotlar" class="btn btn-info text-white py-0 my-1 my-lg-0"><i class="bi bi-filetype-exe"></i></a>
+                <a href="{{ route('filial.show',$item->id ) }}" title="Filial sozlamalari" 
+                class="btn btn-primary py-0 my-1 my-lg-0"><i class="bi bi-gear"></i></a>
+              </td>
+            </tr>
+            @empty
 
-              @endforelse
-            </tbody>
-          </table>
-        </div>
+            @endforelse
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 

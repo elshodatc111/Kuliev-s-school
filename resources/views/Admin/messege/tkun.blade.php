@@ -1,15 +1,15 @@
 @extends('Admin.layout.home')
-@section('title','Guruhlar')
+@section('title','Tug\'ilgan kunlar')
 @section('content')
 
 <main id="main" class="main">
 
 <div class="pagetitle">
-    <h1>Guruhlar</h1>
+    <h1>Tug'ilgan kunlar</h1>
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('Admin') }}">Bosh sahifa</a></li>
-            <li class="breadcrumb-item active">Guruhlar</li>
+            <li class="breadcrumb-item active">Tug'ilgan kunlar</li>
         </ol>
     </nav>
 </div>

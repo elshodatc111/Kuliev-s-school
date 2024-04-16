@@ -29,6 +29,8 @@ Route::get('/Superadmin/statistika', [SuperAdminController::class, 'statistika']
     ###Filiallar###
 Route::get('/Superadmin/filial', [FilialController::class, 'filial'])->name('filial');
 Route::get('/Superadmin/filial/show/{id}', [FilialController::class, 'show'])->name('filial.show');
+Route::post('/Superadmin/filial/update', [FilialController::class, 'filialUpdate'])->name('filialUpdate');
+Route::post('/Superadmin/filial/delete', [FilialController::class, 'filialDelete'])->name('filialDelete');
 Route::get('/Superadmin/filailCrm/{id}', [FilialController::class, 'filailCrm'])->name('filailCrm');
 Route::get('/Superadmin/room/delete/{id}', [FilialController::class, 'roomdelete'])->name('roomdelete');
 Route::get('/Superadmin/setting/tulov/deleted/{id}', [FilialController::class, 'tulovSettingDelete'])->name('tulovSettingDelete');

@@ -20,143 +20,108 @@
     <div class="alert alert-danger">{{Session::get('error') }}</div>
 @endif
 <section class="section dashboard">
-    <div>
         <div class="card">
             <div class="card-body text-center">
-                <h5 class="card-title mb-0">{{ $Filial->filial_name }}</span></h5>
-                <table class="table table-bordered text-center">
-                    <tr>
-                        <th style="with:33.333333%"><i class="bi bi-cash"></i> Naqt</th>
-                        <th style="with:33.333333%"><i class="bi bi-credit-card"></i> Plastik</th>
-                        <th style="with:33.333333%"><i class="bi bi-cash-coin"></i> Payme</th>
-                    </tr>
-                    <tr>
-                        <td>150 000</td>
-                        <td>150 000</td>
-                        <td>150 000</td>
-                    </tr>
-                </table>
-
+                <h5 class="card-title mb-0 pb-0">{{ $Filial->filial_name }}</span></h5>
+            </div>
+        </div>
+    
+        <div class="card">
+            <div class="card-body text-center">
                 <div class="row">
-                    <div class="col-lg-3 my-lg-0 my-1 col-6">
-                        <button class="btn btn-outline-primary w-100"><i class="bi bi-cash-stack"></i> Kassaga qaytarish</button>
-                    </div>
-                    <div class="col-lg-3 my-lg-0 my-1 col-6">
-                        <button class="btn btn-outline-primary w-100"><i class="bi bi-cart4"></i> Xarajatlar</button>
-                    </div>
-                    <div class="col-lg-3 my-lg-0 my-1 col-6">
-                        <button class="btn btn-outline-warning w-100"><i class="bi bi-cash-stack"></i> Chiqimlar tarixi</button>
-                    </div>
-                    <div class="col-lg-3 my-lg-0 my-1 col-6">
-                        <button class="btn btn-outline-warning w-100"><i class="bi bi-cart4"></i> Xarajatlar tarixi</button>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="card" style="min-height:300px;">
-                <div class="card-body text-center">
-                    <h5 class="card-title mb-0">Filial xonalari</span></h5>
-                    <div class="table-responsive">
-                        <table class="table table-bordered text-center table-striped table-hover" style="font-size:14px;">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Filial xonasi</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbodt>
-                                @forelse($Room as $item)
-                                <tr>
-                                    <td>{{ $loop->index+1 }}</td>
-                                    <td>{{ $item->room_name }}</td>
-                                    <td>
-                                        <a href="{{ route('roomdelete',$item->id) }}" class="btn btn-danger py-0 px-1"><i class="bi bi-trash"></i></a>
-                                    </td>
-                                </tr>
-                                @empty
-                                <tr>
-                                    <td colspan=3 class="text-center">Xonalar mavjud emas</td>
-                                </tr>
-                                @endforelse
-                            </tbodt>
-                        </table>
-                    </div>
-                    <form action="{{ route('roomcreate') }}" method="post">
-                        @csrf 
-                        <input type="hidden" name="filial_id" value="{{ $Filial->id }}">
-                        <input type="hidden" name="status" value="true">
-                        <div class="row">
-                            <div class="col-8">
-                                <input type="text" name="room_name" placeholder="Xona nomi" class="form-control" required>
-                            </div>
-                            <div class="col-4">
-                                <button class="btn btn-primary w-100">Saqlash</button>
-                            </div>
+                    <div class="col-lg-8">
+                        <h5 class="card-title mb-0">Filial xonalari</span></h5>
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-center table-striped table-hover" style="font-size:14px;">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Filial xonasi</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbodt>
+                                    @forelse($Room as $item)
+                                    <tr>
+                                        <td>{{ $loop->index+1 }}</td>
+                                        <td>{{ $item->room_name }}</td>
+                                        <td>
+                                            <a href="{{ route('roomdelete',$item->id) }}" class="btn btn-danger py-0 px-1"><i class="bi bi-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                    @empty
+                                    <tr>
+                                        <td colspan=3 class="text-center">Xonalar mavjud emas</td>
+                                    </tr>
+                                    @endforelse
+                                </tbodt>
+                            </table>
                         </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6">
-            <div class="card" style="min-height:300px;">
-                <div class="card-body text-center">
-                    <h5 class="card-title mb-0">To'lov sozlamalari</span></h5>
-                    <div class="table-responsive">
-                        <table class="table table-bordered text-center table-striped table-hover" style="font-size:14px;">
-                            <thead>
-                                <tr>
-                                    <th>Summa</th>
-                                    <th>Chegirma</th>
-                                    <th>Admin Chegirma</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbodt>
-                                @forelse($TulovSetting as $item)
-                                <tr>
-                                    <td>{{ $item['tulov_summa'] }}</td>
-                                    <td>{{ $item['chegirma'] }}</td>
-                                    <td>{{ $item['admin_chegirma'] }}</td>
-                                    <td>
-                                        <a href="{{ route('tulovSettingDelete',$item['id'] ) }}" class="btn btn-danger py-0 px-1"><i class="bi bi-trash"></i></a>
-                                    </td>
-                                </tr>
-                                @empty
-                                <tr>
-                                    <td class="text-center" colspan=4>To'lov sozlamalari mavjud emas.</td>
-                                </tr>
-                                @endforelse
-                            </tbodt>
-                        </table>
                     </div>
-                    <form action="{{ route('tulovSettingCreate') }}" method="post" id="form4">
-                        @csrf
-                        <input type="hidden" name="filial_id" value="{{ $Filial->id }}">
-                        <input type="hidden" name="status" value="true">
-                        <div class="row">
-                            <div class="col-6 pt-2">
-                                <input type="text" name="tulov_summa" id="summa1" class="form-control" placeholder="To'lov summasi" required>
-                            </div>
-                            <div class="col-6 pt-2">
-                                <input type="text" name="chegirma" id="summa2" class="form-control" placeholder="Chegirma" required>
-                            </div>
-                            <div class="col-6 pt-2">
-                                <input type="text" name="admin_chegirma" id="summa3" class="form-control" placeholder="Admin chegirma" required>
-                            </div>
-                            <div class="col-6 pt-2">
-                                <button class="btn btn-primary w-100">Saqlash</button>
-                            </div>
-                        </div>
-                    </form>
+                    <div class="col-lg-4">
+                        <h5 class="card-title mb-0">Yangi filial</span></h5>
+                        <form action="{{ route('roomcreate') }}" method="post">
+                            @csrf 
+                            <input type="hidden" name="filial_id" value="{{ $Filial->id }}">
+                            <input type="hidden" name="status" value="true">
+                            <input type="text" name="room_name" placeholder="Xona nomi" class="form-control" required>
+                            <button class="btn btn-primary w-100 mt-2">Saqlash</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+            
+        <div class="card">
+            <div class="card-body text-center">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <h5 class="card-title mb-0">To'lov sozlamalari</span></h5>
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-center table-striped table-hover" style="font-size:14px;">
+                                <thead>
+                                    <tr>
+                                        <th>Summa</th>
+                                        <th>Chegirma</th>
+                                        <th>Admin Chegirma</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbodt>
+                                    @forelse($TulovSetting as $item)
+                                    <tr>
+                                        <td>{{ $item['tulov_summa'] }}</td>
+                                        <td>{{ $item['chegirma'] }}</td>
+                                        <td>{{ $item['admin_chegirma'] }}</td>
+                                        <td>
+                                            <a href="{{ route('tulovSettingDelete',$item['id'] ) }}" class="btn btn-danger py-0 px-1"><i class="bi bi-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                    @empty
+                                    <tr>
+                                        <td class="text-center" colspan=4>To'lov sozlamalari mavjud emas.</td>
+                                    </tr>
+                                    @endforelse
+                                </tbodt>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <h5 class="card-title mb-0">Yangi to'lov</span></h5>
+                        <form action="{{ route('tulovSettingCreate') }}" method="post" id="form4">
+                            @csrf
+                            <input type="hidden" name="filial_id" value="{{ $Filial->id }}">
+                            <input type="hidden" name="status" value="true">
+                            <input type="text" name="tulov_summa" id="summa1" class="form-control mt-2" placeholder="To'lov summasi" required>
+                            <input type="text" name="chegirma" id="summa2" class="form-control mt-2" placeholder="Chegirma" required>
+                            <input type="text" name="admin_chegirma" id="summa3" class="form-control mt-2" placeholder="Admin chegirma" required>
+                            <button class="btn btn-primary w-100 mt-2">Saqlash</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+            
         <div class="row">
             <div class="col-lg-8">
                 <div class="card">
@@ -201,8 +166,66 @@
                 </div>
             </div>
         </div>
-    </div>
-  
+        
+        <div class="text-center">
+            <button class="btn btn-primary mt-3" style="width:48%;" data-bs-toggle="modal" data-bs-target="#FilialUpdate"><i class="bi bi-pencil"></i> Filialni o'chirish</button>
+            <button class="btn btn-danger mt-3" style="width:48%;" data-bs-toggle="modal" data-bs-target="#FilialDelete"><i class="bi bi-trash"></i> Filialni o'chirish</button>
+        </div>
+        
+        <div class="modal fade" id="FilialUpdate" tabindex="-1">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title w-100 text-center">Filialni taxrirlash</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ route('filialUpdate') }}" method="post">
+                            <div class="row">
+                                <div class="col-12">
+                                    @csrf
+                                    <input type="hidden" name="id" value="{{ $Filial['id'] }}">
+                                    <label for="">Filial nomi</label>
+                                    <input type="text" class="form-control" name="filial_name" required value="{{ $Filial['filial_name'] }}">
+                                    <label for="">Filial manzili</label>
+                                    <input type="text" class="form-control mb-3" name="filial_addres" required value="{{ $Filial['filial_addres'] }}">
+                                </div>
+                                <div class="col-6">
+                                    <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
+                                </div>
+                                <div class="col-6">
+                                    <button type="submit" class="btn btn-danger w-100" data-bs-dismiss="modal">Taxrirlash</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="FilialDelete" tabindex="-1">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title w-100 text-center">Filialni o'chirish</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-danger w-100 text-center">Filial o'chirilgach barcha malumotlar o'chitib yubotiladi. Qayta tiklash imkoni mavjud emas.</p>
+                        <form action="{{ route('filialDelete') }}" method="post">
+                            <div class="row">
+                                <div class="col-6">
+                                    <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
+                                </div>
+                                <div class="col-6">
+                                    @csrf
+                                    <input type="hidden" name="id" value="{{ $Filial['id'] }}">
+                                    <button type="submit" class="btn btn-danger w-100" data-bs-dismiss="modal">O'chirish</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
   
 

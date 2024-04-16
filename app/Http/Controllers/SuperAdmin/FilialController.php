@@ -26,11 +26,28 @@ class FilialController extends Controller{
             'filial_name' => 'required',
             'filial_addres' => 'required'
         ]);
+        $validated['naqt'] = 0;
+        $validated['xarajat_naqt'] = 0;
+        $validated['plastik'] = 0;
+        $validated['xarajat_plastik'] = 0;
+        $validated['payme'] = 0;
+        $validated['xarajat_payme'] = 0;
         $Filial = Filial::create($validated);
         FilialKassa::create([
             'filial_id' => $Filial->id
         ]);
         return redirect()->back()->with('success', 'Yangi filial yaratildi.'); 
+    }
+    public function filialUpdate(Request $request){
+        $validated = $request->validate([
+            'filial_name' => 'required',
+            'filial_addres' => 'required'
+        ]);
+        $Filial = Filial::find($request['id']);
+        $Filial->filial_name = $request->filial_name;
+        $Filial->filial_addres = $request->filial_addres;
+        $Filial->save();
+        return redirect()->back()->with('success', 'Filial taxrirlandi.'); 
     }
     public function filailCrm($Filial_id){
         $Filial = Filial::find($Filial_id);
@@ -93,5 +110,8 @@ class FilialController extends Controller{
         ]);
         Cours::create($validated);
         return redirect()->back()->with('success', 'Yangi kurs kiritildi.');
+    }
+    public function filialDelete(Request $request){
+        dd($request);
     }
 }

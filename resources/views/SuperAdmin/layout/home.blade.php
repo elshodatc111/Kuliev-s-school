@@ -72,12 +72,6 @@
         <a class="nav-link collapsed" href="{{ route('filial') }}"><i class="bi bi-menu-button-wide"></i><span>Filiallar</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('hisobot') }}"><i class="bi bi-journal-text"></i><span>Hisobot</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('statistika') }}"><i class="bi bi-bar-chart"></i><span>Statistika</span></a>
-      </li>
-      <li class="nav-item">
         <a class="nav-link collapsed" href="{{ route('hodimlar') }}"><i class="bi bi-person"></i><span>Administrator</span></a>
       </li>
     </ul>
