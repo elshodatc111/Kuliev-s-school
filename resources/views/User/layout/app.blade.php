@@ -41,13 +41,12 @@
                 <li class="nav-item dropdown pe-3">
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="" data-bs-toggle="dropdown">
                         <i class="bi bi-person-circle" class="rounded-circle" style="font-size: 30px;"></i>
-                        <span class="d-none d-md-block dropdown-toggle ps-2">{{ @Auth::user()->email }}</span>
+                        <span class="d-none d-md-block dropdown-toggle ps-2">{{ @Auth::user()->name }}</span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
-                            <h6>{{ @Auth::user()->name }}</h6>
+                            <h6>{{ @Auth::user()->email }}</h6>
                             <span class="text-success">
-                                <i class="bi bi-coin"></i>
                                 <p style="display:inline;" class="text-danger">{{ @Auth::user()->balans }} </p>so'm
                             </span>
                         </li>
