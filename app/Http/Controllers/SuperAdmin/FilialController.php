@@ -18,7 +18,14 @@ class FilialController extends Controller{
         $this->middleware('auth');
     }
     public function filial(){
-        $Filial = Filial::get();
+        $Filial = array();
+        foreach (Filial::get() as $key => $value) {
+            $Filial[$key]['id'] = $value->id ;
+            $Filial[$key]['filial_name'] = $value->filial_name;
+            $Filial[$key]['naqt'] = $value->naqt;
+            $Filial[$key]['plastik'] = $value->plastik;
+            $Filial[$key]['payme'] = $value->payme;
+        }
         return view('SuperAdmin.filial',compact('Filial'));
     }
     public function filialcreate(Request $request){

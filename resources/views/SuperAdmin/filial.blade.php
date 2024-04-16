@@ -39,16 +39,16 @@
             <tr>
               <td>{{ $loop->index+1 }}</td>
               <td style="text-align:left;">
-                <a href="{{ route('filailCrm',$item->id) }}">{{ $item->filial_name }}</a>
+                <b><a href="{{ route('filailCrm',$item['id']) }}">{{ $item['filial_name'] }}</a></b>
               </td>
-              <td>{{ $item->naqt }}</td>
-              <td>{{ $item->plastik }}</td>
-              <td>{{ $item->payme }}</td>
+              <td>{{ $item['naqt'] }}</td>
+              <td>{{ $item['plastik'] }}</td>
+              <td>{{ $item['payme'] }}</td>
               <td style="text-align:right">
-                <a href="#" title="Moliya" class="btn btn-warning py-0 my-1 my-lg-0"><i class="bi bi-cash"></i></a>
-                <a href="#" title="Statistika" class="btn btn-danger py-0 my-1 my-lg-0"><i class="bi bi-bar-chart"></i></a>
-                <a href="#" title="Hisobotlar" class="btn btn-info text-white py-0 my-1 my-lg-0"><i class="bi bi-filetype-exe"></i></a>
-                <a href="{{ route('filial.show',$item->id ) }}" title="Filial sozlamalari" 
+                <a href="{{ route('SuperAdminMoliya' , $item['id']) }}" title="Moliya" class="btn btn-warning py-0 my-1 my-lg-0"><i class="bi bi-cash"></i></a>
+                <a href="{{ route('SuperAdminStatistika' , $item['id']) }}" title="Statistika" class="btn btn-danger py-0 my-1 my-lg-0"><i class="bi bi-bar-chart"></i></a>
+                <a href="{{ route('SuperAdminReport' , $item['id']) }}" title="Hisobotlar" class="btn btn-info text-white py-0 my-1 my-lg-0"><i class="bi bi-filetype-exe"></i></a>
+                <a href="{{ route('filial.show',$item['id'] ) }}" title="Filial sozlamalari" 
                 class="btn btn-primary py-0 my-1 my-lg-0"><i class="bi bi-gear"></i></a>
               </td>
             </tr>

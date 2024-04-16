@@ -10,20 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
 class SuperAdminController extends Controller{
-    
     public function index(){
         return view('SuperAdmin.index');
-    }
-
-    public function hisobot(){
-        return view('SuperAdmin.hisobot');
-    }
-
-    public function statistika(){
-        return view('SuperAdmin.statistika');
-    }
-
-
-
-    
+    }    
 }

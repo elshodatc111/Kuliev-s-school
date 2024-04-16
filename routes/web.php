@@ -6,6 +6,10 @@ use App\Http\Controllers\SuperAdmin\SuperAdminController;
 use App\Http\Controllers\SuperAdmin\KabinetController;
 use App\Http\Controllers\SuperAdmin\HodimlarController;
 use App\Http\Controllers\SuperAdmin\FilialController;
+use App\Http\Controllers\SuperAdmin\SuperMoliyaController;
+use App\Http\Controllers\SuperAdmin\SuperReportController;
+use App\Http\Controllers\SuperAdmin\SuperStatistikaController;
+use App\Http\Controllers\SuperAdmin\SuperElonController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\HodimController;
 use App\Http\Controllers\Admin\AdminGuruhController;
@@ -32,6 +36,16 @@ Route::get('/Superadmin/filial/show/{id}', [FilialController::class, 'show'])->n
 Route::post('/Superadmin/filial/update', [FilialController::class, 'filialUpdate'])->name('filialUpdate');
 Route::post('/Superadmin/filial/delete', [FilialController::class, 'filialDelete'])->name('filialDelete');
 Route::get('/Superadmin/filailCrm/{id}', [FilialController::class, 'filailCrm'])->name('filailCrm');
+
+Route::get('/Superadmin/moliya/{id}', [SuperMoliyaController::class, 'index'])->name('SuperAdminMoliya');
+
+Route::get('/Superadmin/statistika/{id}', [SuperStatistikaController::class, 'index'])->name('SuperAdminStatistika');
+
+Route::get('/Superadmin/report/{id}', [SuperReportController::class, 'index'])->name('SuperAdminReport');
+
+Route::get('/Superadmin/elon/techer', [SuperElonController::class, 'techer'])->name('SuperAdminElonTecher');
+Route::get('/Superadmin/elon/student', [SuperElonController::class, 'student'])->name('SuperAdminElonStudent');
+
 Route::get('/Superadmin/room/delete/{id}', [FilialController::class, 'roomdelete'])->name('roomdelete');
 Route::get('/Superadmin/setting/tulov/deleted/{id}', [FilialController::class, 'tulovSettingDelete'])->name('tulovSettingDelete');
 Route::post('/Superadmin/setting/tulov/create', [FilialController::class, 'tulovSettingCreate'])->name('tulovSettingCreate');
