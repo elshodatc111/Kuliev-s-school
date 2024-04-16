@@ -103,7 +103,7 @@ class AdminController extends Controller{
     }
     public function tkun(){
         $today = Carbon::today();
-        $tkun = User::whereRaw("DATE_FORMAT(tkun, '%m-%d') = ?", [$today->format('m-d')])->get();
+        $tkun = User::where('filial_id',request()->cookie('filial_id'))->where('type','User')->whereRaw("DATE_FORMAT(tkun, '%m-%d') = ?", [$today->format('m-d')])->get();
         return view('Admin.messege.tkun', compact('tkun'));
     }
     public function elonlar(){
