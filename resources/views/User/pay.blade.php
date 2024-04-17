@@ -14,13 +14,14 @@
         <div class="dashboard">
             <div class="col-12">
                 <h4 class="card-title">To'lov turini tanlang</h4>
-                <form method="POST" action="https://test.paycom.uz">
-                    <input type="hidden" name="merchant" value="{Merchant ID}"/>
+                <p><b>Tulov summasi: </b>{{ $summa }} so'm</p>
+                <form method="POST" action="https://checkout.paycom.uz">
+                    @csrf
+                    <input type="hidden" name="merchant" value="65f14418a929127d44bcb5d1"/>
                     <input type="hidden" name="amount" value="{{ $summa2 }}"/>
-                    <input type="hidden" name="user_id" value="{{ Auth::user()->id }}"/>
+                    <input type="hidden" name="onwer_id" value="{{ Auth::user()->id }}"/>
                     <input type="hidden" name="lang" value="uz"/>
                     <input type="hidden" name="callback_timeout" value="15"/>
-                    <input type="hidden" name="description" value="{ Shaxsiy kabinet balansini to'ldirish. }"/>
                     <button type="submit" class="btn btn-primary p-5 py-3"> <b>Payme</b> </button>
                 </form>
             </div>

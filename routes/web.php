@@ -22,7 +22,7 @@ use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\UserGuruhController;
 use App\Http\Controllers\User\UserPaymartController;
 use App\Http\Controllers\User\UserContactController;
-
+use App\Http\Controllers\User\PaymeController; 
 Route::get('/', [HomeController::class, 'index']);
 
 Auth::routes();
@@ -146,3 +146,5 @@ Route::get('/User/tolov/{summa}', [UserPaymartController::class, 'pay'])->name('
 Route::post('/User/tolov', [UserPaymartController::class, 'pay2'])->name('Tolov');
 Route::get('/User/contact', [UserContactController::class, 'Contact'])->name('Contact');
 Route::post('/User/contact', [UserContactController::class, 'ContactPost'])->name('ContactPost');
+
+Route::post('/payme', [PaymeController::class, 'index']);
