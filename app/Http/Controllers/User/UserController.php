@@ -6,11 +6,11 @@ use App\Models\Guruh;
 use App\Models\GuruhUser;
 use App\Models\Tulov;
 use App\Models\Room;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cookie;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller{
     public function __construct(){
@@ -52,7 +52,6 @@ class UserController extends Controller{
         $Stat['new'] = $New;
         $Stat['activ'] = $Activ;
         $Stat['end'] = $End;
-        
         $endTimestamp = date("Y-m-d",strtotime('-3 day',time()));
         $GuruhUser2 = GuruhUser::where('guruh_users.user_id',Auth::user()->id)
             ->join('guruhs','guruhs.id','guruh_users.guruh_id')
@@ -73,14 +72,29 @@ class UserController extends Controller{
                 $CHegirma[$key]['tulov'] = number_format(($value->guruh_price-$value->guruh_chegirma), 0, '.', ' ');
             }
         }
-        #$GuruhUser->where('guruhs.guruh_start')
-        #dd($CHegirma);
-        
-
-
         return view('User.index',compact('Stat','CHegirma'));
     }
     public function Kabinet(){
         return view('User.kabinet');
+    }
+    public function KabinetUpdate(Request $request){
+        $User  = User::find(Auth::user()->id);
+        $User->name = $request->name;
+        $User->save();
+        return redirect()->back()->with('success', 'Malumotlar yangilandi.'); 
+    }
+    public function KabinetUpdatePassw(Request $request){
+        $validate = $request->validate([
+            'pass' => ['required', 'string', 'min:8'],
+            'pass1' => ['required', 'string', 'min:8'],
+            'pass2' => ['required', 'string', 'min:8'],
+        ]);
+        if($request->pass1 != $request->pass2){
+            return redirect()->back()->with('error', 'Parollar bir xil emas.'); 
+        }
+        $User  = User::find(Auth::user()->id);
+        $User->password = Hash::make($request->pass1);
+        $User->save();
+        return redirect()->back()->with('success', 'Parol yangilandi.'); 
     }
 }

@@ -137,6 +137,8 @@ Route::get('/Techer/kabinet', [TecherController::class, 'Kabinet'])->name('TKabi
 ### User ###
 Route::get('/User/index', [UserController::class, 'index'])->name('User');
 Route::get('/User/kabinet', [UserController::class, 'Kabinet'])->name('Kabinet');
+Route::post('/User/kabinet/update', [UserController::class, 'KabinetUpdate'])->name('KabinetUpdate');
+Route::post('/User/kabinet/password/update', [UserController::class, 'KabinetUpdatePassw'])->name('KabinetUpdatePassw');
 Route::get('/User/guruhlar', [UserGuruhController::class, 'Guruhlar'])->name('Guruhlar');
 Route::get('/User/guruhlar/show/{id}', [UserGuruhController::class, 'show'])->name('GuruhShow');
 Route::get('/User/tolovlar', [UserPaymartController::class, 'Tolovlar'])->name('Tolovlar');

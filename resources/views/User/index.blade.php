@@ -6,7 +6,7 @@
         <h1>Bosh sahifa</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('User') }}">Dashboard</a></li>
                 <li class="breadcrumb-item active">Bosh sahifa</li>
             </ol>
         </nav>
@@ -40,12 +40,12 @@
         <h5 class="card-title">Chegirmali to'lovlar</h5>
             <div class="row">
                 @forelse($CHegirma as $item)
-                <div class="col-lg-6">
+                <div class="col-lg-4">
                     <div class="card">
-                        <img src="https://atko.tech/NiceAdmin/assets/img/01.png" class="card-img-top">
+                        <img src="https://atko.tech/NiceAdmin/assets/img/cours.jpg" class="card-img-top">
                         <div class="card-body">
-                            <h5 class="card-title w-100 text-center">{{ $item['guruh_name'] }}</h5>
-                            <p class="mt-0">Guruhga <span class="text-primary">
+                            <h5 class="card-title w-100 mb-0 p-1 text-center">{{ $item['guruh_name'] }}</h5>
+                            <p class="mt-0 p-0">Guruhga <span class="text-primary">
                                 {{ $item['tulov'] }}</span> so'm to'lov qiling va <span class="text-primary">
                                 {{ $item['guruh_chegirma'] }}</span> s'om chegirma oling</p>
                             <div class="w-100 text-center">
