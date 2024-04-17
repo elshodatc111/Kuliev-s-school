@@ -140,4 +140,6 @@ Route::get('/User/kabinet', [UserController::class, 'Kabinet'])->name('Kabinet')
 Route::get('/User/guruhlar', [UserGuruhController::class, 'Guruhlar'])->name('Guruhlar');
 Route::get('/User/guruhlar/show/{id}', [UserGuruhController::class, 'show'])->name('GuruhShow');
 Route::get('/User/tolovlar', [UserPaymartController::class, 'Tolovlar'])->name('Tolovlar');
+Route::get('/User/tolov/{summa}', [UserPaymartController::class, 'pay'])->name('Tolov');
+Route::post('/User/tolov', [UserPaymartController::class, 'pay2'])->name('Tolov');
 Route::get('/User/contact', [UserContactController::class, 'Contact'])->name('Contact');

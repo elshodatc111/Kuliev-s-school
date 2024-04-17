@@ -20,4 +20,13 @@ class UserPaymartController extends Controller{
         }
         return view('User.tulovlar',compact('Tulov'));
     }
+
+    public function pay($summa){
+        $summa2 = str_replace(" ","",$summa)*100;
+        return view('User.pay',compact('summa','summa2'));
+    }
+    public function pay2(Request $request){
+        return $this->pay($request->summa);
+    }
+    
 }
