@@ -19,6 +19,9 @@ use App\Http\Controllers\Admin\AdminKabinetController;
 use App\Http\Controllers\Admin\MoliyaController;
 use App\Http\Controllers\Techer\TecherController;
 use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\User\UserGuruhController;
+use App\Http\Controllers\User\UserPaymartController;
+use App\Http\Controllers\User\UserContactController;
 
 Route::get('/', [HomeController::class, 'index']);
 
@@ -133,7 +136,8 @@ Route::get('/Techer/tulovlar', [TecherController::class, 'Tolovlar'])->name('TTo
 Route::get('/Techer/kabinet', [TecherController::class, 'Kabinet'])->name('TKabinet');
 ### User ###
 Route::get('/User/index', [UserController::class, 'index'])->name('User');
-Route::get('/User/guruhlar', [UserController::class, 'Guruhlar'])->name('Guruhlar');
-Route::get('/User/tolovlar', [UserController::class, 'Tolovlar'])->name('Tolovlar');
-Route::get('/User/contact', [UserController::class, 'Contact'])->name('Contact');
 Route::get('/User/kabinet', [UserController::class, 'Kabinet'])->name('Kabinet');
+Route::get('/User/guruhlar', [UserGuruhController::class, 'Guruhlar'])->name('Guruhlar');
+Route::get('/User/guruhlar/show/{id}', [UserGuruhController::class, 'show'])->name('GuruhShow');
+Route::get('/User/tolovlar', [UserPaymartController::class, 'Tolovlar'])->name('Tolovlar');
+Route::get('/User/contact', [UserContactController::class, 'Contact'])->name('Contact');

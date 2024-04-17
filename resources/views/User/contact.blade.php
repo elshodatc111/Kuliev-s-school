@@ -38,17 +38,10 @@
                             <div class="border">
                                 <div class="list-group " style="height:340px;overflow-x: hidden;overflow-y: scroll">
                                     <div style="width: 70%;background-color: rgba(155, 155, 255, 0.25);margin: 5px;border-radius: 5px;padding: 5px;">
-                                        <b style="text-align: left;" class="w-100">Elshod Musurmonov</b> 
+                                        <b style="text-align: left;" class="w-100">Operator</b> 
                                         <p class="p-0 m-0 text-muted">
-                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Et incidunt itaque eligendi repudiandae, rerum eos? Debitis doloribus quis rem ab laudantium temporibus, sit ipsum corporis! Id ratione fugit quo distinctio.
-                                        </p> 
-                                        <div class="d-flex p-0 w-100 justify-content-between">
-                                            <small class="text-muted w-100" style="font-size:8px;padding-top:10px;text-align:right">
-                                                <i class="bi bi-check text-success" style="font-size:12px"></i>
-                                                <i class="bi bi-check-all text-success" style="font-size:12px"></i>
-                                                2024-01-02 15:15:00
-                                            </small>
-                                        </div>   
+                                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                        </p>   
                                     </div>
                                     
                                     <div style="width: 80%;background-color: rgba(155, 155, 255, 0.05);margin: 5px;border-radius: 5px;padding: 5px;margin-left: 19%;">
