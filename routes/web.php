@@ -145,3 +145,4 @@ Route::get('/User/tolovlar', [UserPaymartController::class, 'Tolovlar'])->name('
 Route::get('/User/tolov/{summa}', [UserPaymartController::class, 'pay'])->name('Tolov');
 Route::post('/User/tolov', [UserPaymartController::class, 'pay2'])->name('Tolov');
 Route::get('/User/contact', [UserContactController::class, 'Contact'])->name('Contact');
+Route::post('/User/contact', [UserContactController::class, 'ContactPost'])->name('ContactPost');

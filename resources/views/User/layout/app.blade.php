@@ -34,16 +34,24 @@
             <ul class="d-flex align-items-center">
                 <li class="nav-item">
                     <a class="nav-link nav-icon" href="{{ route('Contact') }}" title="Murojatlar">
-                        <i class="bi bi-chat-left-text"></i>
-                        <span class="badge bg-success badge-number">3</span>
+                        <i class="bi bi-envelope"></i>
+                        <span class="badge bg-success badge-number">@include('User.layout.murojat')</span>
                     </a>
                 </li>
                 <li class="nav-item">
+                    @if(@Auth::user()->balans>=0)
                     <a href="{{ route('Tolovlar') }}" title="Balans" class="text-success">
                         <i class="bi bi-coin"></i>
-                        {{ @Auth::user()->balans }}
+                        {{ number_format((@Auth::user()->balans), 0, '.', ' ') }}
                         <i class="bi bi-coin text-white"></i>
                     </a>
+                    @else
+                    <a href="{{ route('Tolovlar') }}" title="Balans" class="text-danger">
+                        <i class="bi bi-coin"></i>
+                        {{ number_format((@Auth::user()->balans), 0, '.', ' ') }}
+                        <i class="bi bi-coin text-white"></i>
+                    </a>
+                    @endif
                 </li>
                 <li class="nav-item dropdown pe-3">
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="" data-bs-toggle="dropdown">
@@ -54,7 +62,12 @@
                         <li class="dropdown-header">
                             <h6>{{ @Auth::user()->name }}</h6>
                             <span class="text-success">
-                                <p style="display:inline;" class="text-danger">{{ @Auth::user()->balans }} </p>so'm
+                            @if(@Auth::user()->balans>=0)
+                            <p style="display:inline;" class="text-success">{{ number_format((@Auth::user()->balans), 0, '.', ' ') }} </p>
+                            @else
+                            <p style="display:inline;" class="text-danger">{{ number_format((@Auth::user()->balans), 0, '.', ' ') }} </p>
+                            @endif
+                                so'm
                             </span>
                         </li>
                         <li><hr class="dropdown-divider"></li>
