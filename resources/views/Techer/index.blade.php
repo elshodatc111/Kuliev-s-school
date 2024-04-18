@@ -15,14 +15,32 @@
         </div>
     
         <section class="section dashboard">
-            <div class="card info-card sales-card">
-                <div class="card-body text-center">
-                    <h5 class="card-title">1-xona</span></h5>
-                    <div class="table-responsive">
-
-                    </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="card info-card sales-card">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Yangi guruhlar</span></h5>
+                            <h5>15</h5>
+                        </div>
+                    </div>  
                 </div>
-            </div>  
+                <div class="col-lg-4">
+                    <div class="card info-card sales-card">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Aktiv guruhlar</span></h5>
+                            <h5>15</h5>
+                        </div>
+                    </div>  
+                </div>
+                <div class="col-lg-4">
+                    <div class="card info-card sales-card">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Yakunlangan guruhlar</span></h5>
+                            <h5>15</h5>
+                        </div>
+                    </div>  
+                </div>
+            </div>
         </section>
 
     </main>

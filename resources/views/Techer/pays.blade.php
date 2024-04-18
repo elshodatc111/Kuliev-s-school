@@ -1,5 +1,5 @@
 @extends('Techer.layout.home')
-@section('title','To'lovlar')
+@section('title','To\'lovlar')
 @section('content')
 
     <main id="main" class="main">
@@ -31,7 +31,20 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                
+                                @forelse($Tulov as $item)
+                                <tr>
+                                    <td>{{ $loop->index+1 }}</td>
+                                    <td>{{ $item['guruh'] }}</td>
+                                    <td>{{ $item['summa'] }}</td>
+                                    <td>{{ $item['type'] }}</td>
+                                    <td>{{ $item['about'] }}</td>
+                                    <td>{{ $item['time'] }}</td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan=6 class="text-center">Ish haqi to'lovlar mavjud emas.</td>
+                                </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>

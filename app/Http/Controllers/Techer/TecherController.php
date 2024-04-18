@@ -61,16 +61,21 @@ class TecherController extends Controller
         return view('Techer.grops',compact('Guruh'));
     }
     public function Tolovlar(){
-        $IshHaqi = IshHaqi::where('user_id',Auth::user()->id)->where('status','!=','Hodim')->orderby('id','desc')->get();
-        $Tulovlar = array();
+        $IshHaqi = IshHaqi::where('user_id',Auth::user()->id)
+            ->where('status','!=','Hodim')
+            ->orderby('id','desc')
+            ->get();
+        $Tulov = array();
         foreach ($IshHaqi as $key => $value) {
             $Tulov[$key]['id'] = $value->id;
             $Tulov[$key]['summa'] = number_format(($value->summa), 0, '.', ' ');
             $Tulov[$key]['type'] = $value->type;
             $Tulov[$key]['about'] = $value->about;
+            $Tulov[$key]['time'] = $value->created_at;
             $Tulov[$key]['guruh'] = Guruh::find($value->status)->guruh_name;
         }
-        return view('Techer.pays');
+        #dd($Tulov);
+        return view('Techer.pays',compact('Tulov'));
     }
     public function Kabinet(){
         return view('Techer.kabinet');
