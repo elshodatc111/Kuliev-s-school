@@ -28,6 +28,7 @@ class PaymeChegirma{
         $chegirma = 0;
         $guruh_Name = "NULL";
         $GuruhUser = GuruhUser::where('user_id',$user_id)->where('status','true')->get();
+        
         if($GuruhUser){
             foreach ($GuruhUser as $key => $value) {
                 $Guruh = Guruh::find($value->guruh_id);
@@ -51,6 +52,10 @@ class PaymeChegirma{
         $Hisob2 = $Balans2."+".$chegirma."=".$Balans2+$chegirma;
         $Users->balans = $Users->balans+$summa+$chegirma;
         $Users -> save();
+        $filial_id = $Users->filial_id;
+        $Filial = Filial::find($filial_id);
+        $Filial->payme = $Filial->payme+$summa;
+        $Filial->save();
         $Tulov = Tulov::create([
             'filial_id'=>$Users->filial_id,
             'user_id'=>$user_id,

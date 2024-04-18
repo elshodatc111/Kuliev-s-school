@@ -20,17 +20,22 @@
     <div class="alert alert-danger">{{Session::get('error') }}</div>
 @endif
 <section class="section dashboard">
-        <div class="card">
-            <div class="card-body text-center">
-                <h5 class="card-title mb-0 pb-0">SSSS</span></h5>
-            </div>
+    <div class="card">
+        <div class="card-body text-center">
+            <h5 class="card-title">Hisobotlar</span></h5>
+            <form action="" method="post">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <select name="" class="form-select" required>
+                            <option value="">Tanlang</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-4"><button class="btn btn-primary mt-2 mt-lg-0 w-100">Filter</button></div>
+                </div>
+            </form>
+
         </div>
-    
-
-  
-
-
-     
+    </div>
 </section>
 
 </main>
