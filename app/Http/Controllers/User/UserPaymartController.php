@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Log;
 
 class UserPaymartController extends Controller{
     public function Tolovlar(){
-        $Tulovlar = Tulov::where('user_id',Auth::user()->id)->get();
+        $Tulovlar = Tulov::where('user_id',Auth::user()->id)->orderby('id','desc')->get();
         $Tulov = array();
         foreach($Tulovlar as $key=>$item){
             $Tulov[$key]['summa'] = number_format(($item->summa), 0, '.', ' ');

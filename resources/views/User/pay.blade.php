@@ -19,7 +19,7 @@
                     @csrf
                     <input type="hidden" name="merchant" value="65f14418a929127d44bcb5d1"/>
                     <input type="hidden" name="amount" value="{{ $summa2 }}"/>
-                    <input type="hidden" name="onwer_id" value="{{ Auth::user()->id }}"/>
+                    <input type="hidden" name="account[onwer_id]" value="{{ Auth::user()->id }}"/>
                     <input type="hidden" name="lang" value="uz"/>
                     <input type="hidden" name="callback_timeout" value="15"/>
                     <button type="submit" class="btn btn-primary p-5 py-3"> <b>Payme</b> </button>

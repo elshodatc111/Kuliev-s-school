@@ -91,7 +91,7 @@ class PaymeController extends Controller{
             }
             $id = $request->params['id'];
             $time = $request->params['time'];
-            $amount = $request->params['amount'];
+            $amount = $request->params['amount']/100;
             $account = $request->params['account'];
             if(!array_key_exists('onwer_id', $account)){
                 $response = [

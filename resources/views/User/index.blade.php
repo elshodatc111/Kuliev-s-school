@@ -49,7 +49,11 @@
                                 {{ $item['tulov'] }}</span> so'm to'lov qiling va <span class="text-primary">
                                 {{ $item['guruh_chegirma'] }}</span> s'om chegirma oling</p>
                             <div class="w-100 text-center">
-                                <a href="{{ route('Tolov',$item['tulov']) }}" class="btn btn-success w-50">To'lov</a>
+                                <form action="{{ route('Tolov') }}" method="post">
+                                    @csrf
+                                    <input type="hidden" name="summa" value="{{$item['tulov']}}">
+                                    <button class="btn btn-primary w-100 w-100 mt-1">To'lov</button>
+                                </form>
                             </div>
                         </div>
                     </div>
