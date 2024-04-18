@@ -17,9 +17,38 @@
         <section class="section dashboard">
             <div class="card info-card sales-card">
                 <div class="card-body text-center">
-                    <h5 class="card-title">1-xona</span></h5>
+                    <h5 class="card-title">Sizning guruhlaringiz.</span></h5>
                     <div class="table-responsive">
-
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Guruh</th>
+                                    <th>Boshlanish vaqti</th>
+                                    <th>Tugash vaqti</th>
+                                    <th>Talabalar</th>
+                                    <th>Dars vaqti</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($Guruh as $item)
+                                <tr>
+                                    <td>{{ $loop->index+1 }}</td>
+                                    <td style="text-align:left">{{ $item['guruh_name'] }}</td>
+                                    <td>{{ $item['guruh_start'] }}</td>
+                                    <td>{{ $item['guruh_end'] }}</td>
+                                    <td>{{ $item['users'] }}</td>
+                                    <td>{{ $item['guruh_vaqt'] }}</td>
+                                    <td><a href="{{ $item['id'] }}" class="btn btn-primary px-1 py-0"><i class="bi bi-eye"></i></a></td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan=7 class="text-center">Guruhlar mavjud emas.</td>
+                                </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>  

@@ -20,26 +20,26 @@
             <h5 class="card-title">Filiallar</span></h5>
             <div class="table-responsive">
                 <table class="table table-bordered" style="font-size:14px;">
-                    <thead>
+                    <thead class="">
                       <tr>
-                          <th rowspan=2 class="align-middle">Filial</th>
-                          <th rowspan=2 class="align-middle">Tashriflar</th>
-                          <th colspan=4>Guruhlar</th>
-                          <th colspan=2>Hodimlar</th>
+                          <th rowspan=2 class="align-middle bg-primary text-white"><i class="bi bi-house-door-fill"></i> Filial</th>
+                          <th rowspan=2 class="align-middle bg-primary text-white"><i class="bi bi-people"></i> Tashriflar</th>
+                          <th colspan=4 class="bg-primary text-white"><i class="bi bi-menu-button-wide"></i> Guruhlar</th>
+                          <th colspan=2 class="bg-primary text-white"><i class="bi bi-microsoft-teams"></i> Hodimlar</th>
                       </tr>
                       <tr>
-                          <th style="font-size:10px;">Jami</th>
-                          <th style="font-size:10px;">Yangi</th>
-                          <th style="font-size:10px;">Aktiv</th>
-                          <th style="font-size:10px;">Yakunlangan</th>
-                          <th style="font-size:10px;">O'qituvchilar</th>
-                          <th style="font-size:10px;">Menegerlar</th>
+                          <th style="font-size:10px;" class="bg-warning text-white">Jami</th>
+                          <th style="font-size:10px;" class="bg-warning text-white">Yangi</th>
+                          <th style="font-size:10px;" class="bg-warning text-white">Aktiv</th>
+                          <th style="font-size:10px;" class="bg-warning text-white">Yakunlangan</th>
+                          <th style="font-size:10px;" class="bg-info text-white">O'qituvchilar</th>
+                          <th style="font-size:10px;" class="bg-info text-white">Menegerlar</th>
                       </tr>
                     </thead>
                     <tbody>
                       @foreach($Filial as $item)
                       <tr>
-                          <th style="text-align:left">{{ $item['filial_name'] }}</th>
+                          <th style="text-align:left" class="text-primary">{{ $item['filial_name'] }}</th>
                           <td>{{ $item['user'] }}</td>
                           <td>{{ $item['guruhlar'] }}</td>
                           <td>{{ $item['yangiguruh'] }}</td>
