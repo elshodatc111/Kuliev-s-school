@@ -70,6 +70,8 @@ Route::get('/Admin/index', [AdminController::class, 'index'])->name('Admin');
 Route::get('/Admin/eslatma', [AdminController::class, 'eslatmalar'])->name('AdminEslatma');
 Route::get('/Admin/eslatma/arxiv/{id}', [AdminController::class, 'eslatmaarxiv'])->name('AdminEslatmaArxiv');
 Route::get('/Admin/murojatlar', [AdminController::class, 'murojatlar'])->name('AdminMurojarlar');
+Route::post('/Admin/murojatlar', [AdminController::class, 'murojatlarCreate'])->name('AdminMurojarlarPost');
+Route::get('/Admin/murojatlar/show/{id}', [AdminController::class, 'murojatlarShow'])->name('AdminMurojarlarShow');
 Route::get('/Admin/tkun', [AdminController::class, 'tkun'])->name('AdminTKun');
 Route::get('/Admin/elonlar', [AdminController::class, 'elonlar'])->name('AdminElonlar');
 
@@ -98,6 +100,7 @@ Route::post('/Admin/moliya/xarajat/delete', [MoliyaController::class, 'xarajatde
 Route::post('/Admin/moliya/xarajat/tasdiqlandi', [MoliyaController::class, 'xarajattasdiq'])->name('AdminMoliyaXarajatTasdiq');
 
 Route::get('/Admin/guruh', [AdminGuruhController::class, 'index'])->name('AdminGuruh');
+Route::post('/Admin/guruh/delete', [AdminGuruhController::class, 'deletGuruh'])->name('AdminGuruhDelete');
 Route::get('/Admin/guruh/show/{id}', [AdminGuruhController::class, 'show'])->name('AdminGuruhShow');
 Route::get('/Admin/guruh/end', [AdminGuruhController::class, 'endGuruh'])->name('AdminGuruhEnd');
 Route::get('/Admin/guruh/create', [AdminGuruhController::class, 'CreateGuruh'])->name('AdminGuruhCreate');

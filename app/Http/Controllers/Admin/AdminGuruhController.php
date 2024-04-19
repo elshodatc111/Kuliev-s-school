@@ -5,11 +5,13 @@ use App\Models\TulovSetting;
 use App\Models\Room;
 use App\Models\User;
 use App\Models\Filial;
+use App\Models\Davomat;
 use App\Models\Guruh;
 use App\Models\UserHistory;
 use App\Models\GuruhUser;
 use App\Models\Cours;
 use App\Models\GuruhTime;
+use App\Models\IshHaqi;
 use App\Events\debitSendMessege;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -339,7 +341,39 @@ class AdminGuruhController extends Controller{
         $Room = Room::where('filial_id',request()->cookie('filial_id'))->where('status','true')->get();
         $UsersDeletes = $this->userEndGroups($id);
         $Talabalar = $this->guruhTalabalari($id);
-        return view('Admin.guruh.show',compact('TulovSetting','Room','Guruh','Days','UsersDeletes','Talabalar'));
+        $Guruhw['kunlar'] = GuruhTime::where('guruh_id',$id)->get();
+        $Davomat = array();
+        foreach (GuruhUser::where('guruh_id',$id)->where('status','true')->get() as $key => $value) {
+            $Davomat[$key]['name'] = User::find($value->user_id)->name;
+            foreach (GuruhTime::where('guruh_id',$id)->get() as $key2 => $item) {
+                if($item->dates>date('Y-m-d')){
+                    $Davomat[$key]['status'][$key2] = 'new';
+                }elseif($item->dates==date('Y-m-d')){
+                    $Dav = Davomat::where('guruh_id',$id)->where('user_id',$value->user_id)->where('dates',date("Y-m-d"))->first();
+                    if($Dav){
+                        if($Dav->status=='true'){
+                            $Davomat[$key]['status'][$key2] = 'DarsKuniTrue';
+                        }else{
+                            $Davomat[$key]['status'][$key2] = 'DarsKuniFalse';
+                        }
+                    }else{
+                        $Davomat[$key]['status'][$key2] = 'DarsKuni';
+                    }
+                }else{
+                    $Dav = Davomat::where('guruh_id',$id)->where('user_id',$value->user_id)->where('dates',$item->dates)->first();
+                    if($Dav){
+                        if($Dav->status=='true'){
+                            $Davomat[$key]['status'][$key2] = 'DavomatBor';
+                        }else{
+                            $Davomat[$key]['status'][$key2] = 'DavomatYoq';
+                        }
+                    }else{
+                        $Davomat[$key]['status'][$key2] = 'DarsOtilmadi';
+                    }
+                }
+            }
+        }
+        return view('Admin.guruh.show',compact('Davomat','Guruhw','TulovSetting','Room','Guruh','Days','UsersDeletes','Talabalar'));
     }
     public function guruhDelUser(Request $request){
         $validate = $request->validate([
@@ -566,7 +600,23 @@ class AdminGuruhController extends Controller{
         }
         return redirect()->route('AdminGuruhShow',$guruh_id)->with('success', 'Yangi guruh ochildi.');
     }
-
+    public function deletGuruh(Request $request){
+        $GuruhUser = count(GuruhUser::where('guruh_id',$request->guruh_id)->get());
+        if($GuruhUser>0){
+            return redirect()->back()->with('error', "Guruhga talabalar mavjud guruhni o'chirish mumkun emas."); 
+        }
+        $IshHaqi = count(IshHaqi::where('status',$request->guruh_id)->get());
+        if($IshHaqi>0){
+            return redirect()->back()->with('error', "Guruh uchun o'qituvchiga ish haqi to'langan guruhni o'chirish mumkun emas."); 
+        }
+        $Guruh = Guruh::find($request->guruh_id);
+        $Guruh->delete();
+        $GuruhTime = GuruhTime::where('guruh_id',$request->guruh_id)->get();
+        foreach ($GuruhTime as $key => $value) {
+            $value->delete();
+        }
+        return redirect()->route('AdminGuruh')->with('success', "Guruh o'chirildi."); 
+    }
     
 
 }

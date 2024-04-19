@@ -13,10 +13,7 @@
             </ol>
         </nav>
     </div>
-    Guruhni O'chirish<br>
-    Guruhda talabalar davomati<br>
     Elonlar<br>
-    Murojatlar
     <section class="section dashboard">
         <div class="card">
             <div class="card-body">

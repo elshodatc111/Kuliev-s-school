@@ -329,58 +329,40 @@
         <div class="card-body text-center">
             <div class="table-responsive">
                 <h5 class="card-title pb-1"><i class="bi bi-clipboard-check"></i> Davomat</h5>
-                <table class="table text-center table-bordered table-hover" style="font-size:14px;">
+                <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th class="text-center">Talaba</th>
-                            <th class="text-center" style="font-size:12px;">01-01</th>
-                            <th class="text-center" style="font-size:12px;">01-01</th>
-                            <th class="text-center" style="font-size:12px;">01-01</th>
-                            <th class="text-center" style="font-size:12px;">01-01</th>
-                            <th class="text-center" style="font-size:12px;">01-01</th>
-                            <th class="text-center" style="font-size:12px;">01-01</th>
-                            <th class="text-center" style="font-size:12px;">01-01</th>
-                            <th class="text-center" style="font-size:12px;">01-01</th>
-                            <th class="text-center" style="font-size:12px;">01-01</th>
-                            <th class="text-center" style="font-size:12px;">01-01</th>
-                            <th class="text-center" style="font-size:12px;">01-01</th>
-                            <th class="text-center" style="font-size:12px;">01-01</th>
-                            <th class="text-center" style="font-size:12px;">01-01</th>
+                            <th  class="bg-primary text-white">#</th>
+                            <th  class="bg-primary text-white">Talabalar</th>
+                            @foreach($Guruhw['kunlar'] as $item)
+                            <td  class="bg-primary text-white" style="font-size:10px;width:50px">{{ $item['dates'] }}</td>
+                            @endforeach
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach($Davomat as $item)
                         <tr>
-                            <td style="text-align:left">Elshod Musurmonov</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <th>{{ $loop->index+1 }}</th>
+                            <th style="text-align:left;">{{ $item['name'] }}</th>
+                            @foreach($item['status'] as $value)
+                                @if($value=='new')
+                                    <td class="bg-secondary text-white text-center" title="Dars kutilmoqda" style="cursor:pointer"><i class="bi bi-clock"></i></td>
+                                @elseif($value=='DarsKuni')
+                                    <td class="bg-info text-white text-center" title="Bugun dars kuni" style="cursor:pointer"><i class="bi bi-clipboard-x"></i></td>
+                                @elseif($value=='DarsKuniTrue')
+                                    <td class="bg-success text-white text-center" title="Darsga qatnashdi" style="cursor:pointer"><i class="bi bi-clipboard2-check"></i></td>
+                                @elseif($value=='DarsKuniFalse')
+                                    <td class="bg-warning text-white text-center" title="Darsga qatnashmadi" style="cursor:pointer"><i class="bi bi-clipboard-minus"></i></td>
+                                @elseif($value=='DavomatBor')
+                                    <td class="bg-success text-white text-center" title="Darsga qatnashdi" style="cursor:pointer"><i class="bi bi-clipboard2-check"></i></td>
+                                @elseif($value=='DavomatYoq')
+                                    <td class="bg-warning text-white text-center" title="Darsga qatnashmadi" style="cursor:pointer"><i class="bi bi-clipboard-minus"></i></td>
+                                @elseif($value=='DarsOtilmadi')
+                                    <td class="bg-danger text-white text-center" title="Davomat olinmadi" style="cursor:pointer"><i class="bi bi-dot"></i></td>
+                                @endif
+                            @endforeach
                         </tr>
-                        <tr>
-                            <td style="text-align:left">Elshod Musurmonov</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -500,11 +482,11 @@
                     <h5 class="modal-title w-100 text-center">Guruh o'chirilsinmi?</h5>
                 </div>
                 <div class="modal-body text-center p-0">
-                    <form action="#" method="post" class="p-0 m-0 w-100 py-2">
+                    <form action="{{ route('AdminGuruhDelete') }}" method="post" class="p-0 m-0 w-100 py-2">
                         @csrf
-                        <input type="hidden" name="user_id" value="#">
+                        <input type="hidden" name="guruh_id" value="{{ $Guruh['id'] }}">
                         <button type="button" class="btn btn-secondary" style="width:47%;" data-bs-dismiss="modal">Bekor qilish</button>
-                        <button type="submit66" class="btn btn-success" style="width:47%;">O'chirish</button>
+                        <button type="submit" class="btn btn-success" style="width:47%;">O'chirish</button>
                     </form>
                 </div>
             </div>

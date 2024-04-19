@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 use App\Models\Room;
 use App\Models\User;
-
+use App\Models\Murojat;
 use Carbon\Carbon;
 use App\Models\Guruh;
 use App\Models\Eslatma;
@@ -99,8 +99,64 @@ class AdminController extends Controller{
         return redirect()->back()->with('success', "Eslatma arxivlansi.");
     }
     public function murojatlar(){
-        return view('Admin.messege.murojat');
+        $Users = User::where('filial_id',request()->cookie('filial_id'))->get();
+        $Murojatlar = array();
+
+        foreach ($Users as $key => $value) {
+            $Murojat = Murojat::where('user_id',$value->id)->orderBy('created_at', 'desc')->first();
+            if($Murojat){
+                $Murojatlar[$key]['user_id'] = $value->id;
+                $Murojatlar[$key]['name'] = $value->name;
+                $Murojatlar[$key]['text'] = $Murojat->text;
+                $Murojatlar[$key]['admin_type'] = $Murojat->admin_type;
+                $Murojatlar[$key]['created_at'] = $Murojat->created_at;
+            }
+        }
+        return view('Admin.messege.murojat',compact('Murojatlar'));
     }
+    public function murojatlarShow($id){
+        $Users = User::where('filial_id',request()->cookie('filial_id'))->get();
+        $Murojatlar = array();
+        foreach ($Users as $key => $value) {
+            $Murojat = Murojat::where('user_id',$value->id)->orderBy('created_at', 'desc')->first();
+            if($Murojat){
+                $Murojatlar[$key]['user_id'] = $value->id;
+                $Murojatlar[$key]['name'] = $value->name;
+                $Murojatlar[$key]['text'] = $Murojat->text;
+                $Murojatlar[$key]['admin_type'] = $Murojat->admin_type;
+                $Murojatlar[$key]['created_at'] = $Murojat->created_at;
+            }
+        }
+        $Murojat2 = Murojat::where('user_id',$id)->get();
+        $chat = array();
+        foreach ($Murojat2 as $key => $value) {
+            if($value->status=='admin'){
+                $chat[$key]['admin'] = User::find($value->admin_id )->name;
+            }else{
+                $chat[$key]['admin'] = User::find($value->user_id )->name;
+                $value->admin_type = 'false';
+                $value->save();
+            }
+            $chat[$key]['status'] = $value->status;
+            $chat[$key]['text'] = $value->text;
+            $chat[$key]['created_at'] = $value->created_at;
+        }
+        return view('Admin.messege.murojat_show',compact('Murojatlar','id','chat'));
+    }
+    public function murojatlarCreate(Request $request){
+        $validate = $request->validate([
+            'user_id' => ['required', 'string', 'max:255'],
+            'text' => ['required', 'string', 'max:255'],
+        ]);
+        $validate['filial_id'] = request()->cookie('filial_id');
+        $validate['user_type'] = 'true';
+        $validate['admin_id'] = Auth::user()->id;
+        $validate['admin_type'] = 'true';
+        $validate['status'] = 'admin';
+        Murojat::create($validate);
+        return redirect()->back()->with('success', "Murohatga javob yuborildi.");
+    }
+
     public function tkun(){
         $today = Carbon::today();
         $tkun = User::where('filial_id',request()->cookie('filial_id'))->where('type','User')->whereRaw("DATE_FORMAT(tkun, '%m-%d') = ?", [$today->format('m-d')])->get();

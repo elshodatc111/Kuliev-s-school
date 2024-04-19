@@ -55,7 +55,7 @@
                 <li class="nav-item">
                     <a class="nav-link nav-icon" href="{{ route('AdminMurojarlar') }}" title="Murojatlar">
                         <i class="bi bi-envelope-arrow-down-fill"></i>
-                        <span class="badge bg-success badge-number">3</span>
+                        <span class="badge bg-success badge-number">@include('Admin.layout.murojat')</span>
                     </a>
                 </li>
                 <li class="nav-item dropdown pe-3">
