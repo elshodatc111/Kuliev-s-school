@@ -65,7 +65,7 @@ return [
     |
     */
 
-    'timezone' => env('APP_TIMEZONE', 'GMT+5'),
+    'timezone' => env('APP_TIMEZONE', 'Asia/Samarkand'),
 
     /*
     |--------------------------------------------------------------------------
