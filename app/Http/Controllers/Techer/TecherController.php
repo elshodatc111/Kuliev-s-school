@@ -5,6 +5,7 @@ use App\Models\Guruh;
 use App\Models\Tulov;
 use App\Models\User;
 use App\Models\Room;
+use App\Models\Davomat;
 use App\Models\IshHaqi;
 use App\Models\GuruhUser;
 use App\Models\GuruhTime;
@@ -167,10 +168,80 @@ class TecherController extends Controller
                 break;
         }
         $Guruh['users'] = count(GuruhUser::where('guruh_id',$id)->where('status','true')->get());
-        $Guruh['kunlar'] = GuruhTime::where('guruh_id',$Guruhlar->id)->get();
+        $Guruh['kunlar'] = GuruhTime::where('guruh_id',$Guruhlar->id)->where('room_id',$Guruhlar->room_id)->get();
+        $Guruh['darskuni'] = count(GuruhTime::where('guruh_id',$Guruhlar->id)->where('dates',date('Y-m-d'))->get());
+        $Guruh['davomatOlindi'] = count(Davomat::where('guruh_id',$id)->where('dates',date("Y-m-d"))->get());
+        $DavUser = array();
+        foreach(GuruhUser::where('guruh_id',$id)->where('status','true')->get() as $key => $item){
+            $DavUser[$key]['user_id'] = $item->user_id;
+            $DavUser[$key]['name'] = User::find($item->user_id)->name;
+        }
+        $Guruh['davUser'] = $DavUser;
         
-
-        
-        return view('Techer.grops_show',compact('Guruh'));
+        $Davomat = array();
+        foreach (GuruhUser::where('guruh_id',$id)->where('status','true')->get() as $key => $value) {
+            $Davomat[$key]['name'] = User::find($value->user_id)->name;
+            foreach (GuruhTime::where('guruh_id',$Guruhlar->id)->where('room_id',$Guruhlar->room_id)->get() as $key2 => $item) {
+                if($item->dates>date('Y-m-d')){
+                    $Davomat[$key]['status'][$key2] = 'new';
+                }elseif($item->dates==date('Y-m-d')){
+                    $Dav = Davomat::where('guruh_id',$id)->where('user_id',$value->user_id)->where('dates',date("Y-m-d"))->first();
+                    if($Dav){
+                        if($Dav->status=='true'){
+                            $Davomat[$key]['status'][$key2] = 'DarsKuniTrue';
+                        }else{
+                            $Davomat[$key]['status'][$key2] = 'DarsKuniFalse';
+                        }
+                    }else{
+                        $Davomat[$key]['status'][$key2] = 'DarsKuni';
+                    }
+                }else{
+                    $Dav = Davomat::where('guruh_id',$id)->where('user_id',$value->user_id)->where('dates',$item->dates)->first();
+                    if($Dav){
+                        if($Dav->status=='true'){
+                            $Davomat[$key]['status'][$key2] = 'DavomatBor';
+                        }else{
+                            $Davomat[$key]['status'][$key2] = 'DavomatYoq';
+                        }
+                    }else{
+                        $Davomat[$key]['status'][$key2] = 'DarsOtilmadi';
+                    }
+                }
+            }
+        }
+        return view('Techer.grops_show',compact('Guruh','Davomat'));
+    }
+    public function davomat(Request $request){
+        $guruh_id = $request->guruh_id;
+        $GuruhUser = GuruhUser::where('guruh_id',$guruh_id)->where('status','true')->get();
+        $Davomat = array();
+        $k = 0;
+        foreach($GuruhUser as $key => $item){
+            $Davomat[$key]['user_id'] = $item->user_id;
+            $Davomat[$key]['user_name'] = User::find($item->user_id)->name;
+            $req = strval('user_id'.$item->user_id);
+            if($request->$req == 'on'){
+                $Davomat[$key]['user_name'] = "true";
+                $k = $k + 1;
+            }else{
+                $Davomat[$key]['user_name'] = "false";
+            }
+        }
+        if($k==0){
+            return redirect()->back()->with('error', "Davomat uchun talabalarni tanlamadingiz."); 
+        }else{
+            $filial_id = request()->cookie('filial_id');
+            foreach ($Davomat as $key => $value) {
+                Davomat::create([
+                    'filial_id' => $filial_id,
+                    'guruh_id' => $guruh_id,
+                    'user_id' => $value['user_id'],
+                    'dates' => date("Y-m-d"),
+                    'status' => $value['user_name'],
+                    'techer_id' => Auth::user()->id
+                ]);
+            }
+            return redirect()->back()->with('success', "Guruh uchun davomat olindi."); 
+        }
     }
 }
