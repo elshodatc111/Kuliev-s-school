@@ -20,7 +20,7 @@
                     <div class="card info-card sales-card">
                         <div class="card-body text-center">
                             <h5 class="card-title">Yangi guruhlar</span></h5>
-                            <h5>15</h5>
+                            <h5>{{ $Stat['new'] }}</h5>
                         </div>
                     </div>  
                 </div>
@@ -28,7 +28,7 @@
                     <div class="card info-card sales-card">
                         <div class="card-body text-center">
                             <h5 class="card-title">Aktiv guruhlar</span></h5>
-                            <h5>15</h5>
+                            <h5>{{ $Stat['start'] }}</h5>
                         </div>
                     </div>  
                 </div>
@@ -36,7 +36,7 @@
                     <div class="card info-card sales-card">
                         <div class="card-body text-center">
                             <h5 class="card-title">Yakunlangan guruhlar</span></h5>
-                            <h5>15</h5>
+                            <h5>{{ $Stat['end'] }}</h5>
                         </div>
                     </div>  
                 </div>

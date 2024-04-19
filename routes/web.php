@@ -132,8 +132,11 @@ Route::post('/Admin/hodim/pay/ishhaqi', [HodimController::class, 'adminPayHodiml
 ### Techer ###
 Route::get('/Techer/index', [TecherController::class, 'index'])->name('Techer');
 Route::get('/Techer/guruhlar', [TecherController::class, 'Guruhlar'])->name('TGuruhlar');
+Route::get('/Techer/guruh/{id}', [TecherController::class, 'show'])->name('TGuruhShow');
 Route::get('/Techer/tulovlar', [TecherController::class, 'Tolovlar'])->name('TTolovlar');
 Route::get('/Techer/kabinet', [TecherController::class, 'Kabinet'])->name('TKabinet');
+Route::post('/Techer/kabinet/update', [TecherController::class, 'KabinetTUpdate'])->name('KabinetTUpdate');
+Route::post('/Techer/kabinet/update/password', [TecherController::class, 'KabinetTUpdatePassword'])->name('KabinetTUpdatePassword');
 ### User ###
 Route::get('/User/index', [UserController::class, 'index'])->name('User');
 Route::get('/User/kabinet', [UserController::class, 'Kabinet'])->name('Kabinet');
