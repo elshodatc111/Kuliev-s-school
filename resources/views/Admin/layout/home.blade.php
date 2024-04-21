@@ -33,12 +33,14 @@
         <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
                 @if(Auth::user()->type != 'Operator')
+                <!--
                 <li class="nav-item">
                     <a class="nav-link nav-icon" href="{{ route('AdminElonlar') }}" title="Elonlar">
                         <i class="bi bi-megaphone-fill"></i>
                         <span class="badge bg-primary badge-number">3</span>
                     </a>
                 </li>
+                -->
                 @endif
                 <li class="nav-item">
                     <a class="nav-link nav-icon" href="{{ route('AdminTKun') }}" title="Tug'ilgan kunlar">

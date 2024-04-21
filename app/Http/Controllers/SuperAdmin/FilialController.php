@@ -14,7 +14,9 @@ use App\Models\Davomat;
 use App\Models\Eslatma;
 use App\Models\Guruh;
 use App\Models\GuruhTime;
+use App\Models\TulovDelete;
 use App\Models\GuruhUser;
+use App\Models\UserHistory;
 use App\Models\IshHaqi;
 use App\Models\Murojat;
 use App\Models\Tulov;
@@ -217,6 +219,12 @@ class FilialController extends Controller{
 
         $Murojat = Murojat::where('filial_id',$filial_id)->get();
         foreach ($Murojat as $key => $value) {$value->delete();}
+
+        $UserHistory = UserHistory::where('filial_id',$filial_id)->get();
+        foreach ($UserHistory as $key => $value) {$value->delete();}
+        
+        $TulovDelete = TulovDelete::where('filial_id',$filial_id)->get();
+        foreach ($TulovDelete as $key => $value) {$value->delete();}
 
         $Tulov = Tulov::where('filial_id',$filial_id)->get();
         foreach ($Tulov as $key => $value) {$value->delete();}

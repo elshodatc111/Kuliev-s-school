@@ -31,6 +31,7 @@
     </div>
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
+        <!--
         <li class="nav-item">
             <a class="nav-link nav-icon" href="{{ route('SuperAdminElonStudent') }}" title="Talabalarga elonlar">
                 <i class="bi bi-people"></i>
@@ -43,6 +44,7 @@
                 <span class="badge bg-success badge-number">3</span>
             </a>
         </li>
+        -->
         <li class="nav-item dropdown pe-3">
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-person-circle" class="rounded-circle" style="font-size: 30px;"></i>

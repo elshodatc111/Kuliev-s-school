@@ -81,7 +81,7 @@
             </tr>
             @empty
             <tr>
-              <td>Filiallar mavjud emas</td>
+              <td colspan=6 class="text-center">Filiallar mavjud emas</td>
             </tr>
             @endforelse
             <tr>
