@@ -38,13 +38,13 @@ Route::get('/Superadmin/filial', [FilialController::class, 'filial'])->name('fil
 Route::get('/Superadmin/filial/show/{id}', [FilialController::class, 'show'])->name('filial.show');
 Route::post('/Superadmin/filial/update', [FilialController::class, 'filialUpdate'])->name('filialUpdate');
 Route::post('/Superadmin/filial/delete', [FilialController::class, 'filialDelete'])->name('filialDelete');
+Route::post('/Superadmin/filial/settimg/sms', [FilialController::class, 'filialSettimgSMS'])->name('filialSettimgSMS');
 Route::get('/Superadmin/filailCrm/{id}', [FilialController::class, 'filailCrm'])->name('filailCrm');
 
-Route::get('/Superadmin/moliya/{id}', [SuperMoliyaController::class, 'index'])->name('SuperAdminMoliya');
+Route::POST('/Superadmin/moliya/xarajat', [SuperMoliyaController::class, 'xarajat'])->name('SuperAdminMoliyaXarajay');
+Route::POST('/Superadmin/moliya/kassaga', [SuperMoliyaController::class, 'kassaga'])->name('SuperAdminMoliyaKassaga');
 
 Route::get('/Superadmin/statistika/{id}', [SuperStatistikaController::class, 'index'])->name('SuperAdminStatistika');
-
-Route::get('/Superadmin/report/{id}', [SuperReportController::class, 'index'])->name('SuperAdminReport');
 
 Route::get('/Superadmin/elon/techer', [SuperElonController::class, 'techer'])->name('SuperAdminElonTecher');
 Route::get('/Superadmin/elon/student', [SuperElonController::class, 'student'])->name('SuperAdminElonStudent');

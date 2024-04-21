@@ -6,8 +6,19 @@ use App\Models\User;
 use App\Models\Filial;
 use App\Models\Room;
 use App\Models\Cours;
+use App\Models\Moliya;
 use App\Models\TulovSetting;
 use App\Models\FilialKassa;
+use App\Models\AdminKassa;
+use App\Models\Davomat;
+use App\Models\Eslatma;
+use App\Models\Guruh;
+use App\Models\GuruhTime;
+use App\Models\GuruhUser;
+use App\Models\IshHaqi;
+use App\Models\Murojat;
+use App\Models\Tulov;
+use App\Models\SmsCentar;
 use App\Events\CreateFilial;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
@@ -19,14 +30,46 @@ class FilialController extends Controller{
     }
     public function filial(){
         $Filial = array();
+        $Naqt = 0;
+        $Plastik = 0;
+        $Payme = 0;
         foreach (Filial::get() as $key => $value) {
             $Filial[$key]['id'] = $value->id ;
             $Filial[$key]['filial_name'] = $value->filial_name;
-            $Filial[$key]['naqt'] = $value->naqt;
-            $Filial[$key]['plastik'] = $value->plastik;
-            $Filial[$key]['payme'] = $value->payme;
+            $Filial[$key]['naqt'] = number_format(($value->naqt), 0, '.', ' ');
+            $Naqt = $Naqt + $value->naqt;
+            $Filial[$key]['plastik'] = number_format(($value->plastik), 0, '.', ' ');
+            $Plastik = $Plastik + $value->plastik;
+            $Filial[$key]['payme'] = number_format(($value->payme), 0, '.', ' ');
+            $Payme = $Payme + $value->payme;
+        } 
+        $Jami = $Payme+$Plastik+$Naqt;
+        $Naqt = number_format(($Naqt), 0, '.', ' ');
+        $Plastik = number_format(($Plastik), 0, '.', ' ');
+        $Payme = number_format(($Payme), 0, '.', ' ');
+        $Jami = number_format(($Jami), 0, '.', ' ');
+
+        $dates = date("Y-m-d",strtotime('-1 month',time()))." 00:00:00";
+        $Moliya = Moliya::where('created_at','>=',$dates)->orderby('id','desc')->get();
+        $Xarajatlar = array();
+        $Qaytarildi = array();
+        foreach ($Moliya as $key => $value) {
+            if($value->xodisa=='XarajatAdmin'){
+                $Xarajatlar[$key]['filial_name'] = Filial::find($value->filial_id)->filial_name;
+                $Xarajatlar[$key]['summa'] = number_format(($value->summa), 0, '.', ' ');
+                $Xarajatlar[$key]['type'] = $value->type;
+                $Xarajatlar[$key]['about'] = $value->about;
+                $Xarajatlar[$key]['created_at'] = $value->created_at;
+            }
+            if($value->xodisa=='Qaytarildi'){
+                $Qaytarildi[$key]['filial_name'] = Filial::find($value->filial_id)->filial_name;
+                $Qaytarildi[$key]['summa'] = number_format(($value->summa), 0, '.', ' ');
+                $Qaytarildi[$key]['type'] = $value->type;
+                $Qaytarildi[$key]['about'] = $value->about;
+                $Qaytarildi[$key]['created_at'] = $value->created_at;
+            }
         }
-        return view('SuperAdmin.filial',compact('Filial'));
+        return view('SuperAdmin.filial',compact('Xarajatlar','Qaytarildi','Filial','Plastik','Naqt','Payme','Jami'));
     }
     public function filialcreate(Request $request){
         $validated = $request->validate([
@@ -41,6 +84,9 @@ class FilialController extends Controller{
         $validated['xarajat_payme'] = 0;
         $Filial = Filial::create($validated);
         FilialKassa::create([
+            'filial_id' => $Filial->id
+        ]);
+        SmsCentar::create([
             'filial_id' => $Filial->id
         ]);
         return redirect()->back()->with('success', 'Yangi filial yaratildi.'); 
@@ -73,7 +119,9 @@ class FilialController extends Controller{
             $TulovSetting[$key]['admin_chegirma'] = number_format(($item->admin_chegirma), 0, '.', ' ');
         }
         $Cours = Cours::where('filial_id',$id)->get();
-        return view('SuperAdmin.filialshow',compact('Filial','Room','TulovSetting','Cours'));
+        $SmsCentar = SmsCentar::where('filial_id',$id)->first();
+        
+        return view('SuperAdmin.filialshow',compact('Filial','SmsCentar','Room','TulovSetting','Cours'));
     }
     public function roomcreate(Request $request){
         $validated = $request->validate([
@@ -119,6 +167,82 @@ class FilialController extends Controller{
         return redirect()->back()->with('success', 'Yangi kurs kiritildi.');
     }
     public function filialDelete(Request $request){
-        dd($request);
+        $filial_id = $request->id;
+
+        $User = User::where('filial_id',$filial_id)->get();
+        foreach ($User as $key => $value) {$value->delete();}
+
+        $Filial = Filial::find($filial_id);
+        $Filial->delete();
+
+        $Room = Room::where('filial_id',$filial_id)->get();
+        foreach ($Room as $key => $value) {$value->delete();}
+
+        $Cours = Cours::where('filial_id',$filial_id)->get();
+        foreach ($Cours as $key => $value) {$value->delete();}
+
+        $Moliya = Moliya::where('filial_id',$filial_id)->get();
+        foreach ($Moliya as $key => $value) {$value->delete();}
+
+        $TulovSetting = TulovSetting::where('filial_id',$filial_id)->get();
+        foreach ($TulovSetting as $key => $value) {$value->delete();}
+
+        $FilialKassa = FilialKassa::where('filial_id',$filial_id)->first();
+        $FilialKassa->delete();
+
+        $AdminKassa = AdminKassa::where('filial_id',$filial_id)->get();
+        foreach ($AdminKassa as $key => $value) {$value->delete();}
+
+        $Davomat = Davomat::where('filial_id',$filial_id)->get();
+        foreach ($Davomat as $key => $value) {$value->delete();}
+
+        $Eslatma = Eslatma::where('filial_id',$filial_id)->get();
+        foreach ($Eslatma as $key => $value) {$value->delete();}
+
+        $Guruh = Guruh::where('filial_id',$filial_id)->get();
+        foreach ($Guruh as $key => $value) {$value->delete();}
+
+        $GuruhTime = GuruhTime::where('filial_id',$filial_id)->get();
+        foreach ($GuruhTime as $key => $value) {$value->delete();}
+
+        $GuruhUser = GuruhUser::where('filial_id',$filial_id)->get();
+        foreach ($GuruhUser as $key => $value) {$value->delete();}
+
+        $IshHaqi = IshHaqi::where('filial_id',$filial_id)->get();
+        foreach ($IshHaqi as $key => $value) {$value->delete();}
+
+        $Murojat = Murojat::where('filial_id',$filial_id)->get();
+        foreach ($Murojat as $key => $value) {$value->delete();}
+
+        $Tulov = Tulov::where('filial_id',$filial_id)->get();
+        foreach ($Tulov as $key => $value) {$value->delete();}
+
+        $SmsCentar = SmsCentar::where('filial_id',$filial_id)->first();
+        $SmsCentar->delete();
+        
+        return redirect()->route('filial')->with('success', 'Filial o\'chirildi.');
+    }
+    public function filialSettimgSMS(Request $request){
+        if($request->tashrif){
+            $tashrif = 'on';
+        }else{
+            $tashrif = 'off';
+        }
+        if($request->tulov){
+            $tulov = 'on';
+        }else{
+            $tulov = 'off';
+        }
+        if($request->tkun){
+            $tkun = 'on';
+        }else{
+            $tkun = 'off';
+        }
+        $SmsCentar = SmsCentar::where('filial_id',$request->filial_id)->first();
+        $SmsCentar->tashrif = $tashrif;
+        $SmsCentar->tulov = $tulov;
+        $SmsCentar->tkun = $tkun;
+        $SmsCentar->save();
+        return redirect()->back()->with('success', 'SMS sozlamalari sozlandi.');
     }
 }

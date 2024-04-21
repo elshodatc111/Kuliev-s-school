@@ -26,10 +26,10 @@
             </div>
         </div>
     
-        <div class="card">
-            <div class="card-body text-center">
-                <div class="row">
-                    <div class="col-lg-8">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body text-center">
                         <h5 class="card-title mb-0">Filial xonalari</span></h5>
                         <div class="table-responsive">
                             <table class="table table-bordered text-center table-striped table-hover" style="font-size:14px;">
@@ -57,8 +57,6 @@
                                 </tbodt>
                             </table>
                         </div>
-                    </div>
-                    <div class="col-lg-4">
                         <h5 class="card-title mb-0">Yangi filial</span></h5>
                         <form action="{{ route('roomcreate') }}" method="post">
                             @csrf 
@@ -66,16 +64,13 @@
                             <input type="hidden" name="status" value="true">
                             <input type="text" name="room_name" placeholder="Xona nomi" class="form-control" required>
                             <button class="btn btn-primary w-100 mt-2">Saqlash</button>
-                        </form>
+                        </form> 
                     </div>
                 </div>
             </div>
-        </div>
-            
-        <div class="card">
-            <div class="card-body text-center">
-                <div class="row">
-                    <div class="col-lg-8">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body text-center">
                         <h5 class="card-title mb-0">To'lov sozlamalari</span></h5>
                         <div class="table-responsive">
                             <table class="table table-bordered text-center table-striped table-hover" style="font-size:14px;">
@@ -105,8 +100,6 @@
                                 </tbodt>
                             </table>
                         </div>
-                    </div>
-                    <div class="col-lg-4">
                         <h5 class="card-title mb-0">Yangi to'lov</span></h5>
                         <form action="{{ route('tulovSettingCreate') }}" method="post" id="form4">
                             @csrf
@@ -120,10 +113,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-            
-        <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-6">
                 <div class="card">
                     <div class="card-body text-center">
                         <h5 class="card-title mb-0">Filial kurslari</span></h5>
@@ -148,12 +138,6 @@
                             </tr>
                             @endforelse
                         </table>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="card">
-                    <div class="card-body text-center">
                         <h5 class="card-title mb-0">Yangi kurs qo'shish</span></h5>
                         <form action="{{ route('filialCoursCreate') }}" method="post">
                             @csrf
@@ -165,11 +149,63 @@
                     </div>
                 </div>
             </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title mb-0">SMS sozlamalari</span></h5>
+                        <form action="{{ route('filialSettimgSMS') }}" method="post">@csrf
+                            <input type="hidden" name="filial_id" value="{{ $Filial->id }}">
+                            @if($SmsCentar->tashrif=='on')
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" name="tashrif" id="tashrif" checked>
+                                <label class="form-check-label" for="tashrif">Yangi tashrifga sms yuborish</label>
+                            </div>
+                            @else
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" name="tashrif" id="tashrif">
+                                <label class="form-check-label" for="tashrif">Yangi tashrifga sms yuborish</label>
+                            </div>
+                            @endif
+
+                            @if($SmsCentar->tulov=='on')
+                            <div class="form-check form-switch mt-3">
+                                <input class="form-check-input" name="tulov" type="checkbox" id="tulov" checked>
+                                <label class="form-check-label" for="tulov">To'lovlarga sms yuborish</label>
+                            </div>
+                            @else
+                            <div class="form-check form-switch mt-3">
+                                <input class="form-check-input" name="tulov" type="checkbox" id="tulov">
+                                <label class="form-check-label" for="tulov">To'lovlarga sms yuborish</label>
+                            </div>
+                            @endif
+                            @if($SmsCentar->tkun=='on')
+                            <div class="form-check form-switch mt-3">
+                                <input class="form-check-input" type="checkbox" name="tkun" id="tkun" checked>
+                                <label class="form-check-label" for="tkun">Tug'ilgan kunlarga sms yuborish</label>
+                            </div>
+                            @else
+                            <div class="form-check form-switch mt-3">
+                                <input class="form-check-input" name="tkun" type="checkbox" id="tkun">
+                                <label class="form-check-label" for="tkun">Tug'ilgan kunlarga sms yuborish</label>
+                            </div>
+                            @endif
+                            <button type="submit" class="btn btn-primary w-100 mt-3">O'zgarishlarni saqlash</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
+            
+        
+            
+                
+                
         
         <div class="text-center">
-            <button class="btn btn-primary mt-3" style="width:48%;" data-bs-toggle="modal" data-bs-target="#FilialUpdate"><i class="bi bi-pencil"></i> Filialni o'chirish</button>
-            <button class="btn btn-danger mt-3" style="width:48%;" data-bs-toggle="modal" data-bs-target="#FilialDelete"><i class="bi bi-trash"></i> Filialni o'chirish</button>
+            <button class="btn btn-primary mt-3" style="width:48%;" data-bs-toggle="modal" 
+            data-bs-target="#FilialUpdate"><i class="bi bi-pencil"></i> Filialni taxrirlash</button>
+            <button class="btn btn-danger mt-3" style="width:48%;" data-bs-toggle="modal" 
+            data-bs-target="#FilialDelete"><i class="bi bi-trash"></i> Filialni o'chirish</button>
         </div>
         
         <div class="modal fade" id="FilialUpdate" tabindex="-1">
