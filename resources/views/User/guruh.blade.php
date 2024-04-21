@@ -20,7 +20,17 @@
                         <img src="{{ $item['image'] }}" 
                         class="card-img-top">
                         <div class="card-body">
-                            <h5 class="card-title">{{ $item['name'] }}</h5>
+                            <h5 class="card-title w-100 text-center my-0 py-1">{{ $item['name'] }}</h5>
+                            <div class="row text-center">
+                                <div class="col-6">
+                                    <p class="p-0 m-0">Boshlanish vaqt</p>
+                                    {{ $item['start'] }}
+                                </div>
+                                <div class="col-6">
+                                    <p class="p-0 m-0">Tugash vaqt</p>
+                                    {{ $item['end'] }}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </a>

@@ -21,9 +21,15 @@ class HomeController extends Controller{
                 ->withCookie('filial_id', Auth::user()->filial_id, 86400)
                 ->withCookie('filial_name', $Filial->filial_name, 86400);
         }elseif(Auth::user()->type=='Techer'){
-            return redirect()->route('Techer');
+            $Filial = Filial::find(Auth::user()->filial_id);
+            return redirect()->route('Techer')
+            ->withCookie('filial_id', Auth::user()->filial_id, 86400)
+            ->withCookie('filial_name', $Filial->filial_name, 86400);
         }elseif(Auth::user()->type=='User'){
-            return redirect()->route('User');
+            $Filial = Filial::find(Auth::user()->filial_id);
+            return redirect()->route('User')
+            ->withCookie('filial_id', Auth::user()->filial_id, 86400)
+            ->withCookie('filial_name', $Filial->filial_name, 86400);
         }else{
             return view('home');
         }

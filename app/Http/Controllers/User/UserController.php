@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Models\Guruh;
 use App\Models\GuruhUser;
 use App\Models\Tulov;
+use App\Models\ChegirmaDay;
 use App\Models\Room;
 use App\Models\User;
 use App\Http\Controllers\Controller;
@@ -17,12 +18,6 @@ class UserController extends Controller{
         $this->middleware('auth');
     } 
     public function coocies(){
-        if(Auth::user()->filial_id != request()->cookie('filial_id')){
-            if(Auth::user()->type != 'SuperAdmin'){
-                Auth::logout();
-                return view('home')->withCookie('filial_id', ' ', -86400)->withCookie('filial_name', ' ', -86400);
-            }
-        }
         if(!request()->cookie('filial_name')){
             return view('home')->withCookie('filial_id', ' ', -86400)->withCookie('filial_name', ' ', -86400);
         }
@@ -52,7 +47,8 @@ class UserController extends Controller{
         $Stat['new'] = $New;
         $Stat['activ'] = $Activ;
         $Stat['end'] = $End;
-        $endTimestamp = date("Y-m-d",strtotime('-3 day',time()));
+        $ChegirmaDay = ChegirmaDay::where('filial_id',request()->cookie('filial_id'))->first()->days;
+        $endTimestamp = date("Y-m-d",strtotime('-'.$ChegirmaDay.' day',strtotime(date('Y-m-d'))));
         $GuruhUser2 = GuruhUser::where('guruh_users.user_id',Auth::user()->id)
             ->join('guruhs','guruhs.id','guruh_users.guruh_id')
             ->where('guruh_users.status','true')

@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Log;
 
 class UserPaymartController extends Controller{
+    public function __construct(){
+        $this->middleware('auth');
+    }
     public function Tolovlar(){
         $Tulovlar = Tulov::where('user_id',Auth::user()->id)->orderby('id','desc')->get();
         $Tulov = array();

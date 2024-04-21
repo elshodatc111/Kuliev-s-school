@@ -14,11 +14,14 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Log;
 
 class UserGuruhController extends Controller{
+    public function __construct(){
+        $this->middleware('auth');
+    }
     public function Guruhlar(){
         $Guruh = GuruhUser::where('user_id',Auth::user()->id)->where('status','true')->get();
-        $New = "https://atko.tech/NiceAdmin/assets/img/cours.jpg";
-        $End = "https://atko.tech/NiceAdmin/assets/img/cours.jpg";
-        $Now = "https://atko.tech/NiceAdmin/assets/img/cours.jpg";
+        $New = "https://atko.tech/NiceAdmin/assets/img/cours_new.jpg";
+        $End = "https://atko.tech/NiceAdmin/assets/img/cours_end.jpg";
+        $Now = "https://atko.tech/NiceAdmin/assets/img/cours_activ.jpg";
         $Guruhlar = array();
         foreach($Guruh as $key=>$item){
             $Guruhlar[$key]['id'] = $item->guruh_id;
@@ -26,13 +29,17 @@ class UserGuruhController extends Controller{
             $guruh_start = Guruh::find($item->guruh_id)->guruh_start;
             $guruh_end = Guruh::find($item->guruh_id)->guruh_end;
             $thisNow = date("Y-m-d");
-            if($guruh_start>=$thisNow AND $guruh_end<=$thisNow){
-                $Guruhlar[$key]['image'] = $Now;
-            }elseif($guruh_end>$Guruhlar){
+            if($guruh_end<$thisNow){
+                $Guruhlar[$key]['image'] = $End;
+            }elseif($guruh_start>$thisNow){
                 $Guruhlar[$key]['image'] = $New;
+            }elseif($guruh_start<$thisNow AND $guruh_end>$thisNow){
+                $Guruhlar[$key]['image'] = $Now;
             }else{
                 $Guruhlar[$key]['image'] = $End;
             }
+            $Guruhlar[$key]['start'] = $guruh_start;
+            $Guruhlar[$key]['end'] = $guruh_end;
         }
         return view('User.guruh',compact('Guruhlar'));
     }

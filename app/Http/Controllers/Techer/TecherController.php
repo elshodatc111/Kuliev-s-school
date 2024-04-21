@@ -40,7 +40,35 @@ class TecherController extends Controller
         $Stat['start'] = $start;
         $Stat['new'] = $new;
         $Stat['end'] = $end;
-        return view('Techer.index',compact('Stat'));
+        $DateNow = date("Y-m")."-01 00:00:00";
+        $IshHaqiNow = IshHaqi::where('user_id',Auth::user()->id)->where('created_at','>=',$DateNow)->get();
+        $NaqtNow = 0;
+        $PlastihNow = 0;
+        foreach ($IshHaqiNow as $key => $value) {
+            if($value->type=="Naqt"){
+                $NaqtNow = $NaqtNow + $value->summa; 
+            }else{
+                $PlastihNow = $PlastihNow + $value->summa; 
+            }
+        }
+        $DateEnd = date("Y-m",strtotime("-1 month",time()))."-01 00:00:00";
+        $DateEnd3 = date("Y-m",strtotime("-1 month",time()))."-31 23:59:59";
+        $IshHaqiEnd = IshHaqi::where('user_id',Auth::user()->id)->where('created_at','>=',$DateEnd)->where('created_at','<=',$DateEnd3)->get();
+        $NaqtEnd = 0;
+        $PlastihEnd = 0;
+        foreach ($IshHaqiEnd as $key => $value) {
+            if($value->type=="Naqt"){
+                $NaqtEnd = $NaqtEnd + $value->summa; 
+            }else{
+                $PlastihEnd = $PlastihEnd + $value->summa; 
+            }
+        }
+        $Tulov = array();
+        $Tulov['NaqtNow'] = number_format(($NaqtNow), 0, '.', ' ');
+        $Tulov['PlastihNow'] = number_format(($PlastihNow), 0, '.', ' ');
+        $Tulov['NaqtEnd'] = number_format(($NaqtEnd), 0, '.', ' ');
+        $Tulov['PlastihEnd'] = number_format(($PlastihEnd), 0, '.', ' ');
+        return view('Techer.index',compact('Stat','Tulov'));
     }
     public function Guruhlar(){
         $times = date("Y-m-d",strtotime('-30 day',time()));

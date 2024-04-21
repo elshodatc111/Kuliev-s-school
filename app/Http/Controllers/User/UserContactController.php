@@ -9,6 +9,9 @@ use App\Models\Murojat;
 use Illuminate\Support\Facades\Auth;
 
 class UserContactController extends Controller{
+    public function __construct(){
+        $this->middleware('auth');
+    }
     public function Contact(){
         $Murojatlar = Murojat::where('user_id',Auth::user()->id)->get();
         $Murojat = array();
