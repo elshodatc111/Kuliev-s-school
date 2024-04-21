@@ -18,6 +18,7 @@ use App\Models\GuruhUser;
 use App\Models\IshHaqi;
 use App\Models\Murojat;
 use App\Models\Tulov;
+use App\Models\ChegirmaDay;
 use App\Models\SmsCentar;
 use App\Events\CreateFilial;
 use Illuminate\Support\Facades\Auth;
@@ -89,6 +90,9 @@ class FilialController extends Controller{
         SmsCentar::create([
             'filial_id' => $Filial->id
         ]);
+        ChegirmaDay::create([
+            'filial_id' => $Filial->id
+        ]);
         return redirect()->back()->with('success', 'Yangi filial yaratildi.'); 
     }
     public function filialUpdate(Request $request){
@@ -120,8 +124,8 @@ class FilialController extends Controller{
         }
         $Cours = Cours::where('filial_id',$id)->get();
         $SmsCentar = SmsCentar::where('filial_id',$id)->first();
-        
-        return view('SuperAdmin.filialshow',compact('Filial','SmsCentar','Room','TulovSetting','Cours'));
+        $ChegirmaDay = ChegirmaDay::where('filial_id',$id)->first()->days;
+        return view('SuperAdmin.filialshow',compact('ChegirmaDay','Filial','SmsCentar','Room','TulovSetting','Cours'));
     }
     public function roomcreate(Request $request){
         $validated = $request->validate([
@@ -219,6 +223,9 @@ class FilialController extends Controller{
 
         $SmsCentar = SmsCentar::where('filial_id',$filial_id)->first();
         $SmsCentar->delete();
+
+        $ChegirmaDay = ChegirmaDay::where('filial_id',$filial_id)->first();
+        $ChegirmaDay->delete();
         
         return redirect()->route('filial')->with('success', 'Filial o\'chirildi.');
     }
@@ -244,5 +251,14 @@ class FilialController extends Controller{
         $SmsCentar->tkun = $tkun;
         $SmsCentar->save();
         return redirect()->back()->with('success', 'SMS sozlamalari sozlandi.');
+    }
+    public function chegirmaDayUpadte(Request $request){
+        $validated = $request->validate([
+            'days' => 'required|min:0|max:30'
+        ]);
+        $ChegirmaDay = ChegirmaDay::where('filial_id',$request->filial_id)->first();
+        $ChegirmaDay->days = intval($request->days);
+        $ChegirmaDay->save();
+        return redirect()->back()->with('success', 'Chegirma kunlari sozlandi.');
     }
 }

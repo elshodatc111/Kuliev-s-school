@@ -27,7 +27,7 @@
         </div>
     
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-4">
                 <div class="card">
                     <div class="card-body text-center">
                         <h5 class="card-title mb-0">Filial xonalari</span></h5>
@@ -57,7 +57,7 @@
                                 </tbodt>
                             </table>
                         </div>
-                        <h5 class="card-title mb-0">Yangi filial</span></h5>
+                        <h5 class="card-title mb-0">Yangi xona</span></h5>
                         <form action="{{ route('roomcreate') }}" method="post">
                             @csrf 
                             <input type="hidden" name="filial_id" value="{{ $Filial->id }}">
@@ -68,7 +68,87 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title mb-0">Filial kurslari</span></h5>
+                        <table class="table table-bordered text-center">
+                            <tr>
+                                <th>#</th>
+                                <th>Kurs nomi</th>
+                                <th>Status</th>
+                            </tr>
+                            @forelse($Cours as $item)
+                            <tr>
+                                <td>{{ $loop->index+1 }}</td>
+                                <td>{{ $item->cours_name }}</td>
+                                <td>
+                                    <a href="" class="btn btn-primary px-1 py-0"><i class="bi bi-eye"></i></a>
+                                    <a href="" class="btn btn-danger px-1 py-0"><i class="bi bi-trash"></i></a>
+                                </td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan=3 class='text-center'>Kurslar mavjud emas.</td>
+                            </tr>
+                            @endforelse
+                        </table>
+                        <h5 class="card-title mb-0">Yangi kurs qo'shish</span></h5>
+                        <form action="{{ route('filialCoursCreate') }}" method="post">
+                            @csrf
+                            <input type="hidden" name="filial_id" value="{{ $Filial->id }}">
+                            <input type="text" name="cours_name" placeholder="Kursning nomi"  required class="form-control">
+                            <button class="btn btn-primary mt-2 w-100">Kursni saqlash</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title mb-0">SMS sozlamalari</span></h5>
+                        <form action="{{ route('filialSettimgSMS') }}" method="post">@csrf
+                            <input type="hidden" name="filial_id" value="{{ $Filial->id }}">
+                            @if($SmsCentar->tashrif=='on')
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" name="tashrif" id="tashrif" checked>
+                                <label class="form-check-label" for="tashrif">Yangi tashriflarga</label>
+                            </div>
+                            @else
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" name="tashrif" id="tashrif">
+                                <label class="form-check-label" for="tashrif">Yangi tashriflarga</label>
+                            </div>
+                            @endif
+
+                            @if($SmsCentar->tulov=='on')
+                            <div class="form-check form-switch mt-3">
+                                <input class="form-check-input" name="tulov" type="checkbox" id="tulov" checked>
+                                <label class="form-check-label" for="tulov">To'lovlarga</label>
+                            </div>
+                            @else
+                            <div class="form-check form-switch mt-3">
+                                <input class="form-check-input" name="tulov" type="checkbox" id="tulov">
+                                <label class="form-check-label" for="tulov">To'lovlarga</label>
+                            </div>
+                            @endif
+                            @if($SmsCentar->tkun=='on')
+                            <div class="form-check form-switch mt-3">
+                                <input class="form-check-input" type="checkbox" name="tkun" id="tkun" checked>
+                                <label class="form-check-label" for="tkun">Tug'ilgan kunlarga</label>
+                            </div>
+                            @else
+                            <div class="form-check form-switch mt-3">
+                                <input class="form-check-input" name="tkun" type="checkbox" id="tkun">
+                                <label class="form-check-label" for="tkun">Tug'ilgan kunlarga</label>
+                            </div>
+                            @endif
+                            <button type="submit" class="btn btn-primary w-100 mt-3">O'zgarishlarni saqlash</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
                 <div class="card">
                     <div class="card-body text-center">
                         <h5 class="card-title mb-0">To'lov sozlamalari</span></h5>
@@ -113,83 +193,17 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
+            
+            <div class="col-lg-4">
                 <div class="card">
                     <div class="card-body text-center">
-                        <h5 class="card-title mb-0">Filial kurslari</span></h5>
-                        <table class="table table-bordered text-center">
-                            <tr>
-                                <th>#</th>
-                                <th>Kurs nomi</th>
-                                <th>Status</th>
-                            </tr>
-                            @forelse($Cours as $item)
-                            <tr>
-                                <td>{{ $loop->index+1 }}</td>
-                                <td>{{ $item->cours_name }}</td>
-                                <td>
-                                    <a href="" class="btn btn-primary px-1 py-0"><i class="bi bi-eye"></i></a>
-                                    <a href="" class="btn btn-danger px-1 py-0"><i class="bi bi-trash"></i></a>
-                                </td>
-                            </tr>
-                            @empty
-                            <tr>
-                                <td colspan=3 class='text-center'>Kurslar mavjud emas.</td>
-                            </tr>
-                            @endforelse
-                        </table>
-                        <h5 class="card-title mb-0">Yangi kurs qo'shish</span></h5>
-                        <form action="{{ route('filialCoursCreate') }}" method="post">
+                        <h5 class="card-title w-100 text-center">To'lov uchun maksimal chegirma kuni</h5>
+                        <form action="{{ route('chegirmaDayUpadte') }}" method="post">
                             @csrf
-                            <label for="cours_name">Kursning nomi</label>
+                            <label for="">Chegirma Kuni</label>
                             <input type="hidden" name="filial_id" value="{{ $Filial->id }}">
-                            <input type="text" name="cours_name" required class="form-control">
-                            <button class="btn btn-primary mt-2 w-100">Kursni saqlash</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-body text-center">
-                        <h5 class="card-title mb-0">SMS sozlamalari</span></h5>
-                        <form action="{{ route('filialSettimgSMS') }}" method="post">@csrf
-                            <input type="hidden" name="filial_id" value="{{ $Filial->id }}">
-                            @if($SmsCentar->tashrif=='on')
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" name="tashrif" id="tashrif" checked>
-                                <label class="form-check-label" for="tashrif">Yangi tashrifga sms yuborish</label>
-                            </div>
-                            @else
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" name="tashrif" id="tashrif">
-                                <label class="form-check-label" for="tashrif">Yangi tashrifga sms yuborish</label>
-                            </div>
-                            @endif
-
-                            @if($SmsCentar->tulov=='on')
-                            <div class="form-check form-switch mt-3">
-                                <input class="form-check-input" name="tulov" type="checkbox" id="tulov" checked>
-                                <label class="form-check-label" for="tulov">To'lovlarga sms yuborish</label>
-                            </div>
-                            @else
-                            <div class="form-check form-switch mt-3">
-                                <input class="form-check-input" name="tulov" type="checkbox" id="tulov">
-                                <label class="form-check-label" for="tulov">To'lovlarga sms yuborish</label>
-                            </div>
-                            @endif
-                            @if($SmsCentar->tkun=='on')
-                            <div class="form-check form-switch mt-3">
-                                <input class="form-check-input" type="checkbox" name="tkun" id="tkun" checked>
-                                <label class="form-check-label" for="tkun">Tug'ilgan kunlarga sms yuborish</label>
-                            </div>
-                            @else
-                            <div class="form-check form-switch mt-3">
-                                <input class="form-check-input" name="tkun" type="checkbox" id="tkun">
-                                <label class="form-check-label" for="tkun">Tug'ilgan kunlarga sms yuborish</label>
-                            </div>
-                            @endif
-                            <button type="submit" class="btn btn-primary w-100 mt-3">O'zgarishlarni saqlash</button>
+                            <input type="number" value="{{ $ChegirmaDay }}" name="days" max=30 min=0 required  class="form-control">
+                            <button type="submit" class="btn btn-primary w-100 mt-2">O'zgarishlarni Saqlash</button>
                         </form>
                     </div>
                 </div>

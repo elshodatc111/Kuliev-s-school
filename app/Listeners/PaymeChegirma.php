@@ -12,6 +12,7 @@ use App\Models\Filial;
 use App\Models\GuruhUser;
 use App\Models\UserHistory;
 use App\Models\Tulov;
+use App\Models\ChegirmaDay;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\Log;
 use mrmuminov\eskizuz\Eskiz;
@@ -28,10 +29,11 @@ class PaymeChegirma{
         $chegirma = 0;
         $guruh_Name = "NULL";
         $GuruhUser = GuruhUser::where('user_id',$user_id)->where('status','true')->get();
-        
+        $ChegirmaDay = ChegirmaDay::where('filial_id',request()->cookie('filial_id'))->first()->days;
+        $ChegirmaDays = date("Y-m-d",strtotime('-'.$ChegirmaDay.' day',strtotime(date('Y-m-d'))));
         if($GuruhUser){
             foreach ($GuruhUser as $key => $value) {
-                $Guruh = Guruh::find($value->guruh_id);
+                $Guruh = Guruh::where('id',$value->guruh_id)->where('guruh_start','>=',$ChegirmaDays)->get();
                 $Tulov = count(Tulov::where('user_id',$user_id)
                     ->where('guruh_id',$Guruh->id)
                     ->where('type','Chegirma')->get());

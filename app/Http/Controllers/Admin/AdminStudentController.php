@@ -9,6 +9,7 @@ use App\Models\TulovDelete;
 use App\Models\AdminKassa;
 use App\Models\UserHistory;
 use App\Models\GuruhUser;
+use App\Models\ChegirmaDay;
 use App\Models\FilialKassa;
 use App\Models\Tulov;
 use App\Events\CreateTashrif;
@@ -254,10 +255,11 @@ class AdminStudentController extends Controller{
     }
     public function chegirmaliGuruhlar($id){
         $userArxivGuruh = GuruhUser::where('user_id',$id)->where('status','true')->get();
-        $ChegirmaDay = date("Y-m-d",strtotime('-3 day',strtotime(date('Y-m-d'))));
+        $ChegirmaDay = ChegirmaDay::where('filial_id',request()->cookie('filial_id'))->first()->days;
+        $ChegirmaDays = date("Y-m-d",strtotime('-'.$ChegirmaDay.' day',strtotime(date('Y-m-d'))));
         $Guruhlar = array();
         foreach ($userArxivGuruh as $key => $value) {
-            $Guruh = Guruh::where('id',$value->guruh_id)->where('guruh_start','>=',$ChegirmaDay)->first();
+            $Guruh = Guruh::where('id',$value->guruh_id)->where('guruh_start','>=',$ChegirmaDays)->first();
             if($Guruh){
                 $Tulovs = count(Tulov::where('user_id',$id)
                     ->where('guruh_id',$value->guruh_id)

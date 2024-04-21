@@ -52,6 +52,7 @@ Route::get('/Superadmin/elon/student', [SuperElonController::class, 'student'])-
 Route::get('/Superadmin/room/delete/{id}', [FilialController::class, 'roomdelete'])->name('roomdelete');
 Route::get('/Superadmin/setting/tulov/deleted/{id}', [FilialController::class, 'tulovSettingDelete'])->name('tulovSettingDelete');
 Route::post('/Superadmin/setting/tulov/create', [FilialController::class, 'tulovSettingCreate'])->name('tulovSettingCreate');
+Route::post('/Superadmin/setting/chegirmaday/update', [FilialController::class, 'chegirmaDayUpadte'])->name('chegirmaDayUpadte');
 Route::post('/Superadmin/room/create', [FilialController::class, 'roomcreate'])->name('roomcreate');
 Route::post('/Superadmin/filial', [FilialController::class, 'filialcreate'])->name('filialcreate');
 Route::post('/Superadmin/cours/create', [FilialController::class, 'filialCoursCreate'])->name('filialCoursCreate');
