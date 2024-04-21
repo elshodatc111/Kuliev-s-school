@@ -13,7 +13,7 @@
             <li class="breadcrumb-item active">Statistika</li>
         </ol>
     </nav>
-</div>
+</div> 
 @if (Session::has('success'))
     <div class="alert alert-success">{{Session::get('success') }}</div>
 @elseif (Session::has('error'))
@@ -36,17 +36,21 @@
                                     'Facebook',
                                     'Instagram',
                                     'Tanishlar',
+                                    'Bannerlar',
                                     'Boshqa'
                                 ],
                                 datasets: [{
                                     label: 'Oylik tashriflar',
-                                    data: [70, 50, 35,15,45],
+                                    data: [
+                                        {{ $OylikTashriflar['Telegram'] }},
+                                        {{ $OylikTashriflar['Facebook'] }},
+                                        {{ $OylikTashriflar['Instagram'] }},
+                                        {{ $OylikTashriflar['Tanishlar'] }},
+                                        {{ $OylikTashriflar['Bannerlar'] }},
+                                        {{ $OylikTashriflar['Boshqalar'] }},
+                                    ],
                                     backgroundColor: [
-                                    'rgb(255, 99, 132)',
-                                    'rgb(54, 162, 235)',
-                                    'rgb(0, 255, 235)',
-                                    'rgb(54, 162, 235)',
-                                    'rgb(255, 205, 86)'
+                                        '#289FD5','#4867AA','#C032AE','#F4CA16','#8CF416','#16F4D6'
                                     ],
                                     hoverOffset: 4
                                 }]
@@ -74,12 +78,12 @@
                                 ],
                                 datasets: [{
                                     label: 'Oylik to\'lovlar',
-                                    data: [300, 50, 100],
-                                    backgroundColor: [
-                                    'rgb(255, 99, 132)',
-                                    'rgb(54, 162, 235)',
-                                    'rgb(255, 205, 86)'
+                                    data: [
+                                        {{ $OylikTulov['Naqt'] }},
+                                        {{ $OylikTulov['Plastik'] }},
+                                        {{ $OylikTulov['Payme'] }}
                                     ],
+                                    backgroundColor: ['green','#F4AF0F','#44BBC2'],
                                     hoverOffset: 4
                                 }]
                                 }
@@ -99,26 +103,68 @@
                         new Chart(document.querySelector('#barChart'), {
                             type: 'bar',
                             data: {
-                            labels: ['04-04', '03-04', '04-04', '05-04', '06-04', '07-04'],
+                            labels: [
+                                    '{{ $KunlikStatistika["kunlar"][0] }}',
+                                    '{{ $KunlikStatistika["kunlar"][1] }}',
+                                    '{{ $KunlikStatistika["kunlar"][2] }}',
+                                    '{{ $KunlikStatistika["kunlar"][3] }}',
+                                    '{{ $KunlikStatistika["kunlar"][4] }}',
+                                    '{{ $KunlikStatistika["kunlar"][5] }}'
+                                ],
                             datasets: [{
-                                    label: 'Naqt to\'lov',
-                                    data: [65, 59, 80, 81, 56, 55],
+                                    label: "Naqt to'lov",
+                                    data: [
+                                        '{{ $KunlikStatistika["Tulovlar"]["Naqt"][1] }}',
+                                        '{{ $KunlikStatistika["Tulovlar"]["Naqt"][2] }}',
+                                        '{{ $KunlikStatistika["Tulovlar"]["Naqt"][3] }}',
+                                        '{{ $KunlikStatistika["Tulovlar"]["Naqt"][4] }}',
+                                        '{{ $KunlikStatistika["Tulovlar"]["Naqt"][5] }}',
+                                        '{{ $KunlikStatistika["Tulovlar"]["Naqt"][6] }}'
+                                    ],
                                     backgroundColor: ['#0000F6']
                                 },{
-                                    label: 'Plastik to\'lov',
-                                    data: [65, 59, 80, 81, 56, 55],
+                                    label: "Plastik to'lov",
+                                    data: [
+                                        '{{ $KunlikStatistika["Tulovlar"]["Plastik"][1] }}',
+                                        '{{ $KunlikStatistika["Tulovlar"]["Plastik"][2] }}',
+                                        '{{ $KunlikStatistika["Tulovlar"]["Plastik"][3] }}',
+                                        '{{ $KunlikStatistika["Tulovlar"]["Plastik"][4] }}',
+                                        '{{ $KunlikStatistika["Tulovlar"]["Plastik"][5] }}',
+                                        '{{ $KunlikStatistika["Tulovlar"]["Plastik"][6] }}'
+                                    ],
                                     backgroundColor: ['#006262']
                                 },{
-                                    label: 'Payme to\'lov',
-                                    data: [65, 59, 80, 81, 56, 55],
+                                    label: "Payme to'lov",
+                                    data: [
+                                        '{{ $KunlikStatistika["Tulovlar"]["Payme"][1] }}',
+                                        '{{ $KunlikStatistika["Tulovlar"]["Payme"][2] }}',
+                                        '{{ $KunlikStatistika["Tulovlar"]["Payme"][3] }}',
+                                        '{{ $KunlikStatistika["Tulovlar"]["Payme"][4] }}',
+                                        '{{ $KunlikStatistika["Tulovlar"]["Payme"][5] }}',
+                                        '{{ $KunlikStatistika["Tulovlar"]["Payme"][6] }}'
+                                    ],
                                     backgroundColor: ['#21B3B8']
                                 },{
                                     label: 'Chegirmalar',
-                                    data: [65, 59, 80, 81, 56, 55],
+                                    data: [
+                                        '{{ $KunlikStatistika["Tulovlar"]["Chegirma"][1] }}',
+                                        '{{ $KunlikStatistika["Tulovlar"]["Chegirma"][2] }}',
+                                        '{{ $KunlikStatistika["Tulovlar"]["Chegirma"][3] }}',
+                                        '{{ $KunlikStatistika["Tulovlar"]["Chegirma"][4] }}',
+                                        '{{ $KunlikStatistika["Tulovlar"]["Chegirma"][5] }}',
+                                        '{{ $KunlikStatistika["Tulovlar"]["Chegirma"][6] }}'
+                                    ],
                                     backgroundColor: ['#F4CA16']
                                 },{
-                                    label: 'Qaytarilgan to\'lovlar',
-                                    data: [65, 59, 80, 81, 56, 55],
+                                    label: "Qaytarilgan to'lovlar",
+                                    data: [
+                                        '{{ $KunlikStatistika["Tulovlar"]["Qaytarilgan"][1] }}',
+                                        '{{ $KunlikStatistika["Tulovlar"]["Qaytarilgan"][2] }}',
+                                        '{{ $KunlikStatistika["Tulovlar"]["Qaytarilgan"][3] }}',
+                                        '{{ $KunlikStatistika["Tulovlar"]["Qaytarilgan"][4] }}',
+                                        '{{ $KunlikStatistika["Tulovlar"]["Qaytarilgan"][5] }}',
+                                        '{{ $KunlikStatistika["Tulovlar"]["Qaytarilgan"][6] }}'
+                                    ],
                                     backgroundColor: ['#EB4C42']
                                 }
                             ]
@@ -131,58 +177,58 @@
                     <table class="table table-bordered mt-3" style="font-size:12px">
                         <tr>
                             <th style="text-align:left">Status</th>
-                            <th>02-04</th>
-                            <th>03-04</th>
-                            <th>04-04</th>
-                            <th>05-04</th>
-                            <th>06-04</th>
-                            <th>07-04</th>
+                            <td>{{ $KunlikStatistika["kunlar"][0] }}</td>
+                            <td>{{ $KunlikStatistika["kunlar"][1] }}</td>
+                            <td>{{ $KunlikStatistika["kunlar"][2] }}</td>
+                            <td>{{ $KunlikStatistika["kunlar"][3] }}</td>
+                            <td>{{ $KunlikStatistika["kunlar"][4] }}</td>
+                            <td>{{ $KunlikStatistika["kunlar"][5] }}</td>
                         </tr>
                         <tr>
                             <th style="text-align:left">Naqt</th>
-                            <td>100 000</td>
-                            <td>100 000</td>
-                            <td>100 000</td>
-                            <td>100 000</td>
-                            <td>100 000</td>
-                            <td>100 000</td>
+                            <td>{{ $KunlikStatistika["Tulovlar"]["Naqt"][1] }}</td>
+                            <td>{{ $KunlikStatistika["Tulovlar"]["Naqt"][2] }}</td>
+                            <td>{{ $KunlikStatistika["Tulovlar"]["Naqt"][3] }}</td>
+                            <td>{{ $KunlikStatistika["Tulovlar"]["Naqt"][4] }}</td>
+                            <td>{{ $KunlikStatistika["Tulovlar"]["Naqt"][5] }}</td>
+                            <td>{{ $KunlikStatistika["Tulovlar"]["Naqt"][6] }}</td>
                         </tr>
                         <tr>
                             <th style="text-align:left">Plastik</th>
-                            <td>100 000</td>
-                            <td>100 000</td>
-                            <td>100 000</td>
-                            <td>100 000</td>
-                            <td>100 000</td>
-                            <td>100 000</td>
+                            <td>{{ $KunlikStatistika["Tulovlar"]["Plastik"][1] }}</td>
+                            <td>{{ $KunlikStatistika["Tulovlar"]["Plastik"][2] }}</td>
+                            <td>{{ $KunlikStatistika["Tulovlar"]["Plastik"][3] }}</td>
+                            <td>{{ $KunlikStatistika["Tulovlar"]["Plastik"][4] }}</td>
+                            <td>{{ $KunlikStatistika["Tulovlar"]["Plastik"][5] }}</td>
+                            <td>{{ $KunlikStatistika["Tulovlar"]["Plastik"][6] }}</td>
                         </tr>
                         
                         <tr>
                             <th style="text-align:left">Payme</th>
-                            <td>100 000</td>
-                            <td>100 000</td>
-                            <td>100 000</td>
-                            <td>100 000</td>
-                            <td>100 000</td>
-                            <td>100 000</td>
+                            <td>{{ $KunlikStatistika["Tulovlar"]["Payme"][1] }}</td>
+                            <td>{{ $KunlikStatistika["Tulovlar"]["Payme"][2] }}</td>
+                            <td>{{ $KunlikStatistika["Tulovlar"]["Payme"][3] }}</td>
+                            <td>{{ $KunlikStatistika["Tulovlar"]["Payme"][4] }}</td>
+                            <td>{{ $KunlikStatistika["Tulovlar"]["Payme"][5] }}</td>
+                            <td>{{ $KunlikStatistika["Tulovlar"]["Payme"][6] }}</td>
                         </tr>
                         <tr>
                             <th style="text-align:left">Chegirma</th>
-                            <td>100 000</td>
-                            <td>100 000</td>
-                            <td>100 000</td>
-                            <td>100 000</td>
-                            <td>100 000</td>
-                            <td>100 000</td>
+                            <td>{{ $KunlikStatistika["Tulovlar"]["Chegirma"][1] }}</td>
+                            <td>{{ $KunlikStatistika["Tulovlar"]["Chegirma"][2] }}</td>
+                            <td>{{ $KunlikStatistika["Tulovlar"]["Chegirma"][3] }}</td>
+                            <td>{{ $KunlikStatistika["Tulovlar"]["Chegirma"][4] }}</td>
+                            <td>{{ $KunlikStatistika["Tulovlar"]["Chegirma"][5] }}</td>
+                            <td>{{ $KunlikStatistika["Tulovlar"]["Chegirma"][6] }}</td>
                         </tr>
                         <tr>
                             <th style="text-align:left">Qaytarildi</th>
-                            <td>100 000</td>
-                            <td>100 000</td>
-                            <td>100 000</td>
-                            <td>100 000</td>
-                            <td>100 000</td>
-                            <td>100 000</td>
+                            <td>{{ $KunlikStatistika["Tulovlar"]["Qaytarilgan"][1] }}</td>
+                            <td>{{ $KunlikStatistika["Tulovlar"]["Qaytarilgan"][2] }}</td>
+                            <td>{{ $KunlikStatistika["Tulovlar"]["Qaytarilgan"][3] }}</td>
+                            <td>{{ $KunlikStatistika["Tulovlar"]["Qaytarilgan"][4] }}</td>
+                            <td>{{ $KunlikStatistika["Tulovlar"]["Qaytarilgan"][5] }}</td>
+                            <td>{{ $KunlikStatistika["Tulovlar"]["Qaytarilgan"][6] }}</td>
                         </tr>
                     </table>
                 </div>
