@@ -9,9 +9,9 @@ use Illuminate\Console\Command;
 
 class tkun extends Command
 {
-    protected $signature = 'demo:cron';
+    protected $signature = 'demo:tkun';
 
-    protected $description = 'Command description';
+    protected $description = 'Tugilgan kunlarga sms yuborish';
 
     public function handle(){
         $today = Carbon::today();

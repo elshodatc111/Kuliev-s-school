@@ -7,6 +7,7 @@ use App\Models\AdminKassa;
 use App\Models\Tulov;
 use App\Models\Filial;
 use App\Models\Guruh;
+use App\Models\SmsCentar;
 use App\Models\FilialKassa;
 use App\Models\UserHistory;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -14,7 +15,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Auth;
 use mrmuminov\eskizuz\Eskiz;
 use mrmuminov\eskizuz\types\sms\SmsSingleSmsType;
-
+use Illuminate\Support\Facades\Log;
 class UserTulov{
     public function __construct(){}
     public function handle(createTulov $event): void{
@@ -125,24 +126,28 @@ class UserTulov{
         }else{
             $text = $User->name." ".$filial_name." o'quv markazi kurslari uchun ".$summa." so'm to'lov qabul qilindi.";        
         }
-        $phone = "+998".str_replace(" ","",$User->phone);
-        $eskiz_email = env('ESKIZ_UZ_EMAIL');
-        $eskiz_password = env('ESKIZ_UZ_Password');
-        $eskiz = new Eskiz($eskiz_email,$eskiz_password);
-        $eskiz->requestAuthLogin();
-        $from='4546';
-        $mobile_phone = $phone;
-        $message = $text;
-        $user_sms_id = 1;
-        $callback_url = '';
-        $singleSmsType = new SmsSingleSmsType(
-            from: $from,
-            message: $message,
-            mobile_phone: $mobile_phone,
-            user_sms_id:$user_sms_id,
-            callback_url:$callback_url
-        );
-        $result = $eskiz->requestSmsSend($singleSmsType);
+        $SmsCentar = SmsCentar::where('filial_id',$User->filial_id)->first()->tulov;
+        Log::info('User Tulov CRM');
+        if($SmsCentar=='on'){
+            $phone = "+998".str_replace(" ","",$User->phone);
+            $eskiz_email = env('ESKIZ_UZ_EMAIL');
+            $eskiz_password = env('ESKIZ_UZ_Password');
+            $eskiz = new Eskiz($eskiz_email,$eskiz_password);
+            $eskiz->requestAuthLogin();
+            $from='4546';
+            $mobile_phone = $phone;
+            $message = $text;
+            $user_sms_id = 1;
+            $callback_url = '';
+            $singleSmsType = new SmsSingleSmsType(
+                from: $from,
+                message: $message,
+                mobile_phone: $mobile_phone,
+                user_sms_id:$user_sms_id,
+                callback_url:$callback_url
+            );
+            $result = $eskiz->requestSmsSend($singleSmsType);
+        }
         if(Auth::user()->type!='SuperAdmin'){
             $AdminKassa = AdminKassa::where('user_id',Auth::user()->id)->first();
             $AdminKassa->naqt = $AdminKassa->naqt + $naqt;           

@@ -6,6 +6,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use App\Events\Payme;
 use App\Models\User;
+use App\Models\SmsCentar;
 use App\Models\Guruh;
 use App\Models\Filial;
 use App\Models\GuruhUser;
@@ -15,7 +16,6 @@ use App\Models\Transaction;
 use Illuminate\Support\Facades\Log;
 use mrmuminov\eskizuz\Eskiz;
 use mrmuminov\eskizuz\types\sms\SmsSingleSmsType;
-
 class PaymeChegirma{
     public function __construct(){
         //
@@ -103,26 +103,31 @@ class PaymeChegirma{
         $Name = $Users->name;
         $Filial = Filial::where('id',$Users->filial_id)->first()->filial_name;
         if($chegirma!=0){
-            $Text = $Name." ".$Filial." o'quv markazi kurslar uchun ".$summa." so'm to'lov qabul qilindi. va siz ".$chegirma." so'm chegirma oldingiz.";    
+            $Text = "Hurmatli ".$Name." ".$Filial." o'quv markazi kurslar uchun ".$summa." so'm to'lov qabul qilindi va siz ".$chegirma." so'mlik chegirma oldingiz.";    
         }else{
-            $Text = $Name." ".$Filial." o'quv markazi kurslar uchun ".$summa." so'm to'lov qabul qilindi.";    
+            $Text = "Hurmatli ".$Name." ".$Filial." o'quv markazi kurslar uchun ".$summa." so'm to'lov qabul qilindi.";    
         }
-        $eskiz_email = env('ESKIZ_UZ_EMAIL');
-        $eskiz_password = env('ESKIZ_UZ_Password');
-        $eskiz = new Eskiz($eskiz_email,$eskiz_password);
-        $eskiz->requestAuthLogin();
-        $from='4546';
-        $mobile_phone = $Phone;
-        $message = $Text;
-        $user_sms_id = 1;
-        $callback_url = '';
-        $singleSmsType = new SmsSingleSmsType(
-            from: $from,
-            message: $message,
-            mobile_phone: $mobile_phone,
-            user_sms_id:$user_sms_id,
-            callback_url:$callback_url
-        );
-        $result = $eskiz->requestSmsSend($singleSmsType);
+        $SmsCentar = SmsCentar::where('filial_id',$Users->filial_id)->first()->tulov;
+        Log::info("Payme Orqali SMS yuborish tekshirilmoqda.");
+        if($SmsCentar=='on'){
+            $eskiz_email = env('ESKIZ_UZ_EMAIL');
+            $eskiz_password = env('ESKIZ_UZ_Password');
+            $eskiz = new Eskiz($eskiz_email,$eskiz_password);
+            $eskiz->requestAuthLogin();
+            $from='4546';
+            $mobile_phone = $Phone;
+            $message = $Text;
+            $user_sms_id = 1;
+            $callback_url = '';
+            $singleSmsType = new SmsSingleSmsType(
+                from: $from,
+                message: $message,
+                mobile_phone: $mobile_phone,
+                user_sms_id:$user_sms_id,
+                callback_url:$callback_url
+            );
+            $result = $eskiz->requestSmsSend($singleSmsType);
+        }
+        
     }
 }

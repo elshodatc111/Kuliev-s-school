@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\FilialKassa;
 use App\Models\Filial;
 use App\Models\Moliya;
+use App\Models\Tulov;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -43,8 +44,25 @@ class MoliyaController extends Controller{
             $Xarajat[$key]['created_at'] = $value->created_at;
             $Xarajat[$key]['user'] = User::find($value->user_id)->email;
         }
-        return view("Admin.moliya.index",compact('Kassa','Chiqim','Xarajat'));
-    }
+        $Days = date('Y-m-d',strtotime('-7 day', time()))." 00:00:00";
+        $JamiTulov = Tulov::where('filial_id',request()->cookie('filial_id'))->where('created_at','>=',$Days)->get();
+        $Qaytarildi = array();
+        $QaytarildiSumma = 0;
+        foreach ($JamiTulov as $key => $value) {
+            if($value->type =='Qaytarildi (Naqt)' OR $value->type=='Qaytarildi (Plastik)'){
+               $Qaytarildi[$key]['user_id'] = $value->user_id; 
+               $Qaytarildi[$key]['user'] = User::find($value->user_id)->name; 
+               $Qaytarildi[$key]['admin'] = User::find($value->admin_id)->email; 
+               $Qaytarildi[$key]['summa'] = number_format(($value->summa), 0, '.', ' ');
+               $Qaytarildi[$key]['type'] = $value->type; 
+               $Qaytarildi[$key]['about'] = $value->about; 
+               $Qaytarildi[$key]['created_at'] = $value->created_at; 
+               $QaytarildiSumma = $QaytarildiSumma+$value->summa;
+            }
+        }
+        $QaytarildiSumma = number_format(($QaytarildiSumma), 0, '.', ' ');
+        return view("Admin.moliya.index",compact('QaytarildiSumma','Qaytarildi','Kassa','Chiqim','Xarajat'));
+    } 
     public function chiqim(Request $request){
         $naqt = str_replace(" ","",$request->naqt);
         $plastik = str_replace(" ","",$request->plastik);

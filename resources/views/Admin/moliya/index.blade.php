@@ -74,14 +74,63 @@
     </div>
 </section>
 <div class="row text-center pb-3 mt-0 pt-0">
-    <div class="col-lg-6">
-        <button class="btn btn-warning text-white w-100 mt-2" data-bs-toggle="modal" data-bs-target="#KassadanChiqim"><i class="bi bi-capslock"></i> Kassadan chiqim</button>
+    <div class="col-lg-4 mt-2 mt-lg-0">
+        <button class="btn btn-danger text-white w-100 mt-2" 
+        data-bs-toggle="modal" data-bs-target="#QaytarilganTulov">
+        <i class="bi bi-capslock"></i> Qaytarildi: {{ $QaytarildiSumma }}</button>
     </div>
-    <div class="col-lg-6">
-        <button class="btn btn-info text-white w-100 mt-2" data-bs-toggle="modal" data-bs-target="#XarajatChiqim"><i class="bi bi-cart4"></i> Xarajat uchun chiqim</button>
+    <div class="col-lg-4 mt-2 mt-lg-0">
+        <button class="btn btn-warning text-white w-100 mt-2" 
+        data-bs-toggle="modal" data-bs-target="#KassadanChiqim">
+        <i class="bi bi-capslock"></i> Kassadan chiqim</button>
+    </div>
+    <div class="col-lg-4 mt-2 mt-lg-0">
+        <button class="btn btn-info text-white w-100 mt-2" 
+        data-bs-toggle="modal" data-bs-target="#XarajatChiqim">
+        <i class="bi bi-cart4"></i> Xarajat uchun chiqim</button>
     </div>
 </div>
-
+<div class="modal fade" id="QaytarilganTulov" tabindex="-1">
+    <div class="modal-dialog  modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="card-title p-0 m-0 w-100 text-center"><i class="bi bi-capslock"></i> Qaytarilgan to'lovlar (Oxirgi 7 kun)</h5>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered text-center" style="font-size:14px">
+                        <thead>
+                            <th>#</th>
+                            <th>Talaba</th>
+                            <th>Summa</th>
+                            <th>Qaytarish haqida</th>
+                            <th>Tulov turi</th>
+                            <th>Qaytarish vaqti</th>
+                            <th>Meneger</th>
+                        </thead>
+                        <tbody>
+                            @forelse($Qaytarildi as $item)
+                            <tr>
+                                <td>{{ $loop->index+1 }}</td>
+                                <td><a href="{{ route('StudentShow',$item['user_id']) }}">{{ $item['user'] }}</a></td>
+                                <td>{{ $item['summa'] }}</td>
+                                <td>{{ $item['about'] }}</td>
+                                <td>{{ $item['type'] }}</td>
+                                <td>{{ $item['created_at'] }}</td>
+                                <td>{{ $item['admin'] }}</td>
+                            </tr>
+                            @empty
+                                <tr>
+                                    <td colspan=8 class="text-center">Qaytarilgan to'lovlar mavjud emas.</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="KassadanChiqim" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">

@@ -14,11 +14,11 @@
         </ol>
     </nav>
 </div>
-@if (Session::has('success'))
-    <div class="alert alert-success">{{Session::get('success') }}</div>
-@elseif (Session::has('error'))
-    <div class="alert alert-danger">{{Session::get('error') }}</div>
-@endif
+    @if (Session::has('success'))
+        <div class="alert alert-success">{{Session::get('success') }}</div>
+    @elseif (Session::has('error'))
+        <div class="alert alert-danger">{{Session::get('error') }}</div>
+    @endif
 <section class="section dashboard">
         <div class="card">
             <div class="card-body text-center">
