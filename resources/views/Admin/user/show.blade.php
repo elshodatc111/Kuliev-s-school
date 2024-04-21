@@ -19,7 +19,7 @@
 @elseif (Session::has('error'))
     <div class="alert alert-danger">{{Session::get('error') }}</div>
 @endif
-
+ 
     <section class="section dashboard">
         <div class="card">
             <div class="card-body pt-3">
@@ -104,10 +104,10 @@
                         <div class="col-lg-3 col-6">
                             <button class="btn my-1 btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#resetPassword"><i class="bi bi-lock"></i> Parolni yangilash</button>
                         </div>
-                        @if(Auth::user()->type!='Operator')
                         <div class="col-lg-3 col-6">
                             <button class="btn my-1 btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#parRepetUsr"><i class="bi bi-cash-stack"></i> To'lovni qaytarish</button>
                         </div>
+                        @if(Auth::user()->type!='Operator')
                         <div class="col-lg-3 col-6">
                             <button class="btn my-1 btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#chegirmaPlus"><i class="bi bi-coin"></i> Chegirma kiritish</button>
                         </div>
@@ -451,7 +451,7 @@
                                         <td>{{ $item['status'] }}</td>
                                         <td>_</td>
                                         <td>_</td>
-                                        <td>_</td>
+                                        <td>O'quv markazga birinchi tashrif</td>
                                         <td>_</td>
                                         <td>{{ $item['balans'] }}</td>
                                     </tr> 
@@ -461,7 +461,7 @@
                                         <td>{{ $item['status'] }}</td>
                                         <td>{{ $item['type'] }}</td>
                                         <td>{{ $item['summa'] }}</td>
-                                        <td>Balansga qaytarildi.</td>
+                                        <td>Guruh uchun to'lov balansiga qaytarildi.</td>
                                         <td>{{ $item['xisoblash'] }}</td>
                                         <td>{{ $item['balans'] }}</td>
                                     </tr> 
@@ -505,6 +505,46 @@
                                         <td>{{ $item['xisoblash'] }}</td>
                                         <td>{{ $item['balans'] }}</td>
                                     </tr> 
+                                    @elseif($item->status=="Guruhga qo'shildi")
+                                    <tr>
+                                        <td class="text-center">{{ $loop->index+1 }}</td>
+                                        <td>{{ $item['status'] }}</td>
+                                        <td>{{ $item['type'] }}</td>
+                                        <td>{{ $item['summa'] }}</td>
+                                        <td>Yangi guruhga qo'shildi</td>
+                                        <td>{{ $item['xisoblash'] }}</td>
+                                        <td>{{ $item['balans'] }}</td>
+                                    </tr> 
+                                    @elseif($item->status=="To'lov o'chirildi(Naqt)")
+                                    <tr>
+                                        <td class="text-center">{{ $loop->index+1 }}</td>
+                                        <td>{{ $item['status'] }}</td>
+                                        <td>{{ $item['type'] }}</td>
+                                        <td>{{ $item['summa'] }}</td>
+                                        <td>Talaba naqt to'lovi o'chirildi</td>
+                                        <td>{{ $item['xisoblash'] }}</td>
+                                        <td>{{ $item['balans'] }}</td>
+                                    </tr> 
+                                    @elseif($item->status=="To'lov o'chirildi(Chegirma)")
+                                    <tr>
+                                        <td class="text-center">{{ $loop->index+1 }}</td>
+                                        <td>{{ $item['status'] }}</td>
+                                        <td>{{ $item['type'] }}</td>
+                                        <td>{{ $item['summa'] }}</td>
+                                        <td>Talab chegirmasi o'chirildi</td>
+                                        <td>{{ $item['xisoblash'] }}</td>
+                                        <td>{{ $item['balans'] }}</td>
+                                    </tr>  
+                                    @elseif($item->status=="To'lov o'chirildi(Plastik)")
+                                    <tr>
+                                        <td class="text-center">{{ $loop->index+1 }}</td>
+                                        <td>{{ $item['status'] }}</td>
+                                        <td>{{ $item['type'] }}</td>
+                                        <td>{{ $item['summa'] }}</td>
+                                        <td>Talab plastik to'lovi o'chirildi</td>
+                                        <td>{{ $item['xisoblash'] }}</td>
+                                        <td>{{ $item['balans'] }}</td>
+                                    </tr> 
                                     @else
                                     <tr>
                                         <td class="text-center">{{ $loop->index+1 }}</td>
@@ -517,7 +557,9 @@
                                     </tr> 
                                     @endif
                                 @empty
-
+                                    <tr>
+                                        <td colspan=7 class="text-center">Talaba tarixi mavjud emas.</td>
+                                    </tr>
                                 @endforelse
                             </tbody>
                         </table>
@@ -619,6 +661,39 @@
                         </table>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title w-100 text-center">Talaba Eslatmalari</h5>
+            <div class="table-responsive" style="font-size:12px;">
+                <table class="table table-bordered text-center table-hover">
+                    <thead>
+                        <tr>
+                            <td>#</td>
+                            <td>Eslatma</td>
+                            <td>Eslatma vaqti</td>
+                            <td>Meneger</td>
+                            <td>Eslatma xolati</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($eslat as $item)
+                        <tr>
+                            <td>{{ $loop->index+1 }}</td>
+                            <td>{{ $item['text'] }}</td>
+                            <td>{{ $item['created_at'] }}</td>
+                            <td>{{ $item['admin_id'] }}</td>
+                            <td>{{ $item['status'] }}</td>
+                        </tr>
+                        @empty
+                            <tr>
+                                <td colspan=5 class="text-center">Eslatmalar mavjud emas.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

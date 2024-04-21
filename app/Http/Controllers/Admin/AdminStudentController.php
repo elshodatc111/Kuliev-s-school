@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\User;
 use App\Models\Guruh;
 use App\Models\Eslatma;
+use App\Models\TulovDelete;
 use App\Models\AdminKassa;
 use App\Models\UserHistory;
 use App\Models\GuruhUser;
@@ -258,7 +259,9 @@ class AdminStudentController extends Controller{
         foreach ($userArxivGuruh as $key => $value) {
             $Guruh = Guruh::where('id',$value->guruh_id)->where('guruh_start','>=',$ChegirmaDay)->first();
             if($Guruh){
-                $Tulovs = count(Tulov::where('user_id',$id)->where('guruh_id',$value->guruh_id)->where('type','Chegirma')->get());
+                $Tulovs = count(Tulov::where('user_id',$id)
+                    ->where('guruh_id',$value->guruh_id)
+                    ->where('type','Chegirma')->get());
                 if($Tulovs>0){}
                 else{
                     $Guruhlar[$key]['guruh_id'] = $Guruh->id;
@@ -318,9 +321,18 @@ class AdminStudentController extends Controller{
         $Tulovlar = $this->TalabaTulovlari($id);
         $adminChegirma = $this->adminChegirma($id);
         $FilialKassa = $this->kassadaMavjud();
-        return view('Admin.user.show',compact('FilialKassa','adminChegirma','Users','Guruhs','userHistory','Tulovlar','talaba_guruh','userArxivGuruh','ChegirmaGuruh'));
+        $Eslatma = Eslatma::where('type','user')->where('user_guruh_id',$id)->orderby('id','desc')->get();
+        $eslat = array();
+        foreach ($Eslatma as $key => $value) {
+            $eslat[$key]['id'] = $value->id;
+            $eslat[$key]['text'] = $value->text;
+            $eslat[$key]['status'] = $value->status;
+            $eslat[$key]['admin_id'] = User::find($value->admin_id)->email;
+            $eslat[$key]['created_at'] = $value->created_at;
+        }
+        return view('Admin.user.show',compact('eslat','FilialKassa','adminChegirma','Users','Guruhs','userHistory','Tulovlar','talaba_guruh','userArxivGuruh','ChegirmaGuruh'));
     }
-    public function tulov(Request $request){
+    public function tulov(Request $request){ 
         $validate = $request->validate([
             'user_id' => ['required', 'string', 'max:255'],
             'naqt' => ['required', 'string', 'max:255'],
@@ -343,6 +355,25 @@ class AdminStudentController extends Controller{
         }
         $summa = $TalabaTulovlar->summa;
         $type = $TalabaTulovlar->type;
+        if($type=='Payme'){
+            return redirect()->back()->with('error', 'Payme orqali to\'lovni o\'chirib bo\'lmaydi.'); 
+        }
+        if($type=='Qaytarildi (Plastik)'){
+            return redirect()->back()->with('error', 'Qaytarilgan to\'lovni o\'chirib bo\'lmaydi.'); 
+        }
+        if($type=='Qaytarildi (Naqt)'){
+            return redirect()->back()->with('error', 'Qaytarilgan to\'lovni o\'chirib bo\'lmaydi.'); 
+        }
+        if($TalabaTulovlar->created_at<=date("Y-m-d")." 00:00:00"){
+            return redirect()->back()->with('error', 'To\'lovni o\'chirish muddati 1 kun To\'lov o\'chirilmadi.'); 
+        }
+        TulovDelete::create([
+            'filial_id'=>$TalabaTulovlar->filial_id,
+            'user_id'=>$TalabaTulovlar->user_id,
+            'summa'=>$TalabaTulovlar->summa,
+            'type'=>$TalabaTulovlar->type,
+            'admin_id'=>Auth::user()->id,
+        ]);
         $User = User::find($user_id);
         $User_Balans = $User->balans;
         $User_balans = $User->balans;
@@ -365,7 +396,7 @@ class AdminStudentController extends Controller{
         $UserHistory = UserHistory::create([
             'filial_id'=>request()->cookie('filial_id'),
             'user_id'=>$user_id,
-            'status'=>"To'lov o'chirildi(".$type.")",
+            'status'=>"To'lov o'chirildi(".$TalabaTulovlar->type.")",
             'type'=>$guruh_name,
             'summa'=>$summa,
             'xisoblash'=>$User_Balans."-".$summa."=".$User->balans,

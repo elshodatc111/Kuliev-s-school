@@ -328,7 +328,37 @@
         </div>
     </div>
 </div>
+@if(Auth::user()->type=='SuperAdmin')
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title w-100 text-center">O'chirilgan to'lovlar(Oxirgi 7 kunlik)</h5>
+        <div class="table-responsive">
+            <table class="table table-bordered text-center" style="font-size:12px;">
+                <tr>
+                    <th>#</th>
+                    <th>Talaba</th>
+                    <th>Summa</th>
+                    <th>Type</th>
+                    <th>O'chirilgan vaqt</th>
+                    <th>Meneger</th>
+                </tr>
+                @forelse($TulDel as $item)
+                    <tr>
+                        <td>{{ $loop->index+1 }}</td>
+                        <td style="text-align:left"><a href="{{ route('StudentShow',$item['user_id']) }}">{{ $item['student'] }}</a></td>
+                        <td>{{ $item['summa'] }}</td>
+                        <td>{{ $item['type'] }}</td>
+                        <td>{{ $item['created_at'] }}</td>
+                        <td>{{ $item['admin'] }}</td>
+                    </tr>
+                @empty
 
+                @endforelse
+            </table>
+        </div>
+    </div>
+</div>
+@endif
 </main>
 
 @endsection

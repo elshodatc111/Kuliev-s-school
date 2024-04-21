@@ -7,6 +7,7 @@ use App\Models\FilialKassa;
 use App\Models\Filial;
 use App\Models\Moliya;
 use App\Models\Tulov;
+use App\Models\TulovDelete;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -59,9 +60,19 @@ class MoliyaController extends Controller{
                $Qaytarildi[$key]['created_at'] = $value->created_at; 
                $QaytarildiSumma = $QaytarildiSumma+$value->summa;
             }
-        }
+        } 
         $QaytarildiSumma = number_format(($QaytarildiSumma), 0, '.', ' ');
-        return view("Admin.moliya.index",compact('QaytarildiSumma','Qaytarildi','Kassa','Chiqim','Xarajat'));
+        $TulovDelete = TulovDelete::where('filial_id',request()->cookie('filial_id'))->where('created_at','>=',$Days)->get();
+        $TulDel = array();
+        foreach ($TulovDelete as $key => $value) {
+            $TulDel[$key]['student'] = User::find($value->user_id)->name;
+            $TulDel[$key]['admin'] = User::find($value->admin_id)->email;
+            $TulDel[$key]['user_id'] = $value->user_id;
+            $TulDel[$key]['summa'] = number_format(($value->summa), 0, '.', ' ');
+            $TulDel[$key]['type'] = $value->type;
+            $TulDel[$key]['created_at'] = $value->created_at;
+        }
+        return view("Admin.moliya.index",compact('TulDel','QaytarildiSumma','Qaytarildi','Kassa','Chiqim','Xarajat'));
     } 
     public function chiqim(Request $request){
         $naqt = str_replace(" ","",$request->naqt);
