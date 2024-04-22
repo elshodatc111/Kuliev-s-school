@@ -7,6 +7,8 @@ use App\Models\FilialKassa;
 use App\Models\IshHaqi;
 use App\Models\Guruh;
 use App\Models\GuruhUser;
+use App\Models\GuruhTime;
+use App\Models\Davomat;
 use App\Events\AdminCreateTecher;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -75,8 +77,19 @@ class AdminTecherController extends Controller{
             $Guruh[$key]['Users'] = count(GuruhUser::where('guruh_id',$value->id)->where('status','true')->get());
             $Guruh[$key]['Bonus'] = $bonuss;
             $Guruh[$key]['delete'] = count(GuruhUser::where('guruh_id',$value->id)->where('status','false')->get());
-            $Guruh[$key]['Davomat'] = 0;  ### To'g'irlanishi kerak  ###
-            $Guruh[$key]['Hisoblandi'] = number_format($Guruh[$key]['Users']*$TecherTulov+$TecherBonus*$Guruh[$key]['Bonus'], 0, '.', ' ');
+            $GuruhTime = GuruhTime::where('guruh_id',$value->id)->get();
+            $CountDavomat = 0;
+            foreach ($GuruhTime as $guruh_time) {
+                $dates = $guruh_time->dates;
+                $Davomat = count(Davomat::where('guruh_id',$value->id)->where('dates',$dates)->get());
+                if($Davomat>0){
+                    $CountDavomat = $CountDavomat + 1;
+                }
+            }
+            $TecherTulov = $TecherTulov/count($GuruhTime)*$Guruh[$key]['Users']*$CountDavomat;
+            $TecherBonus = $TecherBonus*$bonuss;
+            $Guruh[$key]['Davomat'] = $CountDavomat;
+            $Guruh[$key]['Hisoblandi'] = $TecherTulov + $TecherBonus;
             $Guruh[$key]['Tulov'] = number_format($tulov, 0, '.', ' ');
         }
         $Statistika['new'] = $newGuruh;

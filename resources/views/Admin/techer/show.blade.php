@@ -201,86 +201,85 @@
     </div>
     
     <div class="card info-card sales-card">
-      <div class="card-body text-center">
-        <h5 class="card-title mb-0 pb-0">O'qituvchi guruhlari</h5>
-        <p class="m-0 p-0 text-danger" style="font-size:10px;">(Guruh yakunlangandan 30 kundan so'ng guruhlar o'chiriladi)</p>
-        Davomatlar soni
-        <div class="table-responsive">
-            <table class="table table-bordered text-center table-striped table-hover" style="font-size:14px;">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Guruh</th>
-                        <th>Boshlanish vaqti</th>
-                        <th>Tugash vaqti</th>
-                        <th>Talabalar</th>
-                        <th>Talaba o'chirildi</th>
-                        <th>Bonus</th>
-                        <th>Davomad</th>
-                        <th>Ish haqi</th>
-                        <th>To'langan</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($Guruh as $item)
-                    <tr>
-                        <td>{{ $loop->index+1 }}</td>
-                        <td style="text-align:left;"><a href="{{ route('AdminGuruhShow',$item['id'] ) }}">{{ $item['guruh_name'] }}<a></td>
-                        <td>{{ $item['guruh_start'] }}</td>
-                        <td>{{ $item['guruh_end'] }}</td>
-                        <td>{{ $item['Users'] }}</td>
-                        <td>{{ $item['delete'] }}</td>
-                        <td>{{ $item['Bonus'] }}</td>
-                        <td>{{ $item['Davomat'] }}</td>
-                        <td style="text-align:right">{{ $item['Hisoblandi'] }}</td>
-                        <td style="text-align:right">{{ $item['Tulov'] }}</td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td class="text-center" colspan=9>Guruhlar mavjud emas.</td>
-                    </tr>
-                    @endforelse
-                </tbody>
-            </table>
+        <div class="card-body text-center">
+            <h5 class="card-title mb-0 pb-0">O'qituvchi guruhlari</h5>
+            <p class="m-0 p-0 text-danger" style="font-size:10px;">(Guruh yakunlangandan 30 kundan so'ng guruhlar o'chiriladi)</p>
+            <div class="table-responsive">
+                <table class="table table-bordered text-center table-striped table-hover" style="font-size:14px;">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Guruh</th>
+                            <th>Boshlanish vaqti</th>
+                            <th>Tugash vaqti</th>
+                            <th>Talabalar</th>
+                            <th>Talaba o'chirildi</th>
+                            <th>Bonus</th>
+                            <th>Davomad</th>
+                            <th>Ish haqi</th>
+                            <th>To'langan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($Guruh as $item)
+                        <tr>
+                            <td>{{ $loop->index+1 }}</td>
+                            <td style="text-align:left;"><a href="{{ route('AdminGuruhShow',$item['id'] ) }}">{{ $item['guruh_name'] }}<a></td>
+                            <td>{{ $item['guruh_start'] }}</td>
+                            <td>{{ $item['guruh_end'] }}</td>
+                            <td>{{ $item['Users'] }}</td>
+                            <td>{{ $item['delete'] }}</td>
+                            <td>{{ $item['Bonus'] }}</td>
+                            <td>{{ $item['Davomat'] }}</td>
+                            <td style="text-align:right">{{ $item['Hisoblandi'] }}</td>
+                            <td style="text-align:right">{{ $item['Tulov'] }}</td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td class="text-center" colspan=9>Guruhlar mavjud emas.</td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
         </div>
-      </div>
     </div>  
 
     <div class="card info-card sales-card">
-      <div class="card-body text-center">
-        <h5 class="card-title mb-0 pb-0">To'langan ish haqi</h5>
-        <p class="m-0 p-0 text-danger" style="font-size:10px;">(Oxirgi 35 kunda to'langan ish haqi)</p>
-        <div class="table-responsive">
-            <table class="table table-bordered text-center table-striped table-hover" style="font-size:14px;">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Guruh</th>
-                        <th>To'lov Summa</th>
-                        <th>To'lov vaqti</th>
-                        <th>To'lov haqida</th>
-                        <th>Meneger</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($Tulov as $item)
-                    <tr>
-                        <td>{{ $loop->index+1 }}</td>
-                        <td style="text-align:left">{{ $item['guruh'] }}</td>
-                        <td>{{ $item['summa'] }}</td>
-                        <td>{{ $item['created_at'] }}</td>
-                        <td>{{ $item['about'] }}</td>
-                        <td>{{ $item['admin_id'] }}</td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td class="text-center" colspan=6>To'lovlar mavjud emas</td>
-                    </tr>
-                    @endforelse
-                </tbody>
-            </table>
+        <div class="card-body text-center">
+            <h5 class="card-title mb-0 pb-0">To'langan ish haqi</h5>
+            <p class="m-0 p-0 text-danger" style="font-size:10px;">(Oxirgi 35 kunda to'langan ish haqi)</p>
+            <div class="table-responsive">
+                <table class="table table-bordered text-center table-striped table-hover" style="font-size:14px;">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Guruh</th>
+                            <th>To'lov Summa</th>
+                            <th>To'lov vaqti</th>
+                            <th>To'lov haqida</th>
+                            <th>Meneger</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($Tulov as $item)
+                        <tr>
+                            <td>{{ $loop->index+1 }}</td>
+                            <td style="text-align:left">{{ $item['guruh'] }}</td>
+                            <td>{{ $item['summa'] }}</td>
+                            <td>{{ $item['created_at'] }}</td>
+                            <td>{{ $item['about'] }}</td>
+                            <td>{{ $item['admin_id'] }}</td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td class="text-center" colspan=6>To'lovlar mavjud emas</td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
         </div>
-      </div>
     </div>  
 </section>
 

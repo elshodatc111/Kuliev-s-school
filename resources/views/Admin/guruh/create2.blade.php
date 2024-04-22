@@ -87,6 +87,7 @@
                     </div>
                     <div class="col-lg-8">
                         <h5 class="card-title w-100 text-center my-1 py-1">Dars kunlari</h5>
+                        @if($GuruhView['count_day']==13)
                         <table class="table table-bordered" style="font-size:14px;">
                             <tr>
                                 <td><b>1-dars:</b> {{ $GuruhView['kunlar'][0] }}</td>
@@ -112,6 +113,50 @@
                                 <td colspan=3 class="text-center"><b>Qo'shimcha dars:</b> {{ $GuruhView['kunlar'][12] }}</td>
                             </tr>
                         </table>
+                        @else
+                        <table class="table table-bordered" style="font-size:14px;">
+                            <tr>
+                                <td><b>1-dars:</b> {{ $GuruhView['kunlar'][0] }}</td>
+                                <td><b>5-dars:</b> {{ $GuruhView['kunlar'][8] }}</td>
+                                <td><b>9-dars:</b> {{ $GuruhView['kunlar'][16] }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>2-dars:</b> {{ $GuruhView['kunlar'][1] }}</td>
+                                <td><b>6-dars:</b> {{ $GuruhView['kunlar'][9] }}</td>
+                                <td><b>10-dars:</b> {{ $GuruhView['kunlar'][17] }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>3-dars:</b> {{ $GuruhView['kunlar'][2] }}</td>
+                                <td><b>7-dars:</b> {{ $GuruhView['kunlar'][10] }}</td>
+                                <td><b>11-dars:</b> {{ $GuruhView['kunlar'][18] }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>4-dars:</b> {{ $GuruhView['kunlar'][3] }}</td>
+                                <td><b>8-dars:</b> {{ $GuruhView['kunlar'][11] }}</td>
+                                <td><b>12-dars:</b> {{ $GuruhView['kunlar'][19] }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>1-dars:</b> {{ $GuruhView['kunlar'][4] }}</td>
+                                <td><b>5-dars:</b> {{ $GuruhView['kunlar'][12] }}</td>
+                                <td><b>9-dars:</b> {{ $GuruhView['kunlar'][20] }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>2-dars:</b> {{ $GuruhView['kunlar'][5] }}</td>
+                                <td><b>6-dars:</b> {{ $GuruhView['kunlar'][13] }}</td>
+                                <td><b>10-dars:</b> {{ $GuruhView['kunlar'][21] }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>3-dars:</b> {{ $GuruhView['kunlar'][6] }}</td>
+                                <td><b>7-dars:</b> {{ $GuruhView['kunlar'][14] }}</td>
+                                <td><b>11-dars:</b> {{ $GuruhView['kunlar'][22] }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>4-dars:</b> {{ $GuruhView['kunlar'][7] }}</td>
+                                <td><b>8-dars:</b> {{ $GuruhView['kunlar'][15] }}</td>
+                                <td><b>12-dars:</b> {{ $GuruhView['kunlar'][23] }}</td>
+                            </tr>
+                        </table>
+                        @endif
                     </div>
                     <div class="col-lg-4">
                         <h5 class="card-title text-center my-1 py-1 w-100">Dars vaqtini tanlang</h5>
@@ -121,6 +166,7 @@
                             <input type="hidden" name="techer_id" value="{{ $GuruhInput['techer_id'] }}">
                             <input type="hidden" name="cours_id" value="{{ $GuruhInput['cours_id'] }}">
                             <input type="hidden" name="room_id" value="{{ $GuruhInput['room_id'] }}">
+                            <input type="hidden" name="count_day" value="{{ $GuruhView['count_day'] }}">
                             <input type="hidden" name="guruh_name" value="{{ $GuruhInput['guruh_name'] }}">
                             <input type="hidden" name="guruh_price" value="{{ $GuruhInput['guruh_price'] }}">
                             <input type="hidden" name="guruh_chegirma" value="{{ $GuruhInput['guruh_chegirma'] }}">

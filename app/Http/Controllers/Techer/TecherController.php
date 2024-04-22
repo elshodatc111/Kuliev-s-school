@@ -237,7 +237,8 @@ class TecherController extends Controller
                 }
             }
         }
-        return view('Techer.grops_show',compact('Guruh','Davomat'));
+        $DarsKunlar = count($Guruh['kunlar']);
+        return view('Techer.grops_show',compact('Guruh','Davomat','DarsKunlar'));
     }
     public function davomat(Request $request){
         $guruh_id = $request->guruh_id;

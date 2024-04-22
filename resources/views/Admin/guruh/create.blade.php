@@ -59,6 +59,7 @@
                                         <option value="">Tanlang</option>
                                         <option value="juft">Juft kunlar</option>
                                         <option value="toq">Toq kunlar</option>
+                                        <option value="xarkuni">Xar kuni</option>
                                     </select>
                                 </div>
                             </div>

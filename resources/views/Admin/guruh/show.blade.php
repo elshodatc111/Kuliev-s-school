@@ -241,6 +241,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h5 class="card-title pt-0 my-0 pb-1">Dars kunlari</h5>
+                            @if($DarsKunlari==13)
                             <table class="table table-hover table-bordered" style="font-size:12px;">
                                 <tr>
                                     <th style="text-align:left;">1-dars</th>
@@ -279,6 +280,74 @@
                                     <td style="text-align:right;">{{ $Guruh['Kunlar'][9] }}</td>
                                 </tr>
                             </table>
+                            @else
+                            <table class="table table-hover table-bordered" style="font-size:12px;">
+                                <tr>
+                                    <th style="text-align:left;">1-dars</th>
+                                    <td style="text-align:right;">{{ $Guruh['Kunlar'][0] }}</td>
+                                    <th style="text-align:left;">9-dars</th>
+                                    <td style="text-align:right;">{{ $Guruh['Kunlar'][8] }}</td>
+                                    <th style="text-align:left;">17-dars</th>
+                                    <td style="text-align:right;">{{ $Guruh['Kunlar'][16] }}</td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align:left;">2-dars</th>
+                                    <td style="text-align:right;">{{ $Guruh['Kunlar'][1] }}</td>
+                                    <th style="text-align:left;">10-dars</th>
+                                    <td style="text-align:right;">{{ $Guruh['Kunlar'][9] }}</td>
+                                    <th style="text-align:left;">18-dars</th>
+                                    <td style="text-align:right;">{{ $Guruh['Kunlar'][17] }}</td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align:left;">3-dars</th>
+                                    <td style="text-align:right;">{{ $Guruh['Kunlar'][2] }}</td>
+                                    <th style="text-align:left;">11-dars</th>
+                                    <td style="text-align:right;">{{ $Guruh['Kunlar'][10] }}</td>
+                                    <th style="text-align:left;">19-dars</th>
+                                    <td style="text-align:right;">{{ $Guruh['Kunlar'][18] }}</td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align:left;">4-dars</th>
+                                    <td style="text-align:right;">{{ $Guruh['Kunlar'][3] }}</td>
+                                    <th style="text-align:left;">12-dars</th>
+                                    <td style="text-align:right;">{{ $Guruh['Kunlar'][11] }}</td>
+                                    <th style="text-align:left;">20-dars</th>
+                                    <td style="text-align:right;">{{ $Guruh['Kunlar'][19] }}</td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align:left;">5-dars</th>
+                                    <td style="text-align:right;">{{ $Guruh['Kunlar'][4] }}</td>
+                                    <th style="text-align:left;">13-dars</th>
+                                    <td style="text-align:right;">{{ $Guruh['Kunlar'][12] }}</td>
+                                    <th style="text-align:left;">21-dars</th>
+                                    <td style="text-align:right;">{{ $Guruh['Kunlar'][20] }}</td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align:left;">6-dars</th>
+                                    <td style="text-align:right;">{{ $Guruh['Kunlar'][5] }}</td>
+                                    <th style="text-align:left;">14-dars</th>
+                                    <td style="text-align:right;">{{ $Guruh['Kunlar'][13] }}</td>
+                                    <th style="text-align:left;">22-dars</th>
+                                    <td style="text-align:right;">{{ $Guruh['Kunlar'][21] }}</td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align:left;">7-dars</th>
+                                    <td style="text-align:right;">{{ $Guruh['Kunlar'][6] }}</td>
+                                    <th style="text-align:left;">15-dars</th>
+                                    <td style="text-align:right;">{{ $Guruh['Kunlar'][14] }}</td>
+                                    <th style="text-align:left;">23-dars</th>
+                                    <td style="text-align:right;">{{ $Guruh['Kunlar'][22] }}</td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align:left;">8-dars</th>
+                                    <td style="text-align:right;">{{ $Guruh['Kunlar'][7] }}</td>
+                                    <th style="text-align:left;">16-dars</th>
+                                    <td style="text-align:right;">{{ $Guruh['Kunlar'][15] }}</td>
+                                    <th style="text-align:left;">24-dars</th>
+                                    <td style="text-align:right;">{{ $Guruh['Kunlar'][23] }}</td>
+                                </tr>
+                            </table>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -315,7 +384,9 @@
                                     <td>{{ $item['status'] }}</td>
                                 </tr>
                                 @empty
-
+                                <tr>
+                                    <td colspan=10 class="text-center">Guruh talabalari mavjud emas.</td>
+                                </tr>
                                 @endforelse
                             </tbody>
                         </table>
@@ -418,6 +489,7 @@
                                         <option value>Tanlang...</option>
                                         <option value="toq">Toq kunlar</option>
                                         <option value="juft">Juft kunlar</option>
+                                        <option value="xarkuni">Xar kuni</option>
                                     </select>
                                     <label for="hafta_kuni">Hafta kuni</label>
                                 </div>  

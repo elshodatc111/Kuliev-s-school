@@ -117,6 +117,7 @@
                                 <tr>
                                     <td colspan=3 class="text-center w-100"><b>Dars kunlari</b></td>
                                 </tr>
+                                @if($DarsKunlar==13)
                                 <tr style="font-size:10px">
                                     <td>{{ $Guruh['kunlar'][0]['dates'] }}</td>
                                     <td>{{ $Guruh['kunlar'][4]['dates'] }}</td>
@@ -140,6 +141,48 @@
                                 <tr style="font-size:10px">
                                     <td colspan=3 class="text-center">Qo'shimcha dars: {{ $Guruh['kunlar'][12]['dates'] }}</td>
                                 </tr>
+                                @else 
+                                <tr style="font-size:10px">
+                                    <td>{{ $Guruh['kunlar'][0]['dates'] }}</td>
+                                    <td>{{ $Guruh['kunlar'][8]['dates'] }}</td>
+                                    <td>{{ $Guruh['kunlar'][16]['dates'] }}</td>
+                                </tr>
+                                <tr style="font-size:10px">
+                                    <td>{{ $Guruh['kunlar'][1]['dates'] }}</td>
+                                    <td>{{ $Guruh['kunlar'][9]['dates'] }}</td>
+                                    <td>{{ $Guruh['kunlar'][17]['dates'] }}</td>
+                                </tr>
+                                <tr style="font-size:10px">
+                                    <td>{{ $Guruh['kunlar'][2]['dates'] }}</td>
+                                    <td>{{ $Guruh['kunlar'][10]['dates'] }}</td>
+                                    <td>{{ $Guruh['kunlar'][18]['dates'] }}</td>
+                                </tr>
+                                <tr style="font-size:10px">
+                                    <td>{{ $Guruh['kunlar'][3]['dates'] }}</td>
+                                    <td>{{ $Guruh['kunlar'][11]['dates'] }}</td>
+                                    <td>{{ $Guruh['kunlar'][19]['dates'] }}</td>
+                                </tr>
+                                <tr style="font-size:10px">
+                                    <td>{{ $Guruh['kunlar'][4]['dates'] }}</td>
+                                    <td>{{ $Guruh['kunlar'][12]['dates'] }}</td>
+                                    <td>{{ $Guruh['kunlar'][20]['dates'] }}</td>
+                                </tr>
+                                <tr style="font-size:10px">
+                                    <td>{{ $Guruh['kunlar'][5]['dates'] }}</td>
+                                    <td>{{ $Guruh['kunlar'][13]['dates'] }}</td>
+                                    <td>{{ $Guruh['kunlar'][21]['dates'] }}</td>
+                                </tr>
+                                <tr style="font-size:10px">
+                                    <td>{{ $Guruh['kunlar'][6]['dates'] }}</td>
+                                    <td>{{ $Guruh['kunlar'][14]['dates'] }}</td>
+                                    <td>{{ $Guruh['kunlar'][22]['dates'] }}</td>
+                                </tr>
+                                <tr style="font-size:10px">
+                                    <td>{{ $Guruh['kunlar'][7]['dates'] }}</td>
+                                    <td>{{ $Guruh['kunlar'][15]['dates'] }}</td>
+                                    <td>{{ $Guruh['kunlar'][23]['dates'] }}</td>
+                                </tr>
+                                @endif
                             </table>
                         </div>
                     </div>

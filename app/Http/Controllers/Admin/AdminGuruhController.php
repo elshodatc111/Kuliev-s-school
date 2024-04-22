@@ -79,14 +79,20 @@ class AdminGuruhController extends Controller{
         $i = 1;
         if($type=='toq'){
             $Juft = [1, 3, 5];
-        }else{
+        }elseif($type=='juft'){
             $Juft = [2, 4, 6];
+        }else{
+            $Juft = [1, 2, 3, 4, 5, 6];
         }
         $dates = array();
         while ($startTimestamp <= $endTimestamp) {
             $currentDayOfWeek = date('N', $startTimestamp);
             if (in_array($currentDayOfWeek, $Juft)) { // Monday, Wednesday, Friday
-                if($i==14){break;}
+                if($type=='xarkuni'){
+                    if($i==25){break;}
+                }else{
+                    if($i==14){break;}
+                }
                 $dates[] = date('Y-m-d', $startTimestamp);
                 $i = $i+1;
             }
@@ -179,9 +185,11 @@ class AdminGuruhController extends Controller{
         $GuruhView['hafta_kun'] = $request->hafta_kun;
         $GuruhView['guruh_start'] = $request->guruh_start;
         $GuruhView['guruh_end'] = end($dars_kunlari);
+        $GuruhView['count_day'] = count($dars_kunlari);
         $GuruhView['kunlar'] = $dars_kunlari;
         $GuruhView['dars_vaqtlari'] = $this->boshSoatlar($dars_vaqti);
         $GuruhInput = array();
+
         $GuruhInput['filial_id'] = request()->cookie('filial_id');
         $GuruhInput['techer_id'] = $request->techer_id;
         $GuruhInput['cours_id'] = $request->cours_id;
@@ -231,6 +239,19 @@ class AdminGuruhController extends Controller{
         $Kunlar['date10'] = $request->date10;
         $Kunlar['date11'] = $request->date11;
         $Kunlar['date12'] = $request->date12;
+        $Kunlar['date13'] = $request->date13;
+        if($request->count_day==24){
+            $Kunlar['date14'] = $request->date14;
+            $Kunlar['date15'] = $request->date15;
+            $Kunlar['date16'] = $request->date16;
+            $Kunlar['date17'] = $request->date17;
+            $Kunlar['date18'] = $request->date18;
+            $Kunlar['date19'] = $request->date19;
+            $Kunlar['date20'] = $request->date20;
+            $Kunlar['date21'] = $request->date21;
+            $Kunlar['date22'] = $request->date22;
+            $Kunlar['date23'] = $request->date23;
+        }
         foreach ($Kunlar as $key => $value) {
             GuruhTime::create([
                 'filial_id'=>$request->filial_id,
@@ -336,6 +357,7 @@ class AdminGuruhController extends Controller{
     }
     public function show($id){
         $Guruh = $this->GuruhAbout($id);
+        $DarsKunlari = count($Guruh['Kunlar']);
         $Days = GuruhTime::where('guruh_id',$Guruh['id'])->get();
         $TulovSetting = TulovSetting::where('filial_id',request()->cookie('filial_id'))->get();
         $Room = Room::where('filial_id',request()->cookie('filial_id'))->where('status','true')->get();
@@ -373,7 +395,7 @@ class AdminGuruhController extends Controller{
                 }
             }
         }
-        return view('Admin.guruh.show',compact('Davomat','Guruhw','TulovSetting','Room','Guruh','Days','UsersDeletes','Talabalar'));
+        return view('Admin.guruh.show',compact('DarsKunlari','Davomat','Guruhw','TulovSetting','Room','Guruh','Days','UsersDeletes','Talabalar'));
     }
     public function guruhDelUser(Request $request){
         $validate = $request->validate([
@@ -499,8 +521,9 @@ class AdminGuruhController extends Controller{
         $NewGuruh['cours_id'] = Cours::find($request->cours_id)->cours_name;
         $NewGuruh['room_id'] = Room::find($request->room_id)->room_name;
         $NewGuruh['guruh_start'] = $request->dars_boshlanish_vaqti;
-        $NewGuruh['dars_kunlari'] = $this->DarsKunlari($request->dars_boshlanish_vaqti,$request->hafta_kun);
+        $NewGuruh['dars_kunlari'] = $this->DarsKunlari($request->dars_boshlanish_vaqti,$request->hafta_kuni);
         $NewGuruh['guruh_end'] = end($NewGuruh['dars_kunlari']);
+        $NewGuruh['count_kun'] = count($NewGuruh['dars_kunlari']);
         $NewGuruh['hafta_kuni'] = $request->hafta_kuni;
         $NewGuruh['users'] = GuruhUser::where('guruh_users.guruh_id',$request->guruh_id)->where('guruh_users.status','true')->join('users','users.id','guruh_users.user_id')->select('users.id','users.name')->get();
         $dars_vaqti = array(1,2,3,4,5,6,7,8,9);
@@ -518,6 +541,8 @@ class AdminGuruhController extends Controller{
                 unset($dars_vaqti[$value-1]);
             }
         }
+        #dd($request->hafta_kuni);
+        #dd($NewGuruh['count_kun']);
         $NewGuruh['bosh_vaqtlar'] = $this->boshSoatlar($dars_vaqti);
         return view('Admin.guruh.create_next',compact('Guruh','NewGuruh','NewGuruhForm'));
     }
@@ -536,6 +561,19 @@ class AdminGuruhController extends Controller{
         $DarsKunlari['10'] = $request->kun10;
         $DarsKunlari['11'] = $request->kun11;
         $DarsKunlari['12'] = $request->kun12;
+        if($request->count_kun==24){
+            $DarsKunlari['13'] = $request->kun12;
+            $DarsKunlari['14'] = $request->kun12;
+            $DarsKunlari['15'] = $request->kun12;
+            $DarsKunlari['16'] = $request->kun12;
+            $DarsKunlari['17'] = $request->kun12;
+            $DarsKunlari['18'] = $request->kun12;
+            $DarsKunlari['19'] = $request->kun12;
+            $DarsKunlari['20'] = $request->kun12;
+            $DarsKunlari['21'] = $request->kun12;
+            $DarsKunlari['22'] = $request->kun12;
+            $DarsKunlari['23'] = $request->kun12;
+        }
         $validate = $request->validate([
             'techer_id' => ['required', 'string', 'max:255'],
             'cours_id' => ['required', 'string', 'max:255'],

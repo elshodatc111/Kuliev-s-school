@@ -74,8 +74,9 @@
                             </tr>
                         </table>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-8">
                         <h5 class="card-title w-100 text-center my-1 py-1">Dars kunlari</h5>
+                        @if($NewGuruh['count_kun']==13)
                         <table class="table table-bordered" style="font-size:14px;">
                             <tr>
                                 <td><b>1-dars:</b> {{ $NewGuruh['dars_kunlari'][0] }}</td>
@@ -105,8 +106,52 @@
                                 <td colspan=2 class="text-center"><b>Qo'shimcha dars:</b> {{ $NewGuruh['dars_kunlari'][12] }}</td>
                             </tr>
                         </table>
+                        @else
+                        <table class="table table-bordered" style="font-size:14px;">
+                            <tr>
+                                <td><b>1-dars:</b> {{ $NewGuruh['dars_kunlari'][0] }}</td>
+                                <td><b>9-dars:</b> {{ $NewGuruh['dars_kunlari'][8] }}</td>
+                                <td><b>17-dars:</b> {{ $NewGuruh['dars_kunlari'][16] }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>2-dars:</b> {{ $NewGuruh['dars_kunlari'][1] }}</td>
+                                <td><b>10-dars:</b> {{ $NewGuruh['dars_kunlari'][9] }}</td>
+                                <td><b>18-dars:</b> {{ $NewGuruh['dars_kunlari'][17] }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>3-dars:</b> {{ $NewGuruh['dars_kunlari'][2] }}</td>
+                                <td><b>11-dars:</b> {{ $NewGuruh['dars_kunlari'][10] }}</td>
+                                <td><b>19-dars:</b> {{ $NewGuruh['dars_kunlari'][18] }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>4-dars:</b> {{ $NewGuruh['dars_kunlari'][3] }}</td>
+                                <td><b>12-dars:</b> {{ $NewGuruh['dars_kunlari'][11] }}</td>
+                                <td><b>20-dars:</b> {{ $NewGuruh['dars_kunlari'][19] }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>5-dars:</b> {{ $NewGuruh['dars_kunlari'][4] }}</td>
+                                <td><b>13-dars:</b> {{ $NewGuruh['dars_kunlari'][12] }}</td>
+                                <td><b>21-dars:</b> {{ $NewGuruh['dars_kunlari'][20] }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>6-dars:</b> {{ $NewGuruh['dars_kunlari'][5] }}</td>
+                                <td><b>14-dars:</b> {{ $NewGuruh['dars_kunlari'][13] }}</td>
+                                <td><b>22-dars:</b> {{ $NewGuruh['dars_kunlari'][21] }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>7-dars:</b> {{ $NewGuruh['dars_kunlari'][6] }}</td>
+                                <td><b>15-dars:</b> {{ $NewGuruh['dars_kunlari'][14] }}</td>
+                                <td><b>23-dars:</b> {{ $NewGuruh['dars_kunlari'][22] }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>8-dars:</b> {{ $NewGuruh['dars_kunlari'][7] }}</td>
+                                <td><b>16-dars:</b> {{ $NewGuruh['dars_kunlari'][15] }}</td>
+                                <td><b>24-dars:</b> {{ $NewGuruh['dars_kunlari'][23] }}</td>
+                            </tr>
+                        </table>
+                        @endif
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                         <h5 class="card-title w-100 text-center my-1 py-1">Yangi guruhga talaba o'tqazish</h5>
                         <form action="{{ route('CreateGuruhNext2') }}" method="post">
                             @csrf
@@ -122,6 +167,7 @@
                                 </tr>
                                 @endforeach
                             </table>
+                            <input type="hidden" name="count_kun" value={{ $NewGuruh['count_kun'] }}>
                             <input type="hidden" name="techer_id" value="{{ $NewGuruhForm['techer_id'] }}">
                             <input type="hidden" name="cours_id" value="{{ $NewGuruhForm['cours_id'] }}">
                             <input type="hidden" name="room_id" value="{{ $NewGuruhForm['room_id'] }}">
