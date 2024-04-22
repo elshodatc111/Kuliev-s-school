@@ -68,7 +68,9 @@
                             </td>
                         </tr>
                         @empty
-
+                        <tr>
+                            <td colspan=7 class="text-center">Guruhlar mavjud emas.</td>
+                        </tr>
                         @endforelse
                     </tbody>
                 </table>

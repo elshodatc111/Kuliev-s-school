@@ -25,7 +25,7 @@
             <div class="card-body pt-3">
                 <div class="tab-content pt-2" id="myTabjustifiedContent">
                     <div class="tab-pane fade show active" id="home-justified" role="tabpanel" aria-labelledby="home-tab">
-                        <h5 class="card-title w-100 text-center py-1">{{ $Users['name'] }}</h5>
+                        <h5 class="card-title w-100 text-center py-1" style="font-size:36px;">{{ $Users['name'] }}</h5>
                         <div class="row">
                             <div class="col-lg-6">
                                 <ul class="list-group">
@@ -602,7 +602,9 @@
                                     </td>
                                 </tr> 
                                 @empty
-
+                                    <tr>
+                                        <td colspan=9 class="text-center">Talaba guruhlari mavjud emas.</td>
+                                    </tr>
                                 @endforelse
                             </tbody>
                         </table>
@@ -647,15 +649,15 @@
                                     @endif
                                 </tr> 
                                 @empty
-                                @if(Auth::user()->type!='Operator')
-                                <tr>
-                                    <td colspan=7 class="text-center">To'lovlar mavjud emas.</td>
-                                </tr>
-                                @else
-                                <tr>
-                                    <td colspan=6 class="text-center">To'lovlar mavjud emas.</td>
-                                </tr>
-                                @endif
+                                    @if(Auth::user()->type!='Operator')
+                                    <tr>
+                                        <td colspan=7 class="text-center">To'lovlar mavjud emas.</td>
+                                    </tr>
+                                    @else
+                                    <tr>
+                                        <td colspan=6 class="text-center">To'lovlar mavjud emas.</td>
+                                    </tr>
+                                    @endif
                                 @endforelse
                             </tbody>
                         </table>

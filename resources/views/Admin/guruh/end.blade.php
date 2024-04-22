@@ -63,7 +63,9 @@
                                 </td>
                             </tr>
                             @empty
-
+                                <tr>
+                                    <td colspan=7 class="text-center">Yakunlangan guruhlar mavjud emas.</td>
+                                </tr>
                             @endforelse
                         </tbody>
                     </table>

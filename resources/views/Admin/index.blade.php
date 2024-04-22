@@ -13,8 +13,49 @@
             </ol>
         </nav>
     </div>
-    Elonlar<br>
     <section class="section dashboard">
+        <div class="card">
+            <div class="card-body pt-3">
+                <div style="text-align:right;">
+                    <a href="{{ route('StudentCreate') }}" class="btn btn-success"><i class="bi bi-person-add"></i> Yangi talaba</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table datatable" style="font-size:14px;">
+                        <thead>
+                            <tr>
+                                <th class="bg-primary text-white text-center">#</th>
+                                <th class="bg-primary text-white text-center">FIO</th>
+                                <th class="bg-primary text-white text-center">Manzil</th>
+                                <th class="bg-primary text-white text-center">Telefon raqam</th>
+                                <th class="bg-primary text-white text-center">Guruhlar</th>
+                                <th class="bg-primary text-white text-center">Ro'yhatdan o'tdi</th>
+                                <th class="bg-primary text-white text-center">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($User as $item)
+                            <tr>
+                                <td class="text-center">{{ $loop->index+1 }}</td>
+                                <th>{{ $item['name'] }}</th>
+                                <td>{{ $item['addres'] }}</td>
+                                <td class="text-center">{{ $item['phone'] }}</td>
+                                <td class="text-center">{{ $item['guruhlar'] }}</td>
+                                <td class="text-center">{{ $item['created_at'] }}</td>
+                                <td class="text-center">
+                                    <a href="{{ route('StudentShow',$item['id']) }}" class="btn btn-primary py-0 px-1">
+                                        <i class="bi bi-eye"></i></a>
+                                </td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan=7 class="text-center">Tashriflar mavjud emas.</td>
+                            </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
         <div class="card">
             <div class="card-body">
                 @foreach($Rooms as $key => $value)

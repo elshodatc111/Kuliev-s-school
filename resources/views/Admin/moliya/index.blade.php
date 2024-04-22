@@ -352,7 +352,9 @@
                         <td>{{ $item['admin'] }}</td>
                     </tr>
                 @empty
-
+                    <tr>
+                        <td colspan=6 class="text-center">O'chirilgan to'lovlar mavjud emas.</td>
+                    </tr>
                 @endforelse
             </table>
         </div>

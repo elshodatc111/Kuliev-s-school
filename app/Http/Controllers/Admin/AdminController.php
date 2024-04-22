@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 use App\Models\Room;
 use App\Models\User;
+use App\Models\GuruhUser;
 use App\Models\Murojat;
 use Carbon\Carbon;
 use App\Models\Guruh;
@@ -29,8 +30,7 @@ class AdminController extends Controller{
     }
     public function index(){
         $this->coocies();
-        $currentTime = time();
-        $weekStart = strtotime('last Monday', $currentTime);
+        $weekStart = strtotime('monday this week', time());
         $Room = Room::where('filial_id',request()->cookie('filial_id'))->where('status','true')->get();
         $room_id = 1;
         $Rooms = array();
@@ -41,9 +41,10 @@ class AdminController extends Controller{
             for ($k = 1; $k <= 9; $k++) {
                 for ($i = 0; $i < 6; $i++) {
                     $day = date('Y-m-d', strtotime("+$i days", $weekStart));
+                    
                     $GuruhJadval = GuruhTime::where('room_id',$value->id)
                                 ->where('times',$k)->where('dates',$day)->get();
-                    if(count($GuruhJadval)>=1){
+                    if(count($GuruhJadval)>0){
                         $guruh_id = $GuruhJadval->first()->guruh_id;
                         $guruh_name = Guruh::where('id',$guruh_id)->get()->first()->guruh_name;
                         $Jadval[$i][$k]['guruh_id'] = $guruh_id;
@@ -53,7 +54,19 @@ class AdminController extends Controller{
             }
             $Rooms[$key]['hafta_kun'] = $Jadval;
         }
-        return view('Admin.index', compact('Rooms'));
+
+        $Users = User::where('filial_id',request()->cookie('filial_id'))->where('type','User')->orderby('id','desc')->get();
+        $User = array();
+        foreach ($Users as $key => $value) {
+            $User[$key]['id']=$value->id;
+            $User[$key]['name']=$value->name;
+            $User[$key]['addres']=$value->addres;
+            $User[$key]['phone']=$value->phone;
+            $GuruhUser = count(GuruhUser::where('user_id',$value->id)->where('status','true')->get());
+            $User[$key]['created_at']=$GuruhUser;
+            $User[$key]['guruhlar']=$value->created_at;
+        }
+        return view('Admin.index', compact('Rooms','User'));
     }
     public function eslatmalar(){
         $Eslatma = array();
