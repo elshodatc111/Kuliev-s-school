@@ -14,7 +14,7 @@
     </div>
     <section class="section dashboard">
         <div class="row">
-            <div class="col-lg-4">
+            <div class="col-lg-4"> 
                 <div class="card">
                     <img src="https://atko.tech/NiceAdmin/assets/img/cours.jpg" class="card-img-top">
                     <div class="card-body p-0">
@@ -46,6 +46,7 @@
                             <tr>
                                 <td colspan=3>Dars kunlari</td>
                             </tr>
+                            @if($CountDates==13)
                             <tr>
                                 <td>{{ $GuruhTime[0]['dates'] }}</td>
                                 <td>{{ $GuruhTime[4]['dates'] }}</td>
@@ -69,6 +70,48 @@
                             <tr>
                                 <td colspan=3><b>Qo'shimcha dars: </b>{{ $GuruhTime[12]['dates'] }}</td>
                             </tr>
+                            @else
+                            <tr>
+                                <td>{{ $GuruhTime[0]['dates'] }}</td>
+                                <td>{{ $GuruhTime[8]['dates'] }}</td>
+                                <td>{{ $GuruhTime[16]['dates'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ $GuruhTime[1]['dates'] }}</td>
+                                <td>{{ $GuruhTime[9]['dates'] }}</td>
+                                <td>{{ $GuruhTime[17]['dates'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ $GuruhTime[2]['dates'] }}</td>
+                                <td>{{ $GuruhTime[10]['dates'] }}</td>
+                                <td>{{ $GuruhTime[18]['dates'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ $GuruhTime[3]['dates'] }}</td>
+                                <td>{{ $GuruhTime[11]['dates'] }}</td>
+                                <td>{{ $GuruhTime[19]['dates'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ $GuruhTime[4]['dates'] }}</td>
+                                <td>{{ $GuruhTime[12]['dates'] }}</td>
+                                <td>{{ $GuruhTime[20]['dates'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ $GuruhTime[5]['dates'] }}</td>
+                                <td>{{ $GuruhTime[13]['dates'] }}</td>
+                                <td>{{ $GuruhTime[21]['dates'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ $GuruhTime[6]['dates'] }}</td>
+                                <td>{{ $GuruhTime[14]['dates'] }}</td>
+                                <td>{{ $GuruhTime[22]['dates'] }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ $GuruhTime[7]['dates'] }}</td>
+                                <td>{{ $GuruhTime[15]['dates'] }}</td>
+                                <td>{{ $GuruhTime[23]['dates'] }}</td>
+                            </tr>
+                            @endif
                         </table>
                     </div>
                 </div>

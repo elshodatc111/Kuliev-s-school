@@ -37,6 +37,7 @@
                 </div>
             </div>
         </div>
+        <!--
         <h5 class="card-title">Chegirmali to'lovlar</h5>
             <div class="row">
                 @forelse($CHegirma as $item)
@@ -62,7 +63,7 @@
 
                 @endforelse
             </div>
-        
+        -->
             
 
 

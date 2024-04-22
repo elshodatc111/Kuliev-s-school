@@ -82,6 +82,7 @@ class UserGuruhController extends Controller{
         $Guruhs['room'] = Room::find($Guruh['room_id'])->room_name;
         $Guruhs['cours_id'] = $Guruh->cours_id;
         $GuruhTime = GuruhTime::where('guruh_id',$Guruh['id'])->get();
-        return view('User.guruh_show',compact('Guruhs','GuruhTime'));
+        $CountDates = count($GuruhTime);
+        return view('User.guruh_show',compact('Guruhs','GuruhTime','CountDates'));
     }
 }
