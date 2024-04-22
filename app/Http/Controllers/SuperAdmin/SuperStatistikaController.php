@@ -124,7 +124,30 @@ class SuperStatistikaController extends Controller{
         $OylikTashriflar = $this->OylikTashrif($id);
         $OylikTulov = $this->OylikTulov($id);
         $KunlikStatistika = $this->KunlikTulovlar($id);
-        #dd($KunlikStatistika['Tulovlar']);
-        return view('SuperAdmin.statistik.index', compact('KunlikStatistika','OylikTashriflar','OylikTulov'));
+        $Kun1 = date("Y-m-d",strtotime('-5 day',time()));
+        $Kun2 = date("Y-m-d",strtotime('-4 day',time()));
+        $Kun3 = date("Y-m-d",strtotime('-3 day',time()));
+        $Kun4 = date("Y-m-d",strtotime('-2 day',time()));
+        $Kun5 = date("Y-m-d",strtotime('-1 day',time()));
+        $Kun6 = date("Y-m-d");
+        return view('SuperAdmin.statistik.index', compact('KunlikStatistika','Kun1','Kun2','Kun3','Kun4','Kun5','Kun6','OylikTashriflar','OylikTulov'));
+    }
+    public function statistikaKun($date){
+        $Start = $date." 00:00:00";
+        $End = $date." 23:59:59";
+        $Tulovlar = Tulov::where('filial_id',request()->cookie('filial_id'))
+            ->where('created_at','>=',$Start)
+            ->where('created_at','<=',$End)
+            ->get();
+        $Tulov = array();
+        foreach ($Tulovlar as $key => $value) {
+            $Tulov[$key]['User'] = User::find($value->user_id)->name;
+            $Tulov[$key]['Admiin'] = User::find($value->admin_id)->email;
+            $Tulov[$key]['summa'] = number_format(($value->summa), 0, '.', ' ');
+            $Tulov[$key]['type'] = $value->type;
+            $Tulov[$key]['about'] = $value->about;
+            $Tulov[$key]['created_at'] = $value->created_at;
+        }
+        return view('SuperAdmin.statistik.kunlik',compact('Tulov'));
     }
 }

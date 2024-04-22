@@ -33,6 +33,7 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/Superadmin/index', [SuperAdminController::class, 'index'])->name('SuperAdmin');
 Route::get('/Superadmin/hisobot', [SuperAdminController::class, 'hisobot'])->name('hisobot');
 Route::get('/Superadmin/statistika', [SuperAdminController::class, 'statistika'])->name('statistika');
+
     ###Filiallar###
 Route::get('/Superadmin/filial', [FilialController::class, 'filial'])->name('filial');
 Route::get('/Superadmin/filial/show/{id}', [FilialController::class, 'show'])->name('filial.show');
@@ -45,6 +46,8 @@ Route::POST('/Superadmin/moliya/xarajat', [SuperMoliyaController::class, 'xaraja
 Route::POST('/Superadmin/moliya/kassaga', [SuperMoliyaController::class, 'kassaga'])->name('SuperAdminMoliyaKassaga');
 
 Route::get('/Superadmin/statistika/{id}', [SuperStatistikaController::class, 'index'])->name('SuperAdminStatistika');
+Route::get('/Superadmin/statistika/kun/{id}', [SuperStatistikaController::class, 'statistikaKun'])->name('statistikaKun');
+
 
 Route::get('/Superadmin/elon/techer', [SuperElonController::class, 'techer'])->name('SuperAdminElonTecher');
 Route::get('/Superadmin/elon/student', [SuperElonController::class, 'student'])->name('SuperAdminElonStudent');

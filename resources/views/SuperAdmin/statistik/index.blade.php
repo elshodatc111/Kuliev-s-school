@@ -177,12 +177,12 @@
                     <table class="table table-bordered mt-3" style="font-size:12px">
                         <tr>
                             <th style="text-align:left">Status</th>
-                            <td>{{ $KunlikStatistika["kunlar"][0] }}</td>
-                            <td>{{ $KunlikStatistika["kunlar"][1] }}</td>
-                            <td>{{ $KunlikStatistika["kunlar"][2] }}</td>
-                            <td>{{ $KunlikStatistika["kunlar"][3] }}</td>
-                            <td>{{ $KunlikStatistika["kunlar"][4] }}</td>
-                            <td>{{ $KunlikStatistika["kunlar"][5] }}</td>
+                            <td><a href="{{ route('statistikaKun',$Kun1) }}">{{ $KunlikStatistika["kunlar"][0] }}</a></td>
+                            <td><a href="{{ route('statistikaKun',$Kun2) }}">{{ $KunlikStatistika["kunlar"][1] }}</a></td>
+                            <td><a href="{{ route('statistikaKun',$Kun3) }}">{{ $KunlikStatistika["kunlar"][2] }}</a></td>
+                            <td><a href="{{ route('statistikaKun',$Kun4) }}">{{ $KunlikStatistika["kunlar"][3] }}</a></td>
+                            <td><a href="{{ route('statistikaKun',$Kun5) }}">{{ $KunlikStatistika["kunlar"][4] }}</a></td>
+                            <td><a href="{{ route('statistikaKun',$Kun6) }}">{{ $KunlikStatistika["kunlar"][5] }}</a></td>
                         </tr>
                         <tr>
                             <th style="text-align:left">Naqt</th>
