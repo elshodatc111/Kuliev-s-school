@@ -166,7 +166,7 @@
                                 </select>
                             </div>
                             <div class="col-12 mb-3 mt-2">
-                                <label for="about">To'lov summasi</label>
+                                <label for="about">To'lov haqida</label>
                                 <textarea name="about" class="form-control" required></textarea>
                             </div>
                             <div class="col-6">
@@ -256,9 +256,11 @@
                             <th>#</th>
                             <th>Guruh</th>
                             <th>To'lov Summa</th>
+                            <th>To'lov turi</th>
                             <th>To'lov vaqti</th>
                             <th>To'lov haqida</th>
                             <th>Meneger</th>
+                            <th>O'chirish</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -267,13 +269,19 @@
                             <td>{{ $loop->index+1 }}</td>
                             <td style="text-align:left">{{ $item['guruh'] }}</td>
                             <td>{{ $item['summa'] }}</td>
+                            <td>{{ $item['type'] }}</td>
                             <td>{{ $item['created_at'] }}</td>
                             <td>{{ $item['about'] }}</td>
                             <td>{{ $item['admin_id'] }}</td>
+                            <td>
+                                @if($item['created_at'] >= $Time1)
+                                    <a href="{{ route('AdminTecherPayDel',$item['id']) }}" class="btn btn-danger px-1 py-0"><i class="bi bi-trash"></i></a>
+                                @endif
+                            </td>
                         </tr>
                         @empty
                         <tr>
-                            <td class="text-center" colspan=6>To'lovlar mavjud emas</td>
+                            <td class="text-center" colspan=8>To'lovlar mavjud emas</td>
                         </tr>
                         @endforelse
                     </tbody>

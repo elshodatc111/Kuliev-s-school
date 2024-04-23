@@ -117,43 +117,43 @@
                         <table class="table table-bordered" style="font-size:14px;">
                             <tr>
                                 <td><b>1-dars:</b> {{ $GuruhView['kunlar'][0] }}</td>
-                                <td><b>5-dars:</b> {{ $GuruhView['kunlar'][8] }}</td>
-                                <td><b>9-dars:</b> {{ $GuruhView['kunlar'][16] }}</td>
+                                <td><b>9-dars:</b> {{ $GuruhView['kunlar'][8] }}</td>
+                                <td><b>17-dars:</b> {{ $GuruhView['kunlar'][16] }}</td>
                             </tr>
                             <tr>
                                 <td><b>2-dars:</b> {{ $GuruhView['kunlar'][1] }}</td>
-                                <td><b>6-dars:</b> {{ $GuruhView['kunlar'][9] }}</td>
-                                <td><b>10-dars:</b> {{ $GuruhView['kunlar'][17] }}</td>
+                                <td><b>10-dars:</b> {{ $GuruhView['kunlar'][9] }}</td>
+                                <td><b>18-dars:</b> {{ $GuruhView['kunlar'][17] }}</td>
                             </tr>
                             <tr>
                                 <td><b>3-dars:</b> {{ $GuruhView['kunlar'][2] }}</td>
-                                <td><b>7-dars:</b> {{ $GuruhView['kunlar'][10] }}</td>
-                                <td><b>11-dars:</b> {{ $GuruhView['kunlar'][18] }}</td>
+                                <td><b>11-dars:</b> {{ $GuruhView['kunlar'][10] }}</td>
+                                <td><b>19-dars:</b> {{ $GuruhView['kunlar'][18] }}</td>
                             </tr>
                             <tr>
                                 <td><b>4-dars:</b> {{ $GuruhView['kunlar'][3] }}</td>
-                                <td><b>8-dars:</b> {{ $GuruhView['kunlar'][11] }}</td>
-                                <td><b>12-dars:</b> {{ $GuruhView['kunlar'][19] }}</td>
+                                <td><b>12-dars:</b> {{ $GuruhView['kunlar'][11] }}</td>
+                                <td><b>20-dars:</b> {{ $GuruhView['kunlar'][19] }}</td>
                             </tr>
                             <tr>
-                                <td><b>1-dars:</b> {{ $GuruhView['kunlar'][4] }}</td>
-                                <td><b>5-dars:</b> {{ $GuruhView['kunlar'][12] }}</td>
-                                <td><b>9-dars:</b> {{ $GuruhView['kunlar'][20] }}</td>
+                                <td><b>5-dars:</b> {{ $GuruhView['kunlar'][4] }}</td>
+                                <td><b>13-dars:</b> {{ $GuruhView['kunlar'][12] }}</td>
+                                <td><b>21-dars:</b> {{ $GuruhView['kunlar'][20] }}</td>
                             </tr>
                             <tr>
-                                <td><b>2-dars:</b> {{ $GuruhView['kunlar'][5] }}</td>
-                                <td><b>6-dars:</b> {{ $GuruhView['kunlar'][13] }}</td>
-                                <td><b>10-dars:</b> {{ $GuruhView['kunlar'][21] }}</td>
+                                <td><b>6-dars:</b> {{ $GuruhView['kunlar'][5] }}</td>
+                                <td><b>14-dars:</b> {{ $GuruhView['kunlar'][13] }}</td>
+                                <td><b>22-dars:</b> {{ $GuruhView['kunlar'][21] }}</td>
                             </tr>
                             <tr>
-                                <td><b>3-dars:</b> {{ $GuruhView['kunlar'][6] }}</td>
-                                <td><b>7-dars:</b> {{ $GuruhView['kunlar'][14] }}</td>
-                                <td><b>11-dars:</b> {{ $GuruhView['kunlar'][22] }}</td>
+                                <td><b>7-dars:</b> {{ $GuruhView['kunlar'][6] }}</td>
+                                <td><b>15-dars:</b> {{ $GuruhView['kunlar'][14] }}</td>
+                                <td><b>23-dars:</b> {{ $GuruhView['kunlar'][22] }}</td>
                             </tr>
                             <tr>
-                                <td><b>4-dars:</b> {{ $GuruhView['kunlar'][7] }}</td>
-                                <td><b>8-dars:</b> {{ $GuruhView['kunlar'][15] }}</td>
-                                <td><b>12-dars:</b> {{ $GuruhView['kunlar'][23] }}</td>
+                                <td><b>8-dars:</b> {{ $GuruhView['kunlar'][7] }}</td>
+                                <td><b>16-dars:</b> {{ $GuruhView['kunlar'][15] }}</td>
+                                <td><b>24-dars:</b> {{ $GuruhView['kunlar'][23] }}</td>
                             </tr>
                         </table>
                         @endif

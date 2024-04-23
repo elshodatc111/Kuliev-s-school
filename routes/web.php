@@ -120,6 +120,7 @@ Route::get('/Admin/admin/techer', [AdminTecherController::class, 'index'])->name
 Route::post('/Admin/admin/techer', [AdminTecherController::class, 'techerCreate'])->name('AdminTecherCreate');
 Route::post('/Admin/admin/techer/update', [AdminTecherController::class, 'techerUpdate'])->name('AdminTecherUpdate');
 Route::post('/Admin/admin/techer/pay', [AdminTecherController::class, 'TecherPay'])->name('AdminTecherPay');
+Route::get('/Admin/admin/techer/pay/del/{id}', [AdminTecherController::class, 'TecherPayDelet'])->name('AdminTecherPayDel');
 Route::post('/Admin/admin/techer/update/password', [AdminTecherController::class, 'techerUpdatePassword'])->name('AdminTecherUpdatePassword');
 Route::get('/Admin/admin/techer/show/{id}', [AdminTecherController::class, 'techerShow'])->name('AdminTecherShow');
 Route::get('/Admin/admin/techer/delete/{id}', [AdminTecherController::class, 'techerDelete'])->name('AdminTecherDelete');

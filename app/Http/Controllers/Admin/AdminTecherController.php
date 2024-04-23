@@ -105,9 +105,23 @@ class AdminTecherController extends Controller{
             $Tulov[$key]['summa'] = number_format($value->summa, 0, '.', ' ');
             $Tulov[$key]['created_at'] = $value->created_at;
             $Tulov[$key]['about'] = $value->about;
+            $Tulov[$key]['type'] = $value->type;
             $Tulov[$key]['admin_id'] = User::find($value->admin_id)->email;
         }
-        return view('Admin.techer.show',compact('Techer','Guruh','Statistika','Tulov'));
+        $Time1 = Date("Y-m-d")." 00:00:00";
+        return view('Admin.techer.show',compact('Time1','Techer','Guruh','Statistika','Tulov'));
+    }
+    public function TecherPayDelet($id){
+        $IshHaqi = IshHaqi::find($id);
+        $FilialKassa = FilialKassa::where('filial_id',$IshHaqi->filial_id)->first();
+        if($IshHaqi->type=='Naqt'){
+            $FilialKassa->tulov_naqt = $FilialKassa->tulov_naqt+$IshHaqi->summa;
+        }else{
+            $FilialKassa->tulov_plastik = $FilialKassa->tulov_plastik+$IshHaqi->summa;
+        }
+        $FilialKassa->save();
+        $IshHaqi->delete();
+        return redirect()->back()->with('success', 'O\'qituvchiga to\'lov o\'chirildi.'); 
     }
     public function techerDelete($id){
         $Techer = User::find($id);

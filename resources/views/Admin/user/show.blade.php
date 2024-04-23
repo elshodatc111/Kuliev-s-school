@@ -31,7 +31,9 @@
                                 <ul class="list-group">
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         <b>Telefon Raqam:</b>
-                                        <span class="badge text-dark">{{ $Users['phone'] }}</span>
+                                        <h3 class="p-0 m-0">
+                                            <span class="badge text-dark">{{ $Users['phone'] }}</span>
+                                        </h3>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         <b>Tanish Telefon Raqam:</b>
@@ -51,13 +53,15 @@
                                 <ul class="list-group">
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         <b>Talaba Balansi:</b>
-                                        @if($Users['balans']>0)
-                                        <span class="badge bg-success">{{ $Users['balans'] }}</span>
-                                        @elseif($Users['balans'] < 0)
-                                        <span class="badge bg-danger">{{ $Users['balans'] }}</span>
-                                        @else
-                                        <span class="badge bg-primary">0</span>
-                                        @endif
+                                        <h3 class="p-0 m-0">
+                                            @if($Users['balans']>0)
+                                            <span class="badge bg-success">{{ $Users['balans'] }}</span>
+                                            @elseif($Users['balans'] < 0)
+                                            <span class="badge bg-danger">{{ $Users['balans'] }}</span>
+                                            @else
+                                            <span class="badge bg-primary">0</span>
+                                            @endif
+                                        </h3>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         <b>Talaba Haqida:</b>
