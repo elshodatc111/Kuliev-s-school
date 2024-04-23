@@ -282,7 +282,7 @@
     
     
 </section>
-
+<div class="w-100 text-center"><a href="{{ route('adminHodimDelete',$User->id) }}" class="btn btn-danger w-50"><i class="bi bi-trash"></i> Hodimni o'chirish</a></div>
 </main>
 
 @endsection

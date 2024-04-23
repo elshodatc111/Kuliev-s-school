@@ -127,7 +127,7 @@ class AdminTecherController extends Controller{
         $Techer = User::find($id);
         $Techer->status = 'false';
         $Techer->save();
-        return redirect()->back()->with('success', 'O\'qituvchi O\'chirildi.'); 
+        return redirect()->route('AdminTecher')->with('success', 'O\'qituvchi O\'chirildi.'); 
     }
     public function techerUpdate(Request $request){
         $validate = $request->validate([

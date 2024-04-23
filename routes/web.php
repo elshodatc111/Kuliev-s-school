@@ -45,6 +45,7 @@ Route::get('/Superadmin/filailCrm/{id}', [FilialController::class, 'filailCrm'])
 Route::POST('/Superadmin/moliya/xarajat', [SuperMoliyaController::class, 'xarajat'])->name('SuperAdminMoliyaXarajay');
 Route::POST('/Superadmin/moliya/kassaga', [SuperMoliyaController::class, 'kassaga'])->name('SuperAdminMoliyaKassaga');
 
+Route::get('/Superadmin/statistika/month', [SuperStatistikaController::class, 'statistikaMonth'])->name('statistikaMonth');
 Route::get('/Superadmin/statistika/{id}', [SuperStatistikaController::class, 'index'])->name('SuperAdminStatistika');
 Route::get('/Superadmin/statistika/kun/{id}', [SuperStatistikaController::class, 'statistikaKun'])->name('statistikaKun');
 

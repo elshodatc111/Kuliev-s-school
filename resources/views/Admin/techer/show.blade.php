@@ -289,7 +289,9 @@
             </div>
         </div>
     </div>  
+    
 </section>
+<div class="w-100 text-center"><a href="{{ route('AdminTecherDelete',$Techer['id']) }}" class="btn btn-danger w-50"><i class="bi bi-trash"></i> O'qituvchini o'chirish </a></div>
 
 </main>
 

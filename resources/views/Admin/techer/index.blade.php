@@ -89,7 +89,6 @@
                             <td>{{ $item->email }}</td>
                             <td>@if(Auth::user()->type != 'Operator')
                                 <a href="{{ route('AdminTecherShow',$item->id) }}" class="btn btn-primary py-0 px-1"><i class="bi bi-eye"></i></a>
-                                <a href="{{ route('AdminTecherDelete',$item->id) }}" class="btn btn-danger py-0 px-1"><i class="bi bi-trash"></i></a>
                                 @endif
                             </td>
                         </tr>

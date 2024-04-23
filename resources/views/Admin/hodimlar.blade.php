@@ -93,7 +93,6 @@
                                     <td>
                                         @if(Auth::user()->type != 'Operator')
                                         <a href="{{ route('adminHodim',$item->id) }}" class="btn btn-primary py-0 px-1"><i class="bi bi-eye"></i></a>
-                                        <a href="{{ route('adminHodimDelete',$item->id) }}" class="btn btn-danger py-0 px-1"><i class="bi bi-trash"></i></a>
                                         @endif
                                     </td>
                                 </tr>

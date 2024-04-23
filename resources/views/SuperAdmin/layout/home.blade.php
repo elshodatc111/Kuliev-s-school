@@ -84,6 +84,9 @@
         <a class="nav-link collapsed" href="{{ route('filial') }}"><i class="bi bi-menu-button-wide"></i><span>Filiallar</span></a>
       </li>
       <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('statistikaMonth') }}"><i class="bi bi-bar-chart"></i><span>Statistika Tulovlar</span></a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link collapsed" href="{{ route('hodimlar') }}"><i class="bi bi-person"></i><span>Administrator</span></a>
       </li>
     </ul>

@@ -46,7 +46,7 @@ class HodimController extends Controller{
         $User = User::find($id);
         $User->status = 'false';
         $User->save();
-        return redirect()->back()->with('success', 'Hodim o\'chirildi.'); 
+        return redirect()->route('adminHodimlar')->with('success', 'Hodim o\'chirildi.'); 
     }
     public function adminHodim($id){
         $User = User::find($id);
