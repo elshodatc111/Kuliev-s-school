@@ -89,9 +89,15 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="{{ route('hodimlar') }}"><i class="bi bi-person"></i><span>Administrator</span></a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('SuperAdminTecher') }}"><i class="bi bi-coin"></i><span>O'qituvchiga to'lov</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href=""><i class="bi bi-file-earmark-medical"></i><span>Hisobot</span></a>
+      </li>
       @if(Auth::user()->email=='elshodatc1116')
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('setting') }}"><i class="bi bi-coin"></i><span>Settings</span></a>
+        <a class="nav-link collapsed" href="{{ route('setting') }}"><i class="bi bi-gear"></i><span>Settings</span></a>
       </li>
       @endif
     </ul>

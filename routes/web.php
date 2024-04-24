@@ -10,6 +10,7 @@ use App\Http\Controllers\SuperAdmin\SuperMoliyaController;
 use App\Http\Controllers\SuperAdmin\SuperReportController;
 use App\Http\Controllers\SuperAdmin\SuperStatistikaController;
 use App\Http\Controllers\SuperAdmin\SuperElonController;
+use App\Http\Controllers\SuperAdmin\SuperAdminTecherController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\HodimController;
 use App\Http\Controllers\Admin\AdminGuruhController;
@@ -47,6 +48,9 @@ Route::get('/Superadmin/filailCrm/{id}', [FilialController::class, 'filailCrm'])
 
 Route::POST('/Superadmin/moliya/xarajat', [SuperMoliyaController::class, 'xarajat'])->name('SuperAdminMoliyaXarajay');
 Route::POST('/Superadmin/moliya/kassaga', [SuperMoliyaController::class, 'kassaga'])->name('SuperAdminMoliyaKassaga');
+
+
+Route::get('/Superadmin/techer/tulovlar', [SuperAdminTecherController::class, 'index'])->name('SuperAdminTecher');
 
 Route::get('/Superadmin/statistika/month', [SuperStatistikaController::class, 'statistikaMonth'])->name('statistikaMonth');
 Route::get('/Superadmin/statistika/{id}', [SuperStatistikaController::class, 'index'])->name('SuperAdminStatistika');
