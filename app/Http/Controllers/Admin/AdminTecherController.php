@@ -94,7 +94,7 @@ class AdminTecherController extends Controller{
             
             $TecherBonus = $TecherBonus*$bonuss;
             $Guruh[$key]['Davomat'] = $CountDavomat;
-            $Guruh[$key]['Hisoblandi'] = $TecherTulov + $TecherBonus;
+            $Guruh[$key]['Hisoblandi'] = number_format($TecherTulov + $TecherBonus, 0, '.', ' ');
             $Guruh[$key]['Tulov'] = number_format($tulov, 0, '.', ' ');
         }
         $Statistika['new'] = $newGuruh;
