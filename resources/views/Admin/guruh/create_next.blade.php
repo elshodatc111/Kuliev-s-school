@@ -191,7 +191,12 @@
                                 <option value="{{ $item['id'] }}">{{ $item['text'] }}</option>
                                 @endforeach
                             </select>
-                            <button class="btn btn-primary w-100 mt-2">Yangi guruhni saqlash</button>
+                            <script>
+                                function button(){
+                                    document.getElementById("buttons").style.display = "none"
+                                }
+                            </script>
+                            <button class="btn btn-primary w-100 mt-2" onclick="button()">Yangi guruhni saqlash</button>
                         </form>
                     </div>
                 </div>

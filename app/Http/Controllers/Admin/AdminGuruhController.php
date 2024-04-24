@@ -239,8 +239,8 @@ class AdminGuruhController extends Controller{
         $Kunlar['date10'] = $request->date10;
         $Kunlar['date11'] = $request->date11;
         $Kunlar['date12'] = $request->date12;
-        $Kunlar['date13'] = $request->date13;
         if($request->count_day==24){
+            $Kunlar['date13'] = $request->date13;
             $Kunlar['date14'] = $request->date14;
             $Kunlar['date15'] = $request->date15;
             $Kunlar['date16'] = $request->date16;
@@ -252,12 +252,12 @@ class AdminGuruhController extends Controller{
             $Kunlar['date22'] = $request->date22;
             $Kunlar['date23'] = $request->date23;
         }
-        foreach ($Kunlar as $key => $value) {
+        foreach ($Kunlar as $key12 => $valueTTTT) {
             GuruhTime::create([
                 'filial_id'=>$request->filial_id,
                 'room_id'=>$request->room_id,
                 'guruh_id'=>$GuruhID,
-                'dates'=>$value,
+                'dates'=>$valueTTTT,
                 'times'=>$request->guruh_vaqt,
             ]);
         }

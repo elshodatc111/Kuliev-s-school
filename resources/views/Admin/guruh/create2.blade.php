@@ -179,13 +179,18 @@
                             @foreach($GuruhView['kunlar'] as $key => $item)
                                 <input type="hidden" name="date{{$key}}" value="{{ $item }}">
                             @endforeach
+                            <script>
+                                function button(){
+                                    document.getElementById("buttons").style.display = "none"
+                                }
+                            </script>
                             <select name="guruh_vaqt" class="form-select" required>
                                 <option value="">Tanlang...</option>
                                 @foreach($GuruhView['dars_vaqtlari'] as $item)
                                     <option value="{{ $item['id'] }}">{{ $item['text'] }}</option>
                                 @endforeach
                             </select>
-                            <button class="btn btn-success w-100 mt-2">Guruhni Saqlash</button>
+                            <button class="btn btn-success w-100 mt-2" id="buttons" onclick="button()">Guruhni Saqlash</button>
                         </form>
                     </div>
                 </div>

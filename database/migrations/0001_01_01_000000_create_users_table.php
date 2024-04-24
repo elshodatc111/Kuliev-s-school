@@ -22,8 +22,8 @@ return new class extends Migration
             $table->string('type');
             $table->string('status');
             $table->string('about');
-            $table->string('smm');
-            $table->integer('balans');
+            $table->string('smm')->nullable();
+            $table->integer('balans')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
