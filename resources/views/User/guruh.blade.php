@@ -37,7 +37,10 @@
             </div>
             @empty
             <div class="col-lg-12 text-center">
-                <p>Sizda guruhlar mavjud emas.</p>
+                <div class="card">
+                    <div class="card-body"><p class="card-title">Sizda guruhlar mavjud emas.</p></div>
+                </div>
+                
             </div>
             @endforelse
         </div>

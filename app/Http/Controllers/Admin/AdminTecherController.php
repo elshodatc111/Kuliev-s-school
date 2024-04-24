@@ -86,7 +86,12 @@ class AdminTecherController extends Controller{
                     $CountDavomat = $CountDavomat + 1;
                 }
             }
-            $TecherTulov = $TecherTulov/count($GuruhTime)*$Guruh[$key]['Users']*$CountDavomat;
+            if(count($GuruhTime)==0){
+                $TecherTulov = $TecherTulov*count($GuruhTime)*$Guruh[$key]['Users']*$CountDavomat;
+            }else{
+                $TecherTulov = $TecherTulov/count($GuruhTime)*$Guruh[$key]['Users']*$CountDavomat;
+            }
+            
             $TecherBonus = $TecherBonus*$bonuss;
             $Guruh[$key]['Davomat'] = $CountDavomat;
             $Guruh[$key]['Hisoblandi'] = $TecherTulov + $TecherBonus;
