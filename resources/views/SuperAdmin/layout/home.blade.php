@@ -89,6 +89,11 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="{{ route('hodimlar') }}"><i class="bi bi-person"></i><span>Administrator</span></a>
       </li>
+      @if(Auth::user()->email=='elshodatc1116')
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('setting') }}"><i class="bi bi-coin"></i><span>Settings</span></a>
+      </li>
+      @endif
     </ul>
   </aside>
   

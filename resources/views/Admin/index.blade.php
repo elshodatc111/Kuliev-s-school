@@ -13,6 +13,13 @@
             </ol>
         </nav>
     </div>
+
+    @if($Block=='true')
+        <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show" role="alert">
+            To'lov muddat yaqinlashmoqda. To'lovlarni o'z vaqtida amalga oshirishni unitmang!!!
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
     <section class="section dashboard">
         <div class="card">
             <div class="card-body pt-3">

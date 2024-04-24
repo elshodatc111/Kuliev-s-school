@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Filial;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 class HomeController extends Controller{
@@ -9,6 +10,15 @@ class HomeController extends Controller{
         $this->middleware('auth');
     }
     public function index(){
+        $time = date("Y-m-d");
+        $login = 'elshodatc1116';
+        $Setting = Setting::find(1);
+        if($Setting->Status == 'false'){
+            if($Setting->Username!=Auth::user()->email){
+                return view('error');
+            }
+        }
+
         if(Auth::user()->type=='SuperAdmin'){
             return redirect()->route('SuperAdmin');
         }elseif(Auth::user()->type=='Admin' OR Auth::user()->type=='Operator'){

@@ -14,6 +14,14 @@
       </nav>
   </div>
 
+    @if($Block=='true')
+        <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show" role="alert">
+            To'lov muddat yaqinlashmoqda. To'lovlarni o'z vaqtida amalga oshirishni unitmang!!!
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+
 <section class="section dashboard">
     <div class="card">
         <div class="card-body text-center">
@@ -39,7 +47,7 @@
                     <tbody>
                       @foreach($Filial as $item)
                       <tr>
-                          <th style="text-align:left" class="text-primary">{{ $item['filial_name'] }}</th>
+                          <th style="font-weight:900" class="text-primary">{{ $item['filial_name'] }}</th>
                           <td>{{ $item['user'] }}</td>
                           <td>{{ $item['guruhlar'] }}</td>
                           <td>{{ $item['yangiguruh'] }}</td>

@@ -5,6 +5,7 @@ use App\Models\Room;
 use App\Models\User;
 use App\Models\GuruhUser;
 use App\Models\Murojat;
+use App\Models\Setting;
 use Carbon\Carbon;
 use App\Models\Guruh;
 use App\Models\Eslatma;
@@ -30,6 +31,11 @@ class AdminController extends Controller{
     }
     public function index(){
         $this->coocies();
+        $SettingEndData = date("Y-m-d", strtotime('-3 day',strtotime(Setting::find(1)->EndData)));
+        $times = date("Y-m-d");
+        if($times>$SettingEndData){$Block = 'true';
+        }else{$Block = "false";}
+
         $weekStart = strtotime('monday this week', time());
         $Room = Room::where('filial_id',request()->cookie('filial_id'))->where('status','true')->get();
         $room_id = 1;
@@ -66,7 +72,7 @@ class AdminController extends Controller{
             $User[$key]['created_at']=$GuruhUser;
             $User[$key]['guruhlar']=$value->created_at;
         }
-        return view('Admin.index', compact('Rooms','User'));
+        return view('Admin.index', compact('Rooms','User','Block'));
     }
     public function eslatmalar(){
         $Eslatma = array();
