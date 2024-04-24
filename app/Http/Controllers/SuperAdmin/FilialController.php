@@ -31,6 +31,7 @@ class FilialController extends Controller{
     public function __construct(){
         $this->middleware('auth');
     }
+
     public function filial(){
         $Filial = array();
         $Naqt = 0;

@@ -62,6 +62,100 @@
             </div>
         </div>
     </div>
+
+    <div class="card">
+            <div class="card-body pt-2">
+              <canvas id="stakedBarChart" style="width:100%;height:400px"></canvas>
+              <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                  new Chart(document.querySelector('#stakedBarChart'), {
+                    type: 'bar',
+                    data: {
+                      labels: [
+                        '{{ $SMM["oy"][0] }}',
+                        '{{ $SMM["oy"][1] }}',
+                        '{{ $SMM["oy"][2] }}',
+                        '{{ $SMM["oy"][3] }}',
+                        '{{ $SMM["oy"][4] }}',
+                        '{{ $SMM["oy"][5] }}'
+                      ],
+                      datasets: [{
+                          label: 'Telegram',
+                          data: [
+                            '{{ $SMM["svod"][0]["Telegram"] }}',
+                            '{{ $SMM["svod"][1]["Telegram"] }}',
+                            '{{ $SMM["svod"][2]["Telegram"] }}',
+                            '{{ $SMM["svod"][3]["Telegram"] }}',
+                            '{{ $SMM["svod"][4]["Telegram"] }}',
+                            '{{ $SMM["svod"][5]["Telegram"] }}'
+                          ],
+                          backgroundColor: '#6495ED',
+                        },{
+                          label: 'Instagram',
+                          data: [
+                            '{{ $SMM["svod"][0]["Instagram"] }}',
+                            '{{ $SMM["svod"][1]["Instagram"] }}',
+                            '{{ $SMM["svod"][2]["Instagram"] }}',
+                            '{{ $SMM["svod"][3]["Instagram"] }}',
+                            '{{ $SMM["svod"][4]["Instagram"] }}',
+                            '{{ $SMM["svod"][5]["Instagram"] }}'
+                          ],
+                          backgroundColor: '#8B008B',
+                        },{
+                          label: 'Facebook',
+                          data: [
+                            '{{ $SMM["svod"][0]["Facebook"] }}',
+                            '{{ $SMM["svod"][1]["Facebook"] }}',
+                            '{{ $SMM["svod"][2]["Facebook"] }}',
+                            '{{ $SMM["svod"][3]["Facebook"] }}',
+                            '{{ $SMM["svod"][4]["Facebook"] }}',
+                            '{{ $SMM["svod"][5]["Facebook"] }}'
+                        ],
+                          backgroundColor: '#B0E0E6',
+                        },{
+                          label: 'Bannerlar',
+                          data: [
+                            '{{ $SMM["svod"][0]["Bannerlar"] }}',
+                            '{{ $SMM["svod"][1]["Bannerlar"] }}',
+                            '{{ $SMM["svod"][2]["Bannerlar"] }}',
+                            '{{ $SMM["svod"][3]["Bannerlar"] }}',
+                            '{{ $SMM["svod"][4]["Bannerlar"] }}',
+                            '{{ $SMM["svod"][5]["Bannerlar"] }}'
+                        ],
+                          backgroundColor: '#FFD700',
+                        },{
+                          label: 'Tanishlar',
+                          data: [
+                            '{{ $SMM["svod"][0]["Tanishlar"] }}',
+                            '{{ $SMM["svod"][1]["Tanishlar"] }}',
+                            '{{ $SMM["svod"][2]["Tanishlar"] }}',
+                            '{{ $SMM["svod"][3]["Tanishlar"] }}',
+                            '{{ $SMM["svod"][4]["Tanishlar"] }}',
+                            '{{ $SMM["svod"][5]["Tanishlar"] }}'
+                        ],
+                          backgroundColor: '#00FF00',
+                        },{
+                          label: 'Boshqalar',
+                          data: [
+                            '{{ $SMM["svod"][0]["Boshqa"] }}',
+                            '{{ $SMM["svod"][1]["Boshqa"] }}',
+                            '{{ $SMM["svod"][2]["Boshqa"] }}',
+                            '{{ $SMM["svod"][3]["Boshqa"] }}',
+                            '{{ $SMM["svod"][4]["Boshqa"] }}',
+                            '{{ $SMM["svod"][5]["Boshqa"] }}'
+                        ],
+                          backgroundColor: '#2F4F4F',
+                        },
+                      ]
+                    },
+                    options: {
+                      plugins: {title: {display: true,text: 'Markazga tashriflar'},},
+                      responsive: true,
+                      scales: {x: {stacked: true,},y: {stacked: true}}
+                    }
+                  });
+                });
+              </script>
 </section>
 
 
