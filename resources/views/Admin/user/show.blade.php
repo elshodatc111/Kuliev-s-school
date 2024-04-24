@@ -144,13 +144,21 @@
                             @endforeach
                         </select>
                         <label for="about" class="mb-1 mt-2">To'lov haqida</label>
-                        <textarea type="text" name="about" class="form-control mb-3"></textarea>
-                        <div class="row">
+                        <textarea type="text" onkeyup="Buttonsd()" name="about" class="form-control mb-3"></textarea>
+                        <script>
+                            function Buttonsd(){
+                                document.getElementById("buttons").style.display = "block";
+                            }
+                            function Buttons(){
+                                document.getElementById("buttons").style.display = "none";
+                            }
+                        </script>
+                        <div class="row" >
                             <div class="col-6">
                                 <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
                             </div>
                             <div class="col-6">
-                                <button type="submit" class="btn btn-primary w-100">To'lov</button>
+                                <button type="submit" id="buttons" class="btn btn-primary w-100" onclick="Buttons()">To'lov</button>
                             </div>
                         </div>
                     </form>
@@ -170,13 +178,21 @@
                         @csrf
                         <input type="hidden" name="user_id" value="{{ $Users['id'] }}">
                         <label for="text">SMS matni</label>
-                        <textarea name="text" class="form-control mb-3" required></textarea>
+                        <textarea name="text" onkeyup="Buttons22()" class="form-control mb-3" required></textarea>
+                        <script>
+                            function Buttons22(){
+                                document.getElementById("buttons2").style.display = "block";
+                            }
+                            function Buttons2(){
+                                document.getElementById("buttons2").style.display = "none";
+                            }
+                        </script>
                         <div class="row">
                             <div class="col-6">
                                 <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
                             </div>
                             <div class="col-6">
-                                <button type="submit" class="btn btn-primary w-100">SMS yuborish</button>
+                                <button type="submit" id="buttons2" onclick="Buttons2()" class="btn btn-primary w-100">SMS yuborish</button>
                             </div>
                         </div>
                     </form>
@@ -232,13 +248,21 @@
                             @endforeach
                         </select>
                         <label for="commit_start" class="mb-1 mt-3">Guruhga qo'shish uchun izoh</label>
-                        <input type="text" name="commit_start" class="form-control mb-3" required>
+                        <input type="text"  onkeyup="Buttons223()" name="commit_start" class="form-control mb-3" required>
+                        <script>
+                            function Buttons223(){
+                                document.getElementById("buttons32").style.display = "block";
+                            }
+                            function Buttons23(){
+                                document.getElementById("buttons32").style.display = "none";
+                            }
+                        </script>
                         <div class="row">
                             <div class="col-6">
-                                <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
+                                <button type="button" id="button223" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
                             </div>
                             <div class="col-6">
-                                <button type="submit" class="btn btn-primary w-100">Saqlash</button>
+                                <button type="submit" id="buttons32" onclick="Buttons23()" class="btn btn-primary w-100">Saqlash</button>
                             </div>
                         </div>
                     </form>
@@ -364,13 +388,21 @@
                             </div>
                             <div class="col-12">
                                 <label for="about" class="mt-3">Qaytarish haqida</label>
-                                <textarea name="about" class="form-control mb-3 mt-1" required></textarea>
+                                <textarea name="about" onkeyup="Buttons44()" class="form-control mb-3 mt-1" required></textarea>
                             </div>
+                            <script>
+                                function Buttons44(){
+                                    document.getElementById("buttons44").style.display = "block";
+                                }
+                                function Buttons44d(){
+                                    document.getElementById("buttons44").style.display = "none";
+                                }
+                            </script>
                             <div class="col-6">
-                                <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
+                                <button type="button" id="button244" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
                             </div>
-                            <div class="col-6">
-                                <button type="submit" class="btn btn-primary w-100">Qaytarish</button>
+                            <div class="col-6" id="buttons44">
+                                <button type="submit" onclick="Buttons44d()" class="btn btn-primary w-100">Qaytarish</button>
                             </div>
                         </div>
                     </form>
@@ -399,13 +431,22 @@
                             @endforeach
                         </select>
                         <label for="about" class="mt-2">Chegirma haqida</label>
-                        <textarea name="about" required class="form-control mb-3"></textarea>
-                        <div class="row">
+                        <textarea name="about" onkeyup="Buttons44ss()" required class="form-control mb-3"></textarea>
+                        <script>
+                                function Buttons44ss(){
+                                    document.getElementById("buttons44ddd").style.display = "block";
+                                    document.getElementById("button244").style.display = "none";
+                                }
+                                function Buttons44dd(){
+                                    document.getElementById("buttons44ddd").style.display = "none";
+                                }
+                            </script>
+                        <div class="row" >
                             <div class="col-6">
-                                <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
+                                <button type="button" id="button244" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
                             </div>
-                            <div class="col-6">
-                                <button type="submit" class="btn btn-primary w-100">Saqlash</button>
+                            <div class="col-6" id="buttons44ddd">
+                                <button type="submit" onclick="Buttons44dd()" class="btn btn-primary w-100">Saqlash</button>
                             </div>
                         </div>
                     </form>

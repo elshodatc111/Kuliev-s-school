@@ -44,7 +44,9 @@
                             <td>{{ $item['Admiin'] }}</td>
                         </tr>
                     @empty
-                    
+                        <tr>
+                            <td colspan=7 class="text-center">Kunlik to'lovlar mavjud emas.</td>
+                        </tr>
                     @endforelse
                 </table>
             </div>
