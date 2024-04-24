@@ -22,10 +22,10 @@
         <div class="card">
             <div class="card-body text-center">
                 <h5 class="card-title mb-0 pb-0">Oylik to'lovlar</h5>
-                <canvas id="oyliktulovlar" style="max-height: 400px;"></canvas>
+                <canvas id="stakedBarChart"  style="width:100%;height:400px"></canvas>
                 <script>
                     document.addEventListener("DOMContentLoaded", () => {
-                        new Chart(document.querySelector('#oyliktulovlar'), {
+                        new Chart(document.querySelector('#stakedBarChart'), {
                             type: 'bar',
                             data: {
                             labels: [

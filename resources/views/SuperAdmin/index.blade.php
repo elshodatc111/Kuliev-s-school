@@ -64,9 +64,9 @@
     </div>
 
     <div class="card">
-            <div class="card-body pt-2">
-              <canvas id="stakedBarChart" style="width:100%;height:400px"></canvas>
-              <script>
+        <div class="card-body pt-2">
+            <canvas id="stakedBarChart" style="width:100%;height:400px"></canvas>
+            <script>
                 document.addEventListener("DOMContentLoaded", () => {
                   new Chart(document.querySelector('#stakedBarChart'), {
                     type: 'bar',
@@ -155,7 +155,10 @@
                     }
                   });
                 });
-              </script>
+            </script>
+        </div>
+    </div>
+
 </section>
 
 

@@ -132,7 +132,7 @@
                                         '{{ $KunlikStatistika["Tulovlar"]["Plastik"][5] }}',
                                         '{{ $KunlikStatistika["Tulovlar"]["Plastik"][6] }}'
                                     ],
-                                    backgroundColor: ['#006262']
+                                    backgroundColor: ['#00FF00']
                                 },{
                                     label: "Payme to'lov",
                                     data: [
@@ -169,7 +169,23 @@
                                 }
                             ]
                             },
-                            options: {scales: {y: {beginAtZero: true}}}
+                            options: {
+                      plugins: {
+                        title: {
+                          display: true,
+                          text: 'Chart.js Bar Chart - Stacked'
+                        },
+                      },
+                      responsive: true,
+                      scales: {
+                        x: {
+                          stacked: true,
+                        },
+                        y: {
+                          stacked: true
+                        }
+                      }
+                    }
                         });
                     });
                 </script>
@@ -229,6 +245,16 @@
                             <td>{{ $KunlikStatistika["Tulovlar"]["Qaytarilgan"][4] }}</td>
                             <td>{{ $KunlikStatistika["Tulovlar"]["Qaytarilgan"][5] }}</td>
                             <td>{{ $KunlikStatistika["Tulovlar"]["Qaytarilgan"][6] }}</td>
+                        </tr>
+                        
+                        <tr>
+                            <th style="text-align:left">Xisoblandi</th>
+                            <td>{{ $KunlikStatistika["Tulovlar"]["Naqt"][1]+$KunlikStatistika["Tulovlar"]["Plastik"][1]+$KunlikStatistika["Tulovlar"]["Payme"][1]-$KunlikStatistika["Tulovlar"]["Qaytarilgan"][1] }}</td>
+                            <td>{{ $KunlikStatistika["Tulovlar"]["Naqt"][2]+$KunlikStatistika["Tulovlar"]["Plastik"][2]+$KunlikStatistika["Tulovlar"]["Payme"][2]-$KunlikStatistika["Tulovlar"]["Qaytarilgan"][2] }}</td>
+                            <td>{{ $KunlikStatistika["Tulovlar"]["Naqt"][3]+$KunlikStatistika["Tulovlar"]["Plastik"][3]+$KunlikStatistika["Tulovlar"]["Payme"][3]-$KunlikStatistika["Tulovlar"]["Qaytarilgan"][3] }}</td>
+                            <td>{{ $KunlikStatistika["Tulovlar"]["Naqt"][4]+$KunlikStatistika["Tulovlar"]["Plastik"][4]+$KunlikStatistika["Tulovlar"]["Payme"][4]-$KunlikStatistika["Tulovlar"]["Qaytarilgan"][4] }}</td>
+                            <td>{{ $KunlikStatistika["Tulovlar"]["Naqt"][5]+$KunlikStatistika["Tulovlar"]["Plastik"][5]+$KunlikStatistika["Tulovlar"]["Payme"][5]-$KunlikStatistika["Tulovlar"]["Qaytarilgan"][5] }}</td>
+                            <td>{{ $KunlikStatistika["Tulovlar"]["Naqt"][6]+$KunlikStatistika["Tulovlar"]["Plastik"][6]+$KunlikStatistika["Tulovlar"]["Payme"][6]-$KunlikStatistika["Tulovlar"]["Qaytarilgan"][6] }}</td>
                         </tr>
                     </table>
                 </div>
