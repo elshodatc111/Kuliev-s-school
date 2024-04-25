@@ -5,6 +5,7 @@ namespace App\Listeners;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use App\Events\Payme;
+use App\Events\SmsCounter;
 use App\Models\User;
 use App\Models\SmsCentar;
 use App\Models\Guruh;
@@ -129,6 +130,10 @@ class PaymeChegirma{
                 callback_url:$callback_url
             );
             $result = $eskiz->requestSmsSend($singleSmsType);
+            $SmsCounter = SmsCounter::find(1);
+            $SmsCounter->maxsms = $SmsCounter->maxsms - 1;
+            $SmsCounter->counte = $SmsCounter->counte + 1;
+            $SmsCounter->save();
         }
         
     }

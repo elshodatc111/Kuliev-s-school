@@ -10,6 +10,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Log;
 use mrmuminov\eskizuz\Eskiz;
 use mrmuminov\eskizuz\types\sms\SmsSingleSmsType;
+use App\Models\SmsCounter;
 
 class CreateTashrifSendMessege{
     public function __construct(){}
@@ -21,7 +22,6 @@ class CreateTashrifSendMessege{
         $eskiz_email = env('ESKIZ_UZ_EMAIL');
         $eskiz_password = env('ESKIZ_UZ_Password');
         $SmsCentar = SmsCentar::where('filial_id',$User->filial_id)->first()->tashrif;
-        Log::info("Yangi tashrifga SMS Yuborish Tekshirilmoqda");
         if($SmsCentar=='on'){
             $eskiz = new Eskiz($eskiz_email,$eskiz_password);
             $eskiz->requestAuthLogin();
@@ -38,6 +38,10 @@ class CreateTashrifSendMessege{
                 callback_url:$callback_url
             );
             $result = $eskiz->requestSmsSend($singleSmsType);
+            $SmsCounter = SmsCounter::find(1);
+            $SmsCounter->maxsms = $SmsCounter->maxsms - 1;
+            $SmsCounter->counte = $SmsCounter->counte + 1;
+            $SmsCounter->save();
         }
     }
 }

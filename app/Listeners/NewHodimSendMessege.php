@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 use App\Models\User;
+use App\Models\SmsCounter;
 use App\Models\Filial;
 use App\Events\CreateHodim;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -34,5 +35,9 @@ class NewHodimSendMessege{
             callback_url:$callback_url
         );
         $result = $eskiz->requestSmsSend($singleSmsType);
+        $SmsCounter = SmsCounter::find(1);
+        $SmsCounter->maxsms = $SmsCounter->maxsms - 1;
+        $SmsCounter->counte = $SmsCounter->counte + 1;
+        $SmsCounter->save();
     }
 }

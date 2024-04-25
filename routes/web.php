@@ -32,6 +32,7 @@ Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/setting', [SettingController::class, 'index'])->name('setting');
 Route::post('/setting', [SettingController::class, 'update'])->name('settingupdate');
+Route::post('/sms/plus', [SettingController::class, 'smsplus'])->name('settingsmsplus');
 
 ### Start SuperAdmin ###
 Route::get('/Superadmin/index', [SuperAdminController::class, 'index'])->name('SuperAdmin');

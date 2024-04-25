@@ -23,39 +23,66 @@
 
 
 <section class="section dashboard">
+    <div class="row text-center">
+      <div class="col-lg-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title pb-1 mb-1"><i class="bi bi-envelope-arrow-up"></i> Yuborilgan SMS</h5>
+            <p class="mb-0 pb-0" style="font-size:25px;">{{ $SmsCounter['counte'] }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title pb-1 mb-1"><i class="bi bi-envelope-check"></i> Mavjud SMSlar</h5>
+            <p class="mb-0 pb-0" style="font-size:25px;">{{ $SmsCounter['maxsms'] }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title pb-1 mb-1"><i class="bi bi-person"></i> Aktiv talabalar</h5>
+            <p class="mb-0 pb-0" style="font-size:25px;">15</p>
+          </div>
+        </div>
+      </div>
+    </div>
+      
     <div class="card">
-        <div class="card-body text-center">
-            <h5 class="card-title">Filiallar</span></h5>
+        <div class="card-body text-center pt-4">
+            
             <div class="table-responsive">
                 <table class="table table-bordered" style="font-size:14px;">
                     <thead class="">
                       <tr>
-                          <th rowspan=2 class="align-middle bg-primary text-white"><i class="bi bi-house-door-fill"></i> Filial</th>
-                          <th rowspan=2 class="align-middle bg-primary text-white"><i class="bi bi-people"></i> Tashriflar</th>
-                          <th colspan=4 class="bg-primary text-white"><i class="bi bi-menu-button-wide"></i> Guruhlar</th>
-                          <th colspan=2 class="bg-primary text-white"><i class="bi bi-microsoft-teams"></i> Hodimlar</th>
+                        <th rowspan=2 class="align-middle"><i class="bi bi-house-door-fill"></i> Filial</th>
+                        <th rowspan=2 class="align-middle"><i class="bi bi-people"></i> Tashriflar</th>
+                        <th colspan=4 class=""><i class="bi bi-menu-button-wide"></i> Guruhlar</th>
+                        <th colspan=2 class=""><i class="bi bi-microsoft-teams"></i> Hodimlar</th>
                       </tr>
                       <tr>
-                          <th style="font-size:10px;" class="bg-warning text-white">Jami</th>
-                          <th style="font-size:10px;" class="bg-warning text-white">Yangi</th>
-                          <th style="font-size:10px;" class="bg-warning text-white">Aktiv</th>
-                          <th style="font-size:10px;" class="bg-warning text-white">Yakunlangan</th>
-                          <th style="font-size:10px;" class="bg-info text-white">O'qituvchilar</th>
-                          <th style="font-size:10px;" class="bg-info text-white">Menegerlar</th>
+                        <th style="font-size:10px;">Jami</th>
+                        <th style="font-size:10px;">Yangi</th>
+                        <th style="font-size:10px;">Aktiv</th>
+                        <th style="font-size:10px;">Yakunlangan</th>
+                        <th style="font-size:10px;">O'qituvchilar</th>
+                        <th style="font-size:10px;">Menegerlar</th>
                       </tr>
                     </thead>
                     <tbody>
                       @foreach($Filial as $item)
-                      <tr>
-                          <th style="font-weight:900" class="text-primary">{{ $item['filial_name'] }}</th>
-                          <td>{{ $item['user'] }}</td>
-                          <td>{{ $item['guruhlar'] }}</td>
-                          <td>{{ $item['yangiguruh'] }}</td>
-                          <td>{{ $item['aktivguruh'] }}</td>
-                          <td>{{ $item['endguruh'] }}</td>
-                          <td>{{ $item['techer'] }}</td>
-                          <td>{{ $item['meneger'] }}</td>
-                      </tr>
+                        <tr>
+                            <th style="font-weight:900" class="text-primary">{{ $item['filial_name'] }}</th>
+                            <td>{{ $item['user'] }}</td>
+                            <td>{{ $item['guruhlar'] }}</td>
+                            <td>{{ $item['yangiguruh'] }}</td>
+                            <td>{{ $item['aktivguruh'] }}</td>
+                            <td>{{ $item['endguruh'] }}</td>
+                            <td>{{ $item['techer'] }}</td>
+                            <td>{{ $item['meneger'] }}</td>
+                        </tr>
                       @endforeach
                     </tbody>
                 </table>

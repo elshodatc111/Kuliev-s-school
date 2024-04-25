@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Listeners;
+use App\Models\SmsCounter;
 use App\Events\UserResetPassword;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -30,5 +31,9 @@ class UserPassUpdateSendMessege{
             callback_url:$callback_url
         );
         $result = $eskiz->requestSmsSend($singleSmsType);
+        $SmsCounter = SmsCounter::find(1);
+        $SmsCounter->maxsms = $SmsCounter->maxsms - 1;
+        $SmsCounter->counte = $SmsCounter->counte + 1;
+        $SmsCounter->save();
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Listeners;
 use App\Events\TugilganKun;
 use App\Models\SmsCentar;
+use App\Models\SmsCounter;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use mrmuminov\eskizuz\Eskiz;
@@ -33,6 +34,10 @@ class SendMessegeTkun{
                 callback_url:$callback_url
             );
             $result = $eskiz->requestSmsSend($singleSmsType);
+            $SmsCounter = SmsCounter::find(1);
+            $SmsCounter->maxsms = $SmsCounter->maxsms - 1;
+            $SmsCounter->counte = $SmsCounter->counte + 1;
+            $SmsCounter->save();
         }
     }
 }

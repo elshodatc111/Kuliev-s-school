@@ -4,6 +4,7 @@ namespace App\Http\Controllers\SuperAdmin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\SmsCounter;
 use App\Models\Guruh;
 use App\Models\Filial;
 use App\Models\Setting;
@@ -78,6 +79,7 @@ class SuperAdminController extends Controller{
         return $sss;
     }
     public function index(){
+        $SmsCounter = SmsCounter::find(1);
         $SettingEndData = date("Y-m-d", strtotime('-3 day',strtotime(Setting::find(1)->EndData)));
         $times = date("Y-m-d");
         if($times>$SettingEndData){
@@ -101,6 +103,6 @@ class SuperAdminController extends Controller{
 
         $SMM = $this->SMMIndex();
         
-        return view('SuperAdmin.index',compact('Filial','Block','SMM'));
+        return view('SuperAdmin.index',compact('Filial','Block','SMM','SmsCounter'));
     }    
 }

@@ -3,6 +3,7 @@ namespace App\Listeners;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use mrmuminov\eskizuz\Eskiz;
+use App\Models\SmsCounter;
 use mrmuminov\eskizuz\types\sms\SmsSingleSmsType;
 use App\Events\AdminCreateTecher;
 class SendMessegeCreatTecher{
@@ -26,5 +27,9 @@ class SendMessegeCreatTecher{
             callback_url:$callback_url
         );
         $result = $eskiz->requestSmsSend($singleSmsType);
+        $SmsCounter = SmsCounter::find(1);
+        $SmsCounter->maxsms = $SmsCounter->maxsms - 1;
+        $SmsCounter->counte = $SmsCounter->counte + 1;
+        $SmsCounter->save();
     }
 }

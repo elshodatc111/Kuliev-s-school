@@ -8,6 +8,7 @@ use App\Models\Tulov;
 use App\Models\Filial;
 use App\Models\Guruh;
 use App\Models\SmsCentar;
+use App\Models\SmsCounter;
 use App\Models\FilialKassa;
 use App\Models\UserHistory;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -147,6 +148,10 @@ class UserTulov{
                 callback_url:$callback_url
             );
             $result = $eskiz->requestSmsSend($singleSmsType);
+            $SmsCounter = SmsCounter::find(1);
+            $SmsCounter->maxsms = $SmsCounter->maxsms - 1;
+            $SmsCounter->counte = $SmsCounter->counte + 1;
+            $SmsCounter->save();
         }
         if(Auth::user()->type!='SuperAdmin'){
             $AdminKassa = AdminKassa::where('user_id',Auth::user()->id)->first();

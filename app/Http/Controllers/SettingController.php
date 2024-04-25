@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Setting;
+use App\Models\SmsCounter;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -11,7 +12,8 @@ class SettingController extends Controller{
     }
     public function index(){
         $Setting = Setting::find(1);
-        return view('setting', compact('Setting'));
+        $SmsCounter = SmsCounter::find(1);
+        return view('setting', compact('Setting','SmsCounter'));
     }
     public function update(Request $request){
         $validated = $request->validate([
@@ -27,6 +29,16 @@ class SettingController extends Controller{
         $Setting = Setting::find(1);
         $Setting->update($validated);
         return redirect()->back()->with('success', 'Markaz sozlamalari taxrirlandi.'); 
+        dd($request);
+    }
+    public function smsplus(Request $request){
+        $validated = $request->validate([
+            'sms' => 'required'
+        ]);
+        $SmsCounter = SmsCounter::find(1);
+        $SmsCounter->maxsms = $SmsCounter->maxsms+$request->sms;
+        $SmsCounter->save();
+        return redirect()->back()->with('success', 'SMS qo\'shildi.'); 
         dd($request);
     }
 }

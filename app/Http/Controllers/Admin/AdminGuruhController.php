@@ -9,6 +9,7 @@ use App\Models\Davomat;
 use App\Models\Guruh;
 use App\Models\UserHistory;
 use App\Models\GuruhUser;
+use App\Models\SmsCounter;
 use App\Models\Cours;
 use App\Models\GuruhTime;
 use App\Models\IshHaqi;
@@ -471,6 +472,11 @@ class AdminGuruhController extends Controller{
             );
             $result = $eskiz->requestSmsSend($singleSmsType);
             $k++;
+
+            $SmsCounter = SmsCounter::find(1);
+            $SmsCounter->maxsms = $SmsCounter->maxsms - 1;
+            $SmsCounter->counte = $SmsCounter->counte + 1;
+            $SmsCounter->save();
         }
         return redirect()->back()->with('success', $k.' ta talabaga sms xabar yuborildi.');
     }

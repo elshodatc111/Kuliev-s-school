@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Listeners;
-
+use App\Models\SmsCounter;
 use App\Events\debitSendMessege;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -35,6 +35,10 @@ class DeberSendMessege{
             );
             $result = $eskiz->requestSmsSend($singleSmsType);
             $k++;
+            $SmsCounter = SmsCounter::find(1);
+            $SmsCounter->maxsms = $SmsCounter->maxsms - 1;
+            $SmsCounter->counte = $SmsCounter->counte + 1;
+            $SmsCounter->save();
         }
     }
 }

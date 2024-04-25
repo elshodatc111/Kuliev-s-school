@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Guruh;
 use App\Models\Eslatma;
 use App\Models\TulovDelete;
+use App\Models\SmsCounter;
 use App\Models\AdminKassa;
 use App\Models\UserHistory;
 use App\Models\GuruhUser;
@@ -191,6 +192,12 @@ class AdminStudentController extends Controller{
             callback_url:$callback_url
         );
         $result = $eskiz->requestSmsSend($singleSmsType);
+
+
+        $SmsCounter = SmsCounter::find(1);
+        $SmsCounter->maxsms = $SmsCounter->maxsms - 1;
+        $SmsCounter->counte = $SmsCounter->counte + 1;
+        $SmsCounter->save();
         return redirect()->back()->with('success', 'SMS xabar yuborildi.'); 
     }
     public function Guruhs($id){
