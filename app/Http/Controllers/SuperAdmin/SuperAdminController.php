@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\SmsCounter;
 use App\Models\Guruh;
+use App\Models\GuruhUser;
 use App\Models\Filial;
 use App\Models\Setting;
 use Illuminate\Support\Facades\Auth;
@@ -103,6 +104,31 @@ class SuperAdminController extends Controller{
 
         $SMM = $this->SMMIndex();
         
-        return view('SuperAdmin.index',compact('Filial','Block','SMM','SmsCounter'));
+
+        $StartDates = date("Y-m")."-01 00:00:00";
+        $EndDates = date("Y-m")."31 23:59:59";
+        $Guruhsss = Guruh::where('guruh_start','<=',$EndDates)->where('guruh_end','>=',$StartDates)->get();
+        $ActivUser = array();
+        foreach ($Guruhsss as $key => $value) {
+            $GuruhUsersss = GuruhUser::where('guruh_id',$value->id)->get();
+            foreach ($GuruhUsersss as $key11 => $item) {
+                $userss_id = $item->user_id;
+                $km = 0;
+                foreach ($ActivUser as $keyaaaas => $valueaaaas) {
+                    if($valueaaaas==$userss_id){
+                        $km++;
+                    }
+                }
+                if($km==0){
+                    array_push($ActivUser, $userss_id);
+                }   
+            }
+        }
+        $ActivStudent = count($ActivUser);
+
+
+
+
+        return view('SuperAdmin.index',compact('Filial','Block','SMM','SmsCounter','ActivStudent'));
     }    
 }

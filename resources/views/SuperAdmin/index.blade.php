@@ -44,7 +44,7 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title pb-1 mb-1"><i class="bi bi-person"></i> Aktiv talabalar</h5>
-            <p class="mb-0 pb-0" style="font-size:25px;">15</p>
+            <p class="mb-0 pb-0" style="font-size:25px;">{{ $ActivStudent }}</p>
           </div>
         </div>
       </div>
