@@ -7,8 +7,8 @@
   <title>@yield('title')</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
-  <link href="{{ env('HTTP_URL')}}assets/img/favicon.png" rel="icon">
-  <link href="{{ env('HTTP_URL')}}assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="{{ env('HTTP_URL')}}assets/img/logo.png" rel="icon">
+  <link href="{{ env('HTTP_URL')}}assets/img/logo.png" rel="apple-touch-icon">
   <link href="https://fonts.gstatic.com" rel="preconnect">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
   <link href="{{ env('HTTP_URL')}}assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -32,16 +32,6 @@
         </div>
         <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
-                @if(Auth::user()->type != 'Operator')
-                <!--
-                <li class="nav-item">
-                    <a class="nav-link nav-icon" href="{{ route('AdminElonlar') }}" title="Elonlar">
-                        <i class="bi bi-megaphone-fill"></i>
-                        <span class="badge bg-primary badge-number">3</span>
-                    </a>
-                </li>
-                -->
-                @endif
                 <li class="nav-item">
                     <a class="nav-link nav-icon" href="{{ route('AdminTKun') }}" title="Tug'ilgan kunlar">
                         <i class="bi bi-cake2-fill"></i>
@@ -69,7 +59,7 @@
                         <li class="dropdown-header">
                             <h6>{{ Auth::user()->name }}</h6>
                             @if(Auth::user()->type=='SuperAdmin')
-                                <a href="{{ route('filial') }}"><span>{{ request()->cookie('filial_name') }}</span></a>
+                                <a href="{{ route('filial') }}" class="btn btn-success w-100 py-0 mt-3"><span>{{ request()->cookie('filial_name') }}</span></a>
                             @else
                                 <span>{{ request()->cookie('filial_name') }}</span>
                             @endif
@@ -134,7 +124,7 @@
   
     <footer id="footer" class="footer">
         <div class="copyright">
-        &copy; <strong><span>CodeStart</span></strong> Development Center
+            <img src="{{ env('HTTP_URL')}}assets/img/logo.png" style="width:18px;"> <strong> <span> CodeStart</span></strong> Development Center
         </div>
     </footer>
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>

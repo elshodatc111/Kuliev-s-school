@@ -23,7 +23,7 @@
     <div class="card-body text-center">
       <div class="row">
         <div class="col-9"><h5 class="card-title">Filiallar</span></h5></div>
-        <div class="col-3"><button class="btn btn-primary w-100 mt-3" data-bs-toggle="modal" data-bs-target="#yangi_filial">Yangi Filial</button></div>
+        <div class="col-3"><button class="btn btn-primary w-100 mt-3" data-bs-toggle="modal" data-bs-target="#yangi_filial"> <i class="bi bi-patch-plus"></i> Yangi Filial</button></div>
 
         <div class="modal fade" id="yangi_filial" tabindex="-1">
           <div class="modal-dialog">
@@ -68,7 +68,7 @@
             <tr>
               <td>{{ $loop->index+1 }}</td>
               <td style="text-align:left;">
-                <b><a href="{{ route('filailCrm',$item['id']) }}">{{ $item['filial_name'] }}</a></b>
+                <b><a href="{{ route('filailCrm',$item['id']) }}" class="btn btn-success text-white w-100 py-0"><i class="bi bi-door-open"></i> {{ $item['filial_name'] }}</a></b>
               </td>
               <td>{{ $item['naqt'] }}</td>
               <td>{{ $item['plastik'] }}</td>
@@ -96,8 +96,10 @@
       </div>
       <div class="row">
         <div class="col-lg-2"></div>
-        <div class="col-lg-4"><button class="btn btn-primary w-100 mt-2 mt-lg-0" data-bs-toggle="modal" data-bs-target="#filial_qaytar">Kassaga qaytarish</button></div>
-        <div class="col-lg-4"><button class="btn btn-primary w-100 mt-2 mt-lg-0" data-bs-toggle="modal" data-bs-target="#umumitxarajat">Xarajatlar uchun chiqim</button></div>
+        <div class="col-lg-4">
+          <button class="btn btn-primary w-100 mt-2 mt-lg-0" data-bs-toggle="modal" data-bs-target="#filial_qaytar"><i class="bi bi-reply-all"></i> Kassaga qaytarish</button></div>
+        <div class="col-lg-4">
+          <button class="btn btn-primary w-100 mt-2 mt-lg-0" data-bs-toggle="modal" data-bs-target="#umumitxarajat"><i class="bi bi-cart2"></i> Xarajatlar uchun chiqim</button></div>
       </div>
     </div>
   </div>
@@ -187,17 +189,17 @@
 
   <div class="card info-card sales-card">
     <div class="card-body text-center">
-      <h5 class="card-title mb-0 pb-0">Xarajatlar tarixi (oxirgi 30 kunlik)</span></h5>
+      <h5 class="card-title mb-0 pb-2"><i class="bi bi-cart2"></i> Xarajatlar tarixi (oxirgi 30 kunlik)</span></h5>
       <ul class="nav nav-tabs d-flex" id="myTabjustified" role="tablist">
         <li class="nav-item flex-fill" role="presentation">
           <button class="nav-link w-100 active" id="home-tab" data-bs-toggle="tab" 
           data-bs-target="#home-justified" type="button" role="tab" aria-controls="home" 
-          aria-selected="true">Xarajatlar</button>
+          aria-selected="true"><i class="bi bi-cart2"></i> Xarajatlar</button>
         </li>
         <li class="nav-item flex-fill" role="presentation">
           <button class="nav-link w-100" id="profile-tab" data-bs-toggle="tab" 
           data-bs-target="#profile-justified" type="button" role="tab" aria-controls="profile" 
-          aria-selected="false">Filial balansiga qaytarildi</button>
+          aria-selected="false"><i class="bi bi-reply-all"></i> Filial balansiga qaytarildi</button>
         </li>
       </ul>
       <div class="tab-content pt-2" id="myTabjustifiedContent">

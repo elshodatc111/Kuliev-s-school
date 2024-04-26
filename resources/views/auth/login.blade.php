@@ -44,6 +44,9 @@
                 </form>
             </div>
         </div>
-        <div class="credits">MyCrm Center </div>
+        <div class="credits">
+            <img src="{{ env('HTTP_URL')}}assets/img/logo.png" style="width:18px;"> 
+            <strong> <span> CodeStart</span></strong> Development Center
+        </div>
     </div>
 @endsection

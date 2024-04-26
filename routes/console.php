@@ -12,6 +12,6 @@ Artisan::command('inspire', function () {
 
 Schedule::command('demo:tkun')->dailyAt('18:27');
 
-### php artisan schedule:work   - > Ishga tushirish kerak
+
 
  
