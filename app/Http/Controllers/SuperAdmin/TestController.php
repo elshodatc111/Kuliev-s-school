@@ -1,0 +1,26 @@
+<?php
+
+namespace App\Http\Controllers\SuperAdmin;
+use App\Models\Cours;
+use App\Models\Filial;
+use App\Models\Test;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
+class TestController extends Controller{
+    public function index(){
+        $Cours = Cours::get();
+        $Cour = array();
+        foreach ($Cours as $key => $value) {
+            $Cour[$key]['id'] = $value->id;
+            $Cour[$key]['filial'] = Filial::find($value->filial_id)->filial_name;
+            $Cour[$key]['cours'] = $value->cours_name;
+            $Cour[$key]['testcount'] = count(Test::where('cours_id',$value->id)->get());
+        }
+        return view('SuperAdmin.test.index',compact('Cour'));
+    }
+
+    public function show($id){
+        return view('SuperAdmin.test.show');
+    }
+}

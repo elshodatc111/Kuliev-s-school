@@ -9,6 +9,7 @@ use App\Http\Controllers\SuperAdmin\FilialController;
 use App\Http\Controllers\SuperAdmin\SuperMoliyaController;
 use App\Http\Controllers\SuperAdmin\SuperReportController;
 use App\Http\Controllers\SuperAdmin\SuperStatistikaController;
+use App\Http\Controllers\SuperAdmin\TestController;
 use App\Http\Controllers\SuperAdmin\SuperElonController;
 use App\Http\Controllers\SuperAdmin\SuperAdminTecherController;
 use App\Http\Controllers\Admin\AdminController;
@@ -38,6 +39,9 @@ Route::post('/sms/plus', [SettingController::class, 'smsplus'])->name('settingsm
 Route::get('/Superadmin/index', [SuperAdminController::class, 'index'])->name('SuperAdmin');
 Route::get('/Superadmin/hisobot', [SuperAdminController::class, 'hisobot'])->name('hisobot');
 Route::get('/Superadmin/statistika', [SuperAdminController::class, 'statistika'])->name('statistika');
+
+Route::get('/Superadmin/Testing', [TestController::class, 'index'])->name('superAdminTesting');
+Route::get('/Superadmin/Testing/show/{id}', [TestController::class, 'show'])->name('superAdminTestingShow');
 
     ###Filiallar###
 Route::get('/Superadmin/filial', [FilialController::class, 'filial'])->name('filial');
