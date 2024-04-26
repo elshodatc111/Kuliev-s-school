@@ -38,7 +38,7 @@
                         </thead>
                         <tbody>
                             @forelse($Test as $item)
-                            <tr>
+                            <tr> 
                                 <td>{{ $loop->index+1 }}</td>
                                 <td>{{ $item['Savol'] }}</td>
                                 <td>{{ $item['TJavob'] }}</td>

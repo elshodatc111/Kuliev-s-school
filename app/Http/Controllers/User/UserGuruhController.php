@@ -5,11 +5,11 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\TestNatija;
 use App\Models\Room;
 use App\Models\Guruh;
 use App\Models\Test;
 use App\Models\GuruhUser;
-use App\Models\TestNatija;
 use App\Models\GuruhTime;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
@@ -90,23 +90,54 @@ class UserGuruhController extends Controller{
             $endData = $value->dates;
         }
         $TestNatija = count(TestNatija::where('guruh_id',$id)->where('user_id',Auth::user()->id)->get());
+        $Natija = "";
         if($endData<=date("Y-m-d")){
             if($TestNatija==0){
                 $Tests = 'true';
             }else{
                 $Tests = "Natija";
+                $Natija = TestNatija::where('guruh_id',$id)->where('user_id',Auth::user()->id)->first();
             }
         }else{
             $Tests = $endData;
         }
-        return view('User.guruh_show',compact('id','Guruhs','GuruhTime','CountDates','Tests'));
+        #dd($Natija);
+        return view('User.guruh_show',compact('id','Guruhs','GuruhTime','CountDates','Natija','Tests'));
     }
     public function test($id){
         $cours_id = Guruh::find($id)->cours_id;
         $guruh_id = $id;
         $Testlar = Test::where('cours_id',$cours_id)->inRandomOrder()->limit(15)->get();
         $TestCount = count($Testlar);
-        return view('User.test_show',compact('Testlar','TestCount'));
+        return view('User.test_show',compact('guruh_id','Testlar','TestCount'));
+    }
+
+    public function check(Request $request){
+        $savol_count = $request->TestCount;
+        $tugri_count = 0;
+        $notugri_count = 0;
+        for ($i=0; $i < $savol_count; $i++) { 
+            $str = strval('test_id'.$i);
+            if($request->$str=='true'){
+                $tugri_count = $tugri_count + 1;
+            }else{
+                $notugri_count = $notugri_count + 1;
+            }
+        }
+        $ball = $tugri_count*100/$savol_count;
+        $guruh_id = $request->guruh_id;
+        $user_id = Auth::user()->id;
+        $filial_id = request()->cookie('filial_id');
+        TestNatija::create([
+            'filial_id'=>$filial_id,
+            'guruh_id'=>$guruh_id,
+            'user_id'=>$user_id,
+            'savol_count'=>$savol_count,
+            'tugri_count'=>$tugri_count,
+            'notugri_count'=>$notugri_count,
+            'ball'=>$ball
+        ]);
+        return redirect()->route('GuruhShow',$guruh_id)->with('success', 'Guruh uchun test topshirildi.'); 
     }
     
 }

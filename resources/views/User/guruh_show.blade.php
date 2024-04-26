@@ -114,7 +114,11 @@
                     </div>
                 </div>
             </div>
-            
+            @if (Session::has('success'))
+                <div class="alert alert-success">{{Session::get('success') }}</div>
+            @elseif (Session::has('error'))
+                <div class="alert alert-danger">{{Session::get('error') }}</div>
+            @endif
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body text-center">
@@ -122,7 +126,22 @@
                         @if($Tests=='true')
                             <a href="{{ route('GuruhShowTest',$id) }}" class="btn btn-success">Testni boshlash</a>
                         @elseif($Tests=='Natija')
-                            Test Natjiasi chiqairilsin
+                            <table class="table table-bordered text-center">
+                                <tr>
+                                    <th>Testlar Soni</th>
+                                    <th>To'gri javob</th>
+                                    <th>Noto'g'ri javob</th>
+                                    <th>Ball</th>
+                                    <th>Test vaqti</th>
+                                </tr>
+                                <tr>
+                                    <td>{{ $Natija['savol_count'] }}</td>
+                                    <td>{{ $Natija['tugri_count'] }}</td>
+                                    <td>{{ $Natija['notugri_count'] }}</td>
+                                    <td>{{ $Natija['ball'] }}</td>
+                                    <td>{{ $Natija['created_at'] }}</td>
+                                </tr>
+                            </table>
                         @else
                             <p class="text-danger">{{ $Tests }} testni kundan boshlab yechish mumkun.</p>
                         @endif

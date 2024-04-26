@@ -13,23 +13,90 @@
         </nav>
     </div> 
     <section class="section dashboard"> 
-        <form action="" method="post">
+        <form action="{{ route('GuruhShowTestCheck') }}" method="post">
             @csrf 
-            <input type="hidden" name="guruh_id" value="">
+            <input type="hidden" name="guruh_id" value="{{ $guruh_id }}">
+            <input type="hidden" name="TestCount" value="{{ $TestCount }}">
             <div class="row">
-                @forelse($Testlar as $item)
+                @forelse($Testlar as $key => $item)
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">{{ $item['Savol'] }}</h5>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" required>
-                                <label class="form-check-label" for="gridRadios1">First radio</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2" required>
-                                <label class="form-check-label" for="gridRadios2">First radio</label>
-                            </div>
+                            @switch($key%4)
+                                @case(0)
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="test_id{{ $key }}" id="D11{{ $key }}" value="false" required>
+                                        <label class="form-check-label" for="D11{{ $key }}">{{ $item['NJavob1'] }}</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="test_id{{ $key }}" id="C11{{ $key }}" value="false" required>
+                                        <label class="form-check-label" for="C11{{ $key }}">{{ $item['NJavob2'] }}</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="test_id{{ $key }}" id="B22{{ $key }}" value="false" required>
+                                        <label class="form-check-label" for="B22{{ $key }}">{{ $item['NJavob3'] }}</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="test_id{{ $key }}" id="A11{{ $key }}" value="true" required>
+                                        <label class="form-check-label" for="A11{{ $key }}">{{ $item['TJavob'] }}</label>
+                                    </div>
+                                    @break
+                                @case(1)
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="test_id{{ $key }}" id="D11{{ $key }}" value="false" required>
+                                        <label class="form-check-label" for="D11{{ $key }}">{{ $item['NJavob1'] }}</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="test_id{{ $key }}" id="A11{{ $key }}" value="true" required>
+                                        <label class="form-check-label" for="A11{{ $key }}">{{ $item['TJavob'] }}</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="test_id{{ $key }}" id="C11{{ $key }}" value="false" required>
+                                        <label class="form-check-label" for="C11{{ $key }}">{{ $item['NJavob2'] }}</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="test_id{{ $key }}" id="B22{{ $key }}" value="false" required>
+                                        <label class="form-check-label" for="B22{{ $key }}">{{ $item['NJavob3'] }}</label>
+                                    </div>
+                                    @break
+                                @case(2)
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="test_id{{ $key }}" id="D11{{ $key }}" value="false" required>
+                                        <label class="form-check-label" for="D11{{ $key }}">{{ $item['NJavob1'] }}</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="test_id{{ $key }}" id="C11{{ $key }}" value="false" required>
+                                        <label class="form-check-label" for="C11{{ $key }}">{{ $item['NJavob2'] }}</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="test_id{{ $key }}" id="B22{{ $key }}" value="false" required>
+                                        <label class="form-check-label" for="B22{{ $key }}">{{ $item['NJavob3'] }}</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="test_id{{ $key }}" id="A11{{ $key }}" value="true" required>
+                                        <label class="form-check-label" for="A11{{ $key }}">{{ $item['TJavob'] }}</label>
+                                    </div>
+                                    @break
+                                @case(3)
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="test_id{{ $key }}" id="A11{{ $key }}" value="true" required>
+                                        <label class="form-check-label" for="A11{{ $key }}">{{ $item['TJavob'] }}</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="test_id{{ $key }}" id="D11{{ $key }}" value="false" required>
+                                        <label class="form-check-label" for="D11{{ $key }}">{{ $item['NJavob1'] }}</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="test_id{{ $key }}" id="C11{{ $key }}" value="false" required>
+                                        <label class="form-check-label" for="C11{{ $key }}">{{ $item['NJavob2'] }}</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="test_id{{ $key }}" id="B22{{ $key }}" value="false" required>
+                                        <label class="form-check-label" for="B22{{ $key }}">{{ $item['NJavob3'] }}</label>
+                                    </div>
+                                    @break
+                            @endswitch
                         </div>
                     </div>
                 </div>
