@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Room;
 use App\Models\Guruh;
+use App\Models\Test;
 use App\Models\GuruhUser;
 use App\Models\TestNatija;
 use App\Models\GuruhTime;
@@ -99,6 +100,13 @@ class UserGuruhController extends Controller{
             $Tests = $endData;
         }
         return view('User.guruh_show',compact('id','Guruhs','GuruhTime','CountDates','Tests'));
+    }
+    public function test($id){
+        $cours_id = Guruh::find($id)->cours_id;
+        $guruh_id = $id;
+        $Testlar = Test::where('cours_id',$cours_id)->inRandomOrder()->limit(15)->get();
+        $TestCount = count($Testlar);
+        return view('User.test_show',compact('Testlar','TestCount'));
     }
     
 }

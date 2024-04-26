@@ -120,7 +120,7 @@
                     <div class="card-body text-center">
                         <h5 class="card-title">Test Natijalari</h5>
                         @if($Tests=='true')
-                            <a href="{{ route('AdminGuruhTest',$id ) }}" class="btn btn-success">Testni boshlash</a>
+                            <a href="{{ route('GuruhShowTest',$id) }}" class="btn btn-success">Testni boshlash</a>
                         @elseif($Tests=='Natija')
                             Test Natjiasi chiqairilsin
                         @else
