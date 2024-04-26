@@ -30,7 +30,7 @@ class UserContactController extends Controller{
             $Murojat[$key]['created_at'] = $value->created_at;
             $Murojat[$key]['admin_type'] = $value->admin_type;
         }
-        return view('User.contact',compact('Murojat'));
+        return view('User.contact', compact('Murojat'));
     }
     public function ContactPost(Request $request){
         $validate = $request->validate([

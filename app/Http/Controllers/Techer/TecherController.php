@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Techer;
 use App\Models\Guruh;
 use App\Models\Tulov;
 use App\Models\User;
+use App\Models\TestNatija;
 use App\Models\Room;
 use App\Models\Davomat;
 use App\Models\IshHaqi;
@@ -238,7 +239,17 @@ class TecherController extends Controller
             }
         }
         $DarsKunlar = count($Guruh['kunlar']);
-        return view('Techer.grops_show',compact('Guruh','Davomat','DarsKunlar'));
+        $NatijaTest = TestNatija::where('guruh_id',$id)->get();
+        $Natija = array();
+        foreach ($NatijaTest as $key => $value) {
+            $Natija[$key]['name'] = User::find($value->user_id)->name;
+            $Natija[$key]['savol_count'] = $value->savol_count;
+            $Natija[$key]['tugri_count'] = $value->tugri_count;
+            $Natija[$key]['notugri_count'] = $value->notugri_count;
+            $Natija[$key]['ball'] = $value->ball;
+            $Natija[$key]['created_at'] = $value->created_at;
+        }
+        return view('Techer.grops_show',compact('Natija','Guruh','Davomat','DarsKunlar'));
     }
     public function davomat(Request $request){
         $guruh_id = $request->guruh_id;

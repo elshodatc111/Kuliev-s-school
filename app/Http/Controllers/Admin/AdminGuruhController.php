@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Filial;
 use App\Models\Davomat;
 use App\Models\Guruh;
+use App\Models\TestNatija;
 use App\Models\UserHistory;
 use App\Models\GuruhUser;
 use App\Models\SmsCounter;
@@ -396,7 +397,17 @@ class AdminGuruhController extends Controller{
                 }
             }
         }
-        return view('Admin.guruh.show',compact('DarsKunlari','Davomat','Guruhw','TulovSetting','Room','Guruh','Days','UsersDeletes','Talabalar'));
+        $NatijaTest = TestNatija::where('guruh_id',$id)->get();
+        $Natija = array();
+        foreach ($NatijaTest as $key => $value) {
+            $Natija[$key]['name'] = User::find($value->user_id)->name;
+            $Natija[$key]['savol_count'] = $value->savol_count;
+            $Natija[$key]['tugri_count'] = $value->tugri_count;
+            $Natija[$key]['notugri_count'] = $value->notugri_count;
+            $Natija[$key]['ball'] = $value->ball;
+            $Natija[$key]['created_at'] = $value->created_at;
+        }
+        return view('Admin.guruh.show',compact('Natija','DarsKunlari','Davomat','Guruhw','TulovSetting','Room','Guruh','Days','UsersDeletes','Talabalar'));
     }
     public function guruhDelUser(Request $request){
         $validate = $request->validate([
@@ -547,8 +558,6 @@ class AdminGuruhController extends Controller{
                 unset($dars_vaqti[$value-1]);
             }
         }
-        #dd($request->hafta_kuni);
-        #dd($NewGuruh['count_kun']);
         $NewGuruh['bosh_vaqtlar'] = $this->boshSoatlar($dars_vaqti);
         return view('Admin.guruh.create_next',compact('Guruh','NewGuruh','NewGuruhForm'));
     }

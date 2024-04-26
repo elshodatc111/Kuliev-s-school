@@ -440,7 +440,43 @@
         </div>
     </div>
 
-
+    <div class="card">
+        <div class="card-body text-center">
+            <h5 class="card-title pb-1"><i class="bi bi-clipboard-check"></i> Test natijalari</h5>
+            <div class="table-responsive">
+                <table class="table table-bordered" style="font-size:14px;">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Talaba</th>
+                            <th>Testlar soni</th>
+                            <th>To'g'ri javoblar</th>
+                            <th>Noto'g'ri javoblar</th>
+                            <th>Ball</th>
+                            <th>Test vaqti</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($Natija as $item)
+                        <tr>
+                            <td>{{ $loop->index+1 }}</td>
+                            <td>{{ $item['name'] }}</td>
+                            <td>{{ $item['savol_count'] }}</td>
+                            <td>{{ $item['tugri_count'] }}</td>
+                            <td>{{ $item['notugri_count'] }}</td>
+                            <td>{{ $item['ball'] }}</td>
+                            <td>{{ $item['created_at'] }}</td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan=7 class="text-center">Test topshirgan talabalar mavjud emas.</td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
     
     <div class="text-center">
         @if(Auth::user()->type!="Operator")
@@ -448,6 +484,9 @@
         @endif
         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#nextGuruh" style="font-size:14px;"><i class="bi bi-arrow-right-square"></i> Guruhni davom etish</button>
     </div>
+
+
+    
     <!-- Guruhni davom ettirish -->
     <div class="modal fade" id="nextGuruh" tabindex="-1">
         <div class="modal-dialog modal-xl">
@@ -564,6 +603,9 @@
             </div>
         </div>
     </div>
+
+    
+
 
 </section>
 

@@ -192,7 +192,7 @@
                 <div class="card-body text-center">
                     <h5 class="card-title">Guruh davomat</span></h5>
                     <div class="table-responsive">
-                        <table class="table table-bordered">
+                        <table class="table table-bordered" style="font-size:14px;">
                             <thead>
                                 <tr>
                                     <th  class="bg-primary text-white">#</th>
@@ -230,7 +230,42 @@
                         </table>
                     </div>
                 </div>
-            </div>    
+            </div>  
+            <div class="card info-card sales-card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Test natijalari</span></h5>
+                    <table class="table table-bordered" style="font-size:14px;">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Talaba</th>
+                            <th>Testlar soni</th>
+                            <th>To'g'ri javoblar</th>
+                            <th>Noto'g'ri javoblar</th>
+                            <th>Ball</th>
+                            <th>Test vaqti</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($Natija as $item)
+                        <tr>
+                            <td>{{ $loop->index+1 }}</td>
+                            <td>{{ $item['name'] }}</td>
+                            <td>{{ $item['savol_count'] }}</td>
+                            <td>{{ $item['tugri_count'] }}</td>
+                            <td>{{ $item['notugri_count'] }}</td>
+                            <td>{{ $item['ball'] }}</td>
+                            <td>{{ $item['created_at'] }}</td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan=7 class="text-center">Test topshirgan talabalar mavjud emas.</td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+                </div>  
+            </div>  
         </section>
 
     </main>

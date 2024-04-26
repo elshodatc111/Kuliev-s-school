@@ -23,7 +23,7 @@
                     <div class="info-box card p-3">
                         <i class="bi bi-telephone"></i>
                         <h3 class="card-title p-0 m-0">Telefon</h3>
-                        <p class="m-0">+998 91 950 1101<br>+1 6678 254445 41</p>
+                        <p class="m-0">+998 91 950 1101</p>
                     </div>
                     <div class="info-box card p-3">
                         <i class="bi bi-clock"></i>
