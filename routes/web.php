@@ -42,6 +42,8 @@ Route::get('/Superadmin/statistika', [SuperAdminController::class, 'statistika']
 
 Route::get('/Superadmin/Testing', [TestController::class, 'index'])->name('superAdminTesting');
 Route::get('/Superadmin/Testing/show/{id}', [TestController::class, 'show'])->name('superAdminTestingShow');
+Route::post('/Superadmin/Testing/create', [TestController::class, 'create'])->name('superAdminTestingCreate');
+Route::get('/Superadmin/Testing/delete/{id}', [TestController::class, 'delete'])->name('superAdminTestingDelete');
 
     ###Filiallar###
 Route::get('/Superadmin/filial', [FilialController::class, 'filial'])->name('filial');
@@ -128,6 +130,8 @@ Route::post('/Admin/guruh/create/next2', [AdminGuruhController::class, 'CreateGu
 Route::post('/Admin/guruh/deleteUser', [AdminGuruhController::class, 'guruhDelUser'])->name('guruhDeletesUserss');
 Route::post('/Admin/guruh/user/sendMessege', [AdminGuruhController::class, 'userSendMessege'])->name('userSendMessege');
 Route::post('/Admin/guruh/debit/sendMessege', [AdminGuruhController::class, 'debitSendMessege'])->name('debitSendMessege');
+
+
 
 Route::get('/Admin/admin/techer', [AdminTecherController::class, 'index'])->name('AdminTecher');
 Route::post('/Admin/admin/techer', [AdminTecherController::class, 'techerCreate'])->name('AdminTecherCreate');

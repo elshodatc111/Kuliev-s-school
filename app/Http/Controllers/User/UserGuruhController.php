@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Room;
 use App\Models\Guruh;
 use App\Models\GuruhUser;
+use App\Models\TestNatija;
 use App\Models\GuruhTime;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
@@ -83,6 +84,21 @@ class UserGuruhController extends Controller{
         $Guruhs['cours_id'] = $Guruh->cours_id;
         $GuruhTime = GuruhTime::where('guruh_id',$Guruh['id'])->get();
         $CountDates = count($GuruhTime);
-        return view('User.guruh_show',compact('Guruhs','GuruhTime','CountDates'));
+        $endData = 0;
+        foreach ($GuruhTime as $key => $value) {
+            $endData = $value->dates;
+        }
+        $TestNatija = count(TestNatija::where('guruh_id',$id)->where('user_id',Auth::user()->id)->get());
+        if($endData<=date("Y-m-d")){
+            if($TestNatija==0){
+                $Tests = 'true';
+            }else{
+                $Tests = "Natija";
+            }
+        }else{
+            $Tests = $endData;
+        }
+        return view('User.guruh_show',compact('id','Guruhs','GuruhTime','CountDates','Tests'));
     }
+    
 }

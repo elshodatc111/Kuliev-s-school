@@ -8,6 +8,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class TestController extends Controller{
+    public function __construct(){
+        $this->middleware('auth');
+    }
     public function index(){
         $Cours = Cours::get();
         $Cour = array();
@@ -21,6 +24,24 @@ class TestController extends Controller{
     }
 
     public function show($id){
-        return view('SuperAdmin.test.show');
+        $Test = Test::where('cours_id',$id)->get();
+        return view('SuperAdmin.test.show', compact('id','Test'));
+    }
+    public function create(Request $request){
+        $validate = $request->validate([
+            'cours_id' => ['required', 'string', 'max:255'],
+            'Savol' => ['required', 'string', 'max:255'],
+            'TJavob' => ['required', 'string', 'max:255'],
+            'NJavob1' => ['required', 'string', 'max:255'],
+            'NJavob2' => ['required', 'string', 'max:255'],
+            'NJavob3' => ['required', 'string', 'max:255']
+        ]);
+        Test::create($validate);
+        return redirect()->back()->with('success', 'Yangi test savoli qo\'shildi'); 
+    }
+    public function delete($id){
+        $Test = Test::find($id);
+        $Test->delete();
+        return redirect()->back()->with('success', 'Test savoli o\chirildi.'); 
     }
 }
