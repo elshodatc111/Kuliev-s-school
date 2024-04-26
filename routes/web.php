@@ -12,6 +12,7 @@ use App\Http\Controllers\SuperAdmin\SuperStatistikaController;
 use App\Http\Controllers\SuperAdmin\TestController;
 use App\Http\Controllers\SuperAdmin\SuperElonController;
 use App\Http\Controllers\SuperAdmin\SuperAdminTecherController;
+use App\Http\Controllers\SuperAdmin\ReportControlle;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\HodimController;
 use App\Http\Controllers\Admin\AdminGuruhController;
@@ -29,7 +30,7 @@ use App\Http\Controllers\SettingController;
 Route::get('/', [HomeController::class, 'index']);
 
 Auth::routes();
-
+ 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/setting', [SettingController::class, 'index'])->name('setting');
 Route::post('/setting', [SettingController::class, 'update'])->name('settingupdate');
@@ -37,7 +38,9 @@ Route::post('/sms/plus', [SettingController::class, 'smsplus'])->name('settingsm
 
 ### Start SuperAdmin ###
 Route::get('/Superadmin/index', [SuperAdminController::class, 'index'])->name('SuperAdmin');
-Route::get('/Superadmin/hisobot', [SuperAdminController::class, 'hisobot'])->name('hisobot');
+Route::get('/Superadmin/hisobot/all/web/index', [ReportControlle::class, 'index'])->name('hisobot');
+Route::post('/Superadmin/hisobot/all/show', [ReportControlle::class, 'show'])->name('hisobotShow');
+
 Route::get('/Superadmin/statistika', [SuperAdminController::class, 'statistika'])->name('statistika');
 
 Route::get('/Superadmin/Testing', [TestController::class, 'index'])->name('superAdminTesting');

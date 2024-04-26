@@ -26,7 +26,6 @@ class SuperAdminController extends Controller{
         $Oylar[3] = date("Y-m",strtotime("-2 month",time()));
         $Oylar[4] = date("Y-m",strtotime("-1 month",time()));
         $Oylar[5] = date("Y-m");
-
         $Oylar2 = array();
         $Oylar2[0] = date("M",strtotime("-5 month",time()));
         $Oylar2[1] = date("M",strtotime("-4 month",time()));
@@ -34,12 +33,9 @@ class SuperAdminController extends Controller{
         $Oylar2[3] = date("M",strtotime("-2 month",time()));
         $Oylar2[4] = date("M",strtotime("-1 month",time()));
         $Oylar2[5] = date("M");
-        
         $Svod = array();
         foreach ($Oylar as $key => $value) {
-            $User = User::where('type','User')
-                ->where('created_at','>=',$value."-01 00:00:00")
-                ->where('created_at','<=',$value."-31 23:59:59")->get();
+            $User = User::where('type','User')->where('created_at','>=',$value."-01 00:00:00")->where('created_at','<=',$value."-31 23:59:59")->get();
             $Telegram = 0;
             $Instagram = 0;
             $Facebook = 0;
@@ -83,12 +79,8 @@ class SuperAdminController extends Controller{
         $SmsCounter = SmsCounter::find(1);
         $SettingEndData = date("Y-m-d", strtotime('-3 day',strtotime(Setting::find(1)->EndData)));
         $times = date("Y-m-d");
-        if($times>$SettingEndData){
-            $Block = 'true';
-        }else{
-            $Block = "false";
-        }
-
+        if($times>$SettingEndData){$Block = 'true';
+        }else{$Block = "false";}
         $Filiallar = Filial::get();
         $Filial = array();
         foreach ($Filiallar as $key => $value) {
@@ -101,10 +93,7 @@ class SuperAdminController extends Controller{
             $Filial[$key]['aktivguruh'] = count(Guruh::where('filial_id',$value->id)->get())-count(Guruh::where('filial_id',$value->id)->where('guruh_start','>',date('Y-m-d'))->get())-count(Guruh::where('filial_id',$value->id)->where('guruh_end','<',date('Y-m-d'))->get());
             $Filial[$key]['endguruh'] = count(Guruh::where('filial_id',$value->id)->where('guruh_end','<',date('Y-m-d'))->get());
         }
-
         $SMM = $this->SMMIndex();
-        
-
         $StartDates = date("Y-m")."-01 00:00:00";
         $EndDates = date("Y-m")."31 23:59:59";
         $Guruhsss = Guruh::where('guruh_start','<=',$EndDates)->where('guruh_end','>=',$StartDates)->get();
@@ -125,10 +114,6 @@ class SuperAdminController extends Controller{
             }
         }
         $ActivStudent = count($ActivUser);
-
-
-
-
         return view('SuperAdmin.index',compact('Filial','Block','SMM','SmsCounter','ActivStudent'));
     }    
 }

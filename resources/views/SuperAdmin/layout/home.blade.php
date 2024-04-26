@@ -96,7 +96,7 @@
         <a class="nav-link collapsed" href="{{ route('SuperAdminTecher') }}"><i class="bi bi-coin"></i><span>O'qituvchiga to'lov</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href=""><i class="bi bi-file-earmark-medical"></i><span>Hisobot</span></a>
+        <a class="nav-link collapsed" href="{{ route('hisobot') }}"><i class="bi bi-file-earmark-medical"></i><span>Hisobot</span></a>
       </li>
       @if(Auth::user()->email=='elshodatc1116')
       <li class="nav-item">
@@ -129,6 +129,13 @@
   <script src="{{ env('HTTP_URL')}}assets/js/main.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.7/jquery.inputmask.min.js"></script>
+  <script src="{{ env('HTTP_URL')}}assets/js/table2excel.js"></script>
+  <script>
+    var table2excel = new Table2Excel();
+    document.getElementById('export').addEventListener('click', function() {
+      table2excel.export(document.getElementById('table'));
+    });
+  </script>
   <script>
     $(".phone").inputmask("99 999 9999");
     (function($, undefined) {
