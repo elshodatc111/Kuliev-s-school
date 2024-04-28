@@ -133,6 +133,7 @@ class MoliyaController extends Controller{
         $Filial->save();
         $FilialKassa->save();
         $Moliya->status = 'true';
+        $Moliya->admin_id = Auth::User()->id;
         $Moliya->save();
         return redirect()->back()->with('success', "Tasdiqlanmagan chiqim tasdiqlandi.");
     }
@@ -191,6 +192,7 @@ class MoliyaController extends Controller{
         }
         $FilialKassa->save();
         $Moliya->status = 'true';
+        $Moliya->admin_id = Auth::User()->id;
         $Moliya->save();
         return redirect()->back()->with('success', "Tasdiqlanmagan xarajat tasdiqlandi.");
     }

@@ -29,7 +29,9 @@
                                 <option value="">Tanlang...</option>
                                 <option value="all_tashrif">Barcha talabalar</option>
                                 <option value="debet_users">Qarzdor talabalar</option>
-                                <option value="pustay_users">Guruhga biriktirilmagan talabalar</option>
+                                <option value="guruh_plus_users">Guruhga biriktirilgan talabalar</option>
+                                <option value="guruh_plus_users2">Guruhga biriktirilgan talabalar 2</option>
+                                <option value="guruh_minus_users">Guruhga biriktirilmagan talabalar</option>
                                 <option value="pay">To'lovlar</option>
                                 <option value="chiqimlar">Chiqimlar</option>
                                 <option value="xarajatlar">Xarajatlar</option>
@@ -46,6 +48,8 @@
                         </div>
                     </div>
                 </form>
+                O'qituvchi va hosimga to'langan ish haqi<br>
+                Test Natijalari
             </div>
         </div>
     </section>
