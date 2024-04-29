@@ -8,7 +8,9 @@ use App\Models\Guruh;
 use App\Models\Tulov;
 use App\Models\Moliya;
 use App\Models\Cours;
+use App\Models\IshHaqi;
 use App\Models\Room;
+use App\Models\TestNatija;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -265,8 +267,50 @@ class ReportControlle extends Controller{
             $Guruh[$key]['guruh_end'] = $value->techer_bonus;
             $Guruh[$key]['meneger'] = User::find($value->admin_id)->name;
         }
-        #dd($Guruh);
         return view('SuperAdmin.hisobot.guruhlar',compact('Guruh'));
+    }
+    public function HodimIshHaqi(){
+        $Pays = array();
+        $IshHaqi = IshHaqi::where('status','Hodim')->get();
+        foreach ($IshHaqi as $key => $value) {
+            $Pays[$key]['filial'] = Filial::find($value->filial_id)->filial_name;
+            $Pays[$key]['user'] = User::find($value->user_id)->name;
+            $Pays[$key]['admin'] = User::find($value->admin_id)->name;
+            $Pays[$key]['about'] = $value->about;
+            $Pays[$key]['summa'] = $value->summa;
+            $Pays[$key]['type'] = $value->type;
+            $Pays[$key]['created_at'] = $value->created_at;
+        }
+        return view('SuperAdmin.hisobot.hodimPay',compact('Pays'));
+    }
+    public function TecherIshHaqi(){
+        $Pays = array();
+        $IshHaqi = IshHaqi::where('status',"!=",'Hodim')->get();
+        foreach ($IshHaqi as $key => $value) {
+            $Pays[$key]['filial'] = Filial::find($value->filial_id)->filial_name;
+            $Pays[$key]['user'] = User::find($value->user_id)->name;
+            $Pays[$key]['admin'] = User::find($value->admin_id)->name;
+            $Pays[$key]['about'] = $value->about;
+            $Pays[$key]['summa'] = $value->summa;
+            $Pays[$key]['type'] = $value->type;
+            $Pays[$key]['created_at'] = $value->created_at;
+        }
+        return view('SuperAdmin.hisobot.techerPay',compact('Pays'));
+    }
+    public function TestNatija(){
+        $Test = array();
+        $TestNatija = TestNatija::get();
+        foreach ($TestNatija as $key => $value) {
+            $Test[$key]['filial'] = Filial::find($value->filial_id)->filial_name;
+            $Test[$key]['guruh'] = Guruh::find($value->guruh_id)->guruh_name;
+            $Test[$key]['user'] = Guruh::find($value->user_id)->name;
+            $Test[$key]['savollar'] =$value->savol_count;
+            $Test[$key]['tugri_count'] =$value->tugri_count;
+            $Test[$key]['notugri_count'] =$value->notugri_count;
+            $Test[$key]['ball'] =$value->ball;
+            $Test[$key]['created_at'] =$value->created_at;
+        }
+        return view('SuperAdmin.hisobot.test_natija',compact('Test'));
     }
     public function show(Request $request){
         $type = $request->report;
@@ -280,8 +324,11 @@ class ReportControlle extends Controller{
         if($type=='xarajatlar'){return $this->Xarajatlar();}
         if($type=='hodimlar'){return $this->hodimlar();}
         if($type=='techer'){return $this->techers();}
-        if($type=='guruhlar'){
-            return $this->Guruhlar();
+        if($type=='guruhlar'){return $this->Guruhlar();}
+        if($type=='hodim_ish_haqi'){return $this->HodimIshHaqi();}
+        if($type=='techer_ish_haqi'){return $this->TecherIshHaqi();}
+        if($type=='test_natija'){
+            return $this->TestNatija();
         }
         dd($type);
 

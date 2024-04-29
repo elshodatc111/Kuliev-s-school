@@ -1,5 +1,5 @@
 @extends('SuperAdmin.layout.home')
-@section('title','Kassaga Chiqimlar')
+@section('title','Ish haqi')
 @section('content')
 
 <main id="main" class="main">
@@ -10,13 +10,13 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('SuperAdmin')}}">Bosh sahifa</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('hisobot')}}">Hisobot</a></li>
-                <li class="breadcrumb-item active">Kassaga Chiqimlar</li>
+                <li class="breadcrumb-item active">Ish haqi</li>
             </ol>
         </nav>
     </div> 
 
     
-    <h5 class="w-100 text-center">Kassaga Chiqimlar</h5>
+    <h5 class="w-100 text-center">Hodimlarga to'langan ish haqi</h5>
     <div class="w-100" style="text-align:right">
         <a id='export' style='cursor:pointer' class="btn btn-warning text-white"> EXCEL</a>
     </div>
@@ -25,26 +25,24 @@
             <tr>
                 <th>#</th>
                 <th>Filial</th>
-                <th>Chiqim turi</th>
+                <th>Hodim</th>
                 <th>Summasi</th>
-                <th>Chiqim turi</th>
-                <th>Chiqim haqida</th>
+                <th>To'lov turi</th>
+                <th>To'lov haqida</th>
                 <th>Meneger</th>
-                <th>Admin</th>
-                <th>Chiqim vaqti</th>
+                <th>To'lov vaqti</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($CHiqim as $item)
+            @foreach($Pays as $item)
                 <tr>
                     <td>{{ $loop->index+1 }}</td>
                     <td>{{ $item['filial'] }}</td>
-                    <td>{{ $item['xodisa'] }}</td>
+                    <td>{{ $item['user'] }}</td>
+                    <td>{{ $item['admin'] }}</td>
+                    <td>{{ $item['about'] }}</td>
                     <td>{{ $item['summa'] }}</td>
                     <td>{{ $item['type'] }}</td>
-                    <td>{{ $item['about'] }}</td>
-                    <td>{{ $item['user_id'] }}</td>
-                    <td>{{ $item['admin_id'] }}</td>
                     <td>{{ $item['created_at'] }}</td>
                 </tr>
             @endforeach

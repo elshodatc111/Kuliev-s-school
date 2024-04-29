@@ -40,7 +40,7 @@
                                 <option value="techer">O'qituvchilar</option>
                                 <option value="techer_ish_haqi">O'qituvchilarga to'langan ish xaqi</option>
                                 <option value="guruhlar">Guruhlar</option>
-                                <option value="guruhlar">Test natijalari</option>
+                                <option value="test_natija">Test natijalari</option>
                             </select>
                         </div>
                         <div class="col-4">
@@ -48,8 +48,6 @@
                         </div>
                     </div>
                 </form>
-                O'qituvchi va hosimga to'langan ish haqi<br>
-                Test Natijalari
             </div>
         </div>
     </section>
