@@ -176,7 +176,7 @@ class FilialController extends Controller{
     public function filialDelete(Request $request){
         $filial_id = $request->id;
 
-        $User = User::where('filial_id',$filial_id)->get();
+        $User = User::where('filial_id',$filial_id)->where('type','!=','SuperAdmin')->get();
         foreach ($User as $key => $value) {$value->delete();}
 
         $Filial = Filial::find($filial_id);
