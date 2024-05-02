@@ -447,13 +447,13 @@
                 <table class="table table-bordered" style="font-size:14px;">
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>Talaba</th>
-                            <th>Testlar soni</th>
-                            <th>To'g'ri javoblar</th>
-                            <th>Noto'g'ri javoblar</th>
-                            <th>Ball</th>
-                            <th>Test vaqti</th>
+                            <th class="bg-primary text-white">#</th>
+                            <th class="bg-primary text-white">Talaba</th>
+                            <th class="bg-primary text-white">Testlar soni</th>
+                            <th class="bg-primary text-white">To'g'ri javoblar</th>
+                            <th class="bg-primary text-white">Noto'g'ri javoblar</th>
+                            <th class="bg-primary text-white">Ball</th>
+                            <th class="bg-primary text-white">Test vaqti</th>
                         </tr>
                     </thead>
                     <tbody>

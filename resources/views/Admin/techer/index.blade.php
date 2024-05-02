@@ -71,12 +71,12 @@
                 <table class="table table-bordered text-center table-striped table-hover" style="font-size:14px;">
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>O'qituvchilar</th>
-                            <th>Telefon raqam</th>
-                            <th>Telefon raqam 2</th>
-                            <th>Login</th>
-                            <th>Status</th>
+                            <th class="bg-primary text-white">#</th>
+                            <th class="bg-primary text-white">O'qituvchilar</th>
+                            <th class="bg-primary text-white">Telefon raqam</th>
+                            <th class="bg-primary text-white">Telefon raqam 2</th>
+                            <th class="bg-primary text-white">Login</th>
+                            <th class="bg-primary text-white">Status</th>
                         </tr>
                     </thead>
                     <tbody>

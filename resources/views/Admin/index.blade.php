@@ -24,7 +24,7 @@
         <div class="card">
             <div class="card-body pt-3">
                 <div style="text-align:right;">
-                    <a href="{{ route('StudentCreate') }}" class="btn btn-success"><i class="bi bi-person-add"></i> Yangi talaba</a>
+                    <a href="{{ route('StudentCreate') }}" class="btn btn-success mb-1"><i class="bi bi-person-add"></i> Yangi talaba</a>
                 </div>
                 <div class="table-responsive">
                     <table class="table datatable" style="font-size:14px;">

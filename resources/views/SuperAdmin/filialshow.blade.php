@@ -27,17 +27,17 @@
         </div>
     
         <div class="row">
-            <div class="col-lg-4">
-                <div class="card">
+            <div class="col-lg-6">
+                <div class="card" style="min-height:325px;">
                     <div class="card-body text-center">
                         <h5 class="card-title mb-0">Filial xonalari</span></h5>
                         <div class="table-responsive">
                             <table class="table table-bordered text-center table-striped table-hover" style="font-size:14px;">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
-                                        <th>Filial xonasi</th>
-                                        <th>Status</th>
+                                        <th class="bg-primary text-white">#</th>
+                                        <th class="bg-primary text-white">Filial xonasi</th>
+                                        <th class="bg-primary text-white">Status</th>
                                     </tr>
                                 </thead>
                                 <tbodt>
@@ -68,15 +68,15 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
-                <div class="card">
+            <div class="col-lg-6">
+                <div class="card" style="min-height:325px;">
                     <div class="card-body text-center">
                         <h5 class="card-title mb-0">Filial kurslari</span></h5>
                         <table class="table table-bordered text-center">
                             <tr>
-                                <th>#</th>
-                                <th>Kurs nomi</th>
-                                <th>Status</th>
+                                <th class="bg-primary text-white">#</th>
+                                <th class="bg-primary text-white">Kurs nomi</th>
+                                <th class="bg-primary text-white">Status</th>
                             </tr>
                             @forelse($Cours as $item)
                             <tr>
@@ -103,9 +103,54 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body text-center">
+                        <h5 class="card-title mb-0">To'lov sozlamalari</span></h5>
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-center table-striped table-hover" style="font-size:14px;">
+                                <thead>
+                                    <tr>
+                                        <th class="bg-primary text-white">Summa</th>
+                                        <th class="bg-primary text-white">Chegirma</th>
+                                        <th class="bg-primary text-white">Admin Chegirma</th>
+                                        <th class="bg-primary text-white">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbodt>
+                                    @forelse($TulovSetting as $item)
+                                    <tr>
+                                        <td>{{ $item['tulov_summa'] }}</td>
+                                        <td>{{ $item['chegirma'] }}</td>
+                                        <td>{{ $item['admin_chegirma'] }}</td>
+                                        <td>
+                                            <a href="{{ route('tulovSettingDelete',$item['id'] ) }}" class="btn btn-danger py-0 px-1"><i class="bi bi-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                    @empty
+                                    <tr>
+                                        <td class="text-center" colspan=4>To'lov sozlamalari mavjud emas.</td>
+                                    </tr>
+                                    @endforelse
+                                </tbodt>
+                            </table>
+                        </div>
+                        <h5 class="card-title mb-0">Yangi to'lov</span></h5>
+                        <form action="{{ route('tulovSettingCreate') }}" method="post" id="form4">
+                            @csrf
+                            <input type="hidden" name="filial_id" value="{{ $Filial->id }}">
+                            <input type="hidden" name="status" value="true">
+                            <input type="text" name="tulov_summa" id="summa1" class="form-control mt-2" placeholder="To'lov summasi" required>
+                            <input type="text" name="chegirma" id="summa2" class="form-control mt-2" placeholder="Chegirma" required>
+                            <input type="text" name="admin_chegirma" id="summa3" class="form-control mt-2" placeholder="Admin chegirma" required>
+                            <button class="btn btn-primary w-100 mt-2">Saqlash</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body text-center" style="min-height:250px;">
                         <h5 class="card-title mb-0">SMS sozlamalari</span></h5>
                         <form action="{{ route('filialSettimgSMS') }}" method="post">@csrf
                             <input type="hidden" name="filial_id" value="{{ $Filial->id }}">
@@ -148,54 +193,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-8">
-                <div class="card">
-                    <div class="card-body text-center">
-                        <h5 class="card-title mb-0">To'lov sozlamalari</span></h5>
-                        <div class="table-responsive">
-                            <table class="table table-bordered text-center table-striped table-hover" style="font-size:14px;">
-                                <thead>
-                                    <tr>
-                                        <th>Summa</th>
-                                        <th>Chegirma</th>
-                                        <th>Admin Chegirma</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbodt>
-                                    @forelse($TulovSetting as $item)
-                                    <tr>
-                                        <td>{{ $item['tulov_summa'] }}</td>
-                                        <td>{{ $item['chegirma'] }}</td>
-                                        <td>{{ $item['admin_chegirma'] }}</td>
-                                        <td>
-                                            <a href="{{ route('tulovSettingDelete',$item['id'] ) }}" class="btn btn-danger py-0 px-1"><i class="bi bi-trash"></i></a>
-                                        </td>
-                                    </tr>
-                                    @empty
-                                    <tr>
-                                        <td class="text-center" colspan=4>To'lov sozlamalari mavjud emas.</td>
-                                    </tr>
-                                    @endforelse
-                                </tbodt>
-                            </table>
-                        </div>
-                        <h5 class="card-title mb-0">Yangi to'lov</span></h5>
-                        <form action="{{ route('tulovSettingCreate') }}" method="post" id="form4">
-                            @csrf
-                            <input type="hidden" name="filial_id" value="{{ $Filial->id }}">
-                            <input type="hidden" name="status" value="true">
-                            <input type="text" name="tulov_summa" id="summa1" class="form-control mt-2" placeholder="To'lov summasi" required>
-                            <input type="text" name="chegirma" id="summa2" class="form-control mt-2" placeholder="Chegirma" required>
-                            <input type="text" name="admin_chegirma" id="summa3" class="form-control mt-2" placeholder="Admin chegirma" required>
-                            <button class="btn btn-primary w-100 mt-2">Saqlash</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-lg-4">
-                <div class="card">
+            <div class="col-lg-6">
+                <div class="card" style="min-height:250px;">
                     <div class="card-body text-center">
                         <h5 class="card-title w-100 text-center">To'lov uchun maksimal chegirma kuni</h5>
                         <form action="{{ route('chegirmaDayUpadte') }}" method="post">
@@ -209,17 +208,12 @@
                 </div>
             </div>
         </div>
-            
-        
-            
-                
-                
         
         <div class="text-center">
-            <button class="btn btn-primary mt-3" style="width:48%;" data-bs-toggle="modal" 
-            data-bs-target="#FilialUpdate"><i class="bi bi-pencil"></i> Filialni taxrirlash</button>
-            <button class="btn btn-danger mt-3" style="width:48%;" data-bs-toggle="modal" 
-            data-bs-target="#FilialDelete"><i class="bi bi-trash"></i> Filialni o'chirish</button>
+            <button class="btn btn-primary mt-3" style="width:48%;" data-bs-toggle="modal" data-bs-target="#FilialUpdate"><i class="bi bi-pencil"></i> Filialni taxrirlash</button>
+            @if(Auth::User()->email=='elshodatc1116')
+                <button class="btn btn-danger mt-3" style="width:48%;" data-bs-toggle="modal" data-bs-target="#FilialDelete"><i class="bi bi-trash"></i> Filialni o'chirish</button>
+            @endif
         </div>
         
         <div class="modal fade" id="FilialUpdate" tabindex="-1">

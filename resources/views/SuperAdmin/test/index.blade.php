@@ -26,11 +26,11 @@
                     <table class="table text-center table-bordered" style="font-size:14px;">
                         <thead>
                             <tr>
-                                <th>#</th>
-                                <th>Filial</th>
-                                <th>Cours</th>
-                                <th>Testlar soni</th>
-                                <th>Status</th>
+                                <th class="bg-primary text-white">#</th>
+                                <th class="bg-primary text-white">Filial</th>
+                                <th class="bg-primary text-white">Cours</th>
+                                <th class="bg-primary text-white">Testlar soni</th>
+                                <th class="bg-primary text-white">Status</th>
                             </tr>
                         </thead>
                         <tbody>

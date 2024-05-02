@@ -42,13 +42,13 @@
             <table class="table table-bordered text-center table-hover" style="font-size:12px;">
                 <thead>
                   <tr>
-                    <th class="text-center">#</th>
-                    <th class="text-center">Student/Guruh</th>
-                    <th class="text-center">Eslatma turi</th>
-                    <th class="text-center">Eslatma matni</th>
-                    <th class="text-center">Eslatma vaqti</th>
-                    <th class="text-center">Meneger</th>
-                    <th class="text-center">Status</th>
+                    <th class="text-center bg-primary text-white">#</th>
+                    <th class="text-center bg-primary text-white">Student/Guruh</th>
+                    <th class="text-center bg-primary text-white">Eslatma turi</th>
+                    <th class="text-center bg-primary text-white">Eslatma matni</th>
+                    <th class="text-center bg-primary text-white">Eslatma vaqti</th>
+                    <th class="text-center bg-primary text-white">Meneger</th>
+                    <th class="text-center bg-primary text-white">Status</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -88,12 +88,12 @@
             <table class="table datatable text-center table-hover" style="font-size:12px;">
             <thead>
                   <tr>
-                    <th class="text-center">#</th>
-                    <th class="text-center">Student/Guruh</th>
-                    <th class="text-center">Eslatma turi</th>
-                    <th class="text-center">Eslatma matni</th>
-                    <th class="text-center">Eslatma vaqti</th>
-                    <th class="text-center">Meneger</th>
+                    <th class="text-center bg-primary text-white">#</th>
+                    <th class="text-center bg-primary text-white">Student/Guruh</th>
+                    <th class="text-center bg-primary text-white">Eslatma turi</th>
+                    <th class="text-center bg-primary text-white">Eslatma matni</th>
+                    <th class="text-center bg-primary text-white">Eslatma vaqti</th>
+                    <th class="text-center bg-primary text-white">Meneger</th>
                   </tr>
                 </thead>
                 <tbody>

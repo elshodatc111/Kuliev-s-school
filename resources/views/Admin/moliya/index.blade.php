@@ -100,13 +100,13 @@
                 <div class="table-responsive">
                     <table class="table table-bordered text-center" style="font-size:14px">
                         <thead>
-                            <th>#</th>
-                            <th>Talaba</th>
-                            <th>Summa</th>
-                            <th>Qaytarish haqida</th>
-                            <th>Tulov turi</th>
-                            <th>Qaytarish vaqti</th>
-                            <th>Meneger</th>
+                            <th class="bg-primary text-white">#</th>
+                            <th class="bg-primary text-white">Talaba</th>
+                            <th class="bg-primary text-white">Summa</th>
+                            <th class="bg-primary text-white">Qaytarish haqida</th>
+                            <th class="bg-primary text-white">Tulov turi</th>
+                            <th class="bg-primary text-white">Qaytarish vaqti</th>
+                            <th class="bg-primary text-white">Meneger</th>
                         </thead>
                         <tbody>
                             @forelse($Qaytarildi as $item)
@@ -236,13 +236,13 @@
                     <table class="table text-center table-bordered table-hover" style="font-size:14px;">
                         <thead>
                             <tr>
-                                <th class="text-center">#</th>
-                                <th class="text-center">Summa</th>
-                                <th class="text-center">Chiqim turi</th>
-                                <th class="text-center">Chiqim haqida</th>
-                                <th class="text-center">Chiqim vaqti</th>
-                                <th class="text-center">Meneger</th>
-                                <th class="text-center">Status</th>
+                                <th class="text-center bg-primary text-white">#</th>
+                                <th class="text-center bg-primary text-white">Summa</th>
+                                <th class="text-center bg-primary text-white">Chiqim turi</th>
+                                <th class="text-center bg-primary text-white">Chiqim haqida</th>
+                                <th class="text-center bg-primary text-white">Chiqim vaqti</th>
+                                <th class="text-center bg-primary text-white">Meneger</th>
+                                <th class="text-center bg-primary text-white">Status</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -283,13 +283,13 @@
                     <table class="table text-center table-bordered table-hover" style="font-size:14px;">
                         <thead>
                             <tr>
-                                <th class="text-center">#</th>
-                                <th class="text-center">Summa</th>
-                                <th class="text-center">Xarajat turi</th>
-                                <th class="text-center">Xarajat haqida</th>
-                                <th class="text-center">Xarajat vaqti</th>
-                                <th class="text-center">Meneger</th>
-                                <th class="text-center">Status</th>
+                                <th class="text-center bg-primary text-white">#</th>
+                                <th class="text-center bg-primary text-white">Summa</th>
+                                <th class="text-center bg-primary text-white">Xarajat turi</th>
+                                <th class="text-center bg-primary text-white">Xarajat haqida</th>
+                                <th class="text-center bg-primary text-white">Xarajat vaqti</th>
+                                <th class="text-center bg-primary text-white">Meneger</th>
+                                <th class="text-center bg-primary text-white">Status</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -335,12 +335,12 @@
         <div class="table-responsive">
             <table class="table table-bordered text-center" style="font-size:12px;">
                 <tr>
-                    <th>#</th>
-                    <th>Talaba</th>
-                    <th>Summa</th>
-                    <th>Type</th>
-                    <th>O'chirilgan vaqt</th>
-                    <th>Meneger</th>
+                    <th class="bg-primary text-white">#</th>
+                    <th class="bg-primary text-white">Talaba</th>
+                    <th class="bg-primary text-white">Summa</th>
+                    <th class="bg-primary text-white">Type</th>
+                    <th class="bg-primary text-white">O'chirilgan vaqt</th>
+                    <th class="bg-primary text-white">Meneger</th>
                 </tr>
                 @forelse($TulDel as $item)
                     <tr>

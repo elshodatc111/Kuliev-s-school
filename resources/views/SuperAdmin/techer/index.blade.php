@@ -27,13 +27,13 @@
                     <table class="table text-center table-bordered" style="font-size:14px;">
                         <thead>
                             <tr>
-                                <th>#</th>
-                                <th>Filial</th>
-                                <th>Guruh</th>
-                                <th>O'qituvchi</th>
-                                <th>Hisoblangan</th>
-                                <th>To'langan</th>
-                                <th>Qoldiq</th>
+                                <th class="bg-primary text-white">#</th>
+                                <th class="bg-primary text-white">Filial</th>
+                                <th class="bg-primary text-white">Guruh</th>
+                                <th class="bg-primary text-white">O'qituvchi</th>
+                                <th class="bg-primary text-white">Hisoblangan</th>
+                                <th class="bg-primary text-white">To'langan</th>
+                                <th class="bg-primary text-white">Qoldiq</th>
                             </tr>
                         </thead>
                         <tbody>

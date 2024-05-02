@@ -55,12 +55,12 @@
         <table class="table table-bordered text-center table-striped table-hover" style="font-size:14px;">
           <thead>
             <tr>
-              <th>#</th>
-              <th>Filial</th>
-              <th>Naqt</th>
-              <th>Plastik</th>
-              <th>Payme</th>
-              <th>Status</th>
+              <th class="bg-primary text-white">#</th>
+              <th class="bg-primary text-white">Filial</th>
+              <th class="bg-primary text-white">Naqt</th>
+              <th class="bg-primary text-white">Plastik</th>
+              <th class="bg-primary text-white">Payme</th>
+              <th class="bg-primary text-white">Status</th>
             </tr>
           </thead>
           <tbody>
@@ -208,12 +208,12 @@
             <table class="table table-bordered" style="font-size:14px">
               <thead>
                 <tr>
-                  <td>#</td>
-                  <td>Filial</td>
-                  <td>Summa</td>
-                  <td>Type</td>
-                  <td>Xarajat xaqida</td>
-                  <td>Xarajat vaqti</td>
+                  <td class="bg-primary text-white">#</td>
+                  <td class="bg-primary text-white">Filial</td>
+                  <td class="bg-primary text-white">Summa</td>
+                  <td class="bg-primary text-white">Type</td>
+                  <td class="bg-primary text-white">Xarajat xaqida</td>
+                  <td class="bg-primary text-white">Xarajat vaqti</td>
                 </tr>
               </thead>
               <tbody>
@@ -240,12 +240,12 @@
             <table class="table table-bordered">
               <thead>
                 <tr>
-                  <td>#</td>
-                  <td>Filial</td>
-                  <td>Qaytarilgan summa</td>
-                  <td>Tulov turi</td>
-                  <td>Qaytarish haqida</td>
-                  <td>Qaytarilgan vaqt</td>
+                  <td class="bg-primary text-white">#</td>
+                  <td class="bg-primary text-white">Filial</td>
+                  <td class="bg-primary text-white">Qaytarilgan summa</td>
+                  <td class="bg-primary text-white">Tulov turi</td>
+                  <td class="bg-primary text-white">Qaytarish haqida</td>
+                  <td class="bg-primary text-white">Qaytarilgan vaqt</td>
                 </tr>
               </thead>
                 @forelse($Qaytarildi as $item)

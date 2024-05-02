@@ -19,7 +19,7 @@
     <div class="alert alert-danger">{{Session::get('error') }}</div>
 @endif
 
-<section class="section dashboard">
+        <section class="section dashboard">
             <div class="card">
                 <div class="card-body pt-3">
                     <ul class="nav nav-tabs d-flex" id="myTabjustified" role="tablist">
@@ -37,8 +37,7 @@
                         </li>
                     </ul>
                     <div class="tab-content pt-2" id="myTabjustifiedContent">
-                        <div class="tab-pane fade show active" id="home-justified" role="tabpanel" aria-labelledby="home-tab">
-                            <h5 class="card-title w-100 text-center py-1">Yangi tashrif</h5>
+                        <div class="tab-pane fade show active" id="home-justified" style="min-height:300px;" role="tabpanel" aria-labelledby="home-tab">
                             <form action="{{ route('StudentCreateStore') }}" method="post" class="row">
                                 @csrf
                                 <div class="col-lg-6">

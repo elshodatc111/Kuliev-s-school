@@ -139,7 +139,7 @@
                                 </select>
                             </div>
                             <div class="col-12 mb-3 mt-2">
-                                <label for="about">To'lov summasi</label>
+                                <label for="about">To'lov haqida</label>
                                 <textarea name="about" class="form-control" required></textarea>
                             </div>
                             <div class="col-6">
@@ -251,12 +251,12 @@
                 <table class="table table-bordered text-center table-striped table-hover" style="font-size:14px;">
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>To'lov Summa</th>
-                            <th>To'lov turi</th>
-                            <th>To'lov vaqti</th>
-                            <th>To'lov haqida</th>
-                            <th>Operator</th>
+                            <th class="bg-primary text-white text-center">#</th>
+                            <th class="bg-primary text-white text-center">To'lov Summa</th>
+                            <th class="bg-primary text-white text-center">To'lov turi</th>
+                            <th class="bg-primary text-white text-center">To'lov vaqti</th>
+                            <th class="bg-primary text-white text-center">To'lov haqida</th>
+                            <th class="bg-primary text-white text-center">Operator</th>
                         </tr>
                     </thead>
                     <tbody>

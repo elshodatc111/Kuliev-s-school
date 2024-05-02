@@ -23,7 +23,7 @@
         <div class="card-body text-center pt-3">
             <ul class="nav nav-tabs d-flex">
                 <li class="nav-item flex-fill">
-                    <a class="nav-link w-100 active bg-primary text-white" href="{{ route('AdminGuruh') }}">Guruhlar</a>
+                    <a class="nav-link w-100 active bg-success text-white" href="{{ route('AdminGuruh') }}">Guruhlar</a>
                 </li>
                 <li class="nav-item flex-fill" role="presentation">
                     <a class="nav-link w-100" href="{{ route('AdminGuruhEnd') }}">Yakunlangan guruhlar</a>
@@ -37,13 +37,13 @@
                 <table class="table datatable text-center table-hover" style="font-size:14px;">
                     <thead>
                         <tr>
-                            <th class="text-center">#</th>
-                            <th class="text-center">Guruh</th>
-                            <th class="text-center">Boshlanish vaqti</th>
-                            <th class="text-center">Yakunlanish vaqti</th>
-                            <th class="text-center">Talabalar</th>
-                            <th class="text-center">Guruh holati</th>
-                            <th class="text-center">Status</th>
+                            <th class="bg-primary text-white text-center">#</th>
+                            <th class="bg-primary text-white text-center">Guruh</th>
+                            <th class="bg-primary text-white text-center">Boshlanish vaqti</th>
+                            <th class="bg-primary text-white text-center">Yakunlanish vaqti</th>
+                            <th class="bg-primary text-white text-center">Talabalar</th>
+                            <th class="bg-primary text-white text-center">Guruh holati</th>
+                            <th class="bg-primary text-white text-center">Status</th>
                         </tr>
                     </thead>
                     <tbody>

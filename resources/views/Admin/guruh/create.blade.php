@@ -26,7 +26,7 @@
                     <a class="nav-link w-100" href="{{ route('AdminGuruhEnd') }}">Yakunlangan guruhlar</a>
                 </li>
                 <li class="nav-item flex-fill" role="presentation">
-                    <a class="nav-link w-100 active bg-primary text-white" href="{{ route('AdminGuruhCreate') }}">Yangi guruh</a>
+                    <a class="nav-link w-100 active bg-success text-white" href="{{ route('AdminGuruhCreate') }}">Yangi guruh</a>
                 </li>
             </ul>
             <div class="w-100 mt-2">

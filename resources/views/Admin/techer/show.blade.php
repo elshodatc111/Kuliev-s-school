@@ -208,16 +208,16 @@
                 <table class="table table-bordered text-center table-striped table-hover" style="font-size:14px;">
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>Guruh</th>
-                            <th>Boshlanish vaqti</th>
-                            <th>Tugash vaqti</th>
-                            <th>Talabalar</th>
-                            <th>Talaba o'chirildi</th>
-                            <th>Bonus</th>
-                            <th>Davomad</th>
-                            <th>Ish haqi</th>
-                            <th>To'langan</th>
+                            <th class="bg-primary text-white">#</th>
+                            <th class="bg-primary text-white">Guruh</th>
+                            <th class="bg-primary text-white">Boshlanish vaqti</th>
+                            <th class="bg-primary text-white">Tugash vaqti</th>
+                            <th class="bg-primary text-white">Talabalar</th>
+                            <th class="bg-primary text-white">Talaba o'chirildi</th>
+                            <th class="bg-primary text-white">Bonus</th>
+                            <th class="bg-primary text-white">Davomad</th>
+                            <th class="bg-primary text-white">Ish haqi</th>
+                            <th class="bg-primary text-white">To'langan</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -236,7 +236,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td class="text-center" colspan=9>Guruhlar mavjud emas.</td>
+                            <td class="text-center" colspan=10>Guruhlar mavjud emas.</td>
                         </tr>
                         @endforelse
                     </tbody>
@@ -253,14 +253,14 @@
                 <table class="table table-bordered text-center table-striped table-hover" style="font-size:14px;">
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>Guruh</th>
-                            <th>To'lov Summa</th>
-                            <th>To'lov turi</th>
-                            <th>To'lov vaqti</th>
-                            <th>To'lov haqida</th>
-                            <th>Meneger</th>
-                            <th>O'chirish</th>
+                            <th class="bg-primary text-white">#</th>
+                            <th class="bg-primary text-white">Guruh</th>
+                            <th class="bg-primary text-white">To'lov Summa</th>
+                            <th class="bg-primary text-white">To'lov turi</th>
+                            <th class="bg-primary text-white">To'lov vaqti</th>
+                            <th class="bg-primary text-white">To'lov haqida</th>
+                            <th class="bg-primary text-white">Meneger</th>
+                            <th class="bg-primary text-white">O'chirish</th>
                         </tr>
                     </thead>
                     <tbody>

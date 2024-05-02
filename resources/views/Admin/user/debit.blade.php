@@ -20,7 +20,7 @@
     <div class="alert alert-danger">{{Session::get('error') }}</div>
 @endif
 
-<section class="section dashboard">
+        <section class="section dashboard">
             <div class="card">
                 <div class="card-body pt-3">
                     <ul class="nav nav-tabs d-flex" id="myTabjustified" role="tablist">
@@ -38,8 +38,7 @@
                         </li>
                     </ul>
                     <div class="tab-content pt-2" id="myTabjustifiedContent">
-                        <div class="tab-pane fade show active" id="home-justified" role="tabpanel" aria-labelledby="home-tab">
-                            <h5 class="card-title w-100 text-center py-1">Qarzdorlar</h5>
+                        <div class="tab-pane fade show active" style="min-height:300px;" id="home-justified" role="tabpanel" aria-labelledby="home-tab">
                             <div class="table-responsive">
                                 <table class="table datatable" style="font-size:14px;">
                                     <thead>

@@ -473,19 +473,18 @@
             </ul>
             <div class="tab-content pt-2" id="myTabjustifiedContent">
                 <hr class="p-0 m-0">
-                <div class="tab-pane fade show active" id="Talaba_Tarixi" role="tabpanel" aria-labelledby="history-tab">
-                    <h5 class="card-title w-100 pt-1 p-0 text-center">Talaba tarixi</h5>
+                <div class="tab-pane fade show active" style="min-height:200px;" id="Talaba_Tarixi" role="tabpanel" aria-labelledby="history-tab">
                     <div class="table-responsive" style="font-size:12px;">
                         <table class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Status</th>
-                                    <th>Guruh</th>
-                                    <th>Summa</th>
-                                    <th>To'lov turi</th>
-                                    <th>Hisoblash</th>
-                                    <th>Balans</th>
+                                    <th class="bg-primary text-white text-center">#</th>
+                                    <th class="bg-primary text-white text-center">Status</th>
+                                    <th class="bg-primary text-white text-center">Guruh</th>
+                                    <th class="bg-primary text-white text-center">Summa</th>
+                                    <th class="bg-primary text-white text-center">To'lov turi</th>
+                                    <th class="bg-primary text-white text-center">Hisoblash</th>
+                                    <th class="bg-primary text-white text-center">Balans</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -610,21 +609,20 @@
                         </table>
                     </div>
                 </div>
-                <div class="tab-pane fade show" id="Talaba_guruhlari" role="tabpanel" aria-labelledby="guruhlar-tab">
-                    <h5 class="card-title w-100 p-0 pt-1 text-center">Talaba Guruhlari</h5>
+                <div class="tab-pane fade show" style="min-height:200px;" id="Talaba_guruhlari" role="tabpanel" aria-labelledby="guruhlar-tab">
                     <div class="table-responsive" style="font-size:12px;">
                         <table class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Guruh</th>
-                                    <th>Guruhga qo'shildi</th>
-                                    <th>Meneger</th>
-                                    <th>Qoshish haqida</th>
-                                    <th>Guruhdan o'chirildi</th>
-                                    <th>Meneger</th>
-                                    <th>O'chirish haqida</th>
-                                    <th>Status</th>
+                                    <th class="bg-primary text-white text-center">#</th>
+                                    <th class="bg-primary text-white text-center">Guruh</th>
+                                    <th class="bg-primary text-white text-center">Guruhga qo'shildi</th>
+                                    <th class="bg-primary text-white text-center">Meneger</th>
+                                    <th class="bg-primary text-white text-center">Qoshish haqida</th>
+                                    <th class="bg-primary text-white text-center">Guruhdan o'chirildi</th>
+                                    <th class="bg-primary text-white text-center">Meneger</th>
+                                    <th class="bg-primary text-white text-center">O'chirish haqida</th>
+                                    <th class="bg-primary text-white text-center">Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -655,20 +653,19 @@
                         </table>
                     </div>
                 </div>
-                <div class="tab-pane fade show" id="Talaba_Tulovlari" role="tabpanel" aria-labelledby="tulovlar-tab">
-                    <h5 class="card-title w-100 p-0 pt-1 text-center">Talaba to'lovlari</h5>
+                <div class="tab-pane fade show" id="Talaba_Tulovlari" style="min-height:200px;" role="tabpanel" aria-labelledby="tulovlar-tab">
                     <div class="table-responsive" style="font-size:12px;">
                         <table class="table table-hover table-bordered">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>To'lov summasi</th>
-                                    <th>To'lov turi</th>
-                                    <th>To'lov haqida</th>
-                                    <th>To'lov vaqti</th>
-                                    <th>Meneger</th>
+                                    <th class="text-center bg-primary text-white">#</th>
+                                    <th class="text-center bg-primary text-white">To'lov summasi</th>
+                                    <th class="text-center bg-primary text-white">To'lov turi</th>
+                                    <th class="text-center bg-primary text-white">To'lov haqida</th>
+                                    <th class="text-center bg-primary text-white">To'lov vaqti</th>
+                                    <th class="text-center bg-primary text-white">Meneger</th>
                                     @if(Auth::user()->type!='Operator')
-                                    <th>Status</th>
+                                    <th class="text-center bg-primary text-white">Status</th>
                                     @endif
                                 </tr>
                             </thead>
@@ -718,11 +715,11 @@
                 <table class="table table-bordered text-center table-hover">
                     <thead>
                         <tr>
-                            <td>#</td>
-                            <td>Eslatma</td>
-                            <td>Eslatma vaqti</td>
-                            <td>Meneger</td>
-                            <td>Eslatma xolati</td>
+                            <th class="bg-primary text-white text-center">#</th>
+                            <th class="bg-primary text-white text-center">Eslatma</th>
+                            <th class="bg-primary text-white text-center">Eslatma vaqti</th>
+                            <th class="bg-primary text-white text-center">Meneger</th>
+                            <th class="bg-primary text-white text-center">Eslatma xolati</th>
                         </tr>
                     </thead>
                     <tbody>

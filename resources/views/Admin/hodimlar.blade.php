@@ -74,12 +74,12 @@
                     <table class="table table-bordered text-center table-striped table-hover" style="font-size:14px;">
                         <thead>
                             <tr>
-                                <th>#</th>
-                                <th>Hodim</th>
-                                <th>Phone</th>
-                                <th>Lavozim</th>
-                                <th>Login</th>
-                                <th>Status</th>
+                                <th class="text-center bg-primary text-white">#</th>
+                                <th class="text-center bg-primary text-white">Hodim</th>
+                                <th class="text-center bg-primary text-white">Phone</th>
+                                <th class="text-center bg-primary text-white">Lavozim</th>
+                                <th class="text-center bg-primary text-white">Login</th>
+                                <th class="text-center bg-primary text-white">Status</th>
                             </tr>
                         </thead>
                         <tbody>

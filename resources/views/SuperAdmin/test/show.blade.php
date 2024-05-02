@@ -27,13 +27,13 @@
                     <table class="table text-center table-bordered" style="font-size:14px;">
                         <thead>
                             <tr>
-                                <th>#</th>
-                                <th>Savol</th>
-                                <th>To'g'ri javob</th>
-                                <th>Noto'g'ri javob</th>
-                                <th>Noto'g'ri javob</th>
-                                <th>Noto'g'ri javob</th>
-                                <th>Status</th>
+                                <th class="bg-primary text-white">#</th>
+                                <th class="bg-primary text-white">Savol</th>
+                                <th class="bg-primary text-white">To'g'ri javob</th>
+                                <th class="bg-primary text-white">Noto'g'ri javob</th>
+                                <th class="bg-primary text-white">Noto'g'ri javob</th>
+                                <th class="bg-primary text-white">Noto'g'ri javob</th>
+                                <th class="bg-primary text-white">Status</th>
                             </tr>
                         </thead>
                         <tbody>

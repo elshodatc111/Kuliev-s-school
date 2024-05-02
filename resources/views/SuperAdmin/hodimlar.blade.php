@@ -26,14 +26,14 @@
           <table class="table table-bordered text-center table-striped table-hover" style="font-size:14px;">
             <thead>
               <tr>
-                <th>#</th>
-                <th>Hodim</th>
-                <th>Phone</th>
-                <th>Addres</th>
-                <th>Tkun</th>
-                <th>Login</th>
-                <th>Create</th>
-                <th>Status</th>
+                <th class="bg-primary text-white">#</th>
+                <th class="bg-primary text-white">Hodim</th>
+                <th class="bg-primary text-white">Phone</th>
+                <th class="bg-primary text-white">Addres</th>
+                <th class="bg-primary text-white">Tkun</th>
+                <th class="bg-primary text-white">Login</th>
+                <th class="bg-primary text-white">Create</th>
+                <th class="bg-primary text-white">Status</th>
               </tr>
             </thead>
             <tbody>
