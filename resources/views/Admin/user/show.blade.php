@@ -774,7 +774,7 @@
                         </tr>
                         @empty
                             <tr>
-                                <td colspan=5 class="text-center">Eslatmalar mavjud emas.</td>
+                                <td colspan=7 class="text-center">Eslatmalar mavjud emas.</td>
                             </tr>
                         @endforelse
                     </tbody>
