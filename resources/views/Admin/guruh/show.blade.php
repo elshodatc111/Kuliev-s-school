@@ -480,12 +480,53 @@
     
     <div class="text-center">
         @if(Auth::user()->type!="Operator")
-        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteGuruh" style="font-size:14px;"><i class="bi bi-trash"></i> Guruhni o'chirish</button>
+            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteGuruh" style="font-size:14px;"><i class="bi bi-trash"></i> Guruhni o'chirish</button>
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#updateGuruh" style="font-size:14px;"><i class="bi bi-pencil"></i> Guruhni taxrirlash</button>
         @endif
         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#nextGuruh" style="font-size:14px;"><i class="bi bi-arrow-right-square"></i> Guruhni davom etish</button>
     </div>
 
-
+    <!-- Guruhni davom ettirish -->
+    <div class="modal fade" id="updateGuruh" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title w-100 text-center">Guruhni taxrirlash</h5>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('showUpdatestGuruh') }}" id="form4" method="post">
+                        @csrf
+                        <div class="row">
+                            <div class="col-12">
+                                <input type="hidden" name="id" value="{{ $Guruh['id'] }}">
+                                <label for="guruh_name">Guruh nomi</label>
+                                <input type="text" name="guruh_name" value="{{ $Guruh['guruh_name'] }}" required class="form-control">
+                                <label for="guruh_price" class="mt-2">Guruh narxi</label>
+                                <input type="text" id="summa1" name="guruh_price" value="{{ $Guruh['guruh_price'] }}" required class="form-control">
+                                <label for="techer_id" class="mt-2">O'qituvchi</label>
+                                <select name="techer_id" class="form-select" required>
+                                    <option value="">Tanlang...</option>
+                                    @foreach($Techers as $item)
+                                    <option value="{{ $item['id'] }}">{{ $item['name'] }}</option>
+                                    @endforeach
+                                </select>
+                                <label for="techer_price" class="mt-2">O'qituvchiga to'lov</label>
+                                <input type="text"  id="summa2" name="techer_price" value="{{ $Guruh['techer_price'] }}" required class="form-control">
+                                <label for="techer_bonus" class="mt-2">O'qituvchiga bonus</label>
+                                <input type="text"  id="summa3" name="techer_bonus" value="{{ $Guruh['techer_bonus'] }}" required class="form-control">
+                            </div>
+                            <div class="col-6">
+                                <button type="button" class="btn btn-secondary my-2 w-100" data-bs-dismiss="modal">Bekor qilish</button>
+                            </div>
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-success my-2 w-100">Saqlash</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     
     <!-- Guruhni davom ettirish -->
     <div class="modal fade" id="nextGuruh" tabindex="-1">
@@ -514,7 +555,7 @@
                                     <select class="form-select" name="guruh_price" id="guruh_price" required>
                                         <option value>Tanlang...</option>
                                         @foreach($TulovSetting as $item)
-                                        <option value="{{ $item['id'] }}">{{ $item['tulov_summa'] }}</option>
+                                        <option value="{{ $item['id'] }}">Summa: {{ $item['tulov_summa'] }} Chegirma: {{ $item['chegirma'] }}</option>
                                         @endforeach
                                     </select>
                                     <label for="guruh_price">Yangi guruh narxi</label>
@@ -577,7 +618,7 @@
                                 <button type="button" class="btn btn-secondary my-2 w-100" data-bs-dismiss="modal">Bekor qilish</button>
                             </div>
                             <div class="col-6">
-                                <button type="submit" class="btn btn-success my-2 w-100">Kiyingi</button>
+                                <button type="submit" class="btn btn-success my-2 w-100">Davom etish</button>
                             </div>
                         </div>
                     </form>

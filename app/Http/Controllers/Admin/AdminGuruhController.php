@@ -73,7 +73,7 @@ class AdminGuruhController extends Controller{
         $TulovSetting = TulovSetting::where('filial_id',request()->cookie('filial_id'))->where('status','true')->get();
         $Room = Room::where('filial_id',request()->cookie('filial_id'))->where('status','true')->get();
         $Techer = User::where('filial_id',request()->cookie('filial_id'))->where('status','true')->where('type','Techer')->get();
-        $Cours = Cours::where('filial_id',request()->cookie('filial_id'))->get();
+        $Cours = Cours::where('filial_id',request()->cookie('filial_id'))->where('created_at','!=',null)->get();
         return view('Admin.guruh.create',compact('TulovSetting','Room','Techer','Cours'));
     }
     public function DarsKunlari($StartData, $type){
@@ -362,7 +362,7 @@ class AdminGuruhController extends Controller{
         $Guruh = $this->GuruhAbout($id);
         $DarsKunlari = count($Guruh['Kunlar']);
         $Days = GuruhTime::where('guruh_id',$Guruh['id'])->get();
-        $TulovSetting = TulovSetting::where('filial_id',request()->cookie('filial_id'))->get();
+        $TulovSetting = TulovSetting::where('filial_id',request()->cookie('filial_id'))->where('status','=','true')->get();
         $Room = Room::where('filial_id',request()->cookie('filial_id'))->where('status','true')->get();
         $UsersDeletes = $this->userEndGroups($id);
         $Talabalar = $this->guruhTalabalari($id);
@@ -408,7 +408,23 @@ class AdminGuruhController extends Controller{
             $Natija[$key]['ball'] = $value->ball;
             $Natija[$key]['created_at'] = $value->created_at;
         }
-        return view('Admin.guruh.show',compact('Natija','DarsKunlari','Davomat','Guruhw','TulovSetting','Room','Guruh','Days','UsersDeletes','Talabalar'));
+        $Techers = User::where('filial_id',request()->cookie('filial_id'))->where('type','Techer')->where('status','true')->get();
+        return view('Admin.guruh.show',compact('Techers','Natija','DarsKunlari','Davomat','Guruhw','TulovSetting','Room','Guruh','Days','UsersDeletes','Talabalar'));
+    }
+    public function showUpdatestGuruh(Request $request){
+        $validate = $request->validate([
+            'guruh_name' => ['required'],
+            'guruh_price' => ['required'],
+            'techer_id' => ['required'],
+            'techer_price' => ['required'],
+            'techer_bonus' => ['required']
+        ]);
+        $validate['guruh_price'] = str_replace(" ","",str_replace(",","",$request->guruh_price));
+        $validate['techer_price'] = str_replace(" ","",str_replace(",","",$request->techer_price));
+        $validate['techer_bonus'] = str_replace(" ","",str_replace(",","",$request->techer_bonus));
+        $Guruh = Guruh::find($request->id);
+        $Guruh->update($validate);
+        return redirect()->back()->with('success', "Guruh yangilandi.");
     }
     public function guruhDelUser(Request $request){
         $validate = $request->validate([

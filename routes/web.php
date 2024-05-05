@@ -118,6 +118,7 @@ Route::post('/Admin/moliya/xarajat/delete', [MoliyaController::class, 'xarajatde
 Route::post('/Admin/moliya/xarajat/tasdiqlandi', [MoliyaController::class, 'xarajattasdiq'])->name('AdminMoliyaXarajatTasdiq');
 
 Route::get('/Admin/guruh', [AdminGuruhController::class, 'index'])->name('AdminGuruh');
+Route::post('/Admin/guruh/updates', [AdminGuruhController::class, 'showUpdatestGuruh'])->name('showUpdatestGuruh');
 Route::post('/Admin/guruh/delete', [AdminGuruhController::class, 'deletGuruh'])->name('AdminGuruhDelete');
 Route::get('/Admin/guruh/show/{id}', [AdminGuruhController::class, 'show'])->name('AdminGuruhShow');
 Route::get('/Admin/guruh/end', [AdminGuruhController::class, 'endGuruh'])->name('AdminGuruhEnd');
