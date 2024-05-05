@@ -61,8 +61,8 @@
                                             </th>
                                             <td>{{ $item['addres'] }}</td>
                                             <td class="text-center">{{ $item['phone'] }}</td>
-                                            <td class="text-center">{{ $item['guruhlar'] }}</td>
                                             <td class="text-center">{{ $item['created_at'] }}</td>
+                                            <td class="text-center">{{ $item['guruhlar'] }}</td>
                                         </tr>
                                         @empty
                                         <tr>
