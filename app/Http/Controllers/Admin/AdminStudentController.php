@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use mrmuminov\eskizuz\Eskiz;
 use mrmuminov\eskizuz\types\sms\SmsSingleSmsType;
+use Illuminate\Support\Facades\Http;
 
 class AdminStudentController extends Controller{
     public function __construct(){
@@ -192,8 +193,6 @@ class AdminStudentController extends Controller{
             callback_url:$callback_url
         );
         $result = $eskiz->requestSmsSend($singleSmsType);
-
-
         $SmsCounter = SmsCounter::find(1);
         $SmsCounter->maxsms = $SmsCounter->maxsms - 1;
         $SmsCounter->counte = $SmsCounter->counte + 1;
@@ -339,7 +338,39 @@ class AdminStudentController extends Controller{
             $eslat[$key]['admin_id'] = User::find($value->admin_id)->email;
             $eslat[$key]['created_at'] = $value->created_at;
         }
-        return view('Admin.user.show',compact('eslat','FilialKassa','adminChegirma','Users','Guruhs','userHistory','Tulovlar','talaba_guruh','userArxivGuruh','ChegirmaGuruh'));
+        $email = intval(User::find($id)->email);
+        $Arxiv =  Http::get('http://127.0.0.1:8000/api/user/'.$email)->json();
+        $Balans = 0;
+        $Arxiv2 = array();
+        foreach ($Arxiv as $key => $rowax) {
+            if($rowax['Type']=='Guruhga_qoshildi'){
+                $Balans = $Balans - $rowax['Summa'];
+            }elseif($rowax['Type']=='Guruhga_tulov'){
+                $Balans = $Balans + $rowax['Summa'];
+            }elseif($rowax['Type']=='Tulov_Qaytarildi'){
+                $Balans = $Balans - $rowax['Summa'];
+            }elseif($rowax['Type']=='Guruh_talabaga'){
+                $Balans = $Balans + $rowax['Summa'];
+            }elseif($rowax['Type']=='Guruhga_jarima'){
+                $Balans = $Balans - $rowax['Summa'];
+            }elseif($rowax['Type']=='Guruhga_Chegirma'){
+                $Balans = $Balans + $rowax['Summa'];
+            }
+            $Arxiv2[$key]['UserID'] = $rowax['UserID'];
+            $Arxiv2[$key]['GuruhID'] = $rowax['GuruhID'];
+            $Arxiv2[$key]['Type'] = $rowax['Type'];
+            $Arxiv2[$key]['Data'] = $rowax['Data'];
+            $Arxiv2[$key]['Status'] = $rowax['Status'];
+            $Arxiv2[$key]['Meneger'] = $rowax['Meneger'];
+            $Arxiv2[$key]['Summa'] = number_format($rowax['Summa'], 0, '.', ' ');
+            $Arxiv2[$key]['Balans'] = number_format($Balans, 0, '.', ' ');
+        }
+        $Balans2 = User::find($id)->balans;
+        if($Balans<0){
+            $Balans = $Balans*(-1);
+        }
+        $Balans3 = number_format($Balans2-$Balans, 0, '.', ' ');
+        return view('Admin.user.show',compact('Balans3','Arxiv2','eslat','FilialKassa','adminChegirma','Users','Guruhs','userHistory','Tulovlar','talaba_guruh','userArxivGuruh','ChegirmaGuruh'));
     }
     public function tulov(Request $request){ 
         $validate = $request->validate([
