@@ -123,9 +123,9 @@ class UserTulov{
             $User->save();
         }
         if($Chegirma!=0){
-            $text = $User->name." ".$filial_name." o'quv markazi kurslari uchun ".$summa." so'm to'lov qabul qilindi. va sizga ".$Chegirma." so'm chegirma berildi.";            
+            $text = "Hurmatli ".$User->name." ! ".$filial_name." o'quv markazi kurslari uchun ".$summa." so'm to'lov qabul qilindi. va sizga ".$Chegirma." so'm chegirma berildi.";            
         }else{
-            $text = $User->name." ".$filial_name." o'quv markazi kurslari uchun ".$summa." so'm to'lov qabul qilindi.";        
+            $text = "Hurmatli ".$User->name." ! ".$filial_name." o'quv markazi kurslari uchun ".$summa." so'm to'lov qabul qilindi.";        
         }
         $SmsCentar = SmsCentar::where('filial_id',$User->filial_id)->first()->tulov;
         Log::info('User Tulov CRM');

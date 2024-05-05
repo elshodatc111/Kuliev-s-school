@@ -15,7 +15,7 @@ class DeberSendMessege{
         $Filial = $event->Filial;
         $k=0;
         foreach($event->Messege as $value){
-            $Text = $value['name']." sizning ".$Filial." o'quv markazining o'quv kurslaridan ".$value['qarz']." so'm qarzdorligingiz mavjud.";
+            $Text = "Hurmatli ".$value['name']."! Sizning ".$Filial." o'quv markazining o'quv kurslaridan ".$value['qarz']." so'm qarzdorligingiz mavjud. Qarzdorligingizni so'ndirishingizni so'raymiz.\n".$Filial." o'quv markazi.";
             $Phone = $value['phone'];
             $eskiz_email = env('ESKIZ_UZ_EMAIL');
             $eskiz_password = env('ESKIZ_UZ_Password');

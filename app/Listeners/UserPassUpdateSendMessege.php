@@ -13,7 +13,7 @@ class UserPassUpdateSendMessege{
 
     public function handle(UserResetPassword $event): void{
         $fio = $event->fio;
-        $Text = $fio." Sizning yangi parolingiz\nParol:".$event->password;
+        $Text = "Hurmatli ".$fio." Sizning yangi parolingiz\nParol:".$event->password;
         $eskiz_email = env('ESKIZ_UZ_EMAIL');
         $eskiz_password = env('ESKIZ_UZ_Password');
         $eskiz = new Eskiz($eskiz_email,$eskiz_password);
