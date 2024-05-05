@@ -61,6 +61,7 @@ Route::post('/Superadmin/setting/chegirmaday/update', [FilialController::class, 
 Route::post('/Superadmin/room/create', [FilialController::class, 'roomcreate'])->name('roomcreate');
 Route::post('/Superadmin/filial', [FilialController::class, 'filialcreate'])->name('filialcreate');
 Route::post('/Superadmin/cours/create', [FilialController::class, 'filialCoursCreate'])->name('filialCoursCreate');
+Route::get('/Superadmin/cours/delete/{id}', [FilialController::class, 'filialCoursDelete'])->name('filialCoursDelete');
 
 Route::POST('/Superadmin/moliya/xarajat', [SuperMoliyaController::class, 'xarajat'])->name('SuperAdminMoliyaXarajay');
 Route::POST('/Superadmin/moliya/kassaga', [SuperMoliyaController::class, 'kassaga'])->name('SuperAdminMoliyaKassaga');

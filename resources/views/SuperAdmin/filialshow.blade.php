@@ -83,8 +83,10 @@
                                 <td>{{ $loop->index+1 }}</td>
                                 <td>{{ $item->cours_name }}</td>
                                 <td>
-                                    <a href="" class="btn btn-primary px-1 py-0"><i class="bi bi-eye"></i></a>
-                                    <a href="" class="btn btn-danger px-1 py-0"><i class="bi bi-trash"></i></a>
+                                    <!--
+                                        <a href="" class="btn btn-primary px-1 py-0"><i class="bi bi-eye"></i></a>
+                                    -->
+                                    <a href="{{ route('filialCoursDelete',$item['id']) }}" class="btn btn-danger px-1 py-0"><i class="bi bi-trash"></i></a>
                                 </td>
                             </tr>
                             @empty

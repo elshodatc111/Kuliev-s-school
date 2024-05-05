@@ -125,10 +125,18 @@ class FilialController extends Controller{
             $TulovSetting[$key]['chegirma'] = number_format(($item->chegirma), 0, '.', ' ');
             $TulovSetting[$key]['admin_chegirma'] = number_format(($item->admin_chegirma), 0, '.', ' ');
         }
-        $Cours = Cours::where('filial_id',$id)->get();
+        $Cours = Cours::where('filial_id',$id)->where('created_at','!=',null)->get();
         $SmsCentar = SmsCentar::where('filial_id',$id)->first();
         $ChegirmaDay = ChegirmaDay::where('filial_id',$id)->first()->days;
+        
         return view('SuperAdmin.filialshow',compact('ChegirmaDay','Filial','SmsCentar','Room','TulovSetting','Cours'));
+    
+    }
+    public function filialCoursDelete($id){
+        $Cours = Cours::find($id);
+        $Cours->created_at = null;
+        $Cours->save();
+        return redirect()->back()->with('success', 'Kurs o\'chirildi.'); 
     }
     public function roomcreate(Request $request){
         $validated = $request->validate([
