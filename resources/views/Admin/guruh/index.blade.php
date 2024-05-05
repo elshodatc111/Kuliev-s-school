@@ -43,14 +43,16 @@
                             <th class="bg-primary text-white text-center">Yakunlanish vaqti</th>
                             <th class="bg-primary text-white text-center">Talabalar</th>
                             <th class="bg-primary text-white text-center">Guruh holati</th>
-                            <th class="bg-primary text-white text-center">Status</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse($Guruhlar as $item)
                         <tr>
                             <td>{{ $loop->index+1 }}</td>
-                            <td style="text-align:left">{{ $item['guruh_name'] }}</td>
+                            <td style="text-align:left">
+                            <a href="{{ route('AdminGuruhShow',$item['id']) }}">
+                                {{ $item['guruh_name'] }}
+                            </td>
                             <td>{{ $item['guruh_start'] }}</td>
                             <td>{{ $item['guruh_end'] }}</td>
                             <td>{{ $item['talabalar'] }}</td>
@@ -63,13 +65,10 @@
                                     <span class="bg-danger text-white px-1" style="border-radius:5px">YAKUNLADNI</span>
                                 @endif
                             </td>
-                            <td>
-                                <a href="{{ route('AdminGuruhShow',$item['id']) }}" class="btn btn-primary px-1 py-0"><i class="bi bi-eye"></i></a>
-                            </td>
                         </tr>
                         @empty
                         <tr>
-                            <td colspan=7 class="text-center">Guruhlar mavjud emas.</td>
+                            <td colspan=6 class="text-center">Guruhlar mavjud emas.</td>
                         </tr>
                         @endforelse
                     </tbody>

@@ -76,25 +76,22 @@
                             <th class="bg-primary text-white">Telefon raqam</th>
                             <th class="bg-primary text-white">Telefon raqam 2</th>
                             <th class="bg-primary text-white">Login</th>
-                            <th class="bg-primary text-white">Status</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse($Techers as $item)
                         <tr>
                             <td>{{ $loop->index+1 }}</td>
-                            <td style="text-align:left">{{ $item->name }}</td>
+                            <td style="text-align:left">
+                                <a href="{{ route('AdminTecherShow',$item->id) }}">{{ $item->name }}</a>
+                            </td>
                             <td>{{ $item->phone }}</td>
                             <td>{{ $item->phone2 }}</td>
                             <td>{{ $item->email }}</td>
-                            <td>@if(Auth::user()->type != 'Operator')
-                                <a href="{{ route('AdminTecherShow',$item->id) }}" class="btn btn-primary py-0 px-1"><i class="bi bi-eye"></i></a>
-                                @endif
-                            </td>
                         </tr>
                         @empty
                             <tr>
-                                <td colspan=6 class="text-center">O'qituvchi o'chirildi.</td>
+                                <td colspan=5 class="text-center">O'qituvchi o'chirildi.</td>
                             </tr>
                         @endforelse
                     </tbody>

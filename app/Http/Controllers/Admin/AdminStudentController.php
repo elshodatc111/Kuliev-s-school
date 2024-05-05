@@ -200,8 +200,7 @@ class AdminStudentController extends Controller{
         return redirect()->back()->with('success', 'SMS xabar yuborildi.'); 
     }
     public function Guruhs($id){
-        $Guruhs = Guruh::where('guruh_end','>',date('Y-m-d'))
-            ->where('filial_id',request()->cookie('filial_id'))->get();
+        $Guruhs = Guruh::where('guruh_end','>',date('Y-m-d'))->orderby('guruh_name','asc')->where('filial_id',request()->cookie('filial_id'))->get();
         $Guruh = array();
         foreach ($Guruhs as $key => $value) {
             $GuruhUser = count(GuruhUser::where('user_id',$id)
@@ -339,7 +338,7 @@ class AdminStudentController extends Controller{
             $eslat[$key]['created_at'] = $value->created_at;
         }
         $email = intval(User::find($id)->email);
-        $Arxiv =  Http::get('http://127.0.0.1:8000/api/user/'.$email)->json();
+        $Arxiv =  Http::get(env('ESKI_CRM_API_LINK').$email)->json();
         $Balans = 0;
         $Arxiv2 = array();
         foreach ($Arxiv as $key => $rowax) {

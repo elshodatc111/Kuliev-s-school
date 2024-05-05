@@ -45,7 +45,7 @@
                             <select name="guruh_price" class="form-select" required>
                                 <option value="">Tanlang</option>
                                 @foreach($TulovSetting as $item)
-                                    <option value="{{ $item->id }}">{{ $item->tulov_summa }}</option>
+                                    <option value="{{ $item->id }}"><b>Summa: </b>{{ $item->tulov_summa }}<b> Chegirma: </b>{{ $item->chegirma }}</option>
                                 @endforeach
                             </select>
                             <div class="row">
@@ -105,7 +105,7 @@
                             
                         </div>
                         <div class="col-12">
-                            <button type="submit" class="btn btn-primary w-50 mt-2">Kiyingi</button>
+                            <button type="submit" class="btn btn-primary w-50 mt-2">Davom etish</button>
                         </div>
                     </div>
                 </form>

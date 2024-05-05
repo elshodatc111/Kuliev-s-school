@@ -48,26 +48,25 @@
                                             <th class="bg-primary text-white text-center">Telefon raqam</th>
                                             <th class="bg-primary text-white text-center">Guruhlar</th>
                                             <th class="bg-primary text-white text-center">Ro'yhatdan o'tdi</th>
-                                            <th class="bg-primary text-white text-center">Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @forelse($User as $item)
                                         <tr>
                                             <td class="text-center">{{ $loop->index+1 }}</td>
-                                            <th>{{ $item['name'] }}</th>
+                                            <th>
+                                                <a href="{{ route('StudentShow',$item['id']) }}">
+                                                    {{ $item['name'] }}
+                                                </a>
+                                            </th>
                                             <td>{{ $item['addres'] }}</td>
                                             <td class="text-center">{{ $item['phone'] }}</td>
                                             <td class="text-center">{{ $item['guruhlar'] }}</td>
                                             <td class="text-center">{{ $item['created_at'] }}</td>
-                                            <td class="text-center">
-                                                <a href="{{ route('StudentShow',$item['id']) }}" class="btn btn-primary py-0 px-1">
-                                                    <i class="bi bi-eye"></i></a>
-                                            </td>
                                         </tr>
                                         @empty
                                         <tr>
-                                            <td colspan=7 class="text-center">Tashriflar mavjud emas.</td>
+                                            <td colspan=6 class="text-center">Tashriflar mavjud emas.</td>
                                         </tr>
                                         @endforelse
                                     </tbody>

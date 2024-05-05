@@ -244,7 +244,9 @@
                         <select name="guruh_id" class="form-select" required>
                             <option value="">Tanlang</option>
                             @foreach($Guruhs as $item)
-                            <option value="{{ $item['guruh_id'] }}">{{ $item['guruh_name']." (".$item['techer']." )" }}</option>
+                                <option value="{{ $item['guruh_id'] }}">
+                                    {{ $item['guruh_name']." (".$item['techer']." )" }}
+                                </option>
                             @endforeach
                         </select>
                         <label for="commit_start" class="mb-1 mt-3">Guruhga qo'shish uchun izoh</label>

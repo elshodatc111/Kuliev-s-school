@@ -28,7 +28,8 @@ class AdminGuruhController extends Controller{
     }
     public function index(){
         $EndData = date("Y-m-d",strtotime('-15 day',strtotime(date('Y-m-d'))));
-        $Guruh = Guruh::where('filial_id',request()->cookie('filial_id'))->where('guruh_end','>=',$EndData)->get();
+        $Guruh = Guruh::where('filial_id',request()->cookie('filial_id'))
+            ->where('guruh_end','>=',$EndData)->orderby('guruh_start','desc')->get();
         $Guruhlar = array();
         foreach($Guruh as $key=> $item){
             $Guruhlar[$key]['guruh_name'] = $item->guruh_name;
@@ -69,7 +70,7 @@ class AdminGuruhController extends Controller{
         return view('Admin.guruh.end',compact('Guruhlar'));
     }
     public function CreateGuruh(){
-        $TulovSetting = TulovSetting::where('filial_id',request()->cookie('filial_id'))->get();
+        $TulovSetting = TulovSetting::where('filial_id',request()->cookie('filial_id'))->where('status','true')->get();
         $Room = Room::where('filial_id',request()->cookie('filial_id'))->where('status','true')->get();
         $Techer = User::where('filial_id',request()->cookie('filial_id'))->where('status','true')->where('type','Techer')->get();
         $Cours = Cours::where('filial_id',request()->cookie('filial_id'))->get();
