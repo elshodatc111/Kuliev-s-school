@@ -51,6 +51,7 @@ class AdminStudentController extends Controller{
         $pays = array();
         foreach ($Tulov as $key => $value) {
             $pays[$key]['id'] = $value->id;
+            $pays[$key]['user_id'] = User::find($value->user_id)->id;
             $pays[$key]['fio'] = User::find($value->user_id)->name;
             if($value->guruh_id!='NULL' OR $value->guruh_id!=" "){
                 $pays[$key]['guruh'] = " ";
@@ -82,6 +83,7 @@ class AdminStudentController extends Controller{
         ]);
         $validate['filial_id'] = request()->cookie('filial_id');
         $validate['type'] = 'User';
+        $validate['name'] = strtoupper($request->name);
         $validate['status'] = 'true';
         $validate['balans'] = null;
         $validate['email'] = time()*$login;
@@ -242,6 +244,7 @@ class AdminStudentController extends Controller{
             $History[$key]['id'] = $item->id;
             $History[$key]['guruh_id'] = $item->guruh_id;
             $History[$key]['guruh_name'] = Guruh::find($item->guruh_id)->guruh_name;
+            $History[$key]['guruh_starts'] = Guruh::find($item->guruh_id)->guruh_start;
             $History[$key]['guruh_start'] = $item->created_at;
             $History[$key]['commit_start'] = $item->commit_start;
             $History[$key]['admin_id_start'] = User::where('id',$item->admin_id_start)->first()->email;

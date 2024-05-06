@@ -30,7 +30,6 @@
                                 <th class="bg-primary text-white">Filial</th>
                                 <th class="bg-primary text-white">Cours</th>
                                 <th class="bg-primary text-white">Testlar soni</th>
-                                <th class="bg-primary text-white">Status</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -38,11 +37,8 @@
                             <tr>
                                 <td>{{ $loop->index+1 }}</td>
                                 <td>{{ $item['filial'] }}</td>
-                                <td>{{ $item['cours'] }}</td>
+                                <td><a href="{{ route('superAdminTestingShow',$item['id'] ) }}">{{ $item['cours'] }}</a></td>
                                 <td>{{ $item['testcount'] }}</td>
-                                <td>
-                                    <a href="{{ route('superAdminTestingShow',$item['id'] ) }}" class="btn btn-primary px-1 py-0"><i class="bi bi-eye"></i></a>
-                                </td>
                             </tr>
                             @empty
                             <tr>

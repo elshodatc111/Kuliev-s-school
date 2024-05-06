@@ -40,7 +40,7 @@
                         <div class="tab-pane fade show active"  style="min-height:300px;" id="home-justified" role="tabpanel" aria-labelledby="home-tab">
                             <div class="table-responsive">
                                 <table class="table datatable" style="font-size:14px;">
-                                    <thead>
+                                    <thead> 
                                         <tr>
                                             <th class="bg-primary text-white text-center">#</th>
                                             <th class="bg-primary text-white text-center">FIO</th>
@@ -56,7 +56,7 @@
                                         @forelse($pays as $item)
                                         <tr>
                                             <td class="text-center">{{ $loop->index+1 }}</td>
-                                            <td>{{ $item['fio'] }}</td>
+                                            <td><a href="{{ route('StudentShow',$item['user_id'] ) }}">{{ $item['fio'] }}</a></td>
                                             <td>{{ $item['guruh'] }}</td>
                                             <td>{{ $item['summa'] }}</td>
                                             <td>{{ $item['type'] }}</td>

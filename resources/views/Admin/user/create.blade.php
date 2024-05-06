@@ -43,16 +43,10 @@
                                 <div class="col-lg-6">
                                     <label for="name" class="mt-2 mb-1">FIO</label>
                                     <input type="text" name="name" class="form-control" required>
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <label for="phone" class="mt-2 mb-1">Telefon raqam</label>
-                                            <input type="text" name="phone" class="form-control phone" required>
-                                        </div>
-                                        <div class="col-6">
-                                            <label for="phone2" class="mt-2 mb-1">Tanishi telefon raqami</label>
-                                            <input type="text" name="phone2" class="form-control phone" required>
-                                        </div>
-                                    </div>
+                                    <label for="phone" class="mt-2 mb-1">Telefon raqam</label>
+                                    <input type="text" name="phone" class="form-control phone" required>
+                                    <label for="phone2" class="mt-2 mb-1">Tanishi telefon raqami</label>
+                                    <input type="text" name="phone2" class="form-control phone" required>
                                     <label for="addres" class="mt-2 mb-1">Yashash Manzil</label>
                                     <select name="addres" class="form-select">
                                         <option value="">Tanlang</option>
@@ -90,9 +84,11 @@
                                         <option value="Tanishlar">Tanishlar</option>
                                         <option value="Boshqa">Boshqa</option>
                                     </select>
+                                    <label for="smm" class="mt-2 mb-1 text-white">.</label>
+                                    <button class="btn btn-primary w-100">Tashrifni saqlash</button>
                                 </div>
                                 <div class="col-12 text-center">
-                                    <button class="btn btn-primary w-50 mt-3">Tashrifni saqlash</button>
+                                    
                                 </div>
                             </form>
                             

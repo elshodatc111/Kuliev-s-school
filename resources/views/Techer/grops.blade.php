@@ -28,19 +28,17 @@
                                     <th>Tugash vaqti</th>
                                     <th>Talabalar</th>
                                     <th>Dars vaqti</th>
-                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @forelse($Guruh as $item)
                                 <tr>
                                     <td>{{ $loop->index+1 }}</td>
-                                    <td style="text-align:left">{{ $item['guruh_name'] }}</td>
+                                    <td style="text-align:left"><a href="{{ route('TGuruhShow',$item['id']) }}">{{ $item['guruh_name'] }}</a></td>
                                     <td>{{ $item['guruh_start'] }}</td>
                                     <td>{{ $item['guruh_end'] }}</td>
                                     <td>{{ $item['users'] }}</td>
                                     <td>{{ $item['guruh_vaqt'] }}</td>
-                                    <td><a href="{{ route('TGuruhShow',$item['id']) }}" class="btn btn-primary px-1 py-0"><i class="bi bi-eye"></i></a></td>
                                 </tr>
                                 @empty
                                 <tr>

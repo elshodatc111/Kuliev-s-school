@@ -79,22 +79,16 @@
                                 <th class="text-center bg-primary text-white">Phone</th>
                                 <th class="text-center bg-primary text-white">Lavozim</th>
                                 <th class="text-center bg-primary text-white">Login</th>
-                                <th class="text-center bg-primary text-white">Status</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse($User as $item)
                                 <tr>
                                     <td>{{ $loop->index+1 }}</td>
-                                    <td style="text-align:left">{{ $item->name }}</td>
+                                    <td style="text-align:left"><a href="{{ route('adminHodim',$item->id) }}">{{ $item->name }}</a></td>
                                     <td>{{ $item->phone }}</td>
                                     <td>{{ $item->type }}</td>
                                     <td>{{ $item->email }}</td>
-                                    <td>
-                                        @if(Auth::user()->type != 'Operator')
-                                        <a href="{{ route('adminHodim',$item->id) }}" class="btn btn-primary py-0 px-1"><i class="bi bi-eye"></i></a>
-                                        @endif
-                                    </td>
                                 </tr>
                             @empty
                                 <tr>

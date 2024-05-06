@@ -145,12 +145,12 @@
                     <input type="hidden" name="naqt" value="{{ $Kassa['Naqt'] }}">
                     <input type="hidden" name="plastik" value="{{ $Kassa['Plastik'] }}">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-lg-6">
                             <label for="summa" class="mb-1">Chiqim summasi</label>
                             <input type="text" name="summa" id="summa1" class="form-control" required>
                         </div>
-                        <div class="col-6">
-                            <label for="type" class="mb-1">Chiqim turi</label>
+                        <div class="col-lg-6">
+                            <label for="type" class="mb-1 mt-2 mt-lg-0">Chiqim turi</label>
                             <select name="type" class="form-select" required>
                                 <option value="">Tanlang</option>
                                 <option value="Naqt">Naqt</option>
@@ -187,12 +187,12 @@
                     <input type="hidden" name="naqt" value="{{ $Kassa['Naqt'] }}">
                     <input type="hidden" name="plastik" value="{{ $Kassa['Plastik'] }}">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-lg-6">
                             <label for="summa" class="mb-1">Xarajat summasi</label>
                             <input type="text" name="summa" id="summa2" class="form-control" required>
                         </div>
-                        <div class="col-6">
-                            <label for="type" class="mb-1">Xarajat turi</label>
+                        <div class="col-lg-6">
+                            <label for="type" class="mb-1 mt-2 mt-lg-0">Xarajat turi</label>
                             <select name="type" class="form-select" required>
                                 <option value="">Tanlang</option>
                                 <option value="Naqt">Naqt</option>

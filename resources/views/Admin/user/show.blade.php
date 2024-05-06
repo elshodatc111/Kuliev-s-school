@@ -90,29 +90,29 @@
             <div class="tab-content pt-2" id="myTabjustifiedContent">
                 <div class="tab-pane fade show active" id="home-justified" role="tabpanel" aria-labelledby="home-tab">
                     <div class="row">
-                        <div class="col-lg-3 col-6">
+                        <div class="col-lg-3">
                             <button class="btn my-1 btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#tulovPlus"><i class="bi bi-cash-coin"></i> To'lov qilish</button>
                         </div>
-                        <div class="col-lg-3 col-6">
+                        <div class="col-lg-3">
                             <button class="btn my-1 btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#sendMessege"><i class="bi bi-messenger"></i> SMS yuborish</button>
                         </div>
-                        <div class="col-lg-3 col-6">
+                        <div class="col-lg-3">
                             <button class="btn my-1 btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#eslatmaQoldirish"><i class="bi bi-messenger"></i> Eslatma qoldirish</button>
                         </div>
-                        <div class="col-lg-3 col-6">
+                        <div class="col-lg-3">
                             <button class="btn my-1 btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#guruhPlusUser"><i class="bi bi-cash-coin"></i> Guruhga qo'shish</button>
                         </div>
-                        <div class="col-lg-3 col-6">
+                        <div class="col-lg-3">
                             <button class="btn my-1 btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#userEdit"><i class="bi bi-pencil-square"></i> Taxrirlash</button>
                         </div>
-                        <div class="col-lg-3 col-6">
+                        <div class="col-lg-3">
                             <button class="btn my-1 btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#resetPassword"><i class="bi bi-lock"></i> Parolni yangilash</button>
                         </div>
-                        <div class="col-lg-3 col-6">
+                        <div class="col-lg-3">
                             <button class="btn my-1 btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#parRepetUsr"><i class="bi bi-cash-stack"></i> To'lovni qaytarish</button>
                         </div>
                         @if(Auth::user()->type!='Operator')
-                        <div class="col-lg-3 col-6">
+                        <div class="col-lg-3">
                             <button class="btn my-1 btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#chegirmaPlus"><i class="bi bi-coin"></i> Chegirma kiritish</button>
                         </div>
                         @endif
@@ -376,12 +376,12 @@
                         <input type="hidden" name="naqt" value="{{ $FilialKassa['naqt'] }}">
                         <input type="hidden" name="plastik" value="{{ $FilialKassa['plastik'] }}">
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-lg-6">
                                 <label for="summa">Qaytariladigan summa</label>
                                 <input type="text" name="summa" id="summa2" class="form-control" required>
                             </div>
-                            <div class="col-6">
-                                <label for="type">To'lov turi</label>
+                            <div class="col-lg-6">
+                                <label for="type" class="mt-lg-0 mt-2">To'lov turi</label>
                                 <select name="type" class="form-select" required>
                                     <option value="">Tanlang</option>
                                     <option value="Naqt">Naqt</option>
@@ -481,6 +481,7 @@
                             <thead>
                                 <tr>
                                     <th class="bg-primary text-white text-center">#</th>
+                                    <th class="bg-primary text-white text-center">Vaqti</th>
                                     <th class="bg-primary text-white text-center">Status</th>
                                     <th class="bg-primary text-white text-center">Guruh</th>
                                     <th class="bg-primary text-white text-center">Summa</th>
@@ -494,6 +495,7 @@
                                     @if($item->status=='Markazga tashrif')
                                     <tr>
                                         <td class="text-center">{{ $loop->index+1 }}</td>
+                                        <td>{{ $item['created_at'] }}</td>
                                         <td>{{ $item['status'] }}</td>
                                         <td>_</td>
                                         <td>_</td>
@@ -504,6 +506,7 @@
                                     @elseif($item->status=="Guruhdan o'chirildi")
                                     <tr>
                                         <td class="text-center">{{ $loop->index+1 }}</td>
+                                        <td>{{ $item['created_at'] }}</td>
                                         <td>{{ $item['status'] }}</td>
                                         <td>{{ $item['type'] }}</td>
                                         <td>{{ $item['summa'] }}</td>
@@ -514,6 +517,7 @@
                                     @elseif($item->status=="Jarima")
                                     <tr>
                                         <td class="text-center">{{ $loop->index+1 }}</td>
+                                        <td>{{ $item['created_at'] }}</td>
                                         <td>{{ $item['status'] }}</td>
                                         <td>{{ $item['type'] }}</td>
                                         <td>{{ $item['summa'] }}</td>
@@ -524,6 +528,7 @@
                                     @elseif($item->status=="Chegirma")
                                     <tr>
                                         <td class="text-center">{{ $loop->index+1 }}</td>
+                                        <td>{{ $item['created_at'] }}</td>
                                         <td>{{ $item['status'] }}</td>
                                         <td>{{ $item['type'] }}</td>
                                         <td>{{ $item['summa'] }}</td>
@@ -534,6 +539,7 @@
                                     @elseif($item->status=="Tulov Naqt")
                                     <tr>
                                         <td class="text-center">{{ $loop->index+1 }}</td>
+                                        <td>{{ $item['created_at'] }}</td>
                                         <td>{{ $item['status'] }}</td>
                                         <td>{{ $item['type'] }}</td>
                                         <td>{{ $item['summa'] }}</td>
@@ -544,6 +550,7 @@
                                     @elseif($item->status=="Tulov Plastik")
                                     <tr>
                                         <td class="text-center">{{ $loop->index+1 }}</td>
+                                        <td>{{ $item['created_at'] }}</td>
                                         <td>{{ $item['status'] }}</td>
                                         <td>{{ $item['type'] }}</td>
                                         <td>{{ $item['summa'] }}</td>
@@ -554,6 +561,7 @@
                                     @elseif($item->status=="Guruhga qo'shildi")
                                     <tr>
                                         <td class="text-center">{{ $loop->index+1 }}</td>
+                                        <td>{{ $item['created_at'] }}</td>
                                         <td>{{ $item['status'] }}</td>
                                         <td>{{ $item['type'] }}</td>
                                         <td>{{ $item['summa'] }}</td>
@@ -564,6 +572,7 @@
                                     @elseif($item->status=="To'lov o'chirildi(Naqt)")
                                     <tr>
                                         <td class="text-center">{{ $loop->index+1 }}</td>
+                                        <td>{{ $item['created_at'] }}</td>
                                         <td>{{ $item['status'] }}</td>
                                         <td>{{ $item['type'] }}</td>
                                         <td>{{ $item['summa'] }}</td>
@@ -574,6 +583,7 @@
                                     @elseif($item->status=="To'lov o'chirildi(Chegirma)")
                                     <tr>
                                         <td class="text-center">{{ $loop->index+1 }}</td>
+                                        <td>{{ $item['created_at'] }}</td>
                                         <td>{{ $item['status'] }}</td>
                                         <td>{{ $item['type'] }}</td>
                                         <td>{{ $item['summa'] }}</td>
@@ -584,6 +594,7 @@
                                     @elseif($item->status=="To'lov o'chirildi(Plastik)")
                                     <tr>
                                         <td class="text-center">{{ $loop->index+1 }}</td>
+                                        <td>{{ $item['created_at'] }}</td>
                                         <td>{{ $item['status'] }}</td>
                                         <td>{{ $item['type'] }}</td>
                                         <td>{{ $item['summa'] }}</td>
@@ -594,6 +605,7 @@
                                     @else
                                     <tr>
                                         <td class="text-center">{{ $loop->index+1 }}</td>
+                                        <td>{{ $item['created_at'] }}</td>
                                         <td>{{ $item['status'] }}</td>
                                         <td>{{ $item['type'] }}</td>
                                         <td>{{ $item['summa'] }}</td>
@@ -604,7 +616,7 @@
                                     @endif
                                 @empty
                                     <tr>
-                                        <td colspan=7 class="text-center">Talaba tarixi mavjud emas.</td>
+                                        <td colspan=8 class="text-center">Talaba tarixi mavjud emas.</td>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -631,7 +643,7 @@
                                 @forelse($userArxivGuruh as $item)
                                 <tr>
                                     <td class="text-center">{{ $loop->index+1 }}</td>
-                                    <td><a href="{{ route('AdminGuruhShow',$item['guruh_id'] ) }}">{{ $item['guruh_name'] }}</a></td>
+                                    <td><a href="{{ route('AdminGuruhShow',$item['guruh_id'] ) }}">{{ $item['guruh_name'] }} ({{ $item['guruh_starts'] }})</a></td>
                                     <td>{{ $item['guruh_start'] }}</td>
                                     <td>{{ $item['admin_id_start'] }}</td>
                                     <td>{{ $item['commit_start'] }}</td>
@@ -666,7 +678,7 @@
                                     <th class="text-center bg-primary text-white">To'lov haqida</th>
                                     <th class="text-center bg-primary text-white">To'lov vaqti</th>
                                     <th class="text-center bg-primary text-white">Meneger</th>
-                                    @if(Auth::user()->type!='Operator')
+                                    @if(Auth::user()->type=='SuperAdmin')
                                     <th class="text-center bg-primary text-white">Status</th>
                                     @endif
                                 </tr>
@@ -680,7 +692,7 @@
                                     <td>{{ $item['about'] }}</td>
                                     <td>{{ $item['created_at'] }}</td>
                                     <td>{{ $item['admin'] }}</td>
-                                    @if(Auth::user()->type!='Operator')
+                                    @if(Auth::user()->type=='SuperAdmin')
                                     <td class="text-center">
                                         @if($item['type']=='Qaytarildi (Naqt)')
                                         @elseif($item['type']=='Qaytarildi (Plastik)')
@@ -693,7 +705,7 @@
                                     @endif
                                 </tr> 
                                 @empty
-                                    @if(Auth::user()->type!='Operator')
+                                    @if(Auth::user()->type=='SuperAdmin')
                                     <tr>
                                         <td colspan=7 class="text-center">To'lovlar mavjud emas.</td>
                                     </tr>

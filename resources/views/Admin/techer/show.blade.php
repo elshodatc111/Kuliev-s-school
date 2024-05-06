@@ -46,10 +46,10 @@
                         </tr>
                     </table>
                     <div class="row">
-                        <div class="col-lg-6 mt-lg-0 bt-2">
+                        <div class="col-lg-6 mt-lg-0">
                             <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#editpassword">Parolni yangilash</button>
                         </div>
-                        <div class="col-lg-6 mt-lg-0 bt-2">
+                        <div class="col-lg-6 mt-lg-0 mt-2">
                             <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#taxrirlash">Taxrirlash</button>
                         </div>
                     </div>

@@ -49,12 +49,12 @@
                                 @endforeach
                             </select>
                             <div class="row">
-                                <div class="col-6">
-                                    <label for="guruh_start" style="text-align:left;width:100%" class="mt-2">Dars boshlanish vaqti</label>
+                                <div class="col-lg-6">
+                                    <label for="guruh_start" class="mt-2" style="text-align:left;width:100%" class="mt-2">Dars boshlanish vaqti</label>
                                     <input type="date" name="guruh_start" value="{{ old('guruh_start') }}" class="form-control" required>
                                 </div>
-                                <div class="col-6">
-                                    <label for="hafta_kun" style="text-align:left;width:100%" class="mt-2">Hafta kunlari</label>
+                                <div class="col-lg-6">
+                                    <label for="hafta_kun" class="mt-2" style="text-align:left;width:100%" class="mt-2">Hafta kunlari</label>
                                     <select name="hafta_kun" class="form-select" required>
                                         <option value="">Tanlang</option>
                                         <option value="juft">Juft kunlar</option>
@@ -66,8 +66,8 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="row">
-                                <div class="col-6">
-                                    <label for="" style="text-align:left;width:100%">Dars xonasi</label>
+                                <div class="col-lg-6">
+                                    <label for="" class="mt-2" style="text-align:left;width:100%">Dars xonasi</label>
                                     <select name="room_id" class="form-select" required>
                                         <option value="">Tanlang</option>
                                         @foreach($Room as $item)
@@ -75,8 +75,8 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-6">
-                                    <label for="cours_id" style="text-align:left;width:100%">Guruh uchun kurs</label>
+                                <div class="col-lg-6">
+                                    <label for="cours_id" class="mt-2" style="text-align:left;width:100%">Guruh uchun kurs</label>
                                     <select name="cours_id" class="form-select" required>
                                         <option value="">Tanlang</option>
                                         @foreach($Cours as $item)
@@ -93,11 +93,11 @@
                                 @endforeach
                             </select>
                             <div class="row">
-                                <div class="col-6">
-                                    <label for="techer_price" class="pt-2">O'qituvchiga to'lov</label>
+                                <div class="col-lg-6">
+                                    <label for="techer_price"  class="pt-2">O'qituvchiga to'lov</label>
                                     <input type="text" name="techer_price" class="form-control" id="summa1" required>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-lg-6">
                                     <label for="techer_bonus" class="pt-2">O'qituvchiga bonus</label>
                                     <input type="text" name="techer_bonus" class="form-control" id="summa2" required>
                                 </div>
