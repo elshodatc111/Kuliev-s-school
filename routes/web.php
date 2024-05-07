@@ -44,6 +44,8 @@ Route::get('/Superadmin/hisobot/all/web/index', [ReportControlle::class, 'index'
 Route::post('/Superadmin/hisobot/all/show', [ReportControlle::class, 'show'])->name('hisobotShow');
 
 Route::get('/Superadmin/Testing', [TestController::class, 'index'])->name('superAdminTesting');
+
+
 Route::get('/Superadmin/Testing/show/{id}', [TestController::class, 'show'])->name('superAdminTestingShow');
 Route::post('/Superadmin/Testing/create', [TestController::class, 'create'])->name('superAdminTestingCreate');
 Route::get('/Superadmin/Testing/delete/{id}', [TestController::class, 'delete'])->name('superAdminTestingDelete');

@@ -98,4 +98,5 @@ class SuperMoliyaController extends Controller{
         ]);
         return redirect()->back()->with('success', 'Filial balansiga qaytarildi.'); 
     }
+    
 }

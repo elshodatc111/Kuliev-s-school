@@ -44,4 +44,5 @@ class TestController extends Controller{
         $Test->delete();
         return redirect()->back()->with('success', 'Test savoli o\chirildi.'); 
     }
+
 }
