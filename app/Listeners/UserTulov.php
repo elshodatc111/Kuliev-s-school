@@ -6,7 +6,9 @@ use App\Models\User;
 use App\Models\AdminKassa;
 use App\Models\Tulov;
 use App\Models\Filial;
+use App\Models\SendMessege;
 use App\Models\Guruh;
+use App\Jobs\TashrifMessege;
 use App\Models\SmsCentar;
 use App\Models\SmsCounter;
 use App\Models\FilialKassa;
@@ -123,35 +125,19 @@ class UserTulov{
             $User->save();
         }
         if($Chegirma!=0){
-            $text = "Hurmatli ".$User->name." ! ".$filial_name." o'quv markazi kurslari uchun ".$summa." so'm to'lov qabul qilindi. va sizga ".$Chegirma." so'm chegirma berildi.";            
+            $Text = "Hurmatli ".$User->name." ! ".$filial_name." o'quv markazi kurslari uchun ".$summa." so'm to'lov qabul qilindi. va sizga ".$Chegirma." so'm chegirma berildi.";            
         }else{
-            $text = "Hurmatli ".$User->name." ! ".$filial_name." o'quv markazi kurslari uchun ".$summa." so'm to'lov qabul qilindi.";        
+            $Text = "Hurmatli ".$User->name." ! ".$filial_name." o'quv markazi kurslari uchun ".$summa." so'm to'lov qabul qilindi.";        
         }
         $SmsCentar = SmsCentar::where('filial_id',$User->filial_id)->first()->tulov;
-        Log::info('User Tulov CRM');
         if($SmsCentar=='on'){
-            $phone = "+998".str_replace(" ","",$User->phone);
-            $eskiz_email = env('ESKIZ_UZ_EMAIL');
-            $eskiz_password = env('ESKIZ_UZ_Password');
-            $eskiz = new Eskiz($eskiz_email,$eskiz_password);
-            $eskiz->requestAuthLogin();
-            $from='4546';
-            $mobile_phone = $phone;
-            $message = $text;
-            $user_sms_id = 1;
-            $callback_url = '';
-            $singleSmsType = new SmsSingleSmsType(
-                from: $from,
-                message: $message,
-                mobile_phone: $mobile_phone,
-                user_sms_id:$user_sms_id,
-                callback_url:$callback_url
-            );
-            $result = $eskiz->requestSmsSend($singleSmsType);
-            $SmsCounter = SmsCounter::find(1);
-            $SmsCounter->maxsms = $SmsCounter->maxsms - 1;
-            $SmsCounter->counte = $SmsCounter->counte + 1;
-            $SmsCounter->save();
+            $Phone = str_replace(" ","",$User->phone);
+            $SendMessege = SendMessege::create([
+                'text' => $Text,
+                'phone' =>'+998'.$Phone,
+                'status' => 'Yuborilmoqda...'
+            ]);
+            TashrifMessege::dispatch($SendMessege);
         }
         if(Auth::user()->type!='SuperAdmin'){
             $AdminKassa = AdminKassa::where('user_id',Auth::user()->id)->first();

@@ -312,6 +312,22 @@ class ReportControlle extends Controller{
         }
         return view('SuperAdmin.hisobot.test_natija',compact('Test'));
     }
+    public function UmumiyBalansTarixi(){
+        $Test = array();
+        $Balanss = Moliya::get();
+        $Balans = array();
+        foreach ($Balanss as $key => $value) {
+            $Balans[$key]['filial'] = Filial::find($value->filial_id)->filial_name;
+            $Balans[$key]['xodisa'] = $value->xodisa;
+            $Balans[$key]['summa'] = $value->summa;
+            $Balans[$key]['type'] = $value->type;
+            $Balans[$key]['about'] = $value->about;
+            $Balans[$key]['about'] = $value->about;
+            $Balans[$key]['user_id'] = User::find($value->user_id)->name;
+            $Balans[$key]['created_at'] = $value->created_at;
+        }
+        return view('SuperAdmin.hisobot.balans',compact('Balans'));
+    }
     public function show(Request $request){
         $type = $request->report;
         if($type=='all_tashrif'){return $this->Tashriflar();}
@@ -327,9 +343,8 @@ class ReportControlle extends Controller{
         if($type=='guruhlar'){return $this->Guruhlar();}
         if($type=='hodim_ish_haqi'){return $this->HodimIshHaqi();}
         if($type=='techer_ish_haqi'){return $this->TecherIshHaqi();}
-        if($type=='test_natija'){
-            return $this->TestNatija();
-        }
+        if($type=='test_natija'){return $this->TestNatija();}
+        if($type=='umumiy_balans_tarixi'){return $this->UmumiyBalansTarixi();}
         dd($type);
 
         #return view('SuperAdmin.hisobot.show');

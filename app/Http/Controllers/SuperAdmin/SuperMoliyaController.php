@@ -5,6 +5,7 @@ use App\Models\Filial;
 use App\Models\FilialKassa;
 use App\Models\Moliya;
 use App\Models\User;
+use App\Models\MavjudIshHaqi;
 use Illuminate\Support\Facades\Auth;;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -56,20 +57,24 @@ class SuperMoliyaController extends Controller{
         ]);
         return redirect()->back()->with('success', 'Xarajatlar uchun chiqim qilindi.'); 
     }
+
     public function kassaga(Request $request){
         if($request->summa==0){
             return redirect()->back()->with('error', 'Filialqa qaytarish summasi noto\'g\'ri.'); 
         }
         $filial_id = $request->filial_id;
+        $filial_id2 = $request->filial_id2;
         $Filial = Filial::find($filial_id);
         $FilialKassa = FilialKassa::where('filial_id',$filial_id)->first();
         $summa = str_replace(",","",$request->summa);
         $type = $request->type;
+        $MavjudIshHaqi = MavjudIshHaqi::where('filial_id',$filial_id2)->first();
         if($type=='Naqt'){
             $Mavjud = $Filial->naqt;
             if($summa>$Mavjud){
                 return redirect()->back()->with('error', 'Filail balansida yetarli mablag\' mavjud emas.'); 
             }
+            $MavjudIshHaqi->naqt = $MavjudIshHaqi->naqt + $summa;
             $Filial->naqt = $Filial->naqt - $summa;
             $Filial->xarajat_naqt = $Filial->xarajat_naqt + $summa;
             $FilialKassa->tulov_naqt = $FilialKassa->tulov_naqt + $summa;
@@ -79,11 +84,13 @@ class SuperMoliyaController extends Controller{
              if($Mavkud<$summa){
                  return redirect()->back()->with('error', 'Filail balansida yetarli mablag\' mavjud emas.'); 
              }
+             $MavjudIshHaqi->plastik = $MavjudIshHaqi->plastik + $summa;
              $Filial->plastik = $Filial->plastik - $summa;
              $Filial->xarajat_plastik = $Filial->xarajat_plastik + $summa;
              $FilialKassa->tulov_plastik = $FilialKassa->tulov_plastik + $summa;
              $FilialKassa->tulov_plastik_chiqim_tasdiqlandi = $FilialKassa->tulov_plastik_chiqim_tasdiqlandi - $summa;
         }
+        $MavjudIshHaqi->save();
         $Filial->save();
         $FilialKassa->save();
         Moliya::create([
@@ -98,5 +105,4 @@ class SuperMoliyaController extends Controller{
         ]);
         return redirect()->back()->with('success', 'Filial balansiga qaytarildi.'); 
     }
-    
 }

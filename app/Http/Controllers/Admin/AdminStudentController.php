@@ -13,6 +13,9 @@ use App\Models\GuruhUser;
 use App\Models\ChegirmaDay;
 use App\Models\FilialKassa;
 use App\Models\Tulov;
+use App\Models\SendMessege;
+use App\Models\Filial;
+use App\Jobs\TashrifMessege;
 use App\Events\CreateTashrif;
 use App\Events\createTulov;
 use App\Events\UserResetPassword;
@@ -102,7 +105,13 @@ class AdminStudentController extends Controller{
             'status' => 'Markazga tashrif',
             'balans' => 0,
         ]);
-        CreateTashrif::dispatch($id,$Phone,$password);
+        $Filail_name = Filial::find(request()->cookie('filial_id'))->filial_name;
+        $SendMessege = SendMessege::create([
+            'text' => "Hurmatli ".$NewUser->name."!!\nSiz ".$Filail_name." o'quv markazida ro'yhatga olindingiz. \nLogin: ".$NewUser->email."\nParol: ".$password."\nwebsayt: ".env('WEB_SAYT_LINK'),
+            'phone' =>'+998'.$Phone,
+            'status' => 'Yuborilmoqda...'
+        ]);
+        TashrifMessege::dispatch($SendMessege);
         return redirect()->route('Student')->with('success', 'Yangi tashrif qo\'shildi.'); 
     }
     public function guruhPlus(Request $request){
@@ -171,34 +180,26 @@ class AdminStudentController extends Controller{
         $User = User::find($request->id);
         $User->password = Hash::make($password);
         $User->save();
-        UserResetPassword::dispatch($User->name,$password,$User->phone);
+        $Phone = str_replace(" ","",$User->phone);
+        $Filail_name = Filial::find(request()->cookie('filial_id'))->filial_name;
+        $SendMessege = SendMessege::create([
+            'text' => "Hurmatli ".$User->name."!!\nSiz ".$Filail_name." o'quv markazi. Parolingiz yangilandi. \nLogin: ".$User->email."\nParol: ".$password."\nwebsayt: ".env('WEB_SAYT_LINK'),
+            'phone' =>'+998'.$Phone,
+            'status' => 'Yuborilmoqda...'
+        ]);
+        TashrifMessege::dispatch($SendMessege);
         return redirect()->back()->with('success', 'Talaba paroli yangilandi.'); 
     }
     public function sendMessege(Request $request){
         $User = User::find($request->user_id);
-        $phone = "+998".str_replace(" ","",$User->phone);
+        $Phone = str_replace(" ","",$User->phone);
         $Text = $request->text;
-        $eskiz_email = env('ESKIZ_UZ_EMAIL');
-        $eskiz_password = env('ESKIZ_UZ_Password');
-        $eskiz = new Eskiz($eskiz_email,$eskiz_password);
-        $eskiz->requestAuthLogin();
-        $from='4546';
-        $mobile_phone = $phone;
-        $message = $Text;
-        $user_sms_id = 1;
-        $callback_url = '';
-        $singleSmsType = new SmsSingleSmsType(
-            from: $from,
-            message: $message,
-            mobile_phone: $mobile_phone,
-            user_sms_id:$user_sms_id,
-            callback_url:$callback_url
-        );
-        $result = $eskiz->requestSmsSend($singleSmsType);
-        $SmsCounter = SmsCounter::find(1);
-        $SmsCounter->maxsms = $SmsCounter->maxsms - 1;
-        $SmsCounter->counte = $SmsCounter->counte + 1;
-        $SmsCounter->save();
+        $SendMessege = SendMessege::create([
+            'text' => $Text,
+            'phone' =>'+998'.$Phone,
+            'status' => 'Yuborilmoqda...'
+        ]);
+        TashrifMessege::dispatch($SendMessege);
         return redirect()->back()->with('success', 'SMS xabar yuborildi.'); 
     }
     public function Guruhs($id){
@@ -340,7 +341,40 @@ class AdminStudentController extends Controller{
             $eslat[$key]['admin_id'] = User::find($value->admin_id)->email;
             $eslat[$key]['created_at'] = $value->created_at;
         }
-        return view('Admin.user.show',compact('eslat','FilialKassa','adminChegirma','Users','Guruhs','userHistory','Tulovlar','talaba_guruh','userArxivGuruh','ChegirmaGuruh'));
+
+        $Balans2 = User::find($id)->balans; 
+        $email = intval(User::find($id)->email);
+        $Arxiv =  Http::get(env('ESKI_CRM_API_LINK').$email)->json();
+        $Balans = 0;
+        $Arxiv2 = array();
+        foreach ($Arxiv as $key => $rowax) {
+            if($rowax['Type']=='Guruhga_qoshildi'){
+                $Balans = $Balans - $rowax['Summa'];
+            }elseif($rowax['Type']=='Guruhga_tulov'){
+                $Balans = $Balans + $rowax['Summa'];
+            }elseif($rowax['Type']=='Tulov_Qaytarildi'){
+                $Balans = $Balans - $rowax['Summa'];
+            }elseif($rowax['Type']=='Guruh_talabaga'){
+                $Balans = $Balans + $rowax['Summa'];
+            }elseif($rowax['Type']=='Guruhga_jarima'){
+                $Balans = $Balans - $rowax['Summa'];
+            }elseif($rowax['Type']=='Guruhga_Chegirma'){
+                $Balans = $Balans + $rowax['Summa'];
+            }
+            $Arxiv2[$key]['UserID'] = $rowax['UserID'];
+            $Arxiv2[$key]['GuruhID'] = $rowax['GuruhID'];
+            $Arxiv2[$key]['Type'] = $rowax['Type'];
+            $Arxiv2[$key]['Data'] = $rowax['Data'];
+            $Arxiv2[$key]['Status'] = $rowax['Status'];
+            $Arxiv2[$key]['Meneger'] = $rowax['Meneger'];
+            $Arxiv2[$key]['Summa'] = number_format($rowax['Summa'], 0, '.', ' ');
+            $Arxiv2[$key]['Balans'] = number_format($Balans, 0, '.', ' ');
+        }
+        if($Balans<0){
+            $Balans = $Balans*(-1);
+        }
+        $Balans3 = number_format($Balans2-$Balans, 0, '.', ' ');   
+        return view('Admin.user.show',compact('Balans3','eslat','Arxiv2','FilialKassa','adminChegirma','Users','Guruhs','userHistory','Tulovlar','talaba_guruh','userArxivGuruh','ChegirmaGuruh'));
     }
     public function tulov(Request $request){ 
         $validate = $request->validate([
@@ -351,7 +385,13 @@ class AdminStudentController extends Controller{
         if($request->naqt == '0' AND $request->plastik == '0'){
             return redirect()->back()->with('error', 'To\'lov summasi noto\'g\'ri kiritildi.'); 
         }
-        createTulov::dispatch($request->user_id, $request->naqt, $request->plastik, $request->guruh_id, $request->about);
+        createTulov::dispatch(
+            $request->user_id, 
+            $request->naqt, 
+            $request->plastik, 
+            $request->guruh_id, 
+            $request->about
+        );
         return redirect()->back()->with('success', 'To\'lov amalga oshirildi.'); 
     }
     public function tulovDelete($id){

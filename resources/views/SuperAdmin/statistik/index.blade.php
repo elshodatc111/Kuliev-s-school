@@ -10,476 +10,512 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('SuperAdmin')}}">Bosh sahifa</a></li>
             <li class="breadcrumb-item"><a href="{{ route('filial')}}">Filiallar</a></li>
-            <li class="breadcrumb-item active">Statistika</li>
+            <li class="breadcrumb-item active">Oylik Statistika</li>
         </ol>
     </nav>
 </div> 
-@if (Session::has('success'))
-    <div class="alert alert-success">{{Session::get('success') }}</div>
-@elseif (Session::has('error'))
-    <div class="alert alert-danger">{{Session::get('error') }}</div>
-@endif
     <section class="section dashboard">
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title w-100 text-center">Oylik Tashriflar</h5>
-                        <canvas id="pieChart" style="max-height: 400px;"></canvas>
+        <div class="card">
+            <div class="card-body">
+                <div class="row pt-2">
+                    <div class="col-6 bg-primary"><a href="{{ route('SuperAdminStatistika',$filial_id) }}"><h5 class="card-title w-100 text-center  text-white">Oylik Statistika</h5></a></div>
+                    <div class="col-6"><a href="{{ route('statistikaKun',$filial_id) }}"><h5 class="card-title w-100 text-center text-primary">Kunlik Statistika</h5></a></div>
+                </div><hr class="p-0 m-0">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <h1 class="card-title">Oylik tashriflar</h1>
+                        <canvas id="kunlik_tashrif" style="max-height: 400px;"></canvas>
                         <script>
                             document.addEventListener("DOMContentLoaded", () => {
-                            new Chart(document.querySelector('#pieChart'), {
-                                type: 'pie',
+                                new Chart(document.querySelector('#kunlik_tashrif'), {
+                                type: 'radar',
                                 data: {
-                                labels: [
-                                    'Telegram',
-                                    'Facebook',
-                                    'Instagram',
-                                    'Tanishlar',
-                                    'Bannerlar',
-                                    'Boshqa'
-                                ],
-                                datasets: [{
-                                    label: 'Oylik tashriflar',
+                                    labels: [
+                                        "{{ $Tashriflar[0]['month'] }}",
+                                        "{{ $Tashriflar[1]['month'] }}",
+                                        "{{ $Tashriflar[2]['month'] }}",
+                                        "{{ $Tashriflar[3]['month'] }}",
+                                        "{{ $Tashriflar[4]['month'] }}",
+                                        "{{ $Tashriflar[5]['month'] }}",
+                                        "{{ $Tashriflar[6]['month'] }}"
+                                    ],
+                                    datasets: [{
+                                    label: '',
                                     data: [
-                                        {{ $OylikTashriflar['Telegram'] }},
-                                        {{ $OylikTashriflar['Facebook'] }},
-                                        {{ $OylikTashriflar['Instagram'] }},
-                                        {{ $OylikTashriflar['Tanishlar'] }},
-                                        {{ $OylikTashriflar['Bannerlar'] }},
-                                        {{ $OylikTashriflar['Boshqalar'] }},
+                                        {{ $Tashriflar[0]['tashriflar'] }},
+                                        {{ $Tashriflar[1]['tashriflar'] }},
+                                        {{ $Tashriflar[2]['tashriflar'] }},
+                                        {{ $Tashriflar[3]['tashriflar'] }},
+                                        {{ $Tashriflar[4]['tashriflar'] }},
+                                        {{ $Tashriflar[5]['tashriflar'] }},
+                                        {{ $Tashriflar[6]['tashriflar'] }},
                                     ],
-                                    backgroundColor: [
-                                        '#289FD5','#4867AA','#C032AE','#F4CA16','#8CF416','#16F4D6'
-                                    ],
-                                    hoverOffset: 4
-                                }]
-                                }
-                            });
+                                    fill: true,
+                                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                                    borderColor: 'rgb(54, 162, 235)',
+                                    pointBackgroundColor: 'rgb(54, 162, 235)',
+                                    pointBorderColor: '#fff',
+                                    pointHoverBackgroundColor: '#fff',
+                                    pointHoverBorderColor: 'rgb(54, 162, 235)'
+                                    }]
+                                },
+                                options: {elements: {line: {borderWidth: 3}}}
+                                });
                             });
                         </script>
                     </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title w-100 text-center">Oylik to'lovlar</h5>
-                        <canvas id="doughnutChart" style="max-height: 400px;"></canvas>
+                    <div class="col-lg-6">
+                        <h1 class="card-title">Tashriflar(oxirgi 45 kun)</h1>
+                        <canvas id="crm_tashrif" style="max-height: 400px;"></canvas>
                         <script>
                             document.addEventListener("DOMContentLoaded", () => {
-                            new Chart(document.querySelector('#doughnutChart'), {
-                                type: 'doughnut',
-                                data: {
-                                labels: [
-                                    'Naqt',
-                                    'Plastik',
-                                    'Payme'
-                                ],
-                                datasets: [{
-                                    label: 'Oylik to\'lovlar',
-                                    data: [
-                                        {{ $OylikTulov['Naqt'] }},
-                                        {{ $OylikTulov['Plastik'] }},
-                                        {{ $OylikTulov['Payme'] }}
-                                    ],
-                                    backgroundColor: ['green','#F4AF0F','#44BBC2'],
-                                    hoverOffset: 4
-                                }]
-                                }
-                            });
+                                new Chart(document.querySelector('#crm_tashrif'), {
+                                    type: 'radar',
+                                    data: {
+                                        labels: ['Telegram','Instagram','Facebook','Bannerlar','Tanishlar','Boshqa'],
+                                        datasets: [{
+                                            label: '',
+                                            data: [
+                                                    {{ $Tashriflar['telegram'] }},
+                                                    {{ $Tashriflar['instagram'] }},
+                                                    {{ $Tashriflar['facebook'] }},
+                                                    {{ $Tashriflar['banner'] }},
+                                                    {{ $Tashriflar['tanishlar'] }},
+                                                    {{ $Tashriflar['boshqalar'] }},
+                                                ],
+                                            fill: true,
+                                            backgroundColor: 'rgba(255, 65, 65, 0.4)',
+                                            borderColor: 'rgb(52, 205, 244)',
+                                            pointBackgroundColor: 'rgb(54, 205, 244)',
+                                            pointBorderColor: '#fff',
+                                            pointHoverBackgroundColor: '#fff',
+                                            pointHoverBorderColor: 'rgb(54, 205, 235)'
+                                        }]
+                                    },
+                                    options: {elements: {line: {borderWidth: 3}}}
+                                });
                             });
                         </script>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-body text-center">
-                <h5 class="card-title mb-0 pb-0">Kunlik to'lovlar</h5>
-                <canvas id="barChart" style="max-height: 400px;"></canvas>
-                <script>
-                    document.addEventListener("DOMContentLoaded", () => {
-                        new Chart(document.querySelector('#barChart'), {
-                            type: 'bar',
-                            data: {
-                            labels: [
-                                    '{{ $KunlikStatistika["kunlar"][0] }}',
-                                    '{{ $KunlikStatistika["kunlar"][1] }}',
-                                    '{{ $KunlikStatistika["kunlar"][2] }}',
-                                    '{{ $KunlikStatistika["kunlar"][3] }}',
-                                    '{{ $KunlikStatistika["kunlar"][4] }}',
-                                    '{{ $KunlikStatistika["kunlar"][5] }}'
-                                ],
-                            datasets: [{
-                                    label: "Naqt to'lov",
-                                    data: [
-                                        '{{ $KunlikStatistika["Tulovlar"]["Naqt"][1] }}',
-                                        '{{ $KunlikStatistika["Tulovlar"]["Naqt"][2] }}',
-                                        '{{ $KunlikStatistika["Tulovlar"]["Naqt"][3] }}',
-                                        '{{ $KunlikStatistika["Tulovlar"]["Naqt"][4] }}',
-                                        '{{ $KunlikStatistika["Tulovlar"]["Naqt"][5] }}',
-                                        '{{ $KunlikStatistika["Tulovlar"]["Naqt"][6] }}'
-                                    ],
-                                    backgroundColor: ['#0000F6']
-                                },{
-                                    label: "Plastik to'lov",
-                                    data: [
-                                        '{{ $KunlikStatistika["Tulovlar"]["Plastik"][1] }}',
-                                        '{{ $KunlikStatistika["Tulovlar"]["Plastik"][2] }}',
-                                        '{{ $KunlikStatistika["Tulovlar"]["Plastik"][3] }}',
-                                        '{{ $KunlikStatistika["Tulovlar"]["Plastik"][4] }}',
-                                        '{{ $KunlikStatistika["Tulovlar"]["Plastik"][5] }}',
-                                        '{{ $KunlikStatistika["Tulovlar"]["Plastik"][6] }}'
-                                    ],
-                                    backgroundColor: ['#00FF00']
-                                },{
-                                    label: "Payme to'lov",
-                                    data: [
-                                        '{{ $KunlikStatistika["Tulovlar"]["Payme"][1] }}',
-                                        '{{ $KunlikStatistika["Tulovlar"]["Payme"][2] }}',
-                                        '{{ $KunlikStatistika["Tulovlar"]["Payme"][3] }}',
-                                        '{{ $KunlikStatistika["Tulovlar"]["Payme"][4] }}',
-                                        '{{ $KunlikStatistika["Tulovlar"]["Payme"][5] }}',
-                                        '{{ $KunlikStatistika["Tulovlar"]["Payme"][6] }}'
-                                    ],
-                                    backgroundColor: ['#21B3B8']
-                                },{
-                                    label: 'Chegirmalar',
-                                    data: [
-                                        '{{ $KunlikStatistika["Tulovlar"]["Chegirma"][1] }}',
-                                        '{{ $KunlikStatistika["Tulovlar"]["Chegirma"][2] }}',
-                                        '{{ $KunlikStatistika["Tulovlar"]["Chegirma"][3] }}',
-                                        '{{ $KunlikStatistika["Tulovlar"]["Chegirma"][4] }}',
-                                        '{{ $KunlikStatistika["Tulovlar"]["Chegirma"][5] }}',
-                                        '{{ $KunlikStatistika["Tulovlar"]["Chegirma"][6] }}'
-                                    ],
-                                    backgroundColor: ['#F4CA16']
-                                },{
-                                    label: "Qaytarilgan to'lovlar",
-                                    data: [
-                                        '{{ $KunlikStatistika["Tulovlar"]["Qaytarilgan"][1] }}',
-                                        '{{ $KunlikStatistika["Tulovlar"]["Qaytarilgan"][2] }}',
-                                        '{{ $KunlikStatistika["Tulovlar"]["Qaytarilgan"][3] }}',
-                                        '{{ $KunlikStatistika["Tulovlar"]["Qaytarilgan"][4] }}',
-                                        '{{ $KunlikStatistika["Tulovlar"]["Qaytarilgan"][5] }}',
-                                        '{{ $KunlikStatistika["Tulovlar"]["Qaytarilgan"][6] }}'
-                                    ],
-                                    backgroundColor: ['#EB4C42']
-                                }
-                            ]
-                            },
-                            options: {
-                      plugins: {
-                        title: {
-                          display: true,
-                          text: 'Chart.js Bar Chart - Stacked'
-                        },
-                      },
-                      responsive: true,
-                      scales: {
-                        x: {
-                          stacked: true,
-                        },
-                        y: {
-                          stacked: true
-                        }
-                      }
-                    }
-                        });
-                    });
-                </script>
-                <div class="table-responsive">
-                    <table class="table table-bordered mt-3" style="font-size:12px">
-                        <tr>
-                            <th style="text-align:left">Status</th>
-                            <td><a href="{{ route('statistikaKun',$Kun1) }}">{{ $KunlikStatistika["kunlar"][0] }}</a></td>
-                            <td><a href="{{ route('statistikaKun',$Kun2) }}">{{ $KunlikStatistika["kunlar"][1] }}</a></td>
-                            <td><a href="{{ route('statistikaKun',$Kun3) }}">{{ $KunlikStatistika["kunlar"][2] }}</a></td>
-                            <td><a href="{{ route('statistikaKun',$Kun4) }}">{{ $KunlikStatistika["kunlar"][3] }}</a></td>
-                            <td><a href="{{ route('statistikaKun',$Kun5) }}">{{ $KunlikStatistika["kunlar"][4] }}</a></td>
-                            <td><a href="{{ route('statistikaKun',$Kun6) }}">{{ $KunlikStatistika["kunlar"][5] }}</a></td>
-                        </tr>
-                        <tr>
-                            <th style="text-align:left">Naqt</th>
-                            <td>{{ $KunlikStatistika["Tulovlar"]["Naqt"][1] }}</td>
-                            <td>{{ $KunlikStatistika["Tulovlar"]["Naqt"][2] }}</td>
-                            <td>{{ $KunlikStatistika["Tulovlar"]["Naqt"][3] }}</td>
-                            <td>{{ $KunlikStatistika["Tulovlar"]["Naqt"][4] }}</td>
-                            <td>{{ $KunlikStatistika["Tulovlar"]["Naqt"][5] }}</td>
-                            <td>{{ $KunlikStatistika["Tulovlar"]["Naqt"][6] }}</td>
-                        </tr>
-                        <tr>
-                            <th style="text-align:left">Plastik</th>
-                            <td>{{ $KunlikStatistika["Tulovlar"]["Plastik"][1] }}</td>
-                            <td>{{ $KunlikStatistika["Tulovlar"]["Plastik"][2] }}</td>
-                            <td>{{ $KunlikStatistika["Tulovlar"]["Plastik"][3] }}</td>
-                            <td>{{ $KunlikStatistika["Tulovlar"]["Plastik"][4] }}</td>
-                            <td>{{ $KunlikStatistika["Tulovlar"]["Plastik"][5] }}</td>
-                            <td>{{ $KunlikStatistika["Tulovlar"]["Plastik"][6] }}</td>
-                        </tr>
-                        
-                        <tr>
-                            <th style="text-align:left">Payme</th>
-                            <td>{{ $KunlikStatistika["Tulovlar"]["Payme"][1] }}</td>
-                            <td>{{ $KunlikStatistika["Tulovlar"]["Payme"][2] }}</td>
-                            <td>{{ $KunlikStatistika["Tulovlar"]["Payme"][3] }}</td>
-                            <td>{{ $KunlikStatistika["Tulovlar"]["Payme"][4] }}</td>
-                            <td>{{ $KunlikStatistika["Tulovlar"]["Payme"][5] }}</td>
-                            <td>{{ $KunlikStatistika["Tulovlar"]["Payme"][6] }}</td>
-                        </tr>
-                        <tr>
-                            <th style="text-align:left">Chegirma</th>
-                            <td>{{ $KunlikStatistika["Tulovlar"]["Chegirma"][1] }}</td>
-                            <td>{{ $KunlikStatistika["Tulovlar"]["Chegirma"][2] }}</td>
-                            <td>{{ $KunlikStatistika["Tulovlar"]["Chegirma"][3] }}</td>
-                            <td>{{ $KunlikStatistika["Tulovlar"]["Chegirma"][4] }}</td>
-                            <td>{{ $KunlikStatistika["Tulovlar"]["Chegirma"][5] }}</td>
-                            <td>{{ $KunlikStatistika["Tulovlar"]["Chegirma"][6] }}</td>
-                        </tr>
-                        <tr>
-                            <th style="text-align:left">Qaytarildi</th>
-                            <td>{{ $KunlikStatistika["Tulovlar"]["Qaytarilgan"][1] }}</td>
-                            <td>{{ $KunlikStatistika["Tulovlar"]["Qaytarilgan"][2] }}</td>
-                            <td>{{ $KunlikStatistika["Tulovlar"]["Qaytarilgan"][3] }}</td>
-                            <td>{{ $KunlikStatistika["Tulovlar"]["Qaytarilgan"][4] }}</td>
-                            <td>{{ $KunlikStatistika["Tulovlar"]["Qaytarilgan"][5] }}</td>
-                            <td>{{ $KunlikStatistika["Tulovlar"]["Qaytarilgan"][6] }}</td>
-                        </tr>
-                        
-                        <tr>
-                            <th style="text-align:left">Xisoblandi</th>
-                            <td>{{ $KunlikStatistika["Tulovlar"]["Naqt"][1]+$KunlikStatistika["Tulovlar"]["Plastik"][1]+$KunlikStatistika["Tulovlar"]["Payme"][1]-$KunlikStatistika["Tulovlar"]["Qaytarilgan"][1] }}</td>
-                            <td>{{ $KunlikStatistika["Tulovlar"]["Naqt"][2]+$KunlikStatistika["Tulovlar"]["Plastik"][2]+$KunlikStatistika["Tulovlar"]["Payme"][2]-$KunlikStatistika["Tulovlar"]["Qaytarilgan"][2] }}</td>
-                            <td>{{ $KunlikStatistika["Tulovlar"]["Naqt"][3]+$KunlikStatistika["Tulovlar"]["Plastik"][3]+$KunlikStatistika["Tulovlar"]["Payme"][3]-$KunlikStatistika["Tulovlar"]["Qaytarilgan"][3] }}</td>
-                            <td>{{ $KunlikStatistika["Tulovlar"]["Naqt"][4]+$KunlikStatistika["Tulovlar"]["Plastik"][4]+$KunlikStatistika["Tulovlar"]["Payme"][4]-$KunlikStatistika["Tulovlar"]["Qaytarilgan"][4] }}</td>
-                            <td>{{ $KunlikStatistika["Tulovlar"]["Naqt"][5]+$KunlikStatistika["Tulovlar"]["Plastik"][5]+$KunlikStatistika["Tulovlar"]["Payme"][5]-$KunlikStatistika["Tulovlar"]["Qaytarilgan"][5] }}</td>
-                            <td>{{ $KunlikStatistika["Tulovlar"]["Naqt"][6]+$KunlikStatistika["Tulovlar"]["Plastik"][6]+$KunlikStatistika["Tulovlar"]["Payme"][6]-$KunlikStatistika["Tulovlar"]["Qaytarilgan"][6] }}</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        
-        <div class="card">
-            <div class="card-body text-center">
-                <h5 class="card-title mb-0 pb-0">Oylik to'lovlar</h5>
-                <canvas id="oyliktulovlar" style="max-height: 400px;"></canvas>
-                <script>
-                    document.addEventListener("DOMContentLoaded", () => {
-                        new Chart(document.querySelector('#oyliktulovlar'), {
-                            type: 'bar',
-                            data: {
-                            labels: [
-                                '{{ $OylikStatistiakOylar[0] }}',
-                                '{{ $OylikStatistiakOylar[1] }}',
-                                '{{ $OylikStatistiakOylar[2] }}',
-                                '{{ $OylikStatistiakOylar[3] }}',
-                                '{{ $OylikStatistiakOylar[4] }}',
-                                '{{ $OylikStatistiakOylar[5] }}'
-                            ],
-                            datasets: [{
-                                    label: 'Naqt to\'lov',
-                                    data: [
-                                        {{ $OylikTulovlar['statis'][1]['Naqt'] }},
-                                        {{ $OylikTulovlar['statis'][2]['Naqt'] }},
-                                        {{ $OylikTulovlar['statis'][3]['Naqt'] }},
-                                        {{ $OylikTulovlar['statis'][4]['Naqt'] }},
-                                        {{ $OylikTulovlar['statis'][5]['Naqt'] }},
-                                        {{ $OylikTulovlar['statis'][6]['Naqt'] }}
-                                    ],
-                                    backgroundColor: ['#0000F6']
-                                },{
-                                    label: 'Plastik to\'lov',
-                                    data: [
-                                        {{ $OylikTulovlar['statis'][1]['Plastik'] }},
-                                        {{ $OylikTulovlar['statis'][2]['Plastik'] }},
-                                        {{ $OylikTulovlar['statis'][3]['Plastik'] }},
-                                        {{ $OylikTulovlar['statis'][4]['Plastik'] }},
-                                        {{ $OylikTulovlar['statis'][5]['Plastik'] }},
-                                        {{ $OylikTulovlar['statis'][6]['Plastik'] }},
-                                    ],
-                                    backgroundColor: ['#006262']
-                                },{
-                                    label: 'Payme to\'lov',
-                                    data: [
-                                        {{ $OylikTulovlar['statis'][1]['Payme'] }},
-                                        {{ $OylikTulovlar['statis'][2]['Payme'] }},
-                                        {{ $OylikTulovlar['statis'][3]['Payme'] }},
-                                        {{ $OylikTulovlar['statis'][4]['Payme'] }},
-                                        {{ $OylikTulovlar['statis'][5]['Payme'] }},
-                                        {{ $OylikTulovlar['statis'][6]['Payme'] }},
-                                    ],
-                                    backgroundColor: ['#21B3B8']
-                                },{
-                                    label: 'Chegirmalar',
-                                    data: [
-                                        {{ $OylikTulovlar['statis'][1]['Chegirma'] }},
-                                        {{ $OylikTulovlar['statis'][2]['Chegirma'] }},
-                                        {{ $OylikTulovlar['statis'][3]['Chegirma'] }},
-                                        {{ $OylikTulovlar['statis'][4]['Chegirma'] }},
-                                        {{ $OylikTulovlar['statis'][5]['Chegirma'] }},
-                                        {{ $OylikTulovlar['statis'][6]['Chegirma'] }},
-                                    ],
-                                    backgroundColor: ['#F4CA16']
-                                },{
-                                    label: 'Qaytarilgan to\'lovlar',
-                                    data: [
-                                        {{ $OylikTulovlar['statis'][1]['Qaytarilgan'] }},
-                                        {{ $OylikTulovlar['statis'][2]['Qaytarilgan'] }},
-                                        {{ $OylikTulovlar['statis'][3]['Qaytarilgan'] }},
-                                        {{ $OylikTulovlar['statis'][4]['Qaytarilgan'] }},
-                                        {{ $OylikTulovlar['statis'][5]['Qaytarilgan'] }},
-                                        {{ $OylikTulovlar['statis'][6]['Qaytarilgan'] }},
-                                    ],
-                                    backgroundColor: ['#EB4C42']
-                                },{
-                                    label: 'Xarajatalar',
-                                    data: [
-                                        {{ $OylikTulovlar['statis'][1]['Xarajat'] }},
-                                        {{ $OylikTulovlar['statis'][2]['Xarajat'] }},
-                                        {{ $OylikTulovlar['statis'][3]['Xarajat'] }},
-                                        {{ $OylikTulovlar['statis'][4]['Xarajat'] }},
-                                        {{ $OylikTulovlar['statis'][5]['Xarajat'] }},
-                                        {{ $OylikTulovlar['statis'][6]['Xarajat'] }},
-                                    ],
-                                    backgroundColor: ['#E000f0']
-                                },{
-                                    label: 'Umumiy xarajat',
-                                    data: [
-                                        {{ $OylikTulovlar['statis'][1]['UmumiyXarajat'] }},
-                                        {{ $OylikTulovlar['statis'][2]['UmumiyXarajat'] }},
-                                        {{ $OylikTulovlar['statis'][3]['UmumiyXarajat'] }},
-                                        {{ $OylikTulovlar['statis'][4]['UmumiyXarajat'] }},
-                                        {{ $OylikTulovlar['statis'][5]['UmumiyXarajat'] }},
-                                        {{ $OylikTulovlar['statis'][6]['UmumiyXarajat'] }},
-                                    ],
-                                    backgroundColor: ['#E000fF']
-                                },{
-                                    label: 'Ish haqi',
-                                    data: [
-                                        {{ $OylikTulovlar['statis'][1]['IshHaqi'] }},
-                                        {{ $OylikTulovlar['statis'][2]['IshHaqi'] }},
-                                        {{ $OylikTulovlar['statis'][3]['IshHaqi'] }},
-                                        {{ $OylikTulovlar['statis'][4]['IshHaqi'] }},
-                                        {{ $OylikTulovlar['statis'][5]['IshHaqi'] }},
-                                        {{ $OylikTulovlar['statis'][6]['IshHaqi'] }},
-                                    ],
-                                    backgroundColor: ['#00fff0']
-                                },{
-                                    label: 'Daromad',
-                                    data: [
-                                        {{ $OylikTulovlar['statis'][1]['Daromat'] }},
-                                        {{ $OylikTulovlar['statis'][2]['Daromat'] }},
-                                        {{ $OylikTulovlar['statis'][3]['Daromat'] }},
-                                        {{ $OylikTulovlar['statis'][4]['Daromat'] }},
-                                        {{ $OylikTulovlar['statis'][5]['Daromat'] }},
-                                        {{ $OylikTulovlar['statis'][6]['Daromat'] }},
-                                    ],
-                                    backgroundColor: ['#00ff00']
-                                }
-                            ]
-                            },
-                            options: {scales: {y: {beginAtZero: true}}}
-                        });
-                    });
-                </script>
-                <div class="table-responsive">
-                    <table class="table table-bordered mt-3" style="font-size:12px">
-                        <tr>
-                            <th style="text-align:left">Status</th>
-                            <th>{{ $OylikStatistiakOylar[0] }}</th>
-                            <th>{{ $OylikStatistiakOylar[1] }}</th>
-                            <th>{{ $OylikStatistiakOylar[2] }}</th>
-                            <th>{{ $OylikStatistiakOylar[3] }}</th>
-                            <th>{{ $OylikStatistiakOylar[4] }}</th>
-                            <th>{{ $OylikStatistiakOylar[5] }}</th>
-                        </tr>
-                        <tr>
-                            <th style="text-align:left">Naqt</th>
-                            <td>{{ $OylikTulovlar['view'][1]['Naqt'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][2]['Naqt'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][3]['Naqt'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][4]['Naqt'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][5]['Naqt'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][6]['Naqt'] }}</td>
-                        </tr>
-                        <tr>
-                            <th style="text-align:left">Plastik</th>
-                            <td>{{ $OylikTulovlar['view'][1]['Plastik'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][2]['Plastik'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][3]['Plastik'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][4]['Plastik'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][5]['Plastik'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][6]['Plastik'] }}</td>
-                        </tr>
-                        
-                        <tr>
-                            <th style="text-align:left">Payme</th>
-                            <td>{{ $OylikTulovlar['view'][1]['Payme'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][2]['Payme'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][3]['Payme'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][4]['Payme'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][5]['Payme'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][6]['Payme'] }}</td>
-                        </tr>
-                        <tr>
-                            <th style="text-align:left">Chegirma</th>
-                            <td>{{ $OylikTulovlar['view'][1]['Chegirma'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][2]['Chegirma'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][3]['Chegirma'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][4]['Chegirma'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][5]['Chegirma'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][6]['Chegirma'] }}</td>
-                        </tr>
-                        <tr>
-                            <th style="text-align:left">Qaytarildi</th>
-                            <td>{{ $OylikTulovlar['view'][1]['Qaytarilgan'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][2]['Qaytarilgan'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][3]['Qaytarilgan'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][4]['Qaytarilgan'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][5]['Qaytarilgan'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][6]['Qaytarilgan'] }}</td>
-                        </tr>
-                        <tr>
-                            <th style="text-align:left">Xarajatlar</th>
-                            <td>{{ $OylikTulovlar['view'][1]['Xarajat'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][2]['Xarajat'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][3]['Xarajat'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][4]['Xarajat'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][5]['Xarajat'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][6]['Xarajat'] }}</td>
-                        </tr>
-                        <tr>
-                            <th style="text-align:left">Umumiy xarajatlar</th>
-                            <td>{{ $OylikTulovlar['view'][1]['UmumiyXarajat'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][2]['UmumiyXarajat'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][3]['UmumiyXarajat'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][4]['UmumiyXarajat'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][5]['UmumiyXarajat'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][6]['UmumiyXarajat'] }}</td>
-                        </tr>
-                        <tr>
-                            <th style="text-align:left">Ish haqi</th>
-                            <td>{{ $OylikTulovlar['view'][1]['IshHaqi'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][2]['IshHaqi'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][3]['IshHaqi'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][4]['IshHaqi'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][5]['IshHaqi'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][6]['IshHaqi'] }}</td>
-                        </tr>
-                        <tr>
-                            <th style="text-align:left">Daromad</th>
-                            <td>{{ $OylikTulovlar['view'][1]['Daromat'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][2]['Daromat'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][3]['Daromat'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][4]['Daromat'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][5]['Daromat'] }}</td>
-                            <td>{{ $OylikTulovlar['view'][6]['Daromat'] }}</td>
-                        </tr>
-                    </table>
-                </div>
+                    <div class="col-lg-12"><hr></div>
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Activ Talabalar</h5>
+                                <div id="lineChart"></div>
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", () => {
+                                        new ApexCharts(document.querySelector("#lineChart"), {
+                                            series: [{name: "Activ tashriflar",
+                                                data: [
+                                                    {{ $Active[0]['count'] }},
+                                                    {{ $Active[1]['count'] }},
+                                                    {{ $Active[2]['count'] }},
+                                                    {{ $Active[3]['count'] }},
+                                                    {{ $Active[4]['count'] }},
+                                                    {{ $Active[5]['count'] }},
+                                                    {{ $Active[6]['count'] }},
+                                                ]
+                                            }],
+                                            chart: {height: 350,type: 'line',zoom: {enabled: false}},
+                                            dataLabels: {enabled: false},
+                                            stroke: {curve: 'straight'},
+                                            grid: {row: {colors: ['#f3f3f3', 'transparent'],opacity: 0.5},},
+                                            xaxis: {categories: 
+                                                [
+                                                    "{{ $Active[0]['data'] }}",
+                                                    "{{ $Active[1]['data'] }}",
+                                                    "{{ $Active[2]['data'] }}",
+                                                    "{{ $Active[3]['data'] }}",
+                                                    "{{ $Active[4]['data'] }}",
+                                                    "{{ $Active[5]['data'] }}",
+                                                    "{{ $Active[6]['data'] }}",
+                                                ]
+                                            ,}
+                                        }).render();
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-body pt-3 mb-3">
+                                <canvas id="statistika" style="max-height: 400px;"></canvas>
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", () => {
+                                        new Chart(document.querySelector('#statistika'), {
+                                            type: 'radar',
+                                            data: {
+                                                labels: [
+                                                    "{{ $Yillik[1]['date'] }}",
+                                                    "{{ $Yillik[2]['date'] }}",
+                                                    "{{ $Yillik[3]['date'] }}",
+                                                    "{{ $Yillik[4]['date'] }}",
+                                                    "{{ $Yillik[5]['date'] }}",
+                                                    "{{ $Yillik[6]['date'] }}",
+                                                    "{{ $Yillik[7]['date'] }}",
+                                                    "{{ $Yillik[8]['date'] }}",
+                                                    "{{ $Yillik[9]['date'] }}",
+                                                    "{{ $Yillik[10]['date'] }}",
+                                                    "{{ $Yillik[11]['date'] }}",
+                                                    "{{ $Yillik[12]['date'] }}"
+                                                ],
+                                                datasets: [{
+                                                    label: "To'lovlar",
+                                                    data: [
+                                                        {{ $Yillik[1]['Tulov'] }},
+                                                        {{ $Yillik[2]['Tulov'] }},
+                                                        {{ $Yillik[3]['Tulov'] }},
+                                                        {{ $Yillik[4]['Tulov'] }},
+                                                        {{ $Yillik[5]['Tulov'] }},
+                                                        {{ $Yillik[6]['Tulov'] }},
+                                                        {{ $Yillik[7]['Tulov'] }},
+                                                        {{ $Yillik[8]['Tulov'] }},
+                                                        {{ $Yillik[9]['Tulov'] }},
+                                                        {{ $Yillik[10]['Tulov'] }},
+                                                        {{ $Yillik[11]['Tulov'] }},
+                                                        {{ $Yillik[12]['Tulov'] }},
+                                                    ],
+                                                    fill: true,
+                                                    backgroundColor: 'rgba(255, 65, 65, 0.4)',
+                                                    borderColor: 'green',
+                                                    pointBackgroundColor: 'rgb(54, 205, 244)',
+                                                    pointBorderColor: '#fff',
+                                                    pointHoverBackgroundColor: '#fff',
+                                                    pointHoverBorderColor: 'rgb(54, 205, 235)'
+                                                },{
+                                                    label: "Xarajatlar + Ish haqi",
+                                                    data: [
+                                                        {{ $Yillik[1]['Xarajat'] }},
+                                                        {{ $Yillik[2]['Xarajat'] }},
+                                                        {{ $Yillik[3]['Xarajat'] }},
+                                                        {{ $Yillik[4]['Xarajat'] }},
+                                                        {{ $Yillik[5]['Xarajat'] }},
+                                                        {{ $Yillik[6]['Xarajat'] }},
+                                                        {{ $Yillik[7]['Xarajat'] }},
+                                                        {{ $Yillik[8]['Xarajat'] }},
+                                                        {{ $Yillik[9]['Xarajat'] }},
+                                                        {{ $Yillik[10]['Xarajat'] }},
+                                                        {{ $Yillik[11]['Xarajat'] }},
+                                                        {{ $Yillik[12]['Xarajat'] }},
+                                                    ],
+                                                    fill: true,
+                                                    backgroundColor: 'rgba(255, 255, 65, 0.4)',
+                                                    borderColor: 'blue',
+                                                    pointBackgroundColor: 'rgb(54, 205, 244)',
+                                                    pointBorderColor: '#fff',
+                                                    pointHoverBackgroundColor: '#fff',
+                                                    pointHoverBorderColor: 'rgb(54, 205, 235)'
+                                                }]
+                                            },
+                                            options: {elements: {line: {borderWidth: 3}}}
+                                        });
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <h1 class="card-title">Oylik to'lovlar</h1>
+                        <div id="columnChart"></div>
+                        <script>
+                            document.addEventListener("DOMContentLoaded", () => {
+                                new ApexCharts(document.querySelector("#columnChart"), {
+                                    series: [{
+                                        name: "Naqt to'lovlar",
+                                        data: [
+                                            {{ $OylikTulovAll[0]['Naqt'] }},
+                                            {{ $OylikTulovAll[1]['Naqt'] }},
+                                            {{ $OylikTulovAll[2]['Naqt'] }},
+                                            {{ $OylikTulovAll[3]['Naqt'] }},
+                                            {{ $OylikTulovAll[4]['Naqt'] }},
+                                            {{ $OylikTulovAll[5]['Naqt'] }},
+                                            {{ $OylikTulovAll[6]['Naqt'] }}
+                                        ]
+                                    }, {
+                                        name: "Plastik to'lovlar",
+                                        data: [
+                                            {{ $OylikTulovAll[0]['Plastik'] }},
+                                            {{ $OylikTulovAll[1]['Plastik'] }},
+                                            {{ $OylikTulovAll[2]['Plastik'] }},
+                                            {{ $OylikTulovAll[3]['Plastik'] }},
+                                            {{ $OylikTulovAll[4]['Plastik'] }},
+                                            {{ $OylikTulovAll[5]['Plastik'] }},
+                                            {{ $OylikTulovAll[6]['Plastik'] }}
+                                        ]
+                                    }, {
+                                        name: "Payme to'lov",
+                                        data: [
+                                            {{ $OylikTulovAll[0]['Payme'] }},
+                                            {{ $OylikTulovAll[1]['Payme'] }},
+                                            {{ $OylikTulovAll[2]['Payme'] }},
+                                            {{ $OylikTulovAll[3]['Payme'] }},
+                                            {{ $OylikTulovAll[4]['Payme'] }},
+                                            {{ $OylikTulovAll[5]['Payme'] }},
+                                            {{ $OylikTulovAll[6]['Payme'] }}
+                                        ]
+                                    }, {
+                                        name: "Qaytarilgan to'lovlar",
+                                        data: [
+                                            {{ $OylikTulovAll[0]['Qaytar'] }},
+                                            {{ $OylikTulovAll[1]['Qaytar'] }},
+                                            {{ $OylikTulovAll[2]['Qaytar'] }},
+                                            {{ $OylikTulovAll[3]['Qaytar'] }},
+                                            {{ $OylikTulovAll[4]['Qaytar'] }},
+                                            {{ $OylikTulovAll[5]['Qaytar'] }},
+                                            {{ $OylikTulovAll[6]['Qaytar'] }}
+                                        ]
+                                    }, {
+                                        name: "Chegirmalar",
+                                        data: [
+                                            {{ $OylikTulovAll[0]['Chegirma'] }},
+                                            {{ $OylikTulovAll[1]['Chegirma'] }},
+                                            {{ $OylikTulovAll[2]['Chegirma'] }},
+                                            {{ $OylikTulovAll[3]['Chegirma'] }},
+                                            {{ $OylikTulovAll[4]['Chegirma'] }},
+                                            {{ $OylikTulovAll[5]['Chegirma'] }},
+                                            {{ $OylikTulovAll[6]['Chegirma'] }}
+                                        ]
+                                    }],
+                                    chart: {type: 'bar',height: 350},
+                                    plotOptions: {
+                                        bar: {horizontal: false,columnWidth: '55%',endingShape: 'rounded'},
+                                    },
+                                    dataLabels: {enabled: false},
+                                    stroke: {show: true,width: 2,colors: ['transparent']},
+                                    xaxis: {
+                                        categories: [
+                                            "{{ $OylikTulovAll[0]['date'] }}",
+                                            "{{ $OylikTulovAll[1]['date'] }}",
+                                            "{{ $OylikTulovAll[2]['date'] }}",
+                                            "{{ $OylikTulovAll[3]['date'] }}",
+                                            "{{ $OylikTulovAll[4]['date'] }}",
+                                            "{{ $OylikTulovAll[5]['date'] }}",
+                                            "{{ $OylikTulovAll[6]['date'] }}"
+                                        ],
+                                    },
+                                    yaxis: {title: {text: "Oylik to'lovlar"}},
+                                fill: {opacity: 1},
+                                tooltip: {y: {formatter: function(val) {return val + " so'm"}}}
+                                }).render();
+                            });
+                        </script>
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-center table-striped table-hover" style="font-size:14px;">
+                                <thead>
+                                    <tr>
+                                        <th>#/#</th>
+                                        <th>{{ $OylikTulovAll[0]['date'] }}</th>
+                                        <th>{{ $OylikTulovAll[1]['date'] }}</th>
+                                        <th>{{ $OylikTulovAll[2]['date'] }}</th>
+                                        <th>{{ $OylikTulovAll[3]['date'] }}</th>
+                                        <th>{{ $OylikTulovAll[4]['date'] }}</th>
+                                        <th>{{ $OylikTulovAll[5]['date'] }}</th>
+                                        <th>{{ $OylikTulovAll[6]['date'] }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th style="text-align:left;">Naqt To'lovlar</th>
+                                        <td>{{ $OylikTulovAll[0]['Naqt_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[1]['Naqt_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[2]['Naqt_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[3]['Naqt_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[4]['Naqt_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[5]['Naqt_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[6]['Naqt_table'] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align:left;">Plastik To'lovlar</th>
+                                        <td>{{ $OylikTulovAll[0]['Plastik_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[1]['Plastik_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[2]['Plastik_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[3]['Plastik_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[4]['Plastik_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[5]['Plastik_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[6]['Plastik_table'] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align:left;">Payme to'lov</th>
+                                        <td>{{ $OylikTulovAll[0]['Payme_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[1]['Payme_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[2]['Payme_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[3]['Payme_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[4]['Payme_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[5]['Payme_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[6]['Payme_table'] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align:left;">Chegirma To'lovlar</th>
+                                        <td>{{ $OylikTulovAll[0]['Chegirma_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[1]['Chegirma_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[2]['Chegirma_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[3]['Chegirma_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[4]['Chegirma_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[5]['Chegirma_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[6]['Chegirma_table'] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align:left;">Qaytarilgan To'lovlar</th>
+                                        <td>{{ $OylikTulovAll[0]['Qaytar_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[1]['Qaytar_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[2]['Qaytar_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[3]['Qaytar_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[4]['Qaytar_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[5]['Qaytar_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[6]['Qaytar_table'] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align:left;">Naqt + Plastik + Payme - Qaytarildi</th>
+                                        <td>{{ $OylikTulovAll[0]['TulovSum_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[1]['TulovSum_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[2]['TulovSum_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[3]['TulovSum_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[4]['TulovSum_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[5]['TulovSum_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[6]['TulovSum_table'] }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <h1 class="card-title">To'lov Statistikasi</h1>
+                        <canvas id="barChart" style="max-height: 400px;"></canvas>
+                        <script>
+                            document.addEventListener("DOMContentLoaded", () => {
+                                new Chart(document.querySelector('#barChart'), {
+                                    type: 'bar',
+                                    data: {
+                                        labels: [
+                                            "{{ $OylikTulovAll[0]['date'] }}",
+                                            "{{ $OylikTulovAll[1]['date'] }}",
+                                            "{{ $OylikTulovAll[2]['date'] }}",
+                                            "{{ $OylikTulovAll[3]['date'] }}",
+                                            "{{ $OylikTulovAll[4]['date'] }}",
+                                            "{{ $OylikTulovAll[5]['date'] }}",
+                                            "{{ $OylikTulovAll[6]['date'] }}"
+                                        ],
+                                        datasets: [{
+                                            label: "To'lovlar",
+                                            data: [
+                                                {{ $OylikTulovAll[0]['Tulovlar'] }},
+                                                {{ $OylikTulovAll[1]['Tulovlar'] }},
+                                                {{ $OylikTulovAll[2]['Tulovlar'] }},
+                                                {{ $OylikTulovAll[3]['Tulovlar'] }},
+                                                {{ $OylikTulovAll[4]['Tulovlar'] }},
+                                                {{ $OylikTulovAll[5]['Tulovlar'] }},
+                                                {{ $OylikTulovAll[6]['Tulovlar'] }}
+                                            ],
+                                            backgroundColor: ['rgba(39, 208, 255, 0.2)'],
+                                            borderColor: ['rgb(39, 208, 255)'],
+                                            borderWidth: 1
+                                        },{label: "Xarajatlar",
+                                            data: [
+                                                {{ $OylikTulovAll[0]['Xarajatlar'] }},
+                                                {{ $OylikTulovAll[1]['Xarajatlar'] }},
+                                                {{ $OylikTulovAll[2]['Xarajatlar'] }},
+                                                {{ $OylikTulovAll[3]['Xarajatlar'] }},
+                                                {{ $OylikTulovAll[4]['Xarajatlar'] }},
+                                                {{ $OylikTulovAll[5]['Xarajatlar'] }},
+                                                {{ $OylikTulovAll[6]['Xarajatlar'] }}
+                                            ],
+                                            backgroundColor: ['rgba(69, 96, 255, 0.2)'],
+                                            borderColor: ['rgb(69, 96, 255)'],
+                                            borderWidth: 1
+                                        },{label: "Ish haqi",
+                                            data: [
+                                                {{ $OylikTulovAll[0]['IshHaq'] }},
+                                                {{ $OylikTulovAll[1]['IshHaq'] }},
+                                                {{ $OylikTulovAll[2]['IshHaq'] }},
+                                                {{ $OylikTulovAll[3]['IshHaq'] }},
+                                                {{ $OylikTulovAll[4]['IshHaq'] }},
+                                                {{ $OylikTulovAll[5]['IshHaq'] }},
+                                                {{ $OylikTulovAll[6]['IshHaq'] }}
+                                            ],
+                                            backgroundColor: ['rgba(175, 25, 255, 0.2)'],
+                                            borderColor: ['rgb(175, 25, 255)'],
+                                            borderWidth: 1
+                                        },{label: "Daromad",
+                                            data: [
+                                                {{ $OylikTulovAll[0]['Daromat'] }},
+                                                {{ $OylikTulovAll[1]['Daromat'] }},
+                                                {{ $OylikTulovAll[2]['Daromat'] }},
+                                                {{ $OylikTulovAll[3]['Daromat'] }},
+                                                {{ $OylikTulovAll[4]['Daromat'] }},
+                                                {{ $OylikTulovAll[5]['Daromat'] }},
+                                                {{ $OylikTulovAll[6]['Daromat'] }}
+                                            ],
+                                            backgroundColor: ['rgba(255, 25, 255, 0.2)'],
+                                            borderColor: ['rgb(255, 25, 255)'],
+                                            borderWidth: 1
+                                        }]
+                                    },
+                                    options: {scales: {y: {beginAtZero: true}}}
+                                });
+                            });
+                        </script>
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-center table-striped table-hover" style="font-size:14px;">
+                                <thead>
+                                    <tr>
+                                        <th>#/#</th>
+                                        <th>{{ $OylikTulovAll[0]['date'] }}</th>
+                                        <th>{{ $OylikTulovAll[1]['date'] }}</th>
+                                        <th>{{ $OylikTulovAll[2]['date'] }}</th>
+                                        <th>{{ $OylikTulovAll[3]['date'] }}</th>
+                                        <th>{{ $OylikTulovAll[4]['date'] }}</th>
+                                        <th>{{ $OylikTulovAll[5]['date'] }}</th>
+                                        <th>{{ $OylikTulovAll[6]['date'] }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th style="text-align:left;"><b title="Naqt+Plastik+Payme-Qaytarildi">To'lovlar</b></th>
+                                        <td>{{ $OylikTulovAll[0]['TulovSum_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[1]['TulovSum_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[2]['TulovSum_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[3]['TulovSum_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[4]['TulovSum_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[5]['TulovSum_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[6]['TulovSum_table'] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align:left;"><b title="Umumit xarajatlar">Xarajatlar</b></th>
+                                        <td>{{ $OylikTulovAll[0]['Xarajatlar_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[1]['Xarajatlar_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[2]['Xarajatlar_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[3]['Xarajatlar_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[4]['Xarajatlar_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[5]['Xarajatlar_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[6]['Xarajatlar_table'] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align:left;"><b title="Hodim+O'qituvchi">Ish haqi</b></th>
+                                        <td>{{ $OylikTulovAll[0]['IshHaq_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[1]['IshHaq_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[2]['IshHaq_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[3]['IshHaq_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[4]['IshHaq_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[5]['IshHaq_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[6]['IshHaq_table'] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align:left;"><b title="Daromad">Daromad</b></th>
+                                        <td>{{ $OylikTulovAll[0]['Daromat_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[1]['Daromat_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[2]['Daromat_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[3]['Daromat_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[4]['Daromat_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[5]['Daromat_table'] }}</td>
+                                        <td>{{ $OylikTulovAll[6]['Daromat_table'] }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>    
             </div>
         </div>
     </section>

@@ -86,7 +86,7 @@
         <a class="nav-link collapsed" href="{{ route('superAdminTesting') }}"><i class="bi bi-ui-checks-grid"></i>Testlar</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('statistikaMonth') }}"><i class="bi bi-bar-chart"></i><span>Statistika Tulovlar</span></a>
+        <a class="nav-link collapsed" href="{{ route('statistikaMonth') }}"><i class="bi bi-bar-chart"></i><span>Statistika</span></a>
       </li>
       <li class="nav-item">
         <a class="nav-link collapsed" href="{{ route('hodimlar') }}"><i class="bi bi-person"></i><span>Administrator</span></a>
@@ -96,6 +96,9 @@
       </li>
       <li class="nav-item">
         <a class="nav-link collapsed" href="{{ route('hisobot') }}"><i class="bi bi-file-earmark-medical"></i><span>Hisobot</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('smsSend') }}"><i class="bi bi-envelope-arrow-up-fill"></i><span>SMS</span></a>
       </li>
       @if(Auth::user()->email=='elshodatc1116')
       <li class="nav-item">

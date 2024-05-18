@@ -6,6 +6,10 @@ use App\Models\User;
 use App\Models\AdminKassa;
 use App\Models\FilialKassa;
 use App\Models\IshHaqi;
+use App\Models\Filial;
+use App\Models\SendMessege;
+use App\Models\MavjudIshHaqi;
+use App\Jobs\CreateTecherSendMessege;
 use App\Events\CreateHodim;
 use App\Events\CreatIshHaqi;
 use App\Events\HodimUpdatePasswor;
@@ -39,7 +43,19 @@ class HodimController extends Controller{
         $validate['password'] = Hash::make($parol);
         $validate['filial_id'] = request()->cookie('filial_id');
         $User = User::create($validate);
-        CreateHodim::dispatch($User->id);
+        $Filail_name = Filial::find(request()->cookie('filial_id'))->filial_name;
+        $Phone = '+998'.str_replace(" ","",$request->phone);
+        $Text = $request->name." siz ".$Filail_name." o'quv markaziga ishga olindingiz.\nLogin: ".$request->email."\nParol: ".$parol."\nWeb sayt: ".env('WEB_SAYT_LINK');
+        $AdminKassa = AdminKassa::create([
+            'filial_id'=>$User->filial_id,
+            'user_id'=>$User->id
+        ]);
+        $SendMessege = SendMessege::create([
+            'phone' => $Phone,
+            'text' => $Text,
+            'status' => "Yuborilmoqda",
+        ]);
+        CreateTecherSendMessege::dispatch($SendMessege);
         return redirect()->back()->with('success', 'Yangi hodim qo\'shildi.'); 
     }
     public function adminHodimDelete($id){
@@ -57,9 +73,9 @@ class HodimController extends Controller{
         $Kassa['chegirma'] = number_format(($AdminKassa->chegirma), 0, '.', ' ');
         $Kassa['qaytarildi'] = number_format(($AdminKassa->qaytarildi), 0, '.', ' ');
         $Kassa['tashriflar'] = number_format(($AdminKassa->tashriflar), 0, '.', ' ');
-        $FilialKassa = FilialKassa::where('filial_id',request()->cookie('filial_id'))->first();
-        $Kassa['MavjudNaqt'] = number_format($FilialKassa->tulov_naqt, 0, '.', ' ');
-        $Kassa['MavjudPlastik'] = number_format($FilialKassa->tulov_plastik, 0, '.', ' ');
+        $MavjudIshHaqi = MavjudIshHaqi::where('filial_id',request()->cookie('filial_id'))->first();
+        $Kassa['MavjudNaqt'] = number_format($MavjudIshHaqi->naqt, 0, '.', ' ');
+        $Kassa['MavjudPlastik'] = number_format($MavjudIshHaqi->plastik, 0, '.', ' ');
         $ishHaqi = array();
         $Days2 = date("Y-m-d h:i:s",strtotime('-35 day',time()));
         foreach(IshHaqi::where('user_id',$id)->where('created_at','>=',$Days2)->orderby('id','desc')->get() as $key=> $item){
@@ -101,7 +117,15 @@ class HodimController extends Controller{
         $password = rand(10000000, 99999999);
         $User->password = Hash::make($password);
         $User->save();
-        HodimUpdatePasswor::dispatch($User->id,$password);
+        $Filail_name = Filial::find(request()->cookie('filial_id'))->filial_name;
+        $Phone = '+998'.str_replace(" ","",$User->phone);
+        $Text = $User->name." siz ".$Filail_name." o'quv markaziga parolingiz yangilandi.\nLogin: ".$User->email."\nParol: ".$password."\nWeb sayt: ".env('WEB_SAYT_LINK');
+        $SendMessege = SendMessege::create([
+            'phone' => $Phone,
+            'text' => $Text,
+            'status' => "Yuborilmoqda",
+        ]);
+        CreateTecherSendMessege::dispatch($SendMessege);
         return redirect()->back()->with('success', 'Parol yangilandi.'); 
     }
     public function adminPayHodimlarIshHaqi(Request $request){

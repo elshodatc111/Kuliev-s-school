@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Models\FilialKassa;
+use App\Models\MavjudIshHaqi;
 use App\Events\CreatIshHaqi;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -13,14 +14,16 @@ class IshHaqiFililaKassaUpdate{
         $type = $event->type;
         $summa = intval($event->summa);
         $filial_id = $event->filial_id;
+        $MavjudIshHaqi = MavjudIshHaqi::where('filial_id',$filial_id)->first();
         $FilialKassa = FilialKassa::where('filial_id',$filial_id)->first();
         if($type=='Naqt'){
             $FilialKassa->tulov_naqt_ish_haqi = intval($FilialKassa->tulov_naqt_ish_haqi)+$summa;
-            $FilialKassa->tulov_naqt = intval($FilialKassa->tulov_naqt)-$summa;
+            $MavjudIshHaqi->naqt = intval($MavjudIshHaqi->naqt)-$summa;
         }else{
             $FilialKassa->tulov_plastik_ish_haqi = intval($FilialKassa->tulov_plastik_ish_haqi)+$summa;
-            $FilialKassa->tulov_plastik = intval($FilialKassa->tulov_plastik)-$summa;
+            $MavjudIshHaqi->plastik = intval($MavjudIshHaqi->plastik)-$summa;
         }
+        $MavjudIshHaqi->save();
         $FilialKassa->save();
     }
 }

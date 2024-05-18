@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\FilialKassa;
 use App\Models\Filial;
 use App\Models\Moliya;
+use App\Models\MavjudIshHaqi;
 use App\Models\Tulov;
 use App\Models\TulovDelete;
 use App\Http\Controllers\Controller;
@@ -72,7 +73,11 @@ class MoliyaController extends Controller{
             $TulDel[$key]['type'] = $value->type;
             $TulDel[$key]['created_at'] = $value->created_at;
         }
-        return view("Admin.moliya.index",compact('TulDel','QaytarildiSumma','Qaytarildi','Kassa','Chiqim','Xarajat'));
+        $MavjudIshHaqi = MavjudIshHaqi::where('filial_id',request()->cookie('filial_id'))->first();
+        $IshHaq = array();
+        $IshHaq['naqt'] = number_format(($MavjudIshHaqi->naqt), 0, '.', ' ');
+        $IshHaq['plastik'] = number_format(($MavjudIshHaqi->plastik), 0, '.', ' ');
+        return view("Admin.moliya.index",compact('TulDel','QaytarildiSumma','Qaytarildi','Kassa','Chiqim','Xarajat','IshHaq'));
     } 
     public function chiqim(Request $request){
         $naqt = str_replace(" ","",$request->naqt);

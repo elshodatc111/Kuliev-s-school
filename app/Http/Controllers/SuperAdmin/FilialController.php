@@ -22,6 +22,7 @@ use App\Models\Murojat;
 use App\Models\Tulov;
 use App\Models\ChegirmaDay;
 use App\Models\SmsCentar;
+use App\Models\MavjudIshHaqi;
 use App\Events\CreateFilial;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
@@ -37,10 +38,15 @@ class FilialController extends Controller{
         $Naqt = 0;
         $Plastik = 0;
         $Payme = 0;
+        $IshHaqiNaqt = 0;
+        $IshHaqiPlastik = 0;
         foreach (Filial::get() as $key => $value) {
+            $MavjudIshHaqi = MavjudIshHaqi::where('filial_id',$value->id)->first();
             $Filial[$key]['id'] = $value->id ;
             $Filial[$key]['filial_name'] = $value->filial_name;
             $Filial[$key]['naqt'] = number_format(($value->naqt), 0, '.', ' ');
+            $Filial[$key]['IshHaqiNaqt'] = number_format(($MavjudIshHaqi->naqt), 0, '.', ' ');
+            $Filial[$key]['IshHaqiPlastik'] = number_format(($MavjudIshHaqi->plastik), 0, '.', ' ');
             $Naqt = $Naqt + $value->naqt;
             $Filial[$key]['plastik'] = number_format(($value->plastik), 0, '.', ' ');
             $Plastik = $Plastik + $value->plastik;
@@ -56,24 +62,15 @@ class FilialController extends Controller{
         $dates = date("Y-m-d",strtotime('-1 month',time()))." 00:00:00";
         $Moliya = Moliya::where('created_at','>=',$dates)->orderby('id','desc')->get();
         $Xarajatlar = array();
-        $Qaytarildi = array();
         foreach ($Moliya as $key => $value) {
-            if($value->xodisa=='XarajatAdmin'){
-                $Xarajatlar[$key]['filial_name'] = Filial::find($value->filial_id)->filial_name;
-                $Xarajatlar[$key]['summa'] = number_format(($value->summa), 0, '.', ' ');
-                $Xarajatlar[$key]['type'] = $value->type;
-                $Xarajatlar[$key]['about'] = $value->about;
-                $Xarajatlar[$key]['created_at'] = $value->created_at;
-            }
-            if($value->xodisa=='Qaytarildi'){
-                $Qaytarildi[$key]['filial_name'] = Filial::find($value->filial_id)->filial_name;
-                $Qaytarildi[$key]['summa'] = number_format(($value->summa), 0, '.', ' ');
-                $Qaytarildi[$key]['type'] = $value->type;
-                $Qaytarildi[$key]['about'] = $value->about;
-                $Qaytarildi[$key]['created_at'] = $value->created_at;
-            }
+            $Xarajatlar[$key]['filial_name'] = Filial::find($value->filial_id)->filial_name;
+            $Xarajatlar[$key]['summa'] = number_format(($value->summa), 0, '.', ' ');
+            $Xarajatlar[$key]['type'] = $value->type;
+            $Xarajatlar[$key]['xodisa'] = $value->xodisa;
+            $Xarajatlar[$key]['about'] = $value->about;
+            $Xarajatlar[$key]['created_at'] = $value->created_at;
         }
-        return view('SuperAdmin.filial',compact('Xarajatlar','Qaytarildi','Filial','Plastik','Naqt','Payme','Jami'));
+        return view('SuperAdmin.filial',compact('Xarajatlar','Filial','Plastik','Naqt','Payme','Jami'));
     }
     public function filialcreate(Request $request){
         $validated = $request->validate([
@@ -95,6 +92,11 @@ class FilialController extends Controller{
         ]);
         ChegirmaDay::create([
             'filial_id' => $Filial->id
+        ]);
+        MavjudIshHaqi::create([
+            'filial_id' => $Filial->id,
+            'naqt' => 0,
+            'plastik' => 0,
         ]);
         return redirect()->back()->with('success', 'Yangi filial yaratildi.'); 
     }

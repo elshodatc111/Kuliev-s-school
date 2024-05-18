@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 use App\Models\Setting;
 use App\Models\SmsCounter;
 use App\Models\Guruh;
+use App\Models\Cours;
+use App\Models\Filial;
 use App\Models\GuruhUser;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -114,6 +116,23 @@ class ApiController extends Controller{
                 'error' => 'xatolik'
             ];
         }
+        return $response;
+    }
+
+    public function cours(){
+        $Cours = Cours::get();
+        $response = array();
+        foreach($Cours as $key => $item){
+            $response[$key]['filial_name'] = Filial::find($item->filial_id)->filial_name;
+            $response[$key]['id'] = $item->id;
+            $response[$key]['cours_name'] = $item->cours_name;
+        }
+        $response2 = [
+            'status' => [
+                'code' => 200,
+                'cours' => $response
+            ]
+        ];
         return $response;
     }
 

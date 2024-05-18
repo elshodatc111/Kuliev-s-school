@@ -373,8 +373,8 @@ class ComposerStaticInitd8fd3df3f9f495df31694dec079489b1
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -631,6 +631,7 @@ class ComposerStaticInitd8fd3df3f9f495df31694dec079489b1
         'App\\Models\\GuruhTime' => __DIR__ . '/../..' . '/app/Models/GuruhTime.php',
         'App\\Models\\GuruhUser' => __DIR__ . '/../..' . '/app/Models/GuruhUser.php',
         'App\\Models\\IshHaqi' => __DIR__ . '/../..' . '/app/Models/IshHaqi.php',
+        'App\\Models\\MavjudIshHaqi' => __DIR__ . '/../..' . '/app/Models/MavjudIshHaqi.php',
         'App\\Models\\Moliya' => __DIR__ . '/../..' . '/app/Models/Moliya.php',
         'App\\Models\\Murojat' => __DIR__ . '/../..' . '/app/Models/Murojat.php',
         'App\\Models\\Room' => __DIR__ . '/../..' . '/app/Models/Room.php',

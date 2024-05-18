@@ -9,72 +9,128 @@ use App\Models\Guruh;
 use App\Models\GuruhUser;
 use App\Models\Filial;
 use App\Models\Setting;
+use App\Models\Tulov;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class SuperAdminController extends Controller{
-    public function __construct(){
-        $this->middleware('auth');
-    }
-    public function SMMIndex(){
-        $Oylar = array();
-        $Oylar[0] = date("Y-m",strtotime("-5 month",time()));
-        $Oylar[1] = date("Y-m",strtotime("-4 month",time()));
-        $Oylar[2] = date("Y-m",strtotime("-3 month",time()));
-        $Oylar[3] = date("Y-m",strtotime("-2 month",time()));
-        $Oylar[4] = date("Y-m",strtotime("-1 month",time()));
-        $Oylar[5] = date("Y-m");
-        $Oylar2 = array();
-        $Oylar2[0] = date("M",strtotime("-5 month",time()));
-        $Oylar2[1] = date("M",strtotime("-4 month",time()));
-        $Oylar2[2] = date("M",strtotime("-3 month",time()));
-        $Oylar2[3] = date("M",strtotime("-2 month",time()));
-        $Oylar2[4] = date("M",strtotime("-1 month",time()));
-        $Oylar2[5] = date("M");
-        $Svod = array();
-        foreach ($Oylar as $key => $value) {
-            $User = User::where('type','User')->where('created_at','>=',$value."-01 00:00:00")->where('created_at','<=',$value."-31 23:59:59")->get();
-            $Telegram = 0;
-            $Instagram = 0;
-            $Facebook = 0;
-            $Bannerlar = 0;
-            $Tanishlar = 0;
-            $Boshqa = 0;
-            foreach ($User as $keys => $item) {
-                if($item->smm == 'Telegram'){
-                    $Telegram = $Telegram + 1;
-                }elseif($item->smm == 'Instagram'){
-                    $Instagram = $Instagram + 1;
-                }elseif($item->smm == 'Facebook'){
-                    $Facebook = $Facebook + 1;
-                }elseif($item->smm == 'Bannerlar'){
-                    $Bannerlar = $Bannerlar + 1;
-                }elseif($item->smm == 'Tanishlar'){
-                    $Tanishlar = $Tanishlar + 1;
-                }elseif($item->smm == 'Boshqa'){
-                    $Boshqa = $Boshqa + 1;
-                }
-            }
-            $Svod[$key]['Telegram'] = $Telegram;
-            $Svod[$key]['Instagram'] = $Instagram;
-            $Svod[$key]['Facebook'] = $Facebook;
-            $Svod[$key]['Bannerlar'] = $Bannerlar;
-            $Svod[$key]['Tanishlar'] = $Tanishlar;
-            $Svod[$key]['Boshqa'] = $Boshqa;
-            $Telegram = 0;
-            $Instagram = 0;
-            $Facebook = 0;
-            $Bannerlar = 0;
-            $Tanishlar = 0;
-            $Boshqa = 0;
+    public function __construct(){$this->middleware('auth');}
+    public function oxirgiYittiKun(){
+        $weekDays = [];
+        $daysOfWeek = [
+            'Sunday' => 'Yakshanba',
+            'Monday' => 'Dushanba',
+            'Tuesday' => 'Seshanba',
+            'Wednesday' => 'Chorshanba',
+            'Thursday' => 'Payshanba',
+            'Friday' => 'Juma',
+            'Saturday' => 'Shanba',
+        ];
+        for ($i = 0; $i < 7; $i++) {
+            $date = Carbon::now()->subDays($i);
+            $dayName = $date->format('l');
+            $palmDayName = $daysOfWeek[$dayName];
+            $weekDays[] = [
+                'day_name' => $palmDayName,
+                'date' => $date->format('Y-m-d'),
+                'date_wekend' => $date->format('d-M')
+            ];
         }
-        $sss = array();
-        $sss['oy'] = $Oylar2;
-        $sss['svod'] = $Svod;
-        return $sss;
+        $weekDays = array_reverse($weekDays);
+        return $weekDays;
     }
+    public function KunlikTashrivAndCRM(){
+        $Kunlar = $this->oxirgiYittiKun();
+        $Statistika = array();
+        $Tashriflar = array();
+        foreach ($Kunlar as $key => $value) {
+            $Start = $value['date']." 00:00:00";
+            $End = $value['date']." 23:59:59";
+            $Tashriflar[$key]['day_name'] = $value['day_name'];
+            $Tashriflar[$key]['user_count'] = count(User::where('created_at','>=',$Start)->where('created_at','<=',$End)->get());
+        }
+        $Statistika['kunlik_tashrif'] = $Tashriflar;
+        $Statrs = Carbon::now()->subDays(6)->format('Y-m-d')." 00:00:00";
+        $Nows = Carbon::now()->subDays(0)->format('Y-m-d')." 23:59:59";
+        $SNNN = User::where('created_at','>=',$Statrs)->where('created_at','<=',$Nows)->get();
+        $SMM = array();
+        $telegram = 0;
+        $instagram = 0;
+        $facebook = 0;
+        $banner = 0;
+        $tanishlar = 0;
+        $boshqalar = 0;
+        foreach ($SNNN as $key => $value) {
+            if($value->smm=='Telegram'){$telegram = $telegram + 1;}
+            if($value->smm=='Instagram'){$instagram = $instagram + 1;}
+            if($value->smm=='Facebook'){$facebook = $facebook + 1;}
+            if($value->smm=='Bannerlar'){$banner = $banner + 1;}
+            if($value->smm=='Tanishlar'){$tanishlar = $tanishlar + 1;}
+            if($value->smm=='Boshqa'){$boshqalar = $boshqalar + 1;}
+        }
+        $SMM['Telegram'] = $telegram;
+        $SMM['Instagram'] = $instagram;
+        $SMM['Facebook'] = $facebook;
+        $SMM['Banner'] = $banner;
+        $SMM['Tanishlar'] = $tanishlar;
+        $SMM['Boshqalar'] = $boshqalar;
+        $Statistika['smm'] = $SMM;
+        return $Statistika;
+    }
+    public function KunlikTulovlar(){
+        $Kunlar = $this->oxirgiYittiKun();
+        $Tulovlar = array();
+        foreach ($Kunlar as $key => $value) {
+            $Start = $value['date']." 00:00:00";
+            $End = $value['date']." 23:59:59";
+
+            $Tulovlar[$key]['date'] = $value['date'];
+            $Tulovlar[$key]['date_wekend'] = $value['date_wekend'];
+
+            $Tulov = Tulov::where('created_at','>=',$Start)
+                ->where('created_at','<=',$End)->get();
+            $Naqt = 0;
+            $Plastik = 0;
+            $Payme = 0;
+            $Chegirma = 0;
+            $Qaytarildi = 0;
+            $Naqt_Plastik_Payme = 0;
+            foreach ($Tulov as $value) {
+                if($value->type=='Naqt'){
+                    $Naqt = $Naqt + $value['summa'];
+                    $Naqt_Plastik_Payme = $Naqt_Plastik_Payme + $value['summa'];
+                }
+                if($value->type=='Plastik'){
+                    $Plastik = $Plastik + $value['summa'];
+                    $Naqt_Plastik_Payme = $Naqt_Plastik_Payme + $value['summa'];
+                }
+                if($value->type=='Payme'){
+                    $Payme = $Payme + $value['summa'];
+                    $Naqt_Plastik_Payme = $Naqt_Plastik_Payme + $value['summa'];
+                }
+                if($value->type=='Chegirma'){$Chegirma = $Chegirma + $value['summa'];}
+                if($value->type=='Qaytarildi (Plastik)'){$Qaytarildi = $Qaytarildi + $value['summa'];}
+                if($value->type=='Qaytarildi (Naqt)'){$Qaytarildi = $Qaytarildi + $value['summa'];}
+            }
+            
+            $Tulovlar[$key]['Naqt'] = $Naqt;
+            $Tulovlar[$key]['Plastik'] = $Plastik;
+            $Tulovlar[$key]['Payme'] = $Payme;
+            $Tulovlar[$key]['Chegirma'] = $Chegirma;
+            $Tulovlar[$key]['Qaytarildi'] = $Qaytarildi;
+            $Tulovlar[$key]['Naqt_Plastik_Payme'] = $Naqt_Plastik_Payme;
+            $Tulovlar[$key]['Table_Naqt'] = number_format(($Naqt), 0, '.', ' ');
+            $Tulovlar[$key]['Table_Plastik'] = number_format(($Plastik), 0, '.', ' ');
+            $Tulovlar[$key]['Table_Payme'] = number_format(($Payme), 0, '.', ' ');
+            $Tulovlar[$key]['Table_Chegirma'] = number_format(($Chegirma), 0, '.', ' ');
+            $Tulovlar[$key]['Table_Qaytarildi'] = number_format(($Qaytarildi), 0, '.', ' ');
+            $Tulovlar[$key]['Table_Naqt_Plastik_Payme'] = number_format(($Naqt_Plastik_Payme), 0, '.', ' ');
+        }
+        return $Tulovlar;
+    } 
     public function index(){
         $SmsCounter = SmsCounter::find(1);
         $SettingEndData = date("Y-m-d", strtotime('-3 day',strtotime(Setting::find(1)->EndData)));
@@ -93,7 +149,6 @@ class SuperAdminController extends Controller{
             $Filial[$key]['aktivguruh'] = count(Guruh::where('filial_id',$value->id)->get())-count(Guruh::where('filial_id',$value->id)->where('guruh_start','>',date('Y-m-d'))->get())-count(Guruh::where('filial_id',$value->id)->where('guruh_end','<',date('Y-m-d'))->get());
             $Filial[$key]['endguruh'] = count(Guruh::where('filial_id',$value->id)->where('guruh_end','<',date('Y-m-d'))->get());
         }
-        $SMM = $this->SMMIndex();
         $StartDates = date("Y-m")."-01 00:00:00";
         $EndDates = date("Y-m")."31 23:59:59";
         $Guruhsss = Guruh::where('guruh_start','<=',$EndDates)->where('guruh_end','>=',$StartDates)->get();
@@ -113,7 +168,27 @@ class SuperAdminController extends Controller{
                 }   
             }
         }
-        $ActivStudent = count($ActivUser);
-        return view('SuperAdmin.index',compact('Filial','Block','SMM','SmsCounter','ActivStudent'));
+        $ActivStudent = count($ActivUser); // Aktiv talabalar
+        $TashSMM = $this->KunlikTashrivAndCRM(); // Tashriflar va SMM
+        $Tulov = $this->KunlikTulovlar();
+        #dd($Tulov);
+        return view('SuperAdmin.index',compact('Tulov','TashSMM','Filial','Block','SmsCounter','ActivStudent'));
     }    
+    public function tulovShow($data){
+        $Start = $data." 00:00:00";
+        $End = $data." 23:59:59";
+        $Tulov = Tulov::where('created_at','>=',$Start)->where('created_at','<=',$End)->get();
+        $Tulovlar = array();
+        foreach ($Tulov as $key => $value) {
+            $Tulovlar[$key]['Filial'] = Filial::find($value->filial_id)->filial_name;
+            $Tulovlar[$key]['User'] = User::find($value->user_id)->name;
+            $Tulovlar[$key]['Admin'] = User::find($value->admin_id)->email;
+            $Tulovlar[$key]['Summa'] = number_format(($value->summa), 0, '.', ' ');
+            $Tulovlar[$key]['Type'] = $value->type;
+            $Tulovlar[$key]['About'] = $value->about;
+            $Tulovlar[$key]['created_at'] = $value->created_at;
+        }
+        #dd($Tulovlar);
+        return view('SuperAdmin.statistik.kunlik_tulov',compact('data','Tulovlar'));
+    }
 }

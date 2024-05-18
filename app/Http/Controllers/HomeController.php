@@ -3,14 +3,25 @@
 namespace App\Http\Controllers;
 use App\Models\Filial;
 use App\Models\Setting;
+use App\Models\TKunMessege;
+use App\Jobs\TkunSendMessege;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+
 class HomeController extends Controller{
     public function __construct(){
         $this->middleware('auth');
     }
     public function index(){
         $time = date("Y-m-d");
+        if(count(TKunMessege::where('data',$time)->get())==0){
+            $TKunMessege = TKunMessege::create([
+                'data'=> $time,
+                'status'=>'kutilmoqda'
+            ]);
+            TkunSendMessege::dispatch($TKunMessege);
+        }
         $login = 'elshodatc1116';
         $Setting = Setting::find(1);
         if($Setting->Status == 'false'){

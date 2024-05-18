@@ -1,9 +1,7 @@
 @extends('SuperAdmin.layout.home')
 @section('title','Ish haqi')
 @section('content')
-
 <main id="main" class="main">
-
     <div class="pagetitle">
         <h1>Hisobot</h1>
         <nav>
@@ -14,8 +12,6 @@
             </ol>
         </nav>
     </div> 
-
-    
     <h5 class="w-100 text-center">Hodimlarga to'langan ish haqi</h5>
     <div class="w-100" style="text-align:right">
         <a id='export' style='cursor:pointer' class="btn btn-warning text-white"> EXCEL</a>
@@ -39,10 +35,10 @@
                     <td>{{ $loop->index+1 }}</td>
                     <td>{{ $item['filial'] }}</td>
                     <td>{{ $item['user'] }}</td>
-                    <td>{{ $item['admin'] }}</td>
-                    <td>{{ $item['about'] }}</td>
                     <td>{{ $item['summa'] }}</td>
                     <td>{{ $item['type'] }}</td>
+                    <td>{{ $item['about'] }}</td>
+                    <td>{{ $item['admin'] }}</td>
                     <td>{{ $item['created_at'] }}</td>
                 </tr>
             @endforeach

@@ -73,6 +73,7 @@ return array(
     'App\\Models\\GuruhTime' => $baseDir . '/app/Models/GuruhTime.php',
     'App\\Models\\GuruhUser' => $baseDir . '/app/Models/GuruhUser.php',
     'App\\Models\\IshHaqi' => $baseDir . '/app/Models/IshHaqi.php',
+    'App\\Models\\MavjudIshHaqi' => $baseDir . '/app/Models/MavjudIshHaqi.php',
     'App\\Models\\Moliya' => $baseDir . '/app/Models/Moliya.php',
     'App\\Models\\Murojat' => $baseDir . '/app/Models/Murojat.php',
     'App\\Models\\Room' => $baseDir . '/app/Models/Room.php',

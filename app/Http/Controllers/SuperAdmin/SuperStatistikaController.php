@@ -3,348 +3,475 @@
 namespace App\Http\Controllers\SuperAdmin;
 use App\Models\User;
 use App\Models\Filial;
+use App\Models\GuruhUser;
 use App\Models\Tulov;
-use App\Models\Moliya;
 use App\Models\IshHaqi;
+use App\Models\Guruh;
+use App\Models\Moliya;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class SuperStatistikaController extends Controller{
     public function __construct(){
         $this->middleware('auth');
     }
-    public function OylikTashrif($filial_id){
-        $StartMonch = date("Y-m")."-01 00:00:00";
-        $EndMonch = date("Y-m")."-31 23:59:59";
-        $Users = User::where('filial_id',request()->cookie('filial_id'))->where('type','User')->get();
-        $Telegram = 0;
-        $Instagram = 0;
-        $Facebook = 0;
-        $Bannerlar = 0;
-        $Tanishlar = 0;
-        $Boshqalar = 0;
-        $OylikTashrif = array();
-        foreach ($Users as $key => $value) {
-            if($value->smm == 'Telegram'){$Telegram = $Telegram + 1;
-            }elseif($value->smm == 'Instagram'){$Instagram = $Instagram + 1;
-            }elseif($value->smm == 'Facebook'){$Facebook = $Facebook + 1;
-            }elseif($value->smm == 'Bannerlar'){$Bannerlar = $Bannerlar + 1;
-            }elseif($value->smm == 'Tanishlar'){$Tanishlar = $Tanishlar + 1;
-            }else{$Boshqalar = $Boshqalar + 1;}
+    public function oxirgiYittiKun(){
+        $weekDays = [];
+        $daysOfWeek = [
+            'Sunday' => 'Yakshanba',
+            'Monday' => 'Dushanba',
+            'Tuesday' => 'Seshanba',
+            'Wednesday' => 'Chorshanba',
+            'Thursday' => 'Payshanba',
+            'Friday' => 'Juma',
+            'Saturday' => 'Shanba',
+        ];
+        for ($i = 0; $i < 7; $i++) {
+            $date = Carbon::now()->subDays($i);
+            $dayName = $date->format('l');
+            $palmDayName = $daysOfWeek[$dayName];
+            $weekDays[] = [
+                'day_name' => $palmDayName,
+                'date' => $date->format('Y-m-d'),
+                'date_wekend' => $date->format('d-M')
+            ];
         }
-        $OylikTashrif['Telegram'] = $Telegram;
-        $OylikTashrif['Bannerlar'] = $Bannerlar;
-        $OylikTashrif['Instagram'] = $Instagram;
-        $OylikTashrif['Facebook'] = $Facebook;
-        $OylikTashrif['Tanishlar'] = $Tanishlar;
-        $OylikTashrif['Boshqalar'] = $Boshqalar;
-        
-        return $OylikTashrif;
+        $weekDays = array_reverse($weekDays);
+        return $weekDays;
     }
-    public function OylikTulov($filial_id){
-        $StartMonch = date("Y-m")."-01 00:00:00";
-        $EndMonch = date("Y-m")."-31 23:59:59";
-        $Tulovlar = Tulov::where('filial_id',request()->cookie('filial_id'))
-            ->where('created_at',">=",$StartMonch)
-            ->where('created_at',"<=",$EndMonch)
-            ->where('status','true')->get();
-        $Tulov = array();
-        $Naqt = 0;
-        $Plastik = 0;
-        $Payme = 0;
-        foreach ($Tulovlar as $key => $value) {
-            if($value->type=='Naqt'){
-                $Naqt = $Naqt + $value->summa;
-            }elseif($value->type=='Plastik'){
-                $Plastik = $Plastik + $value->summa;
-            }elseif($value->type=='Payme'){
-                $Payme = $Payme + $value->summa;
-            }
-        }
-        $Tulov['Naqt'] = $Naqt;
-        $Tulov['Plastik'] = $Plastik;
-        $Tulov['Payme'] = $Payme;
-        return $Tulov;
-    }
-    public function Kunlar(){
-        $Kunlar = array();
-        array_push($Kunlar,date("d-M",strtotime('-5 day',time())));
-        array_push($Kunlar,date("d-M",strtotime('-4 day',time())));
-        array_push($Kunlar,date("d-M",strtotime('-3 day',time())));
-        array_push($Kunlar,date("d-M",strtotime('-2 day',time())));
-        array_push($Kunlar,date("d-M",strtotime('-1 day',time())));
-        array_push($Kunlar,date("d-M"));
-        return $Kunlar;
-    }
-    public function kunlikNPPCHQTulovlar($filial_id){
-        $KunlikStatustika = array();
-        $Naqt = array();
-        $Plastik = array();
-        $Payme = array();
-        $Chegirma = array();
-        $Qaytarilgan = array();
-        $m = 1;
-        for ($i=-5; $i <= 0; $i++) { 
-            $dates = date("Y-m-d", strtotime($i.' day',time()));
-            $Tulovlar = Tulov::where('filial_id',$filial_id)
-                ->where('created_at',">=",$dates." 00:00:00")
-                ->where('created_at',"<=",$dates." 23:59:59")->where('status','true')->get();
-            $N = 0;
-            $P = 0;
-            $Q = 0;
-            $Pay = 0;
-            $CH = 0;
-            foreach ($Tulovlar as $key => $value) {
-                if($value->type == 'Naqt'){$N = $N + $value->summa;
-                }elseif($value->type == 'Plastik'){$P = $P + $value->summa;
-                }elseif($value->type == 'Chegirma'){$CH = $CH + $value->summa;
-                }elseif($value->type == 'Payme'){$Pay = $Pay + $value->summa;
-                }else{$Q = $Q + $value->summa;}
-            }
-            $Naqt[$m] = $N;
-            $Plastik[$m] = $P;
-            $Payme[$m] = $Pay;
-            $Chegirma[$m] = $CH;
-            $Qaytarilgan[$m] = $Q;
-            $m++;
-        }
-        $KunlikStatustika['Naqt'] = $Naqt;
-        $KunlikStatustika['Plastik'] = $Plastik;
-        $KunlikStatustika['Payme'] = $Payme;
-        $KunlikStatustika['Chegirma'] = $Chegirma;
-        $KunlikStatustika['Qaytarilgan'] = $Qaytarilgan;
-        return $KunlikStatustika;
-
-    }
-    public function KunlikTulovlar($id){
+    public function KunlikTashrivAndCRM($filial_id){
+        $Kunlar = $this->oxirgiYittiKun();
         $Statistika = array();
-        $Statistika['kunlar'] = $this->Kunlar();
-        $Statistika['Tulovlar'] = $this->kunlikNPPCHQTulovlar($id);
+        $Tashriflar = array();
+        foreach ($Kunlar as $key => $value) {
+            $Start = $value['date']." 00:00:00";
+            $End = $value['date']." 23:59:59";
+            $Tashriflar[$key]['day_name'] = $value['day_name'];
+            $Tashriflar[$key]['user_count'] = count(User::where('filial_id',$filial_id)->where('created_at','>=',$Start)->where('created_at','<=',$End)->get());
+        }
+        $Statistika['kunlik_tashrif'] = $Tashriflar;
+        $Statrs = Carbon::now()->subDays(6)->format('Y-m-d')." 00:00:00";
+        $Nows = Carbon::now()->subDays(0)->format('Y-m-d')." 23:59:59";
+        $SNNN = User::where('filial_id',$filial_id)->where('created_at','>=',$Statrs)->where('created_at','<=',$Nows)->get();
+        $SMM = array();
+        $telegram = 0;
+        $instagram = 0;
+        $facebook = 0;
+        $banner = 0;
+        $tanishlar = 0;
+        $boshqalar = 0;
+        foreach ($SNNN as $key => $value) {
+            if($value->smm=='Telegram'){$telegram = $telegram + 1;}
+            if($value->smm=='Instagram'){$instagram = $instagram + 1;}
+            if($value->smm=='Facebook'){$facebook = $facebook + 1;}
+            if($value->smm=='Bannerlar'){$banner = $banner + 1;}
+            if($value->smm=='Tanishlar'){$tanishlar = $tanishlar + 1;}
+            if($value->smm=='Boshqa'){$boshqalar = $boshqalar + 1;}
+        }
+        $SMM['Telegram'] = $telegram;
+        $SMM['Instagram'] = $instagram;
+        $SMM['Facebook'] = $facebook;
+        $SMM['Banner'] = $banner;
+        $SMM['Tanishlar'] = $tanishlar;
+        $SMM['Boshqalar'] = $boshqalar;
+        $Statistika['smm'] = $SMM;
         return $Statistika;
     }
-    public function OylikStatistiakOylar(){
-        $oylar = array();
-        $oylar[0] = date("M",strtotime('-5 month',time()));
-        $oylar[1] = date("M",strtotime('-4 month',time()));
-        $oylar[2] = date("M",strtotime('-3 month',time()));
-        $oylar[3] = date("M",strtotime('-2 month',time()));
-        $oylar[4] = date("M",strtotime('-1 month',time()));
-        $oylar[5] = date("M",strtotime('0 month',time()));
-        return $oylar;
-    }
-    public function OylikTulovlar($id){
-        $OylikStatustika = array();
-        $OylikStatustikaView = array();
-        $Naqt = array();
-        $Plastik = array();
-        $Payme = array();
-        $Chegirma = array();
-        $Qaytarilgan = array();
-        $Xarajat = array();
-        $UmumiyXarajat = array();
-        $IshHaqi = array();
-        $Daromat = array();
-        $m = 1;
-        for ($i=-5; $i <= 0; $i++) { 
-            $dates = date("Y-m", strtotime($i.' month', time()));
-            $Tulovlar = Tulov::where('filial_id',$id)
-                ->where('created_at',">=",$dates."-01 00:00:00")
-                ->where('created_at',"<=",$dates."-31 23:59:59")->where('status','true')->get();
-            $Moliya = Moliya::where('filial_id',$id)
-                ->where('created_at',">=",$dates."-01 00:00:00")
-                ->where('created_at',"<=",$dates."-31 23:59:59")->where('status','true')->get();
-            $IshHaqi = IshHaqi::where('filial_id',$id)
-                ->where('created_at',">=",$dates."-01 00:00:00")
-                ->where('created_at',"<=",$dates."-31 23:59:59")->get();
-            $naqts = 0;
-            $plastiks = 0;
-            $chegirma = 0;
-            $qaytaril = 0;
-            $payme = 0;
-            $xarajat = 0;
-            $adminxarajat = 0;
-            $ishhaqii = 0;
-            foreach ($IshHaqi as $keyt => $value) {$ishhaqii = $ishhaqii + $value->summa;}
-            foreach ($Moliya as $keysss => $value) {
-                if($value->xodisa=='Xarajat'){
-                    $xarajat = $xarajat + $value->summa;
+    public function KunlikTulovlar($filial_id){
+        $Kunlar = $this->oxirgiYittiKun();
+        $Tulovlar = array();
+        foreach ($Kunlar as $key => $value) {
+            $Start = $value['date']." 00:00:00";
+            $End = $value['date']." 23:59:59";
+
+            $Tulovlar[$key]['date'] = $value['date'];
+            $Tulovlar[$key]['date_wekend'] = $value['date_wekend'];
+
+            $Tulov = Tulov::where('created_at','>=',$Start)
+                ->where('filial_id',$filial_id)
+                ->where('created_at','<=',$End)->get();
+            $Naqt = 0;
+            $Plastik = 0;
+            $Payme = 0;
+            $Chegirma = 0;
+            $Qaytarildi = 0;
+            $Naqt_Plastik_Payme = 0;
+            foreach ($Tulov as $value) {
+                if($value->type=='Naqt'){
+                    $Naqt = $Naqt + $value['summa'];
+                    $Naqt_Plastik_Payme = $Naqt_Plastik_Payme + $value['summa'];
                 }
-                if($value->xodisa=='Qaytarildi'){
-                    $xarajat = $xarajat - $value->summa;
+                if($value->type=='Plastik'){
+                    $Plastik = $Plastik + $value['summa'];
+                    $Naqt_Plastik_Payme = $Naqt_Plastik_Payme + $value['summa'];
                 }
-                if($value->xodisa=='XarajatAdmin'){
-                    $adminxarajat = $adminxarajat + $value->summa;
+                if($value->type=='Payme'){
+                    $Payme = $Payme + $value['summa'];
+                    $Naqt_Plastik_Payme = $Naqt_Plastik_Payme + $value['summa'];
                 }
+                if($value->type=='Chegirma'){$Chegirma = $Chegirma + $value['summa'];}
+                if($value->type=='Qaytarildi (Plastik)'){$Qaytarildi = $Qaytarildi + $value['summa'];}
+                if($value->type=='Qaytarildi (Naqt)'){$Qaytarildi = $Qaytarildi + $value['summa'];}
             }
-            foreach ($Tulovlar as $sss => $value) {
-                if($value->type == 'Naqt'){
-                    $naqts = $value->summa + $naqts;
-                }
-                if($value->type == 'Plastik'){
-                    $plastiks = $value->summa + $plastiks;
-                }
-                if($value->type == 'Chegirma'){
-                    $chegirma = $value->summa + $chegirma;
-                }
-                if($value->type == 'Qaytarildi (Naqt)'){
-                    $qaytaril = $value->summa + $qaytaril;
-                }
-                if($value->type == 'Qaytarildi (Plastik)'){
-                    $qaytaril = $value->summa + $qaytaril;
-                }
-                if($value->type == 'Payme'){
-                    $payme = $value->summa + $payme;
-                }
-            }
-            $daromat = $naqts + $plastiks + $payme - $qaytaril - $xarajat - $adminxarajat - $ishhaqii;
-            $OylikStatustika[$m]['Naqt'] = $naqts;
-            $OylikStatustika[$m]['Plastik'] = $plastiks;
-            $OylikStatustika[$m]['Payme'] = $payme;
-            $OylikStatustika[$m]['Chegirma'] = $chegirma;
-            $OylikStatustika[$m]['Qaytarilgan'] = $qaytaril;
-            $OylikStatustika[$m]['Xarajat'] = $xarajat;
-            $OylikStatustika[$m]['UmumiyXarajat'] = $adminxarajat;
-            $OylikStatustika[$m]['IshHaqi'] = $ishhaqii;
-            $OylikStatustika[$m]['Daromat'] = $daromat;
-            $OylikStatustikaView[$m]['Naqt'] = number_format(($naqts), 0, '.', ' ');
-            $OylikStatustikaView[$m]['Plastik'] = number_format(($plastiks), 0, '.', ' ');
-            $OylikStatustikaView[$m]['Payme'] = number_format(($payme), 0, '.', ' ');
-            $OylikStatustikaView[$m]['Chegirma'] = number_format(($chegirma), 0, '.', ' ');
-            $OylikStatustikaView[$m]['Qaytarilgan'] = number_format(($qaytaril), 0, '.', ' ');
-            $OylikStatustikaView[$m]['Xarajat'] = number_format(($xarajat), 0, '.', ' ');
-            $OylikStatustikaView[$m]['UmumiyXarajat'] = number_format(($adminxarajat), 0, '.', ' ');
-            $OylikStatustikaView[$m]['IshHaqi'] = number_format(($ishhaqii), 0, '.', ' ');
-            $OylikStatustikaView[$m]['Daromat'] = number_format(($daromat), 0, '.', ' ');
-            $m++;
+            $Tulovlar[$key]['Naqt'] = $Naqt;
+            $Tulovlar[$key]['Plastik'] = $Plastik;
+            $Tulovlar[$key]['Payme'] = $Payme;
+            $Tulovlar[$key]['Chegirma'] = $Chegirma;
+            $Tulovlar[$key]['Qaytarildi'] = $Qaytarildi;
+            $Tulovlar[$key]['Naqt_Plastik_Payme'] = $Naqt_Plastik_Payme;
+            $Tulovlar[$key]['Table_Naqt'] = number_format(($Naqt), 0, '.', ' ');
+            $Tulovlar[$key]['Table_Plastik'] = number_format(($Plastik), 0, '.', ' ');
+            $Tulovlar[$key]['Table_Payme'] = number_format(($Payme), 0, '.', ' ');
+            $Tulovlar[$key]['Table_Chegirma'] = number_format(($Chegirma), 0, '.', ' ');
+            $Tulovlar[$key]['Table_Qaytarildi'] = number_format(($Qaytarildi), 0, '.', ' ');
+            $Tulovlar[$key]['Table_Naqt_Plastik_Payme'] = number_format(($Naqt_Plastik_Payme), 0, '.', ' ');
         }
-        $report = array();
-        $report['statis'] = $OylikStatustika;
-        $report['view'] = $OylikStatustikaView;
-        return $report;
+        return $Tulovlar;
     }
-    public function index($id){
-        $OylikTashriflar = $this->OylikTashrif($id);
-        $OylikTulov = $this->OylikTulov($id);
-        $KunlikStatistika = $this->KunlikTulovlar($id);
-        $OylikStatistiakOylar = $this->OylikStatistiakOylar();
-        $OylikTulovlar = $this->OylikTulovlar($id);
-        $Kun1 = date("Y-m-d",strtotime('-5 day',time()));
-        $Kun2 = date("Y-m-d",strtotime('-4 day',time()));
-        $Kun3 = date("Y-m-d",strtotime('-3 day',time()));
-        $Kun4 = date("Y-m-d",strtotime('-2 day',time()));
-        $Kun5 = date("Y-m-d",strtotime('-1 day',time()));
-        $Kun6 = date("Y-m-d");
-        return view('SuperAdmin.statistik.index', compact('OylikTulovlar','OylikStatistiakOylar','KunlikStatistika','Kun1','Kun2','Kun3','Kun4','Kun5','Kun6','OylikTashriflar','OylikTulov'));
+    public function OxirgiYittiOy(){
+        $weekDays = [];
+        for ($i = 0; $i < 7; $i++) {
+            $date = Carbon::now()->subMonth($i);
+            $dayName = $date->format('l');
+            $weekDays[] = [
+                'month' => $date->format('Y-m'),
+                'month_text' => $date->format('Y-M'),
+            ];
+        }
+        return array_reverse($weekDays);
+    }
+    public function OxirgiBirYilOylar(){
+        $weekDays = [];
+        for ($i = 0; $i < 13; $i++) {
+            $date = Carbon::now()->subMonth($i);
+            $dayName = $date->format('l');
+            $weekDays[] = [
+                'month' => $date->format('Y-m'),
+                'month_text' => $date->format('Y-M'),
+            ];
+        }
+        return array_reverse($weekDays);
+    }
+    public function AllTashriflarFilial($filial_id){
+        $Oylar = $this->OxirgiYittiOy();
+        $Tashriflar = array();
+        foreach ($Oylar as $key => $value) {
+            $Start = $value['month']."-01 00:00:00";
+            $End = $value['month']."-31 23:59:59";
+            $Users = User::where('filial_id',$filial_id)->where('created_at','>=',$Start)->where('created_at','<=',$End)->get();
+            $Tashriflar[$key]['month'] = $value['month_text'];
+            $Tashriflar[$key]['tashriflar'] = count($Users);
+            
+        }
+        $date = Carbon::now()->subMonth(1)->format("Y-m")."-01 00:00:00";
+        $Users2 = User::where('filial_id',$filial_id)->where('created_at','>=',$date)->get();
+        $telegram = 0;
+        $instagram = 0;
+        $facebook = 0;
+        $banner = 0;
+        $tanishlar = 0;
+        $boshqalar = 0;
+        foreach ($Users2 as $value) {
+            if($value->smm == 'Telegram'){$telegram = $telegram + 1;}
+            if($value->smm == 'Instagram'){$instagram = $instagram + 1;}
+            if($value->smm == 'Facebook'){$facebook = $facebook + 1;}
+            if($value->smm == 'Boshqa'){$boshqalar = $boshqalar + 1;}
+            if($value->smm == 'Tanishlar'){$tanishlar = $tanishlar + 1;}
+            if($value->smm == 'Bannerlar'){$banner = $banner + 1;}
+        }
+        $Tashriflar['telegram'] = $telegram;
+        $Tashriflar['instagram'] = $instagram;
+        $Tashriflar['facebook'] = $facebook;
+        $Tashriflar['banner'] = $banner;
+        $Tashriflar['tanishlar'] = $tanishlar;
+        $Tashriflar['boshqalar'] = $boshqalar;
+        return $Tashriflar;
+    }
+    public function activTalabalarFilial($filial_id){
+        $Actives = array();
+        foreach ($this->OxirgiYittiOy() as $key => $date) {
+            $StartDates = $date['month']."-01 00:00:00";
+            $EndDates = $date['month']."-31 23:59:59";
+            $Guruhsss = Guruh::where('guruh_start','<=',$EndDates)
+                ->where('filial_id','<=',$filial_id)
+                ->where('guruh_end','>=',$StartDates)->get();
+            $ActivUser = array();
+            foreach ($Guruhsss as $value) {
+                $GuruhUsersss = GuruhUser::where('guruh_id',$value->id)
+                    ->where('filial_id','<=',$filial_id)->get();
+                foreach ($GuruhUsersss as $key11 => $item) {
+                    $userss_id = $item->user_id;
+                    $km = 0;
+                    foreach ($ActivUser as $keyaaaas => $valueaaaas) {
+                        if($valueaaaas==$userss_id){
+                            $km++;
+                        }
+                    }
+                    if($km==0){
+                        array_push($ActivUser, $userss_id);
+                    }   
+                }
+            }
+            $Actives[$key]['count'] = count($ActivUser); 
+            $Actives[$key]['data'] = $date['month_text']; 
+        }
+        return $Actives;
+    }
+    public function OylikTulovFilial($filial_id){
+        $Statistik = array();
+        foreach ($this->OxirgiYittiOy() as $key => $date) {
+            $Statistik[$key]['date'] = $date['month_text'];
+            $StartDates = $date['month']."-01 00:00:00";
+            $EndDates = $date['month']."-31 23:59:59";
+            $Naqt = 0;
+            $Plastik = 0;
+            $Payme = 0;
+            $Chegirma = 0;
+            $Qaytar = 0;
+            $Xarajatlar = 0;
+            $IshHaq = 0;
+            $Tulov = Tulov::where('created_at','>=',$StartDates)->where('filial_id','<=',$filial_id)->where('created_at','<=',$EndDates)->get();
+            foreach ($Tulov as $value) {
+                if($value->type=='Naqt'){$Naqt = $Naqt + $value->summa;}
+                if($value->type=='Plastik'){$Plastik = $Plastik + $value->summa;}
+                if($value->type=='Payme'){$Payme = $Payme + $value->summa;}
+                if($value->type=='Chegirma'){$Chegirma = $Chegirma + $value->summa;}
+                if($value->type=='Qaytarildi (Plastik)'){$Qaytar = $Qaytar + $value->summa;}
+                if($value->type=='Qaytarildi (Naqt)'){$Qaytar = $Qaytar + $value->summa;}
+            }
+            $Moliya = Moliya::where('created_at','>=',$StartDates)->where('filial_id','<=',$filial_id)->where('created_at','<=',$EndDates)->get();
+            foreach ($Moliya as $value) {
+                if($value->xodisa=='Xarajat'){$Xarajatlar = $Xarajatlar + $value->summa;}
+                if($value->xodisa=='XarajatAdmin'){$Xarajatlar = $Xarajatlar + $value->summa;}
+            }
+            $IshHaqi = IshHaqi::where('created_at','>=',$StartDates)->where('filial_id','<=',$filial_id)->where('created_at','<=',$EndDates)->get();
+            foreach ($IshHaqi as $value) {$IshHaq = $IshHaq + $value->summa;}
+            $Statistik[$key]['Naqt'] = $Naqt;
+            $Statistik[$key]['Naqt_table'] = number_format(($Naqt), 0, '.', ' ');
+            $Statistik[$key]['Plastik'] = $Plastik;
+            $Statistik[$key]['Plastik_table'] = number_format(($Plastik), 0, '.', ' ');
+            $Statistik[$key]['Payme'] = $Payme;
+            $Statistik[$key]['Payme_table'] = number_format(($Payme), 0, '.', ' ');
+            $Statistik[$key]['Chegirma'] = $Chegirma;
+            $Statistik[$key]['Chegirma_table'] = number_format(($Chegirma), 0, '.', ' ');
+            $Statistik[$key]['Qaytar'] = $Qaytar;
+            $Statistik[$key]['Qaytar_table'] = number_format(($Qaytar), 0, '.', ' ');
+            $TulovSum = $Naqt + $Plastik + $Payme -$Qaytar;
+            $Statistik[$key]['Tulovlar'] = $TulovSum;
+            $Statistik[$key]['TulovSum_table'] = number_format(($TulovSum), 0, '.', ' ');
+            $Statistik[$key]['Xarajatlar'] = $Xarajatlar;
+            $Statistik[$key]['Xarajatlar_table'] = number_format(($Xarajatlar), 0, '.', ' ');
+            $Statistik[$key]['IshHaq'] = $IshHaq;
+            $Statistik[$key]['IshHaq_table'] = number_format(($IshHaq), 0, '.', ' ');
+            $Daromat = $TulovSum - $Xarajatlar - $IshHaq;
+            $Statistik[$key]['Daromat'] = $Daromat;
+            $Statistik[$key]['Daromat_table'] = number_format(($Daromat), 0, '.', ' ');
+        }
+        return $Statistik;
+    }
+    public function YillikStatistikaFilial($filial_id){
+        $Statistik = array();
+        foreach ($this->OxirgiBirYilOylar() as $key => $date) {
+            $Statistik[$key]['date'] = $date['month_text'];
+            $StartDates = $date['month']."-01 00:00:00";
+            $EndDates = $date['month']."-31 23:59:59";
+            $Naqt = 0;
+            $Plastik = 0;
+            $Payme = 0;
+            $Qaytar = 0;
+            $Xarajatlar = 0;
+            $IshHaq = 0;
+            $Tulov = Tulov::where('created_at','>=',$StartDates)->where('filial_id','<=',$filial_id)->where('created_at','<=',$EndDates)->get();
+            foreach ($Tulov as $value) {
+                if($value->type=='Naqt'){$Naqt = $Naqt + $value->summa;}
+                if($value->type=='Plastik'){$Plastik = $Plastik + $value->summa;}
+                if($value->type=='Payme'){$Payme = $Payme + $value->summa;}
+                if($value->type=='Qaytarildi (Plastik)'){$Qaytar = $Qaytar + $value->summa;}
+                if($value->type=='Qaytarildi (Naqt)'){$Qaytar = $Qaytar + $value->summa;}
+            }
+            $Moliya = Moliya::where('created_at','>=',$StartDates)->where('filial_id','<=',$filial_id)->where('created_at','<=',$EndDates)->get();
+            foreach ($Moliya as $value) {
+                if($value->xodisa=='Xarajat'){$Xarajatlar = $Xarajatlar + $value->summa;}
+                if($value->xodisa=='XarajatAdmin'){$Xarajatlar = $Xarajatlar + $value->summa;}
+            }
+            $IshHaqi = IshHaqi::where('created_at','>=',$StartDates)->where('filial_id','<=',$filial_id)->where('created_at','<=',$EndDates)->get();
+            foreach ($IshHaqi as $value) {$IshHaq = $IshHaq + $value->summa;}
+            $TulovSum = $Naqt + $Plastik + $Payme -$Qaytar;
+            $Statistik[$key]['Tulov'] = $TulovSum;
+            $Xarajat = $Xarajatlar + $IshHaq;
+            $Statistik[$key]['Xarajat'] = $Xarajat;
+        }
+        return $Statistik;
+    }
+    public function index($filial_id){
+        $Tashriflar = $this->AllTashriflarFilial($filial_id);
+        $Active = $this->activTalabalarFilial($filial_id);
+        $OylikTulovAll = $this->OylikTulovFilial($filial_id);
+        $Yillik = $this->YillikStatistikaFilial($filial_id);
+        return view('SuperAdmin.statistik.index',compact('Yillik','filial_id','Tashriflar','Active','OylikTulovAll'));
     }
 
+    public function AllTashriflar(){
+        $Oylar = $this->OxirgiYittiOy();
+        $Tashriflar = array();
+        foreach ($Oylar as $key => $value) {
+            $Start = $value['month']."-01 00:00:00";
+            $End = $value['month']."-31 23:59:59";
+            $Users = User::where('created_at','>=',$Start)->where('created_at','<=',$End)->get();
+            $Tashriflar[$key]['month'] = $value['month_text'];
+            $Tashriflar[$key]['tashriflar'] = count($Users);
+            
+        }
+        $date = Carbon::now()->subMonth(1)->format("Y-m")."-01 00:00:00";
+        $Users2 = User::where('created_at','>=',$date)->get();
+        $telegram = 0;
+        $instagram = 0;
+        $facebook = 0;
+        $banner = 0;
+        $tanishlar = 0;
+        $boshqalar = 0;
+        foreach ($Users2 as $value) {
+            if($value->smm == 'Telegram'){$telegram = $telegram + 1;}
+            if($value->smm == 'Instagram'){$instagram = $instagram + 1;}
+            if($value->smm == 'Facebook'){$facebook = $facebook + 1;}
+            if($value->smm == 'Boshqa'){$boshqalar = $boshqalar + 1;}
+            if($value->smm == 'Tanishlar'){$tanishlar = $tanishlar + 1;}
+            if($value->smm == 'Bannerlar'){$banner = $banner + 1;}
+        }
+        $Tashriflar['telegram'] = $telegram;
+        $Tashriflar['instagram'] = $instagram;
+        $Tashriflar['facebook'] = $facebook;
+        $Tashriflar['banner'] = $banner;
+        $Tashriflar['tanishlar'] = $tanishlar;
+        $Tashriflar['boshqalar'] = $boshqalar;
+        return $Tashriflar;
+    }
+    public function activTalabalarAll(){
+        $Actives = array();
+        foreach ($this->OxirgiYittiOy() as $key => $date) {
+            $StartDates = $date['month']."-01 00:00:00";
+            $EndDates = $date['month']."-31 23:59:59";
+            $Guruhsss = Guruh::where('guruh_start','<=',$EndDates)
+                ->where('guruh_end','>=',$StartDates)->get();
+            $ActivUser = array();
+            foreach ($Guruhsss as $value) {
+                $GuruhUsersss = GuruhUser::where('guruh_id',$value->id)->get();
+                foreach ($GuruhUsersss as $key11 => $item) {
+                    $userss_id = $item->user_id;
+                    $km = 0;
+                    foreach ($ActivUser as $keyaaaas => $valueaaaas) {
+                        if($valueaaaas==$userss_id){
+                            $km++;
+                        }
+                    }
+                    if($km==0){
+                        array_push($ActivUser, $userss_id);
+                    }   
+                }
+            }
+            $Actives[$key]['count'] = count($ActivUser); 
+            $Actives[$key]['data'] = $date['month_text']; 
+        }
+        return $Actives;
+    }
+    public function OylikTulovAll(){
+        $Statistik = array();
+        foreach ($this->OxirgiYittiOy() as $key => $date) {
+            $Statistik[$key]['date'] = $date['month_text'];
+            $StartDates = $date['month']."-01 00:00:00";
+            $EndDates = $date['month']."-31 23:59:59";
+            $Naqt = 0;
+            $Plastik = 0;
+            $Payme = 0;
+            $Chegirma = 0;
+            $Qaytar = 0;
+            $Xarajatlar = 0;
+            $IshHaq = 0;
+            $Tulov = Tulov::where('created_at','>=',$StartDates)->where('created_at','<=',$EndDates)->get();
+            foreach ($Tulov as $value) {
+                if($value->type=='Naqt'){$Naqt = $Naqt + $value->summa;}
+                if($value->type=='Plastik'){$Plastik = $Plastik + $value->summa;}
+                if($value->type=='Payme'){$Payme = $Payme + $value->summa;}
+                if($value->type=='Chegirma'){$Chegirma = $Chegirma + $value->summa;}
+                if($value->type=='Qaytarildi (Plastik)'){$Qaytar = $Qaytar + $value->summa;}
+                if($value->type=='Qaytarildi (Naqt)'){$Qaytar = $Qaytar + $value->summa;}
+            }
+            $Moliya = Moliya::where('created_at','>=',$StartDates)->where('created_at','<=',$EndDates)->get();
+            foreach ($Moliya as $value) {
+                if($value->xodisa=='Xarajat'){$Xarajatlar = $Xarajatlar + $value->summa;}
+                if($value->xodisa=='XarajatAdmin'){$Xarajatlar = $Xarajatlar + $value->summa;}
+            }
+            $IshHaqi = IshHaqi::where('created_at','>=',$StartDates)->where('created_at','<=',$EndDates)->get();
+            foreach ($IshHaqi as $value) {$IshHaq = $IshHaq + $value->summa;}
+            $Statistik[$key]['Naqt'] = $Naqt;
+            $Statistik[$key]['Naqt_table'] = number_format(($Naqt), 0, '.', ' ');
+            $Statistik[$key]['Plastik'] = $Plastik;
+            $Statistik[$key]['Plastik_table'] = number_format(($Plastik), 0, '.', ' ');
+            $Statistik[$key]['Payme'] = $Payme;
+            $Statistik[$key]['Payme_table'] = number_format(($Payme), 0, '.', ' ');
+            $Statistik[$key]['Chegirma'] = $Chegirma;
+            $Statistik[$key]['Chegirma_table'] = number_format(($Chegirma), 0, '.', ' ');
+            $Statistik[$key]['Qaytar'] = $Qaytar;
+            $Statistik[$key]['Qaytar_table'] = number_format(($Qaytar), 0, '.', ' ');
+            $TulovSum = $Naqt + $Plastik + $Payme -$Qaytar;
+            $Statistik[$key]['Tulovlar'] = $TulovSum;
+            $Statistik[$key]['TulovSum_table'] = number_format(($TulovSum), 0, '.', ' ');
+            $Statistik[$key]['Xarajatlar'] = $Xarajatlar;
+            $Statistik[$key]['Xarajatlar_table'] = number_format(($Xarajatlar), 0, '.', ' ');
+            $Statistik[$key]['IshHaq'] = $IshHaq;
+            $Statistik[$key]['IshHaq_table'] = number_format(($IshHaq), 0, '.', ' ');
+            $Daromat = $TulovSum - $Xarajatlar - $IshHaq;
+            $Statistik[$key]['Daromat'] = $Daromat;
+            $Statistik[$key]['Daromat_table'] = number_format(($Daromat), 0, '.', ' ');
+        }
+        return $Statistik;
+    }
+    public function YillikStatistikaAll(){
+        $Statistik = array();
+        foreach ($this->OxirgiBirYilOylar() as $key => $date) {
+            $Statistik[$key]['date'] = $date['month_text'];
+            $StartDates = $date['month']."-01 00:00:00";
+            $EndDates = $date['month']."-31 23:59:59";
+            $Naqt = 0;
+            $Plastik = 0;
+            $Payme = 0;
+            $Qaytar = 0;
+            $Xarajatlar = 0;
+            $IshHaq = 0;
+            $Tulov = Tulov::where('created_at','>=',$StartDates)->where('created_at','<=',$EndDates)->get();
+            foreach ($Tulov as $value) {
+                if($value->type=='Naqt'){$Naqt = $Naqt + $value->summa;}
+                if($value->type=='Plastik'){$Plastik = $Plastik + $value->summa;}
+                if($value->type=='Payme'){$Payme = $Payme + $value->summa;}
+                if($value->type=='Qaytarildi (Plastik)'){$Qaytar = $Qaytar + $value->summa;}
+                if($value->type=='Qaytarildi (Naqt)'){$Qaytar = $Qaytar + $value->summa;}
+            }
+            $Moliya = Moliya::where('created_at','>=',$StartDates)->where('created_at','<=',$EndDates)->get();
+            foreach ($Moliya as $value) {
+                if($value->xodisa=='Xarajat'){$Xarajatlar = $Xarajatlar + $value->summa;}
+                if($value->xodisa=='XarajatAdmin'){$Xarajatlar = $Xarajatlar + $value->summa;}
+            }
+            $IshHaqi = IshHaqi::where('created_at','>=',$StartDates)->where('created_at','<=',$EndDates)->get();
+            foreach ($IshHaqi as $value) {$IshHaq = $IshHaq + $value->summa;}
+            $TulovSum = $Naqt + $Plastik + $Payme -$Qaytar;
+            $Statistik[$key]['Tulov'] = $TulovSum;
+            $Xarajat = $Xarajatlar + $IshHaq;
+            $Statistik[$key]['Xarajat'] = $Xarajat;
+        }
+        return $Statistik;
+    }
     public function statistikaMonth(){
-
-        
-        $OylikStatustika = array();
-        $OylikStatustikaView = array();
-        $Naqt = array();
-        $Plastik = array();
-        $Payme = array();
-        $Chegirma = array();
-        $Qaytarilgan = array();
-        $Xarajat = array();
-        $UmumiyXarajat = array();
-        $IshHaqi = array();
-        $Daromat = array();
-        $m = 1;
-        for ($i=-5; $i <= 0; $i++) { 
-            $dates = date("Y-m", strtotime($i.' month', time()));
-            $Tulovlar = Tulov::where('created_at',">=",$dates."-01 00:00:00")
-                ->where('created_at',"<=",$dates."-31 23:59:59")->where('status','true')->get();
-            $Moliya = Moliya::where('created_at',">=",$dates."-01 00:00:00")
-                ->where('created_at',"<=",$dates."-31 23:59:59")->where('status','true')->get();
-            $IshHaqi = IshHaqi::where('created_at',">=",$dates."-01 00:00:00")
-                ->where('created_at',"<=",$dates."-31 23:59:59")->get();
-            $naqts = 0;
-            $plastiks = 0;
-            $chegirma = 0;
-            $qaytaril = 0;
-            $payme = 0;
-            $xarajat = 0;
-            $adminxarajat = 0;
-            $ishhaqii = 0;
-            foreach ($IshHaqi as $keyt => $value) {$ishhaqii = $ishhaqii + $value->summa;}
-            foreach ($Moliya as $keysss => $value) {
-                if($value->xodisa=='Xarajat'){
-                    $xarajat = $xarajat + $value->summa;
-                }
-                if($value->xodisa=='Qaytarildi'){
-                    $xarajat = $xarajat - $value->summa;
-                }
-                if($value->xodisa=='XarajatAdmin'){
-                    $adminxarajat = $adminxarajat + $value->summa;
-                }
-            }
-            foreach ($Tulovlar as $sss => $value) {
-                if($value->type == 'Naqt'){
-                    $naqts = $value->summa + $naqts;
-                }
-                if($value->type == 'Plastik'){
-                    $plastiks = $value->summa + $plastiks;
-                }
-                if($value->type == 'Chegirma'){
-                    $chegirma = $value->summa + $chegirma;
-                }
-                if($value->type == 'Qaytarildi (Naqt)'){
-                    $qaytaril = $value->summa + $qaytaril;
-                }
-                if($value->type == 'Qaytarildi (Plastik)'){
-                    $qaytaril = $value->summa + $qaytaril;
-                }
-                if($value->type == 'Payme'){
-                    $payme = $value->summa + $payme;
-                }
-            }
-            $daromat = $naqts + $plastiks + $payme - $qaytaril - $xarajat - $adminxarajat - $ishhaqii;
-            $OylikStatustika[$m]['Naqt'] = $naqts;
-            $OylikStatustika[$m]['Plastik'] = $plastiks;
-            $OylikStatustika[$m]['Payme'] = $payme;
-            $OylikStatustika[$m]['Chegirma'] = $chegirma;
-            $OylikStatustika[$m]['Qaytarilgan'] = $qaytaril;
-            $OylikStatustika[$m]['Xarajat'] = $xarajat;
-            $OylikStatustika[$m]['UmumiyXarajat'] = $adminxarajat;
-            $OylikStatustika[$m]['IshHaqi'] = $ishhaqii;
-            $OylikStatustika[$m]['Daromat'] = $daromat;
-            $OylikStatustikaView[$m]['Naqt'] = number_format(($naqts), 0, '.', ' ');
-            $OylikStatustikaView[$m]['Plastik'] = number_format(($plastiks), 0, '.', ' ');
-            $OylikStatustikaView[$m]['Payme'] = number_format(($payme), 0, '.', ' ');
-            $OylikStatustikaView[$m]['Chegirma'] = number_format(($chegirma), 0, '.', ' ');
-            $OylikStatustikaView[$m]['Qaytarilgan'] = number_format(($qaytaril), 0, '.', ' ');
-            $OylikStatustikaView[$m]['Xarajat'] = number_format(($xarajat), 0, '.', ' ');
-            $OylikStatustikaView[$m]['UmumiyXarajat'] = number_format(($adminxarajat), 0, '.', ' ');
-            $OylikStatustikaView[$m]['IshHaqi'] = number_format(($ishhaqii), 0, '.', ' ');
-            $OylikStatustikaView[$m]['Daromat'] = number_format(($daromat), 0, '.', ' ');
-            $m++;
-        }
-        $OylikTulovlar = array();
-        $OylikTulovlar['statis'] = $OylikStatustika;
-        $OylikTulovlar['view'] = $OylikStatustikaView;
-        $OylikStatistiakOylar = $this->OylikStatistiakOylar();
-        return view('SuperAdmin.statistik.oy', compact('OylikTulovlar','OylikStatistiakOylar'));
+        $Tashriflar = $this->AllTashriflar();
+        $Active = $this->activTalabalarAll();
+        $OylikTulovAll = $this->OylikTulovAll();
+        $Yillik = $this->YillikStatistikaAll();
+        #dd($Yillik);
+        return view('SuperAdmin.statistik.oy',compact('Tashriflar','Active','OylikTulovAll','Yillik'));
     }
-
-
-    public function statistikaKun($date){
-        $Start = $date." 00:00:00";
-        $End = $date." 23:59:59";
-        $Tulovlar = Tulov::where('filial_id',request()->cookie('filial_id'))
-            ->where('created_at','>=',$Start)
-            ->where('created_at','<=',$End)
-            ->get();
-        $Tulov = array();
-        foreach ($Tulovlar as $key => $value) {
-            $Tulov[$key]['User'] = User::find($value->user_id)->name;
-            $Tulov[$key]['Admiin'] = User::find($value->admin_id)->email;
-            $Tulov[$key]['summa'] = number_format(($value->summa), 0, '.', ' ');
-            $Tulov[$key]['type'] = $value->type;
-            $Tulov[$key]['about'] = $value->about;
-            $Tulov[$key]['created_at'] = $value->created_at;
-        }
-        return view('SuperAdmin.statistik.kunlik',compact('Tulov'));
+    public function statistikaKun($filial_id){
+        $TashSMM = $this->KunlikTashrivAndCRM($filial_id); 
+        $Tulov = $this->KunlikTulovlar($filial_id); 
+        return view('SuperAdmin.statistik.kunlik',compact('Tulov','TashSMM','filial_id'));
     }
 }

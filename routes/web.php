@@ -13,6 +13,7 @@ use App\Http\Controllers\SuperAdmin\TestController;
 use App\Http\Controllers\SuperAdmin\SuperElonController;
 use App\Http\Controllers\SuperAdmin\SuperAdminTecherController;
 use App\Http\Controllers\SuperAdmin\ReportControlle;
+use App\Http\Controllers\SuperAdmin\SMSController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\HodimController;
 use App\Http\Controllers\Admin\AdminGuruhController;
@@ -33,152 +34,196 @@ Auth::routes();
  
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::get('/setting', [SettingController::class, 'index'])->name('setting');
-Route::post('/setting', [SettingController::class, 'update'])->name('settingupdate');
-Route::post('/sms/plus', [SettingController::class, 'smsplus'])->name('settingsmsplus');
+Route::controller(SMSController::class)->group(function () {
+    Route::get('/sms/send', 'index')->name('smsSend');
+    Route::post('/sms/send/show', 'smsSendShow')->name('smsSendShow');
+    Route::post('/sms/send/create', 'smsSendCreate')->name('smsSendCreate');
+});
+
+Route::controller(SettingController::class)->group(function () {
+    Route::get('/setting', 'index')->name('setting');
+    Route::post('/setting', 'update')->name('settingupdate');
+    Route::post('/sms/plus', 'smsplus')->name('settingsmsplus');
+});
 
 Route::get('/Superadmin/index', [SuperAdminController::class, 'index'])->name('SuperAdmin');
-Route::get('/Superadmin/statistika', [SuperAdminController::class, 'statistika'])->name('statistika');
+Route::get('/Superadmin/tulov/show/{data}', [SuperAdminController::class, 'tulovShow'])->name('tulovShowSuperAdmin');
 
 Route::get('/Superadmin/hisobot/all/web/index', [ReportControlle::class, 'index'])->name('hisobot');
 Route::post('/Superadmin/hisobot/all/show', [ReportControlle::class, 'show'])->name('hisobotShow');
 
-Route::get('/Superadmin/Testing', [TestController::class, 'index'])->name('superAdminTesting');
+Route::controller(TestController::class)->group(function () {
+    Route::get('/Superadmin/Testing', 'index')->name('superAdminTesting');
+    Route::get('/Superadmin/Testing/show/{id}', 'show')->name('superAdminTestingShow');
+    Route::post('/Superadmin/Testing/create', 'create')->name('superAdminTestingCreate');
+    Route::get('/Superadmin/Testing/delete/{id}', 'delete')->name('superAdminTestingDelete');
+});
 
+Route::controller(FilialController::class)->group(function () {
+    Route::get('/Superadmin/filial', 'filial')->name('filial');
+    Route::get('/Superadmin/filial/show/{id}', 'show')->name('filial.show');
+    Route::post('/Superadmin/filial/update', 'filialUpdate')->name('filialUpdate');
+    Route::post('/Superadmin/filial/delete', 'filialDelete')->name('filialDelete');
+    Route::post('/Superadmin/filial/settimg/sms', 'filialSettimgSMS')->name('filialSettimgSMS');
+    Route::get('/Superadmin/filailCrm/{id}', 'filailCrm')->name('filailCrm');
+    Route::get('/Superadmin/room/delete/{id}', 'roomdelete')->name('roomdelete');
+    Route::get('/Superadmin/setting/tulov/deleted/{id}', 'tulovSettingDelete')->name('tulovSettingDelete');
+    Route::post('/Superadmin/setting/tulov/create', 'tulovSettingCreate')->name('tulovSettingCreate');
+    Route::post('/Superadmin/setting/chegirmaday/update', 'chegirmaDayUpadte')->name('chegirmaDayUpadte');
+    Route::post('/Superadmin/room/create', 'roomcreate')->name('roomcreate');
+    Route::post('/Superadmin/filial', 'filialcreate')->name('filialcreate');
+    Route::post('/Superadmin/cours/create', 'filialCoursCreate')->name('filialCoursCreate');
+    Route::get('/Superadmin/cours/delete/{id}', 'filialCoursDelete')->name('filialCoursDelete');
+});
 
-Route::get('/Superadmin/Testing/show/{id}', [TestController::class, 'show'])->name('superAdminTestingShow');
-Route::post('/Superadmin/Testing/create', [TestController::class, 'create'])->name('superAdminTestingCreate');
-Route::get('/Superadmin/Testing/delete/{id}', [TestController::class, 'delete'])->name('superAdminTestingDelete');
-
-Route::get('/Superadmin/filial', [FilialController::class, 'filial'])->name('filial');
-Route::get('/Superadmin/filial/show/{id}', [FilialController::class, 'show'])->name('filial.show');
-Route::post('/Superadmin/filial/update', [FilialController::class, 'filialUpdate'])->name('filialUpdate');
-Route::post('/Superadmin/filial/delete', [FilialController::class, 'filialDelete'])->name('filialDelete');
-Route::post('/Superadmin/filial/settimg/sms', [FilialController::class, 'filialSettimgSMS'])->name('filialSettimgSMS');
-Route::get('/Superadmin/filailCrm/{id}', [FilialController::class, 'filailCrm'])->name('filailCrm');
-Route::get('/Superadmin/room/delete/{id}', [FilialController::class, 'roomdelete'])->name('roomdelete');
-Route::get('/Superadmin/setting/tulov/deleted/{id}', [FilialController::class, 'tulovSettingDelete'])->name('tulovSettingDelete');
-Route::post('/Superadmin/setting/tulov/create', [FilialController::class, 'tulovSettingCreate'])->name('tulovSettingCreate');
-Route::post('/Superadmin/setting/chegirmaday/update', [FilialController::class, 'chegirmaDayUpadte'])->name('chegirmaDayUpadte');
-Route::post('/Superadmin/room/create', [FilialController::class, 'roomcreate'])->name('roomcreate');
-Route::post('/Superadmin/filial', [FilialController::class, 'filialcreate'])->name('filialcreate');
-Route::post('/Superadmin/cours/create', [FilialController::class, 'filialCoursCreate'])->name('filialCoursCreate');
-Route::get('/Superadmin/cours/delete/{id}', [FilialController::class, 'filialCoursDelete'])->name('filialCoursDelete');
-
-Route::POST('/Superadmin/moliya/xarajat', [SuperMoliyaController::class, 'xarajat'])->name('SuperAdminMoliyaXarajay');
-Route::POST('/Superadmin/moliya/kassaga', [SuperMoliyaController::class, 'kassaga'])->name('SuperAdminMoliyaKassaga');
+Route::controller(SuperMoliyaController::class)->group(function () {
+    Route::POST('/Superadmin/moliya/xarajat', 'xarajat')->name('SuperAdminMoliyaXarajay');
+    Route::POST('/Superadmin/moliya/kassaga', 'kassaga')->name('SuperAdminMoliyaKassaga');
+});
 
 Route::get('/Superadmin/techer/tulovlar', [SuperAdminTecherController::class, 'index'])->name('SuperAdminTecher');
 
-Route::get('/Superadmin/statistika/month', [SuperStatistikaController::class, 'statistikaMonth'])->name('statistikaMonth');
-Route::get('/Superadmin/statistika/{id}', [SuperStatistikaController::class, 'index'])->name('SuperAdminStatistika');
-Route::get('/Superadmin/statistika/kun/{id}', [SuperStatistikaController::class, 'statistikaKun'])->name('statistikaKun');
+Route::controller(SuperStatistikaController::class)->group(function () {
+    Route::get('/Superadmin/statistika/month', 'statistikaMonth')->name('statistikaMonth');
+    Route::get('/Superadmin/statistika/{id}', 'index')->name('SuperAdminStatistika');
+    Route::get('/Superadmin/statistika/kun/{id}', 'statistikaKun')->name('statistikaKun');
+});
 
-Route::get('/Superadmin/elon/techer', [SuperElonController::class, 'techer'])->name('SuperAdminElonTecher');
-Route::get('/Superadmin/elon/student', [SuperElonController::class, 'student'])->name('SuperAdminElonStudent');
+Route::controller(SuperElonController::class)->group(function () {
+    Route::get('/Superadmin/elon/techer', 'techer')->name('SuperAdminElonTecher');
+    Route::get('/Superadmin/elon/student', 'student')->name('SuperAdminElonStudent');
+});
 
-Route::get('/Superadmin/hodimlar', [HodimlarController::class, 'hodimlar'])->name('hodimlar');
-Route::post('/Superadmin/hodimlar', [HodimlarController::class, 'hodimCreate'])->name('hodimCreate');
-Route::get('/Superadmin/del/{id}', [HodimlarController::class, 'HodimDeletes'])->name('HodimDeletes');
-Route::get('/Superadmin/pass/{id}', [HodimlarController::class, 'HodimPassword'])->name('HodimPassword');
+Route::controller(HodimlarController::class)->group(function () {
+    Route::get('/Superadmin/hodimlar', 'hodimlar')->name('hodimlar');
+    Route::post('/Superadmin/hodimlar', 'hodimCreate')->name('hodimCreate');
+    Route::get('/Superadmin/del/{id}', 'HodimDeletes')->name('HodimDeletes');
+    Route::get('/Superadmin/pass/{id}', 'HodimPassword')->name('HodimPassword');
+});
 
-Route::get('/Superadmin/kabinet', [KabinetController::class, 'kabinet'])->name('kabinet');
-Route::put('/Superadmin/kabinet/{id}', [KabinetController::class, 'kabinetUpdate'])->name('kabinetUpdate');
-Route::put('/Superadmin/kabinet/password/{id}', [KabinetController::class, 'kabinetPassword'])->name('kabinetPassword');
+Route::controller(KabinetController::class)->group(function () {
+    Route::get('/Superadmin/kabinet', 'kabinet')->name('kabinet');
+    Route::put('/Superadmin/kabinet/{id}', 'kabinetUpdate')->name('kabinetUpdate');
+    Route::put('/Superadmin/kabinet/password/{id}', 'kabinetPassword')->name('kabinetPassword');
+});
 
-Route::get('/Admin/index', [AdminController::class, 'index'])->name('Admin');
-Route::get('/Admin/eslatma', [AdminController::class, 'eslatmalar'])->name('AdminEslatma');
-Route::get('/Admin/eslatma/arxiv/{id}', [AdminController::class, 'eslatmaarxiv'])->name('AdminEslatmaArxiv');
-Route::get('/Admin/murojatlar', [AdminController::class, 'murojatlar'])->name('AdminMurojarlar');
-Route::post('/Admin/murojatlar', [AdminController::class, 'murojatlarCreate'])->name('AdminMurojarlarPost');
-Route::get('/Admin/murojatlar/show/{id}', [AdminController::class, 'murojatlarShow'])->name('AdminMurojarlarShow');
-Route::get('/Admin/tkun', [AdminController::class, 'tkun'])->name('AdminTKun');
-Route::get('/Admin/elonlar', [AdminController::class, 'elonlar'])->name('AdminElonlar');
+Route::controller(AdminController::class)->group(function () {
+    Route::get('/Admin/index', 'index')->name('Admin');
+    Route::get('/Admin/eslatma', 'eslatmalar')->name('AdminEslatma');
+    Route::get('/Admin/eslatma/arxiv/{id}', 'eslatmaarxiv')->name('AdminEslatmaArxiv');
+    Route::get('/Admin/murojatlar', 'murojatlar')->name('AdminMurojarlar');
+    Route::post('/Admin/murojatlar', 'murojatlarCreate')->name('AdminMurojarlarPost');
+    Route::get('/Admin/murojatlar/show/{id}', 'murojatlarShow')->name('AdminMurojarlarShow');
+    Route::get('/Admin/tkun', 'tkun')->name('AdminTKun');
+    Route::get('/Admin/elonlar', 'elonlar')->name('AdminElonlar');
+});
+ 
+Route::controller(AdminStudentController::class)->group(function () {
+    Route::get('/Admin/student/index', 'index')->name('Student');
+    Route::get('/Admin/student/index/{id}', 'show')->name('StudentShow');
+    Route::get('/Admin/student/debit', 'debit')->name('StudentQarzdorlar');
+    Route::get('/Admin/student/pays', 'pays')->name('StudentTulovlar');
+    Route::get('/Admin/student/create', 'create')->name('StudentCreate');
+    Route::post('/Admin/student/story', 'store')->name('StudentCreateStore');
+    Route::post('/Admin/student/update', 'update')->name('AdminUserUpdate');
+    Route::post('/Admin/student/password/update', 'passwordUpdate')->name('AdminUserPasswordUpdate');
+    Route::post('/Admin/student/guruh/plus', 'guruhPlus')->name('AdminUserGuruhPlus');
+    Route::post('/Admin/student/send/messege', 'sendMessege')->name('AdminUserSendMessege');
+    Route::post('/Admin/student/pay', 'tulov')->name('AdminUserTulov');
+    Route::post('/Admin/student/pay/qaytar', 'tulovQaytar')->name('AdminUserTulovQaytar');
+    Route::post('/Admin/student/admin/chegirma', 'adminChegirmaMax')->name('AdminUserAdminChegirma');
+    Route::post('/Admin/student/comment', 'comment')->name('AdminUserComment');
+    Route::get('/Admin/student/pay/delete/{id}', 'tulovDelete')->name('AdminUserTulovDelete');
+});
 
-Route::get('/Admin/student/index', [AdminStudentController::class, 'index'])->name('Student');
-Route::get('/Admin/student/index/{id}', [AdminStudentController::class, 'show'])->name('StudentShow');
-Route::get('/Admin/student/debit', [AdminStudentController::class, 'debit'])->name('StudentQarzdorlar');
-Route::get('/Admin/student/pays', [AdminStudentController::class, 'pays'])->name('StudentTulovlar');
-Route::get('/Admin/student/create', [AdminStudentController::class, 'create'])->name('StudentCreate');
-Route::post('/Admin/student/story', [AdminStudentController::class, 'store'])->name('StudentCreateStore');
-Route::post('/Admin/student/update', [AdminStudentController::class, 'update'])->name('AdminUserUpdate');
-Route::post('/Admin/student/password/update', [AdminStudentController::class, 'passwordUpdate'])->name('AdminUserPasswordUpdate');
-Route::post('/Admin/student/guruh/plus', [AdminStudentController::class, 'guruhPlus'])->name('AdminUserGuruhPlus');
-Route::post('/Admin/student/send/messege', [AdminStudentController::class, 'sendMessege'])->name('AdminUserSendMessege');
-Route::post('/Admin/student/pay', [AdminStudentController::class, 'tulov'])->name('AdminUserTulov');
-Route::post('/Admin/student/pay/qaytar', [AdminStudentController::class, 'tulovQaytar'])->name('AdminUserTulovQaytar');
-Route::post('/Admin/student/admin/chegirma', [AdminStudentController::class, 'adminChegirmaMax'])->name('AdminUserAdminChegirma');
-Route::post('/Admin/student/comment', [AdminStudentController::class, 'comment'])->name('AdminUserComment');
-Route::get('/Admin/student/pay/delete/{id}', [AdminStudentController::class, 'tulovDelete'])->name('AdminUserTulovDelete');
+Route::controller(MoliyaController::class)->group(function () {
+    Route::get('/Admin/moliya', 'index')->name('AdminMoliya');
+    Route::post('/Admin/moliya/chiqim', 'chiqim')->name('AdminMoliyaCHiqim');
+    Route::post('/Admin/moliya/chiqim/delete', 'chiqimdelete')->name('AdminMoliyaCHiqimDelete');
+    Route::post('/Admin/moliya/chiqim/tasdiqlandi', 'chiqimtasdiq')->name('AdminMoliyaCHiqimTasdiq');
+    Route::post('/Admin/moliya/xarajat', 'xarajat')->name('AdminMoliyaXarajat');
+    Route::post('/Admin/moliya/xarajat/delete', 'xarajatdelete')->name('AdminMoliyaXarajatDelete');
+    Route::post('/Admin/moliya/xarajat/tasdiqlandi', 'xarajattasdiq')->name('AdminMoliyaXarajatTasdiq');
+});
 
-Route::get('/Admin/moliya', [MoliyaController::class, 'index'])->name('AdminMoliya');
-Route::post('/Admin/moliya/chiqim', [MoliyaController::class, 'chiqim'])->name('AdminMoliyaCHiqim');
-Route::post('/Admin/moliya/chiqim/delete', [MoliyaController::class, 'chiqimdelete'])->name('AdminMoliyaCHiqimDelete');
-Route::post('/Admin/moliya/chiqim/tasdiqlandi', [MoliyaController::class, 'chiqimtasdiq'])->name('AdminMoliyaCHiqimTasdiq');
-Route::post('/Admin/moliya/xarajat', [MoliyaController::class, 'xarajat'])->name('AdminMoliyaXarajat');
-Route::post('/Admin/moliya/xarajat/delete', [MoliyaController::class, 'xarajatdelete'])->name('AdminMoliyaXarajatDelete');
-Route::post('/Admin/moliya/xarajat/tasdiqlandi', [MoliyaController::class, 'xarajattasdiq'])->name('AdminMoliyaXarajatTasdiq');
+Route::controller(AdminGuruhController::class)->group(function () {
+    Route::get('/Admin/guruh', 'index')->name('AdminGuruh');
+    Route::post('/Admin/guruh/updates', 'showUpdatestGuruh')->name('showUpdatestGuruh');
+    Route::post('/Admin/guruh/delete', 'deletGuruh')->name('AdminGuruhDelete');
+    Route::get('/Admin/guruh/show/{id}', 'show')->name('AdminGuruhShow');
+    Route::get('/Admin/guruh/end', 'endGuruh')->name('AdminGuruhEnd');
+    Route::get('/Admin/guruh/create', 'CreateGuruh')->name('AdminGuruhCreate');
+    Route::post('/Admin/guruh/create1', 'CreateGuruh1')->name('AdminGuruhCreate1');
+    Route::post('/Admin/guruh/create2', 'CreateGuruh2')->name('AdminGuruhCreate2');
+    Route::put('/Admin/guruh/create/next', 'CreateGuruhNext')->name('CreateGuruhNext');
+    Route::post('/Admin/guruh/create/next2', 'CreateGuruhNext2')->name('CreateGuruhNext2');
+    Route::post('/Admin/guruh/deleteUser', 'guruhDelUser')->name('guruhDeletesUserss');
+    Route::post('/Admin/guruh/user/sendMessege', 'userSendMessege')->name('userSendMessege');
+    Route::post('/Admin/guruh/debit/sendMessege', 'debitSendMessege')->name('debitSendMessege');
+});
 
-Route::get('/Admin/guruh', [AdminGuruhController::class, 'index'])->name('AdminGuruh');
-Route::post('/Admin/guruh/updates', [AdminGuruhController::class, 'showUpdatestGuruh'])->name('showUpdatestGuruh');
-Route::post('/Admin/guruh/delete', [AdminGuruhController::class, 'deletGuruh'])->name('AdminGuruhDelete');
-Route::get('/Admin/guruh/show/{id}', [AdminGuruhController::class, 'show'])->name('AdminGuruhShow');
-Route::get('/Admin/guruh/end', [AdminGuruhController::class, 'endGuruh'])->name('AdminGuruhEnd');
-Route::get('/Admin/guruh/create', [AdminGuruhController::class, 'CreateGuruh'])->name('AdminGuruhCreate');
-Route::post('/Admin/guruh/create1', [AdminGuruhController::class, 'CreateGuruh1'])->name('AdminGuruhCreate1');
-Route::post('/Admin/guruh/create2', [AdminGuruhController::class, 'CreateGuruh2'])->name('AdminGuruhCreate2');
-Route::put('/Admin/guruh/create/next', [AdminGuruhController::class, 'CreateGuruhNext'])->name('CreateGuruhNext');
-Route::post('/Admin/guruh/create/next2', [AdminGuruhController::class, 'CreateGuruhNext2'])->name('CreateGuruhNext2');
-Route::post('/Admin/guruh/deleteUser', [AdminGuruhController::class, 'guruhDelUser'])->name('guruhDeletesUserss');
-Route::post('/Admin/guruh/user/sendMessege', [AdminGuruhController::class, 'userSendMessege'])->name('userSendMessege');
-Route::post('/Admin/guruh/debit/sendMessege', [AdminGuruhController::class, 'debitSendMessege'])->name('debitSendMessege');
+Route::controller(AdminTecherController::class)->group(function () {
+    Route::get('/Admin/admin/techer', 'index')->name('AdminTecher');
+    Route::post('/Admin/admin/techer', 'techerCreate')->name('AdminTecherCreate');
+    Route::post('/Admin/admin/techer/update', 'techerUpdate')->name('AdminTecherUpdate');
+    Route::post('/Admin/admin/techer/pay', 'TecherPay')->name('AdminTecherPay');
+    Route::get('/Admin/admin/techer/pay/del/{id}', 'TecherPayDelet')->name('AdminTecherPayDel');
+    Route::post('/Admin/admin/techer/update/password', 'techerUpdatePassword')->name('AdminTecherUpdatePassword');
+    Route::get('/Admin/admin/techer/show/{id}', 'techerShow')->name('AdminTecherShow');
+    Route::get('/Admin/admin/techer/delete/{id}', 'techerDelete')->name('AdminTecherDelete');
+});
 
-Route::get('/Admin/admin/techer', [AdminTecherController::class, 'index'])->name('AdminTecher');
-Route::post('/Admin/admin/techer', [AdminTecherController::class, 'techerCreate'])->name('AdminTecherCreate');
-Route::post('/Admin/admin/techer/update', [AdminTecherController::class, 'techerUpdate'])->name('AdminTecherUpdate');
-Route::post('/Admin/admin/techer/pay', [AdminTecherController::class, 'TecherPay'])->name('AdminTecherPay');
-Route::get('/Admin/admin/techer/pay/del/{id}', [AdminTecherController::class, 'TecherPayDelet'])->name('AdminTecherPayDel');
-Route::post('/Admin/admin/techer/update/password', [AdminTecherController::class, 'techerUpdatePassword'])->name('AdminTecherUpdatePassword');
-Route::get('/Admin/admin/techer/show/{id}', [AdminTecherController::class, 'techerShow'])->name('AdminTecherShow');
-Route::get('/Admin/admin/techer/delete/{id}', [AdminTecherController::class, 'techerDelete'])->name('AdminTecherDelete');
+Route::controller(AdminKabinetController::class)->group(function () {
+    Route::get('/Admin/hodim/kabinet', 'kabinet')->name('adminkabinet');
+    Route::post('/Admin/hodim/kabinet/update', 'update')->name('adminkabinetupdate');
+    Route::post('/Admin/hodim/kabinet/passwupdate', 'passwupdate')->name('adminkabinetpasswupdate');
+});
 
-Route::get('/Admin/hodim/kabinet', [AdminKabinetController::class, 'kabinet'])->name('adminkabinet');
-Route::post('/Admin/hodim/kabinet/update', [AdminKabinetController::class, 'update'])->name('adminkabinetupdate');
-Route::post('/Admin/hodim/kabinet/passwupdate', [AdminKabinetController::class, 'passwupdate'])->name('adminkabinetpasswupdate');
+Route::controller(HodimController::class)->group(function () {
+    Route::get('/Admin/hodim/', 'adminHodimlar')->name('adminHodimlar');
+    Route::get('/Admin/hodim/{id}', 'adminHodim')->name('adminHodim');
+    Route::get('/Admin/hodim/delete/{id}', 'adminHodimDelete')->name('adminHodimDelete');
+    Route::post('/Admin/hodim/create', 'adminCreateHodimlar')->name('adminCreateHodimlar');
+    Route::post('/Admin/hodim/clear/statistika', 'adminClearHodimlarStatistik')->name('adminClearHodimlarStatistik');
+    Route::post('/Admin/hodim/update/user', 'adminUpdateHodimlarUser')->name('adminUpdateHodimlarUser');
+    Route::post('/Admin/hodim/update/password', 'adminUpdateHodimlarPassword')->name('adminUpdateHodimlarPassword');
+    Route::post('/Admin/hodim/pay/ishhaqi', 'adminPayHodimlarIshHaqi')->name('adminPayHodimlarIshHaqi');
+});
 
-Route::get('/Admin/hodim/', [HodimController::class, 'adminHodimlar'])->name('adminHodimlar');
-Route::get('/Admin/hodim/{id}', [HodimController::class, 'adminHodim'])->name('adminHodim');
-Route::get('/Admin/hodim/delete/{id}', [HodimController::class, 'adminHodimDelete'])->name('adminHodimDelete');
-Route::post('/Admin/hodim/create', [HodimController::class, 'adminCreateHodimlar'])->name('adminCreateHodimlar');
-Route::post('/Admin/hodim/clear/statistika', [HodimController::class, 'adminClearHodimlarStatistik'])->name('adminClearHodimlarStatistik');
-Route::post('/Admin/hodim/update/user', [HodimController::class, 'adminUpdateHodimlarUser'])->name('adminUpdateHodimlarUser');
-Route::post('/Admin/hodim/update/password', [HodimController::class, 'adminUpdateHodimlarPassword'])->name('adminUpdateHodimlarPassword');
-Route::post('/Admin/hodim/pay/ishhaqi', [HodimController::class, 'adminPayHodimlarIshHaqi'])->name('adminPayHodimlarIshHaqi');
+Route::controller(TecherController::class)->group(function () {
+    Route::get('/Techer/index',  'index')->name('Techer');
+    Route::get('/Techer/guruhlar',  'Guruhlar')->name('TGuruhlar');
+    Route::get('/Techer/guruh/{id}',  'show')->name('TGuruhShow');
+    Route::post('/Techer/guruh/davomat',  'davomat')->name('TGuruhDavomat');
+    Route::get('/Techer/tulovlar',  'Tolovlar')->name('TTolovlar');
+    Route::get('/Techer/kabinet',  'Kabinet')->name('TKabinet');
+    Route::post('/Techer/kabinet/update',  'KabinetTUpdate')->name('KabinetTUpdate');
+    Route::post('/Techer/kabinet/update/password',  'KabinetTUpdatePassword')->name('KabinetTUpdatePassword');
+});
 
-Route::get('/Techer/index', [TecherController::class, 'index'])->name('Techer');
-Route::get('/Techer/guruhlar', [TecherController::class, 'Guruhlar'])->name('TGuruhlar');
-Route::get('/Techer/guruh/{id}', [TecherController::class, 'show'])->name('TGuruhShow');
-Route::post('/Techer/guruh/davomat', [TecherController::class, 'davomat'])->name('TGuruhDavomat');
-Route::get('/Techer/tulovlar', [TecherController::class, 'Tolovlar'])->name('TTolovlar');
-Route::get('/Techer/kabinet', [TecherController::class, 'Kabinet'])->name('TKabinet');
-Route::post('/Techer/kabinet/update', [TecherController::class, 'KabinetTUpdate'])->name('KabinetTUpdate');
-Route::post('/Techer/kabinet/update/password', [TecherController::class, 'KabinetTUpdatePassword'])->name('KabinetTUpdatePassword');
+Route::controller(UserController::class)->group(function () {
+    Route::get('/User/index', 'index')->name('User');
+    Route::get('/User/kabinet', 'Kabinet')->name('Kabinet');
+    Route::post('/User/kabinet/update', 'KabinetUpdate')->name('KabinetUpdate');
+    Route::post('/User/kabinet/password/update', 'KabinetUpdatePassw')->name('KabinetUpdatePassw');
+});
 
-Route::get('/User/index', [UserController::class, 'index'])->name('User');
-Route::get('/User/kabinet', [UserController::class, 'Kabinet'])->name('Kabinet');
-Route::post('/User/kabinet/update', [UserController::class, 'KabinetUpdate'])->name('KabinetUpdate');
-Route::post('/User/kabinet/password/update', [UserController::class, 'KabinetUpdatePassw'])->name('KabinetUpdatePassw');
+Route::controller(UserGuruhController::class)->group(function () {
+    Route::get('/User/guruhlar', 'Guruhlar')->name('Guruhlar');
+    Route::get('/User/guruhlar/show/{id}', 'show')->name('GuruhShow');
+    Route::get('/User/guruhlar/test/show/{id}', 'test')->name('GuruhShowTest');
+    Route::post('/User/guruhlar/test/check', 'check')->name('GuruhShowTestCheck');
+});
 
-Route::get('/User/guruhlar', [UserGuruhController::class, 'Guruhlar'])->name('Guruhlar');
-Route::get('/User/guruhlar/show/{id}', [UserGuruhController::class, 'show'])->name('GuruhShow');
-Route::get('/User/guruhlar/test/show/{id}', [UserGuruhController::class, 'test'])->name('GuruhShowTest');
-Route::post('/User/guruhlar/test/check', [UserGuruhController::class, 'check'])->name('GuruhShowTestCheck');
+Route::controller(UserPaymartController::class)->group(function () {
+    Route::get('/User/tolovlar', 'Tolovlar')->name('Tolovlar');
+    Route::get('/User/tolov/{summa}', 'pay')->name('Tolov');
+    Route::post('/User/tolov', 'pay2')->name('Tolov');
+});
 
-Route::get('/User/tolovlar', [UserPaymartController::class, 'Tolovlar'])->name('Tolovlar');
-Route::get('/User/tolov/{summa}', [UserPaymartController::class, 'pay'])->name('Tolov');
-Route::post('/User/tolov', [UserPaymartController::class, 'pay2'])->name('Tolov');
-
-Route::get('/User/contact', [UserContactController::class, 'Contact'])->name('Contact');
-Route::post('/User/contact', [UserContactController::class, 'ContactPost'])->name('ContactPost');
+Route::controller(UserContactController::class)->group(function () {
+    Route::get('/User/contact', 'Contact')->name('Contact');
+    Route::post('/User/contact', 'ContactPost')->name('ContactPost');
+});
 
 Route::post('/payme', [PaymeController::class, 'index']);

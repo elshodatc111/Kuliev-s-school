@@ -17,3 +17,5 @@ Route::post('/setting/update', [ApiController::class, 'update']);
 Route::get('/sms', [ApiController::class, 'smsCount']);
 Route::post('/sms/plus', [ApiController::class, 'smsCountPlus']);
 Route::post('/active', [ApiController::class, 'active']);
+
+Route::get('/cours', [ApiController::class, 'cours']);

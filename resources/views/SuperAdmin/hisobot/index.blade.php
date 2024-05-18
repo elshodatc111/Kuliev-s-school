@@ -41,6 +41,7 @@
                                 <option value="techer_ish_haqi">O'qituvchilarga to'langan ish xaqi</option>
                                 <option value="guruhlar">Guruhlar</option>
                                 <option value="test_natija">Test natijalari</option>
+                                <option value="umumiy_balans_tarixi">Umumiy balans tarixi</option>
                             </select>
                         </div>
                         <div class="col-4">

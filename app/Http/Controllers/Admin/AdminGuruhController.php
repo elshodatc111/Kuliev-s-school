@@ -13,7 +13,9 @@ use App\Models\GuruhUser;
 use App\Models\SmsCounter;
 use App\Models\Cours;
 use App\Models\GuruhTime;
+use App\Jobs\GuruhSendMessege;
 use App\Models\IshHaqi;
+use App\Models\SendMessege;
 use App\Events\debitSendMessege;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -41,7 +43,7 @@ class AdminGuruhController extends Controller{
                 $Guruhlar[$key]['guruh'] = 1;
             }else{
                 $Guruhlar[$key]['guruh'] = -1;
-            }
+            } 
             $GuruhUser = count(GuruhUser::where('guruh_id',$item->id)->where('status','true')->get());
             $Guruhlar[$key]['talabalar'] = $GuruhUser;
             $Guruhlar[$key]['id'] = $item->id;
@@ -178,7 +180,7 @@ class AdminGuruhController extends Controller{
             }
         }
         $GuruhView = array();
-        $GuruhView['guruh_name'] = $request->guruh_name;
+        $GuruhView['guruh_name'] = strtoupper($request->guruh_name);
         $GuruhView['guruh_price'] = number_format(($TulovSetting->tulov_summa), 0, '.', ' ');
         $GuruhView['guruh_techer'] = User::find($request->techer_id)->name;
         $GuruhView['techer_price'] = str_replace(","," ",$request->techer_price);
@@ -226,6 +228,7 @@ class AdminGuruhController extends Controller{
             'guruh_vaqt' => ['required'],
         ]);
         $validate['admin_id'] = Auth::user()->id;
+        $validate['guruh_name'] = strtoupper($request->guruh_name);
         $Guruh = Guruh::create($validate);
         $GuruhID = $Guruh->id;
         $Kunlar = array();
@@ -362,6 +365,7 @@ class AdminGuruhController extends Controller{
         $Guruh = $this->GuruhAbout($id);
         $DarsKunlari = count($Guruh['Kunlar']);
         $Days = GuruhTime::where('guruh_id',$Guruh['id'])->get();
+        $guruhlar = Cours::where('filial_id',request()->cookie('filial_id'))->get();
         $TulovSetting = TulovSetting::where('filial_id',request()->cookie('filial_id'))->where('status','=','true')->get();
         $Room = Room::where('filial_id',request()->cookie('filial_id'))->where('status','true')->get();
         $UsersDeletes = $this->userEndGroups($id);
@@ -409,7 +413,7 @@ class AdminGuruhController extends Controller{
             $Natija[$key]['created_at'] = $value->created_at;
         }
         $Techers = User::where('filial_id',request()->cookie('filial_id'))->where('type','Techer')->where('status','true')->get();
-        return view('Admin.guruh.show',compact('Techers','Natija','DarsKunlari','Davomat','Guruhw','TulovSetting','Room','Guruh','Days','UsersDeletes','Talabalar'));
+        return view('Admin.guruh.show',compact('guruhlar','Techers','Natija','DarsKunlari','Davomat','Guruhw','TulovSetting','Room','Guruh','Days','UsersDeletes','Talabalar'));
     }
     public function showUpdatestGuruh(Request $request){
         $validate = $request->validate([
@@ -479,34 +483,17 @@ class AdminGuruhController extends Controller{
                 $Users[$key] = "+998".str_replace(" ","",$Phone);
             }
         }
-        $Text = $request->text;
-        $k=0;
         foreach ($Users as $key => $value) {
-            $eskiz_email = env('ESKIZ_UZ_EMAIL');
-            $eskiz_password = env('ESKIZ_UZ_Password');
-            $eskiz = new Eskiz($eskiz_email,$eskiz_password);
-            $eskiz->requestAuthLogin();
-            $from='4546';
-            $mobile_phone = $value;
-            $message = $Text;
-            $user_sms_id = 1;
-            $callback_url = '';
-            $singleSmsType = new SmsSingleSmsType(
-                from: $from,
-                message: $message,
-                mobile_phone: $mobile_phone,
-                user_sms_id:$user_sms_id,
-                callback_url:$callback_url
-            );
-            $result = $eskiz->requestSmsSend($singleSmsType);
-            $k++;
-
-            $SmsCounter = SmsCounter::find(1);
-            $SmsCounter->maxsms = $SmsCounter->maxsms - 1;
-            $SmsCounter->counte = $SmsCounter->counte + 1;
-            $SmsCounter->save();
+            $Phone = $value;
+            $Text = $request->text;
+            $SendMessege = SendMessege::create([
+                'phone' => $Phone,
+                'text' => $Text,
+                'status' => "Yuborilmoqda",
+            ]);
+            GuruhSendMessege::dispatch($SendMessege);
         }
-        return redirect()->back()->with('success', $k.' ta talabaga sms xabar yuborildi.');
+        return redirect()->back()->with('success', 'Talabaga sms xabar yuborilmoqda.');
     }
     public function debitSendMessege(Request $request){
         $UserGuruh = GuruhUser::where('guruh_id',$request->guruh_id)->where('status','true')->get();
@@ -621,6 +608,7 @@ class AdminGuruhController extends Controller{
             'guruh_end' => ['required', 'string', 'max:255'],
             'guruh_vaqt' => ['required', 'string', 'max:255'],
         ]);
+        $validate['guruh_name'] = strtoupper($request->guruh_name);
         $validate['admin_id'] = Auth::User()->id;
         $validate['filial_id'] = request()->cookie('filial_id');
         $Guruh = Guruh::create($validate);
