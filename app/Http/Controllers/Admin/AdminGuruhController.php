@@ -13,9 +13,9 @@ use App\Models\GuruhUser;
 use App\Models\SmsCounter;
 use App\Models\Cours;
 use App\Models\GuruhTime;
-use App\Jobs\GuruhSendMessege;
 use App\Models\IshHaqi;
 use App\Models\SendMessege;
+use App\Models\Text;
 use App\Events\debitSendMessege;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -139,11 +139,11 @@ class AdminGuruhController extends Controller{
                     break;
                 case 8:
                     $Mavjud_vaqtlar['8']['text'] = '18:30-20:00';
-                    $Mavjud_vaqtlar['8']['id'] = 8;
+                    $Mavjud_vaqtlar['8']['id'] = 7;
                     break;
                 case 9:
                     $Mavjud_vaqtlar['9']['text'] = '20:00-21:30';
-                    $Mavjud_vaqtlar['9']['id'] = 9;
+                    $Mavjud_vaqtlar['9']['id'] = 7;
                     break;
             }
         }
@@ -269,7 +269,7 @@ class AdminGuruhController extends Controller{
         }
         return redirect()->route('AdminGuruhShow',$Guruh->id); 
     }
-    public function GuruhAbout($id){
+    public function GuruhAbout($id){ 
         $Guruhlar = Guruh::find($id);
         $Guruh = array();
         $Guruh['guruh_name'] = $Guruhlar->guruh_name;
@@ -483,17 +483,38 @@ class AdminGuruhController extends Controller{
                 $Users[$key] = "+998".str_replace(" ","",$Phone);
             }
         }
+        $Text = $request->text;
+        $k=0;
         foreach ($Users as $key => $value) {
-            $Phone = $value;
-            $Text = $request->text;
-            $SendMessege = SendMessege::create([
-                'phone' => $Phone,
-                'text' => $Text,
-                'status' => "Yuborilmoqda",
+            $eskiz_email = env('ESKIZ_UZ_EMAIL');
+            $eskiz_password = env('ESKIZ_UZ_Password');
+            $eskiz = new Eskiz($eskiz_email,$eskiz_password);
+            $eskiz->requestAuthLogin();
+            $from='4546';
+            $mobile_phone = $value;
+            $message = $Text;
+            $user_sms_id = 1;
+            $callback_url = '';
+            $singleSmsType = new SmsSingleSmsType(
+                from: $from,
+                message: $message,
+                mobile_phone: $mobile_phone,
+                user_sms_id:$user_sms_id,
+                callback_url:$callback_url
+            );
+            $result = $eskiz->requestSmsSend($singleSmsType);
+            $k++;
+            $SmsCounter = SmsCounter::find(1);
+            $SmsCounter->maxsms = $SmsCounter->maxsms - 1;
+            $SmsCounter->counte = $SmsCounter->counte + 1;
+            $SmsCounter->save();
+            
+            SendMessege::create([
+                'phone'=> $value,
+                'text'=> strval($Text)
             ]);
-            GuruhSendMessege::dispatch($SendMessege);
         }
-        return redirect()->back()->with('success', 'Talabaga sms xabar yuborilmoqda.');
+        return redirect()->back()->with('success', $k.' ta talabaga sms xabar yuborildi.');
     }
     public function debitSendMessege(Request $request){
         $UserGuruh = GuruhUser::where('guruh_id',$request->guruh_id)->where('status','true')->get();

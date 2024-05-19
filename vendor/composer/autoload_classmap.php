@@ -6,7 +6,6 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'App\\Console\\Commands\\tkun' => $baseDir . '/app/Console/Commands/tkun.php',
     'App\\Events\\AdminCreateTecher' => $baseDir . '/app/Events/AdminCreateTecher.php',
     'App\\Events\\CreatIshHaqi' => $baseDir . '/app/Events/CreatIshHaqi.php',
     'App\\Events\\CreateHodim' => $baseDir . '/app/Events/CreateHodim.php',
@@ -38,6 +37,7 @@ return array(
     'App\\Http\\Controllers\\SuperAdmin\\HodimlarController' => $baseDir . '/app/Http/Controllers/SuperAdmin/HodimlarController.php',
     'App\\Http\\Controllers\\SuperAdmin\\KabinetController' => $baseDir . '/app/Http/Controllers/SuperAdmin/KabinetController.php',
     'App\\Http\\Controllers\\SuperAdmin\\ReportControlle' => $baseDir . '/app/Http/Controllers/SuperAdmin/ReportControlle.php',
+    'App\\Http\\Controllers\\SuperAdmin\\SMSController' => $baseDir . '/app/Http/Controllers/SuperAdmin/SMSController.php',
     'App\\Http\\Controllers\\SuperAdmin\\SuperAdminController' => $baseDir . '/app/Http/Controllers/SuperAdmin/SuperAdminController.php',
     'App\\Http\\Controllers\\SuperAdmin\\SuperAdminTecherController' => $baseDir . '/app/Http/Controllers/SuperAdmin/SuperAdminTecherController.php',
     'App\\Http\\Controllers\\SuperAdmin\\SuperElonController' => $baseDir . '/app/Http/Controllers/SuperAdmin/SuperElonController.php',
@@ -45,6 +45,7 @@ return array(
     'App\\Http\\Controllers\\SuperAdmin\\SuperStatistikaController' => $baseDir . '/app/Http/Controllers/SuperAdmin/SuperStatistikaController.php',
     'App\\Http\\Controllers\\SuperAdmin\\TestController' => $baseDir . '/app/Http/Controllers/SuperAdmin/TestController.php',
     'App\\Http\\Controllers\\Techer\\TecherController' => $baseDir . '/app/Http/Controllers/Techer/TecherController.php',
+    'App\\Http\\Controllers\\TkunController' => $baseDir . '/app/Http/Controllers/TkunController.php',
     'App\\Http\\Controllers\\User\\PaymeController' => $baseDir . '/app/Http/Controllers/User/PaymeController.php',
     'App\\Http\\Controllers\\User\\UserContactController' => $baseDir . '/app/Http/Controllers/User/UserContactController.php',
     'App\\Http\\Controllers\\User\\UserController' => $baseDir . '/app/Http/Controllers/User/UserController.php',
@@ -77,9 +78,11 @@ return array(
     'App\\Models\\Moliya' => $baseDir . '/app/Models/Moliya.php',
     'App\\Models\\Murojat' => $baseDir . '/app/Models/Murojat.php',
     'App\\Models\\Room' => $baseDir . '/app/Models/Room.php',
+    'App\\Models\\SendMessege' => $baseDir . '/app/Models/SendMessege.php',
     'App\\Models\\Setting' => $baseDir . '/app/Models/Setting.php',
     'App\\Models\\SmsCentar' => $baseDir . '/app/Models/SmsCentar.php',
     'App\\Models\\SmsCounter' => $baseDir . '/app/Models/SmsCounter.php',
+    'App\\Models\\TKunMessege' => $baseDir . '/app/Models/TKunMessege.php',
     'App\\Models\\Test' => $baseDir . '/app/Models/Test.php',
     'App\\Models\\TestNatija' => $baseDir . '/app/Models/TestNatija.php',
     'App\\Models\\Transaction' => $baseDir . '/app/Models/Transaction.php',

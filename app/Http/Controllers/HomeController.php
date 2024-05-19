@@ -3,25 +3,35 @@
 namespace App\Http\Controllers;
 use App\Models\Filial;
 use App\Models\Setting;
+use App\Models\User;
+use Carbon\Carbon;
 use App\Models\TKunMessege;
-use App\Jobs\TkunSendMessege;
+use App\Events\TugilganKun;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
-
 class HomeController extends Controller{
     public function __construct(){
         $this->middleware('auth');
     }
     public function index(){
         $time = date("Y-m-d");
-        if(count(TKunMessege::where('data',$time)->get())==0){
-            $TKunMessege = TKunMessege::create([
-                'data'=> $time,
-                'status'=>'kutilmoqda'
+        $TKunMessege = TKunMessege::where('data',$time)->get();
+        if(count($TKunMessege)==0){
+            TKunMessege::create([
+                'data'=>$time,
+                'status'=>'Tabrik yuborildi'
             ]);
-            TkunSendMessege::dispatch($TKunMessege);
+            $today = Carbon::today();
+            $Users = User::where('type','User')
+                ->whereRaw("DATE_FORMAT(tkun, '%m-%d') = ?", [$today->format('m-d')])
+                ->get();
+            if(count($Users)>0){
+                foreach ($Users as $key => $value) {
+                    TugilganKun::dispatch($value->id);
+                }
+            }
         }
+
         $login = 'elshodatc1116';
         $Setting = Setting::find(1);
         if($Setting->Status == 'false'){

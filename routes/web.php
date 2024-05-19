@@ -10,10 +10,10 @@ use App\Http\Controllers\SuperAdmin\SuperMoliyaController;
 use App\Http\Controllers\SuperAdmin\SuperReportController;
 use App\Http\Controllers\SuperAdmin\SuperStatistikaController;
 use App\Http\Controllers\SuperAdmin\TestController;
+use App\Http\Controllers\SuperAdmin\SMSController;
 use App\Http\Controllers\SuperAdmin\SuperElonController;
 use App\Http\Controllers\SuperAdmin\SuperAdminTecherController;
 use App\Http\Controllers\SuperAdmin\ReportControlle;
-use App\Http\Controllers\SuperAdmin\SMSController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\HodimController;
 use App\Http\Controllers\Admin\AdminGuruhController;
@@ -34,16 +34,16 @@ Auth::routes();
  
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::controller(SMSController::class)->group(function () {
-    Route::get('/sms/send', 'index')->name('smsSend');
-    Route::post('/sms/send/show', 'smsSendShow')->name('smsSendShow');
-    Route::post('/sms/send/create', 'smsSendCreate')->name('smsSendCreate');
-});
-
 Route::controller(SettingController::class)->group(function () {
     Route::get('/setting', 'index')->name('setting');
     Route::post('/setting', 'update')->name('settingupdate');
     Route::post('/sms/plus', 'smsplus')->name('settingsmsplus');
+});
+
+Route::controller(SMSController::class)->group(function () {
+    Route::get('/sms', 'index')->name('sms');
+    Route::post('/show', 'show')->name('sms_show');
+    Route::post('/sms/create', 'send')->name('sms_send');
 });
 
 Route::get('/Superadmin/index', [SuperAdminController::class, 'index'])->name('SuperAdmin');
@@ -117,7 +117,7 @@ Route::controller(AdminController::class)->group(function () {
     Route::get('/Admin/tkun', 'tkun')->name('AdminTKun');
     Route::get('/Admin/elonlar', 'elonlar')->name('AdminElonlar');
 });
- 
+
 Route::controller(AdminStudentController::class)->group(function () {
     Route::get('/Admin/student/index', 'index')->name('Student');
     Route::get('/Admin/student/index/{id}', 'show')->name('StudentShow');
@@ -151,7 +151,7 @@ Route::controller(AdminGuruhController::class)->group(function () {
     Route::post('/Admin/guruh/updates', 'showUpdatestGuruh')->name('showUpdatestGuruh');
     Route::post('/Admin/guruh/delete', 'deletGuruh')->name('AdminGuruhDelete');
     Route::get('/Admin/guruh/show/{id}', 'show')->name('AdminGuruhShow');
-    Route::get('/Admin/guruh/end', 'endGuruh')->name('AdminGuruhEnd');
+    Route::get('/Admin/guruh/end', 'endGuruh')->name('AdminGuruhEnd'); 
     Route::get('/Admin/guruh/create', 'CreateGuruh')->name('AdminGuruhCreate');
     Route::post('/Admin/guruh/create1', 'CreateGuruh1')->name('AdminGuruhCreate1');
     Route::post('/Admin/guruh/create2', 'CreateGuruh2')->name('AdminGuruhCreate2');
@@ -217,8 +217,8 @@ Route::controller(UserGuruhController::class)->group(function () {
 
 Route::controller(UserPaymartController::class)->group(function () {
     Route::get('/User/tolovlar', 'Tolovlar')->name('Tolovlar');
-    Route::get('/User/tolov/{summa}', 'pay')->name('Tolov');
-    Route::post('/User/tolov', 'pay2')->name('Tolov');
+    Route::post('/User/tolov', 'pay2')->name('TolovPost');
+    Route::get('/User/tolovlar/{summa}', 'pay')->name('Tolov');
 });
 
 Route::controller(UserContactController::class)->group(function () {

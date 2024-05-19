@@ -14,8 +14,8 @@
         <div class="dashboard">
             <div class="col-12">
                 <h4 class="card-title">To'lov turini tanlang</h4>
-                <p><b>Tulov summasi: </b>{{ $summa }} so'm</p><!--checkout.paycom.uz-->
-                <form method="POST" action="https://test.paycom.uz">
+                <p><b>Tulov summasi: </b>{{ $summa }} so'm</p>
+                <form method="POST" action="https://checkout.paycom.uz">
                     @csrf
                     <input type="hidden" name="merchant" value="65f14418a929127d44bcb5d1"/>
                     <input type="hidden" name="amount" value="{{ $summa2 }}"/>

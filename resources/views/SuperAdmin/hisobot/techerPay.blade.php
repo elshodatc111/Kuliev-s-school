@@ -3,6 +3,7 @@
 @section('content')
 
 <main id="main" class="main">
+
     <div class="pagetitle">
         <h1>Hisobot</h1>
         <nav>
@@ -12,7 +13,9 @@
                 <li class="breadcrumb-item active">Ish haqi</li>
             </ol>
         </nav>
-    </div>     
+    </div> 
+
+    
     <h5 class="w-100 text-center">Hodimlarga to'langan ish haqi</h5>
     <div class="w-100" style="text-align:right">
         <a id='export' style='cursor:pointer' class="btn btn-warning text-white"> EXCEL</a>
@@ -45,6 +48,8 @@
             @endforeach
         </tbody>
     </table>
+                    
+
 </main>
 
 @endsection

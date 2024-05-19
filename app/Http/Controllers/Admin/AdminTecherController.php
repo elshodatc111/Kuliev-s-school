@@ -3,16 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
-use App\Models\Filial;
 use App\Models\FilialKassa;
 use App\Models\IshHaqi;
 use App\Models\Guruh;
-use App\Models\SendMessege;
 use App\Models\GuruhUser;
 use App\Models\GuruhTime;
 use App\Models\Davomat;
 use App\Models\MavjudIshHaqi;
-use App\Jobs\CreateTecherSendMessege;
 use App\Events\AdminCreateTecher;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -46,16 +43,7 @@ class AdminTecherController extends Controller{
         $validate['admin_id'] = Auth::user()->id;
         $validate['filial_id'] = request()->cookie('filial_id');
         $User = User::create($validate);
-
-        $Filail_name = Filial::find(request()->cookie('filial_id'))->filial_name;
-        $Phone = "+998".str_replace(" ","",$request->phone);
-        $Text = "Hurmatli ".$request->name." siz ".$Filail_name." o'quv markaziga o'qituvchi lavozimiga ishga olindingiz.\nLogin: ".$request->name."\nParol: ".$password."\nWebSayt: ".env('WEB_SAYT_LINK');
-        $SendMessege = SendMessege::create([
-            'phone' => $Phone,
-            'text' => $Text,
-            'status' => "Yuborilmoqda",
-        ]);
-        CreateTecherSendMessege::dispatch($SendMessege);
+        AdminCreateTecher::dispatch($User->id,$password);
         return redirect()->back()->with('success', 'Yangi o\'qituvchi qo\'shildi.'); 
     }
     public function techerShow($id){
@@ -104,6 +92,7 @@ class AdminTecherController extends Controller{
             }else{
                 $TecherTulov = $TecherTulov/count($GuruhTime)*$Guruh[$key]['Users']*$CountDavomat;
             }
+            
             $TecherBonus = $TecherBonus*$bonuss;
             $Guruh[$key]['Davomat'] = $CountDavomat;
             $Guruh[$key]['Hisoblandi'] = number_format($TecherTulov + $TecherBonus, 0, '.', ' ');
@@ -172,15 +161,7 @@ class AdminTecherController extends Controller{
         $password = rand(10000000, 99999999);
         $User->password = Hash::make($password);
         $User->save();
-        $Filail_name = Filial::find(request()->cookie('filial_id'))->filial_name;
-        $Phone = "+998".str_replace(" ","",$User->phone);
-        $Text = "Hurmatli ".$User->name." siz ".$Filail_name." o'quv markazidagi parolingiz yangilandi.\nLogin: ".$User->email."\nParol: ".$password."\nWebSayt: ".env('WEB_SAYT_LINK');
-        $SendMessege = SendMessege::create([
-            'phone' => $Phone,
-            'text' => $Text,
-            'status' => "Yuborilmoqda",
-        ]);
-        CreateTecherSendMessege::dispatch($SendMessege);
+        HodimUpdatePasswor::dispatch($User->id,$password);
         return redirect()->back()->with('success', 'O\'qituvchi paroli yangilandi.'); 
     }
     public function TecherPay(Request $request){

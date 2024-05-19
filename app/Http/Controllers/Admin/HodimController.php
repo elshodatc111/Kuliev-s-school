@@ -6,10 +6,7 @@ use App\Models\User;
 use App\Models\AdminKassa;
 use App\Models\FilialKassa;
 use App\Models\IshHaqi;
-use App\Models\Filial;
-use App\Models\SendMessege;
 use App\Models\MavjudIshHaqi;
-use App\Jobs\CreateTecherSendMessege;
 use App\Events\CreateHodim;
 use App\Events\CreatIshHaqi;
 use App\Events\HodimUpdatePasswor;
@@ -43,19 +40,7 @@ class HodimController extends Controller{
         $validate['password'] = Hash::make($parol);
         $validate['filial_id'] = request()->cookie('filial_id');
         $User = User::create($validate);
-        $Filail_name = Filial::find(request()->cookie('filial_id'))->filial_name;
-        $Phone = '+998'.str_replace(" ","",$request->phone);
-        $Text = $request->name." siz ".$Filail_name." o'quv markaziga ishga olindingiz.\nLogin: ".$request->email."\nParol: ".$parol."\nWeb sayt: ".env('WEB_SAYT_LINK');
-        $AdminKassa = AdminKassa::create([
-            'filial_id'=>$User->filial_id,
-            'user_id'=>$User->id
-        ]);
-        $SendMessege = SendMessege::create([
-            'phone' => $Phone,
-            'text' => $Text,
-            'status' => "Yuborilmoqda",
-        ]);
-        CreateTecherSendMessege::dispatch($SendMessege);
+        CreateHodim::dispatch($User->id); 
         return redirect()->back()->with('success', 'Yangi hodim qo\'shildi.'); 
     }
     public function adminHodimDelete($id){
@@ -117,15 +102,7 @@ class HodimController extends Controller{
         $password = rand(10000000, 99999999);
         $User->password = Hash::make($password);
         $User->save();
-        $Filail_name = Filial::find(request()->cookie('filial_id'))->filial_name;
-        $Phone = '+998'.str_replace(" ","",$User->phone);
-        $Text = $User->name." siz ".$Filail_name." o'quv markaziga parolingiz yangilandi.\nLogin: ".$User->email."\nParol: ".$password."\nWeb sayt: ".env('WEB_SAYT_LINK');
-        $SendMessege = SendMessege::create([
-            'phone' => $Phone,
-            'text' => $Text,
-            'status' => "Yuborilmoqda",
-        ]);
-        CreateTecherSendMessege::dispatch($SendMessege);
+        HodimUpdatePasswor::dispatch($User->id,$password);
         return redirect()->back()->with('success', 'Parol yangilandi.'); 
     }
     public function adminPayHodimlarIshHaqi(Request $request){

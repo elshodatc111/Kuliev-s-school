@@ -147,7 +147,7 @@
                             <div class="col-12">
                                 <label for="summa">Guruhni tanlang</label>
                                 <select name="guruh_id" class="form-select mb-2" required>
-                                    <option value="">Tanlang</option>
+                                    <option value="guruh_id">Tanlang</option>
                                     @foreach($Guruh as $item)
                                     <option value="{{ $item['id'] }}">{{ $item['guruh_name'] }}</option>
                                     @endforeach

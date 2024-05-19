@@ -373,8 +373,8 @@ class ComposerStaticInitd8fd3df3f9f495df31694dec079489b1
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-factory/src',
-            1 => __DIR__ . '/..' . '/psr/http-message/src',
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
+            1 => __DIR__ . '/..' . '/psr/http-factory/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -564,7 +564,6 @@ class ComposerStaticInitd8fd3df3f9f495df31694dec079489b1
     );
 
     public static $classMap = array (
-        'App\\Console\\Commands\\tkun' => __DIR__ . '/../..' . '/app/Console/Commands/tkun.php',
         'App\\Events\\AdminCreateTecher' => __DIR__ . '/../..' . '/app/Events/AdminCreateTecher.php',
         'App\\Events\\CreatIshHaqi' => __DIR__ . '/../..' . '/app/Events/CreatIshHaqi.php',
         'App\\Events\\CreateHodim' => __DIR__ . '/../..' . '/app/Events/CreateHodim.php',
@@ -596,6 +595,7 @@ class ComposerStaticInitd8fd3df3f9f495df31694dec079489b1
         'App\\Http\\Controllers\\SuperAdmin\\HodimlarController' => __DIR__ . '/../..' . '/app/Http/Controllers/SuperAdmin/HodimlarController.php',
         'App\\Http\\Controllers\\SuperAdmin\\KabinetController' => __DIR__ . '/../..' . '/app/Http/Controllers/SuperAdmin/KabinetController.php',
         'App\\Http\\Controllers\\SuperAdmin\\ReportControlle' => __DIR__ . '/../..' . '/app/Http/Controllers/SuperAdmin/ReportControlle.php',
+        'App\\Http\\Controllers\\SuperAdmin\\SMSController' => __DIR__ . '/../..' . '/app/Http/Controllers/SuperAdmin/SMSController.php',
         'App\\Http\\Controllers\\SuperAdmin\\SuperAdminController' => __DIR__ . '/../..' . '/app/Http/Controllers/SuperAdmin/SuperAdminController.php',
         'App\\Http\\Controllers\\SuperAdmin\\SuperAdminTecherController' => __DIR__ . '/../..' . '/app/Http/Controllers/SuperAdmin/SuperAdminTecherController.php',
         'App\\Http\\Controllers\\SuperAdmin\\SuperElonController' => __DIR__ . '/../..' . '/app/Http/Controllers/SuperAdmin/SuperElonController.php',
@@ -603,6 +603,7 @@ class ComposerStaticInitd8fd3df3f9f495df31694dec079489b1
         'App\\Http\\Controllers\\SuperAdmin\\SuperStatistikaController' => __DIR__ . '/../..' . '/app/Http/Controllers/SuperAdmin/SuperStatistikaController.php',
         'App\\Http\\Controllers\\SuperAdmin\\TestController' => __DIR__ . '/../..' . '/app/Http/Controllers/SuperAdmin/TestController.php',
         'App\\Http\\Controllers\\Techer\\TecherController' => __DIR__ . '/../..' . '/app/Http/Controllers/Techer/TecherController.php',
+        'App\\Http\\Controllers\\TkunController' => __DIR__ . '/../..' . '/app/Http/Controllers/TkunController.php',
         'App\\Http\\Controllers\\User\\PaymeController' => __DIR__ . '/../..' . '/app/Http/Controllers/User/PaymeController.php',
         'App\\Http\\Controllers\\User\\UserContactController' => __DIR__ . '/../..' . '/app/Http/Controllers/User/UserContactController.php',
         'App\\Http\\Controllers\\User\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/User/UserController.php',
@@ -635,9 +636,11 @@ class ComposerStaticInitd8fd3df3f9f495df31694dec079489b1
         'App\\Models\\Moliya' => __DIR__ . '/../..' . '/app/Models/Moliya.php',
         'App\\Models\\Murojat' => __DIR__ . '/../..' . '/app/Models/Murojat.php',
         'App\\Models\\Room' => __DIR__ . '/../..' . '/app/Models/Room.php',
+        'App\\Models\\SendMessege' => __DIR__ . '/../..' . '/app/Models/SendMessege.php',
         'App\\Models\\Setting' => __DIR__ . '/../..' . '/app/Models/Setting.php',
         'App\\Models\\SmsCentar' => __DIR__ . '/../..' . '/app/Models/SmsCentar.php',
         'App\\Models\\SmsCounter' => __DIR__ . '/../..' . '/app/Models/SmsCounter.php',
+        'App\\Models\\TKunMessege' => __DIR__ . '/../..' . '/app/Models/TKunMessege.php',
         'App\\Models\\Test' => __DIR__ . '/../..' . '/app/Models/Test.php',
         'App\\Models\\TestNatija' => __DIR__ . '/../..' . '/app/Models/TestNatija.php',
         'App\\Models\\Transaction' => __DIR__ . '/../..' . '/app/Models/Transaction.php',

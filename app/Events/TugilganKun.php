@@ -12,15 +12,13 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class TugilganKun{
+class TugilganKun{ 
     use Dispatchable, InteractsWithSockets, SerializesModels;
-
     public $name;
     public $phone;
     public $filial;
     public $type;
     public function __construct($id){
-        
         $this->name = User::find($id)->name;
         $this->phone = "+998".str_replace(" ","", User::find($id)->phone );
         $this->filial = Filial::find(User::find($id)->filial_id)->filial_name;

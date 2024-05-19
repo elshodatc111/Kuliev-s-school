@@ -102,9 +102,9 @@
       <div class="row">
         <div class="col-lg-2"></div>
         <div class="col-lg-4">
-          <button class="btn btn-warning text-white w-100 mt-2 mt-lg-0" data-bs-toggle="modal" data-bs-target="#filial_qaytar"><i class="bi bi-coin"></i> Filialga ish haqini qaytarish</button></div>
+          <button class="btn btn-outline-warning text-primary w-100 mt-2 mt-lg-0" data-bs-toggle="modal" data-bs-target="#filial_qaytar"><i class="bi bi-coin"></i> Filialga ish haqini qaytarish</button></div>
         <div class="col-lg-4">
-          <button class="btn btn-danger text-white w-100 mt-2 mt-lg-0" data-bs-toggle="modal" data-bs-target="#umumitxarajat"><i class="bi bi-cart2"></i> Xarajatlar uchun chiqim</button></div>
+          <button class="btn btn-outline-danger text-primary w-100 mt-2 mt-lg-0" data-bs-toggle="modal" data-bs-target="#umumitxarajat"><i class="bi bi-cart2"></i> Xarajatlar uchun chiqim</button></div>
       </div>
     </div>
   </div>
@@ -211,8 +211,8 @@
               <td class="bg-primary text-white">Status</td>
               <td class="bg-primary text-white">Summa</td>
               <td class="bg-primary text-white">Type</td>
-              <td class="bg-primary text-white">Izoh</td>
-              <td class="bg-primary text-white">Vaqt</td>
+              <td class="bg-primary text-white">Xarajat xaqida</td>
+              <td class="bg-primary text-white">Xarajat vaqti</td>
             </tr>
           </thead>
           <tbody>
@@ -236,7 +236,7 @@
               </tr>
             @empty
               <tr>
-                <td colspan=7 class="text-center">Xarajatlar mavjud emas.</td>
+                <td colspan=6 class="text-center">Xarajatlar mavjud emas.</td>
               </tr>
             @endforelse
           </tbody>

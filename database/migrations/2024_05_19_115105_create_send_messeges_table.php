@@ -9,15 +9,10 @@ return new class extends Migration{
         Schema::create('send_messeges', function (Blueprint $table) {
             $table->id();
             $table->string('phone');
-            $table->string('text');
-            $table->string('status');
+            $table->text('text');
             $table->timestamps();
         });
     }
-
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('send_messeges');
