@@ -106,9 +106,9 @@ class PaymeChegirma{
         $Name = $Users->name;
         $Filial = Filial::where('id',$Users->filial_id)->first()->filial_name;
         if($chegirma!=0){
-            $Text = "Hurmatli ".$Name." ".$Filial." o'quv markazi kurslar uchun ".$summa." so'm to'lov qabul qilindi va siz ".$chegirma." so'mlik chegirma oldingiz.";    
+            $Text = "Hurmatli ".$Name." ".env('CRM_NAME')." o'quv markazi kurslar uchun ".$summa." so'm to'lov qabul qilindi va siz ".$chegirma." so'mlik chegirma oldingiz.";    
         }else{
-            $Text = "Hurmatli ".$Name." ".$Filial." o'quv markazi kurslar uchun ".$summa." so'm to'lov qabul qilindi.";    
+            $Text = "Hurmatli ".$Name." ".env('CRM_NAME')." o'quv markazi kurslar uchun ".$summa." so'm to'lov qabul qilindi.";    
         }
         $SmsCentar = SmsCentar::where('filial_id',$Users->filial_id)->first()->tulov;
         Log::info("Payme Orqali SMS yuborish tekshirilmoqda.");

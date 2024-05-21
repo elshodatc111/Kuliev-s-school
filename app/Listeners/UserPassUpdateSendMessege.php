@@ -13,7 +13,7 @@ class UserPassUpdateSendMessege{
     public function __construct(){}
     public function handle(UserResetPassword $event): void{
         $fio = $event->fio;
-        $Text = "Hurmatli ".$fio." Sizning yangi parolingiz\nParol: ".$event->password;
+        $Text = "Sizning yangi parolingiz Parol: ".$event->password." websayt: ".env('CRM_LINK');
         $eskiz_email = env('ESKIZ_UZ_EMAIL');
         $eskiz_password = env('ESKIZ_UZ_Password');
         $eskiz = new Eskiz($eskiz_email,$eskiz_password);
@@ -37,7 +37,8 @@ class UserPassUpdateSendMessege{
         $SmsCounter->save();
         SendMessege::create([
             'phone'=> $event->phone,
-            'text'=> strval($Text)
+            'text'=> strval($Text),
+            'status'=>"Yuborildi"
         ]);
     }
 }

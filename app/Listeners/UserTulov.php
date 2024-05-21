@@ -124,9 +124,9 @@ class UserTulov{
             $User->save();
         }
         if($Chegirma!=0){
-            $text = "Hurmatli ".$User->name." ! ".env('CRM_NAME')." o'quv markazi kurslari uchun ".$summa." so'm to'lov qabul qilindi. va sizga ".$Chegirma." so'm chegirma berildi.";            
+            $text = "Hurmatli ".$User->name." ".env('CRM_NAME')." o'quv markazi kurslari uchun ".$summa." so'm to'lov qabul qilindi. va sizga ".$Chegirma." so'm chegirma berildi.";
         }else{
-            $text = "Hurmatli ".$User->name." ! ".env('CRM_NAME')." o'quv markazi kurslari uchun ".$summa." so'm to'lov qabul qilindi.";        
+            $text = "Hurmatli ".$User->name." ".env('CRM_NAME')." o'quv markazi kurslar uchun ".$summa." so'm to'lov qabul qilindi.";
         }
         $SmsCentar = SmsCentar::where('filial_id',$User->filial_id)->first()->tulov;
         Log::info('User Tulov CRM');
@@ -155,7 +155,8 @@ class UserTulov{
             $SmsCounter->save();
             SendMessege::create([
                 'phone'=> $phone,
-                'text'=> strval($text)
+                'text'=> strval($text),
+                'status'=>"Yuborildi"
             ]);
         }
         if(Auth::user()->type!='SuperAdmin'){
