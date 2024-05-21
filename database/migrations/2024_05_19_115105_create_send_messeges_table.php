@@ -9,6 +9,7 @@ return new class extends Migration{
         Schema::create('send_messeges', function (Blueprint $table) {
             $table->id();
             $table->string('phone');
+            $table->string('status');
             $table->text('text');
             $table->timestamps();
         });
